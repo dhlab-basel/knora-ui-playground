@@ -3,6 +3,9 @@ sudo: required
 
 language: node_js
 
+node_js:
+  - "11"
+
 cache:
   yarn: true
   directories:
@@ -10,17 +13,6 @@ cache:
 
 addons:
   chrome: stable
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.9
-
-env:
-  global:
-    - CXX=g++-4.9
-
-install: export CXX="g++-4.9"
 
 before_script:
   - yarn global add @angular/cli
