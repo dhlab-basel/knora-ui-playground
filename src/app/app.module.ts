@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 
 import { ViewerPgComponent } from './viewer-pg/viewer-pg.component';
 import { SearchPgComponent } from './search-pg/search-pg.component';
+import { SearchResultComponent } from './search-pg/search-result/search-result.component';
 import { OntologyPgComponent } from './ontology-pg/ontology-pg.component';
 import { AuthenticationPgComponent } from './authentication-pg/authentication-pg.component';
 
@@ -36,6 +37,7 @@ export function initializeApp(appInitService: AppInitService) {
     AppComponent,
     ViewerPgComponent,
     SearchPgComponent,
+    SearchResultComponent,
     OntologyPgComponent,
     AuthenticationPgComponent
   ],
