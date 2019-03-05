@@ -17,10 +17,10 @@ addons:
 install:
   - yarn global add @angular/cli
   - yarn global add yalc
+  - cd ~ && git clone https://github.com/dhlab-basel/Knora-ui.git && cd Knora-ui && yarn install --prod=false && yarn build-lib-prod && yarn yalc-publish
 
 script:
-  - cd ~ && git clone https://github.com/dhlab-basel/Knora-ui.git && cd Knora-ui && yarn install --prod=false && yarn build-lib-prod && yarn yalc-publish
-  - cd $TRAVIS_BUILD_DIR && yarn install --prod=false
   - yalc remove --all && yarn yalc-add-modules
+  - yarn install --prod=false
   - yarn build-prod
   
