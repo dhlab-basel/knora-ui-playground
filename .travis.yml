@@ -27,9 +27,9 @@ install: export CXX="g++-4.9"
 
 before_script:
   - yarn global add @angular/cli
-  - yarn install
   - yarn add global yalc
-  - cd ~ && git clone https://github.com/dhlab-basel/Knora-ui.git && cd Knora-ui && yarn build-lib-prod && yarn yalc-publish
+  - cd ~ && git clone https://github.com/dhlab-basel/Knora-ui.git && cd Knora-ui && yarn install --prod=false && yarn build-lib-prod && yarn yalc-publish
+  - yarn install --prod=false
 
 script:
   - yarn yalc-add-modules
