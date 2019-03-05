@@ -1,10 +1,7 @@
-dist: trusty
+dist: xenial
 sudo: required
 
 language: node_js
-
-node_js:
-  - "8"
 
 cache:
   yarn: true
@@ -29,7 +26,7 @@ before_script:
   - yarn global add @angular/cli
   - yarn global add yalc
   - cd ~ && git clone https://github.com/dhlab-basel/Knora-ui.git && cd Knora-ui && yarn install --prod=false && yarn build-lib-prod && yarn yalc-publish
-  - yarn install --prod=false
+  - cd $TRAVIS_BUILD_DIR && yarn install --prod=false
 
 script:
   - yarn yalc-add-modules
