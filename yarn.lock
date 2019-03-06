@@ -385,9 +385,9 @@
     "@types/jasmine" "*"
 
 "@types/marked@^0.6.0":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@types/marked/-/marked-0.6.1.tgz#4281d0fbdb7bbefb69905cf44558297bc3c446aa"
-  integrity sha512-yE2cXQELHabu4t+RJIrFu0dVZEG7+zr0cHDSlb8SOJbXiAss/bY9PvSubgaoG7dyn9Bb+GT2Xl4HVhChuU5mEQ==
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@types/marked/-/marked-0.6.2.tgz#f2d508a2d769c009815f2ff3cdda9362700a9147"
+  integrity sha512-yl4Y+AXghz2VWsrIK0rXJpYYcKI1sIbaLoa+ByHq7WFHZfuN0+iJMtgn0zIXh1/DbKn6BIbp9oHuHZjEIb7QlQ==
 
 "@types/node@*":
   version "11.10.4"
@@ -1369,9 +1369,9 @@ camelcase@^4.1.0:
   integrity sha1-1UVjW+HjPFQmScaRc+Xeas+uNN0=
 
 caniuse-lite@^1.0.30000929, caniuse-lite@^1.0.30000939:
-  version "1.0.30000940"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000940.tgz#19f2b1497fbfa5b96b615963097c3757f27989ce"
-  integrity sha512-rp/086IBUfCsNgBpko6DGQv674jRjeXPesDatDB2kxrkmDfD+S5Gesw+uT8YjpRWvLKLMRBy72SLRZ8I0EgQFw==
+  version "1.0.30000941"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000941.tgz#f0810802b2ab8d27f4b625d4769a610e24d5a42c"
+  integrity sha512-4vzGb2MfZcO20VMPj1j6nRAixhmtlhkypM4fL4zhgzEucQIYiRzSqPcWIu1OF8i0FETD93FMIPWfUJCAcFvrqA==
 
 canonical-path@1.0.0:
   version "1.0.0"
@@ -3715,10 +3715,10 @@ jdnconvertiblecalendar@^0.0.2:
   resolved "https://registry.yarnpkg.com/jdnconvertiblecalendar/-/jdnconvertiblecalendar-0.0.2.tgz#4bfd8b220f9fd8bb105308e9f3181f7d927f3503"
   integrity sha512-I7z4EGAFtBcEJyOmxJk+MM8Te3lq5OsNN20eW06jNANcQWJpQ855eqG2oPFgIzT2Xoel2KURfgYpuE7ACB5zPA==
 
-jdnconvertiblecalendardateadapter@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/jdnconvertiblecalendardateadapter/-/jdnconvertiblecalendardateadapter-0.0.7.tgz#5e52b58c2fbf530701c2a5efcef0ca938a008381"
-  integrity sha512-rl+sgmdkNIR8lBVIS8IjemgDHw38NOfaF870bNzPxsZVlCIFuA7CQPT+fqkLovJ8DCJF4PfI9eucN6XheA5g7A==
+jdnconvertiblecalendardateadapter@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/jdnconvertiblecalendardateadapter/-/jdnconvertiblecalendardateadapter-0.0.8.tgz#e3fc988cd74acaa115cfeafb3c68a3ad7ece42ef"
+  integrity sha512-wlnn5bEtJeFbV87fd3yNqrpqPR6io2G4uE2lCiemTU4MJzQRw8K9mZRgjsdVTKWpM7kq5XF1uduSyGTiOZblMA==
   dependencies:
     tslib "^1.9.0"
 
