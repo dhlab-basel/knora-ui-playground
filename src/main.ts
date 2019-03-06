@@ -22,13 +22,8 @@ fetch(`config/config.${environment.name}.json`)
           return;
       }
 
-      console.log('Main - config: ', config);
-
       // Store the response somewhere that your ConfigService can read it.
       window['tempConfigStorage'] = config;
-
-      // console.log('config', config);
-
 
       platformBrowserDynamic()
           .bootstrapModule(AppModule)

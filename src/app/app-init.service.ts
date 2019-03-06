@@ -29,13 +29,9 @@ export class AppInitService {
             // console.log('AppInitService.init() called');
             // do your initialisation stuff here
 
-            console.log('AppInitService - Init');
-
             const data = window['tempConfigStorage'] as IAppConfig;
             
             AppInitService.settings = data;
-
-            console.log('AppInitService - Init - data: ', data);
 
             AppInitService.coreConfig = {
                 name: AppInitService.settings.appName,
@@ -43,8 +39,6 @@ export class AppInitService {
                 media: AppInitService.settings.iiifURL,
                 app: AppInitService.settings.appURL
             } as KuiCoreConfig;
-
-            // console.log('AppInitService: finished');
 
             resolve();
         });
