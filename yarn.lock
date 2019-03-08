@@ -308,31 +308,6 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@knora/action@file:.yalc/@knora/action":
-  version "7.0.0-2da92559"
-  dependencies:
-    tslib "^1.9.0"
-
-"@knora/authentication@file:.yalc/@knora/authentication":
-  version "7.0.0-a427be13"
-  dependencies:
-    tslib "^1.9.0"
-
-"@knora/core@file:.yalc/@knora/core":
-  version "7.0.0-fb869c46"
-  dependencies:
-    tslib "^1.9.0"
-
-"@knora/search@file:.yalc/@knora/search":
-  version "7.0.0-b853af94"
-  dependencies:
-    tslib "^1.9.0"
-
-"@knora/viewer@file:.yalc/@knora/viewer":
-  version "7.0.0-bf45570f"
-  dependencies:
-    tslib "^1.9.0"
-
 "@ngtools/webpack@7.3.4":
   version "7.3.4"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-7.3.4.tgz#069b3425ef928ecf91f34b0c4c04dde158534a85"
@@ -3710,15 +3685,15 @@ jasminewd2@^2.1.0:
   resolved "https://registry.yarnpkg.com/jasminewd2/-/jasminewd2-2.2.0.tgz#e37cf0b17f199cce23bea71b2039395246b4ec4e"
   integrity sha1-43zwsX8ZnM4jvqcbIDk5Uka07E4=
 
-jdnconvertiblecalendar@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/jdnconvertiblecalendar/-/jdnconvertiblecalendar-0.0.2.tgz#4bfd8b220f9fd8bb105308e9f3181f7d927f3503"
-  integrity sha512-I7z4EGAFtBcEJyOmxJk+MM8Te3lq5OsNN20eW06jNANcQWJpQ855eqG2oPFgIzT2Xoel2KURfgYpuE7ACB5zPA==
+jdnconvertiblecalendar@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/jdnconvertiblecalendar/-/jdnconvertiblecalendar-0.0.3.tgz#a4e6106340b27bc06bf08cd00912960c666693cc"
+  integrity sha512-AxqmzIkHLE/iEZuej5S9zTqXOAvtHJIk6iMPM3tLBha9UBclxXqXGeqJtclMflVHuvpzm06e0zJ2YVCSA8vtQg==
 
-jdnconvertiblecalendardateadapter@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/jdnconvertiblecalendardateadapter/-/jdnconvertiblecalendardateadapter-0.0.8.tgz#e3fc988cd74acaa115cfeafb3c68a3ad7ece42ef"
-  integrity sha512-wlnn5bEtJeFbV87fd3yNqrpqPR6io2G4uE2lCiemTU4MJzQRw8K9mZRgjsdVTKWpM7kq5XF1uduSyGTiOZblMA==
+jdnconvertiblecalendardateadapter@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/jdnconvertiblecalendardateadapter/-/jdnconvertiblecalendardateadapter-0.0.9.tgz#b02f044139b28cfa0e631f779caa270a91e67ddf"
+  integrity sha512-LnAlZ6pE9lOa5eSWydpLAeBJ297z2HaWIp2GB5AQgackPkl/LNdP/zBpa5rvUOywpuuuKFfocLwIL1UVMn8xtA==
   dependencies:
     tslib "^1.9.0"
 
