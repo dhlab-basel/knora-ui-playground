@@ -14,14 +14,7 @@ cache:
 addons:
   chrome: stable
 
-install:
-  - yarn global add @angular/cli
-  - yarn global add yalc
-  - cd ~ && git clone https://github.com/dhlab-basel/Knora-ui.git && cd Knora-ui && yarn install --prod=false && yarn build-lib-prod && yarn yalc-publish
-  - cd $TRAVIS_BUILD_DIR
+install: yarn install --prod=false
 
-script:
-  - yalc remove --all && yarn yalc-add-modules
-  - yarn install --prod=false
-  - yarn build-prod
+script: yarn build-prod
   
