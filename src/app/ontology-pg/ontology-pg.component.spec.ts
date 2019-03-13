@@ -1,4 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  MatCardModule,
+  MatDividerModule,
+  MatIconModule,
+  MatTooltipModule
+} from '@angular/material';
+import { ProgressIndicatorComponent } from '@knora/action';
+import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 
 import { OntologyPgComponent } from './ontology-pg.component';
 
@@ -8,9 +17,26 @@ describe('OntologyPgComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OntologyPgComponent ]
+      imports: [
+        HttpClientModule,
+        MatCardModule,
+        MatDividerModule,
+        MatIconModule,
+        MatTooltipModule
+      ],
+      declarations: [
+        OntologyPgComponent,
+        ProgressIndicatorComponent
+      ],
+      providers: [
+        {
+          provide: KuiCoreConfigToken,
+          useValue: KuiCoreConfig
+        },
+        HttpClient
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
