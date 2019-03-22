@@ -26,6 +26,10 @@ const appRoutes: Routes = [
         component: SearchPgComponent,
         children: [
             {
+                path: ':mode/:q/:project',
+                component: SearchResultsComponent
+            },
+            {
                 path: ':mode/:q',
                 component: SearchResultsComponent
             }
