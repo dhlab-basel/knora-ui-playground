@@ -49,7 +49,7 @@ export class SearchPgComponent implements OnInit {
 
   ngOnInit() {
     // set the default search view
-    this.option = this.selection[0];
+    this.option = this.selection[1];
 
 
     this.form = this.fb.group({
