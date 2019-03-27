@@ -1,24 +1,61 @@
-<div class="search-bars">
+<!-- select the search -->
+<form [formGroup]="form">
+  <mat-form-field class="select-search">
+    <mat-select
+      placeholder="Select a search panel variant"
+      [formControl]="form.controls['selectSearch']"
+    >
+      <mat-option *ngFor="let item of selection" [value]="item">
+        {{item.label}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
 
+<div class="search-bars" [ngSwitch]="option.id">
+    <h3>{{option.label}}</h3>
+  <!--
   <h3>Old search</h3>
   <kui-search [route]="'/search'"></kui-search>
-  <br>
-  <h3>Fulltext search</h3>
-  <kui-fulltext-search [route]="'/search'"></kui-fulltext-search>
-  <br>
-  <h3>Extended search</h3>
-  <kui-extended-search [route]="'/search'"></kui-extended-search>
-  <br>
-  <h3>Search panel</h3>
-  <kui-search-panel [route]="'/search'"></kui-search-panel>
+-->
+  <div *ngSwitchCase="selection[0].id">
+    <kui-fulltext-search [route]="'/search'"></kui-fulltext-search>
+  </div>
 
+  <div *ngSwitchCase="selection[1].id">
+    <kui-fulltext-search
+      [route]="'/search'"
+      [projectfilter]="true">
+    </kui-fulltext-search>
+  </div>
+
+  <div *ngSwitchCase="selection[2].id">
+    <kui-fulltext-search
+      [route]="'/search'"
+      [filterbyproject]="projectIri">
+    </kui-fulltext-search>
+  </div>
+
+  <div *ngSwitchCase="selection[3].id">
+    <kui-fulltext-search
+      [route]="'/search'"
+      [projectfilter]="true"
+      [filterbyproject]="projectIri">
+    </kui-fulltext-search>
+  </div>
+
+  <div *ngSwitchCase="selection[4].id">
+    <kui-extended-search [route]="'/search'"></kui-extended-search>
+  </div>
+
+  <div *ngSwitchCase="selection[5].id">
+    <kui-search-panel [route]="'/search'"></kui-search-panel>
+  </div>
 </div>
 
 <mat-divider></mat-divider>
 
 <div class="search-results">
-
   <h3>Search results</h3>
   <router-outlet></router-outlet>
-
 </div>
