@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Params, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'kuip-viewer-pg',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewerPgComponent implements OnInit {
 
-  constructor() { }
+  resourceIri: string;
+
+  constructor(
+    private _route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this._route.paramMap.subscribe(
+      (params: Params) => {
+          this.resourceIri = decodeURIComponent(params.get('id'));
+      }
+    );
   }
 
 }

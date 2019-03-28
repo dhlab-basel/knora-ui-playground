@@ -22,6 +22,10 @@ const appRoutes: Routes = [
         component: OntologyPgComponent
     },
     {
+        path: 'resource/:id',
+        component: ViewerPgComponent
+    },
+    {
         path: 'search',
         component: SearchPgComponent,
         children: [
