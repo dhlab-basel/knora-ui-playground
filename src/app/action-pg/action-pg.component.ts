@@ -8,7 +8,6 @@ import { ApiServiceError } from '@knora/core';
   styleUrls: ['./action-pg.component.scss']
 })
 export class ActionPgComponent implements OnInit {
-
   shortMessage: KuiMessageData;
 
   noteMessage: KuiMessageData;
@@ -47,9 +46,9 @@ export class ActionPgComponent implements OnInit {
 
     // error message from API
     this.errorMessage = {
+      status: 400,
       errorInfo:
         'Http failure response for http://0.0.0.0:3333/admin/projects/shortcode/001/members: 400 Bad Request',
-      status: 400,
       statusText: 'Bad Request',
       url: 'http://0.0.0.0:3333/admin/projects/shortcode/001/members'
     };
