@@ -30,7 +30,7 @@ export class AppInitService {
             // do your initialisation stuff here
 
             const data = window['tempConfigStorage'] as IAppConfig;
-            
+
             AppInitService.settings = data;
 
             AppInitService.coreConfig = {
