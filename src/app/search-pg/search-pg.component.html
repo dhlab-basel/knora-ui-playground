@@ -1,23 +1,26 @@
 <!-- select the search -->
-<form [formGroup]="form">
+<!-- <form [formGroup]="form">
   <mat-form-field class="select-search">
-    <mat-select
-      placeholder="Select a search panel variant"
-      [formControl]="form.controls['selectSearch']"
-    >
+    <mat-select placeholder="Select a search panel variant" [formControl]="form.controls['selectSearch']">
       <mat-option *ngFor="let item of selection" [value]="item">
         {{item.label}}
       </mat-option>
     </mat-select>
   </mat-form-field>
-</form>
+</form> -->
 
+<h3>Fulltext search</h3>
+<kui-fulltext-search [route]="'/search'"></kui-fulltext-search>
+
+<h3>Extended search</h3>
+<kui-extended-search [route]="'/search'"></kui-extended-search>
+<!-- 
 <div class="search-bars" [ngSwitch]="option.id">
-    <h3>{{option.label}}</h3>
-  <!--
+  <h3>{{option.label}}</h3>
+
   <h3>Old search</h3>
   <kui-search [route]="'/search'"></kui-search>
--->
+
   <div *ngSwitchCase="selection[0].id">
     <kui-fulltext-search [route]="'/search'"></kui-fulltext-search>
   </div>
@@ -51,7 +54,7 @@
   <div *ngSwitchCase="selection[5].id">
     <kui-search-panel [route]="'/search'"></kui-search-panel>
   </div>
-</div>
+</div> -->
 
 <!-- <mat-divider></mat-divider> -->
 
@@ -65,4 +68,3 @@
   <h3>Search results</h3>
   <router-outlet></router-outlet>
 </div>
-

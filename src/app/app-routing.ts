@@ -5,10 +5,29 @@ import { AuthenticationPgComponent } from './authentication-pg/authentication-pg
 import { ViewerPgComponent } from './viewer-pg/viewer-pg.component';
 import { OntologyPgComponent } from './ontology-pg/ontology-pg.component';
 import { SearchPgComponent } from './search-pg/search-pg.component';
-import { SearchResultsComponent } from '@knora/viewer';
+// import { SearchResultsComponent } from '@knora/viewer';
+import { SearchResultComponent } from './search-pg/search-result/search-result.component';
 
 
 const appRoutes: Routes = [
+    {
+        path: 'resource/:id',
+        component: ViewerPgComponent
+    },
+    {
+        path: 'search',
+        component: SearchPgComponent,
+        children: [
+            {
+                path: ':mode/:q/:project',
+                component: SearchResultComponent
+            },
+            {
+                path: ':mode/:q',
+                component: SearchResultComponent
+            }
+        ]
+    },
     {
         path: 'authentication',
         component: AuthenticationPgComponent
@@ -20,24 +39,6 @@ const appRoutes: Routes = [
     {
         path: 'ontology',
         component: OntologyPgComponent
-    },
-    {
-        path: 'resource/:id',
-        component: ViewerPgComponent
-    },
-    {
-        path: 'search',
-        component: SearchPgComponent,
-        children: [
-            {
-                path: ':mode/:q/:project',
-                component: SearchResultsComponent
-            },
-            {
-                path: ':mode/:q',
-                component: SearchResultsComponent
-            }
-        ]
     }
 ];
 
