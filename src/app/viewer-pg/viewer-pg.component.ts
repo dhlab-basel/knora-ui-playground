@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Params, ActivatedRoute, Router } from '@angular/router';
+import { ReadResourcesSequence, OntologyInformation, KnoraConstants, ResourceService, IncomingService, ApiServiceError, ReadResource, StillImageRepresentation, ReadStillImageFileValue, ImageRegion, GuiOrder, OntologyCacheService } from '@knora/core';
 
 @Component({
   selector: 'kuip-viewer-pg',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewerPgComponent implements OnInit {
 
-  constructor() { }
+  testResourceIri: string = 'http%3A%2F%2Frdfh.ch%2F0803%2F6ad3e2c47501';
+
+  resourceIri: string;
+
+  constructor(
+    private _route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this._route.paramMap.subscribe(
+      (params: Params) => {
+        this.resourceIri = (decodeURIComponent(params.get('id')) === null) ? this.testResourceIri : decodeURIComponent(params.get('id'));
+
+        // console.log(this.resourceIri)
+      }
+    );
   }
 
 }

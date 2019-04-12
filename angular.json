@@ -33,7 +33,10 @@
               "src/assets/style/main.scss",
               "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/openseadragon/build/openseadragon/openseadragon.min.js",
+              "node_modules/svg-overlay/openseadragon-svg-overlay.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -90,7 +93,10 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/openseadragon/build/openseadragon/openseadragon.min.js",
+              "node_modules/svg-overlay/openseadragon-svg-overlay.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
