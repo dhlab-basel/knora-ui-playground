@@ -1,6 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
+import { ActionPgComponent } from './action-pg/action-pg.component';
 import { AuthenticationPgComponent } from './authentication-pg/authentication-pg.component';
 import { ViewerPgComponent } from './viewer-pg/viewer-pg.component';
 import { OntologyPgComponent } from './ontology-pg/ontology-pg.component';
@@ -9,6 +10,10 @@ import { SearchResultsComponent } from '@knora/viewer';
 
 
 const appRoutes: Routes = [
+    {
+        path: 'action',
+        component: ActionPgComponent
+    },
     {
         path: 'authentication',
         component: AuthenticationPgComponent

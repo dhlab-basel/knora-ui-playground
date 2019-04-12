@@ -25,6 +25,7 @@ import { KuiViewerModule } from '@knora/viewer';
 import { KuiAuthenticationModule } from '@knora/authentication';
 
 import { AppInitService } from './app-init.service';
+import { ActionPgComponent } from './action-pg/action-pg.component';
 
 export function initializeApp(appInitService: AppInitService) {
   return (): Promise<any> => {
@@ -39,7 +40,8 @@ export function initializeApp(appInitService: AppInitService) {
     SearchPgComponent,
     SearchResultComponent,
     OntologyPgComponent,
-    AuthenticationPgComponent
+    AuthenticationPgComponent,
+    ActionPgComponent
   ],
   imports: [
     BrowserModule,
