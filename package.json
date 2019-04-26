@@ -39,7 +39,9 @@
     "moment": "^2.24.0",
     "ngx-markdown": "^7.1.4",
     "node-sass": "^4.11.0",
+    "openseadragon": "^2.4.0",
     "rxjs": "~6.3.3",
+    "svg-overlay": "github:openseadragon/svg-overlay",
     "ts-md5": "^1.2.4",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"

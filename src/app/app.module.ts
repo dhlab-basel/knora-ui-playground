@@ -21,7 +21,7 @@ import { AuthenticationPgComponent } from './authentication-pg/authentication-pg
 import { KuiActionModule } from '@knora/action';
 import { KuiCoreModule, KuiCoreConfigToken } from '@knora/core';
 import { KuiSearchModule } from '@knora/search';
-import { KuiViewerModule } from '@knora/viewer';
+import { KuiViewerModule, SearchResultsComponent } from '@knora/viewer';
 import { KuiAuthenticationModule } from '@knora/authentication';
 
 import { AppInitService } from './app-init.service';
@@ -57,6 +57,8 @@ export function initializeApp(appInitService: AppInitService) {
     KuiAuthenticationModule,
     FlexLayoutModule,
     ReactiveFormsModule
+  ],
+  entryComponents: [
   ],
   providers: [
     AppInitService,

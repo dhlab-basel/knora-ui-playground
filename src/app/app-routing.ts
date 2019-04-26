@@ -6,7 +6,8 @@ import { AuthenticationPgComponent } from './authentication-pg/authentication-pg
 import { ViewerPgComponent } from './viewer-pg/viewer-pg.component';
 import { OntologyPgComponent } from './ontology-pg/ontology-pg.component';
 import { SearchPgComponent } from './search-pg/search-pg.component';
-import { SearchResultsComponent } from '@knora/viewer';
+// import { SearchResultsComponent } from '@knora/viewer';
+import { SearchResultComponent } from './search-pg/search-result/search-result.component';
 
 
 const appRoutes: Routes = [
@@ -19,12 +20,8 @@ const appRoutes: Routes = [
         component: AuthenticationPgComponent
     },
     {
-        path: 'viewer',
+        path: 'resource/:id',
         component: ViewerPgComponent
-    },
-    {
-        path: 'ontology',
-        component: OntologyPgComponent
     },
     {
         path: 'search',
@@ -32,18 +29,30 @@ const appRoutes: Routes = [
         children: [
             {
                 path: ':mode/:q/:project',
-                component: SearchResultsComponent
+                component: SearchResultComponent
             },
             {
                 path: ':mode/:q',
-                component: SearchResultsComponent
+                component: SearchResultComponent
             }
         ]
+    },
+    {
+        path: 'authentication',
+        component: AuthenticationPgComponent
+    },
+    {
+        path: 'viewer',
+        component: ViewerPgComponent
+    },
+    {
+        path: 'ontology',
+        component: OntologyPgComponent
     }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(appRoutes)],
+    imports: [RouterModule.forRoot(appRoutes, { onSameUrlNavigation: 'reload' })],
     exports: [RouterModule]
 })
 

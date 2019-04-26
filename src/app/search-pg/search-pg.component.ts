@@ -45,18 +45,26 @@ export class SearchPgComponent implements OnInit {
     }
   ];
 
+  searchQuery: string = `PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+  CONSTRUCT {
+  ?mainRes knora-api:isMainResource true .
+  } WHERE {
+  ?mainRes a knora-api:Resource .
+  ?mainRes a <http://0.0.0.0:3333/ontology/0001/anything/simple/v2#BlueThing> .
+  }
+  OFFSET 0`;
+
   constructor(@Inject(FormBuilder) private fb: FormBuilder) {}
 
   ngOnInit() {
     // set the default search view
     this.option = this.selection[1];
 
-
     this.form = this.fb.group({
       selectSearch: [this.option, Validators.required]
     });
 
-    this.form.valueChanges.subscribe((data) => {
+    this.form.valueChanges.subscribe(data => {
       this.option = data.selectSearch;
     });
   }
