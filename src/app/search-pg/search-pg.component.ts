@@ -18,6 +18,8 @@ export class SearchPgComponent implements OnInit {
 
   option: Selection;
 
+  gravsearchQuery: string;
+
   selection: Selection[] = [
     {
       id: 'fulltext',
@@ -54,11 +56,11 @@ export class SearchPgComponent implements OnInit {
   }
   OFFSET 0`;
 
-  constructor(@Inject(FormBuilder) private fb: FormBuilder) {}
+  constructor (@Inject(FormBuilder) private fb: FormBuilder) { }
 
   ngOnInit() {
     // set the default search view
-    this.option = this.selection[1];
+    this.option = this.selection[4];
 
     this.form = this.fb.group({
       selectSearch: [this.option, Validators.required]
@@ -67,5 +69,9 @@ export class SearchPgComponent implements OnInit {
     this.form.valueChanges.subscribe(data => {
       this.option = data.selectSearch;
     });
+  }
+
+  setGravsearch(query: string) {
+    this.gravsearchQuery = query;
   }
 }

@@ -18,7 +18,7 @@
 
 <div class="search-bars" [ngSwitch]="option.id">
   <h3>{{option.label}}</h3>
-<!--
+  <!--
   <h3>Old search</h3>
   <kui-search [route]="'/search'"></kui-search>
    -->
@@ -28,28 +28,22 @@
   </div>
 
   <div *ngSwitchCase="selection[1].id">
-    <kui-fulltext-search
-      [route]="'/search'"
-      [projectfilter]="true">
+    <kui-fulltext-search [route]="'/search'" [projectfilter]="true">
     </kui-fulltext-search>
   </div>
 
   <div *ngSwitchCase="selection[2].id">
-    <kui-fulltext-search
-      [route]="'/search'"
-      [filterbyproject]="projectIri">
+    <kui-fulltext-search [route]="'/search'" [filterbyproject]="projectIri">
     </kui-fulltext-search>
   </div>
 
   <div *ngSwitchCase="selection[3].id">
-    <kui-fulltext-search
-      [route]="'/search'"
-      [projectfilter]="true"
-      [filterbyproject]="projectIri">
+    <kui-fulltext-search [route]="'/search'" [projectfilter]="true" [filterbyproject]="projectIri">
     </kui-fulltext-search>
   </div>
 
   <div *ngSwitchCase="selection[4].id">
+    <!-- <kui-extended-search (gravsearch)="setGravsearch($event)"></kui-extended-search> -->
     <kui-extended-search [route]="'/search'"></kui-extended-search>
   </div>
 
@@ -63,8 +57,11 @@
 <!-- <kui-search-results [searchMode]="'extended'" [searchQuery]="searchQuery"></kui-search-results> -->
 
 <mat-divider></mat-divider>
-
-
+<!--
+<kui-search-results *ngIf="gravsearchQuery" [searchMode]="'extended'" [searchQuery]="gravsearchQuery"
+                    [complexView]="true">
+</kui-search-results>
+-->
 
 <div class="search-results">
   <h3>Search results</h3>
