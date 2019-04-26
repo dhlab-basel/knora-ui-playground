@@ -35,7 +35,9 @@ const jsonld = require('jsonld');
 })
 export class SearchResultComponent implements OnInit {
 
-    partOf = AppDemo.searchModule;
+    projectIri = 'http://rdfh.ch/projects/0001';
+
+    /* partOf = AppDemo.searchModule;
 
     KnoraConstants = KnoraConstants;
 
@@ -55,49 +57,49 @@ export class SearchResultComponent implements OnInit {
         title: 'Results: ',
         content: 'resource',
         restrictedBy: ''
-    };
+    }; */
 
     constructor(
-        private _route: ActivatedRoute,
+        /* private _route: ActivatedRoute,
         private _searchService: SearchService,
         private _cacheService: OntologyCacheService,
         private _searchParamsService: SearchParamsService,
         private _gravSearchService: GravsearchGenerationService,
-        private _router: Router) {
+        private _router: Router */) {
     }
 
     ngOnInit() {
 
-        this._route.params.subscribe((params: Params) => {
-            this.list.searchMode = params['mode'];
-
-            if (this.list.searchMode === 'fulltext') {
-                this.list.restrictedBy = params['q'];
-            } else if (this.list.searchMode === 'extended') {
-                this.gravsearchParams = this._searchParamsService.getSearchParams();
-                const gravsearch: string | boolean = this.gravsearchParams.generateGravsearch(this.offset);
-                if (gravsearch === false) {
-                    // no valid search params (application has been reloaded)
-                    // go to root
-                    this._router.navigate([''], { relativeTo: this._route });
-                    return;
-                } else {
-                    // assign Gravsearch query
-                    this.list.restrictedBy = <string> gravsearch;
-                }
-            }
-
-            this.result = [];
-            this.rerender = true;
-            this.getResult();
-        });
-
+        /*  this._route.params.subscribe((params: Params) => {
+             this.list.searchMode = params['mode'];
+ 
+             if (this.list.searchMode === 'fulltext') {
+                 this.list.restrictedBy = params['q'];
+             } else if (this.list.searchMode === 'extended') {
+                 this.gravsearchParams = this._searchParamsService.getSearchParams();
+                 const gravsearch: string | boolean = this.gravsearchParams.generateGravsearch(this.offset);
+                 if (gravsearch === false) {
+                     // no valid search params (application has been reloaded)
+                     // go to root
+                     this._router.navigate([''], { relativeTo: this._route });
+                     return;
+                 } else {
+                     // assign Gravsearch query
+                     this.list.restrictedBy = <string> gravsearch;
+                 }
+             }
+ 
+             this.result = [];
+             this.rerender = true;
+             this.getResult();
+         });
+  */
     }
 
     /**
      * Get search result from Knora - 2 cases: simple search and extended search
      */
-    getResult() {
+    /* getResult() {
 
         // FULLTEXT SEARCH
         if (this.list.searchMode === 'fulltext') {
@@ -148,7 +150,7 @@ export class SearchResultComponent implements OnInit {
         } else {
             this.errorMessage = `search mode invalid: ${this.list.searchMode}`;
         }
-    }
+    } */
 
 
     /**
@@ -156,7 +158,7 @@ export class SearchResultComponent implements OnInit {
      *
      * @param {ApiServiceResult} countQueryResult the response to a count query.
      */
-    private showNumberOfAllResults = (countQueryResult: ApiServiceResult) => {
+    /* private showNumberOfAllResults = (countQueryResult: ApiServiceResult) => {
 
         const resPromises = jsonld.promises;
         // compact JSON-LD using an empty context: expands all Iris
@@ -167,7 +169,7 @@ export class SearchResultComponent implements OnInit {
         }, function (err) {
             console.error('JSONLD could not be expanded:' + err);
         });
-    }
+    } */
 
     /**
      *
@@ -179,7 +181,7 @@ export class SearchResultComponent implements OnInit {
      *
      * @param {ApiServiceResult} searchResult the answer to a search request.
      */
-    private processSearchResults = (searchResult: ApiServiceResult) => {
+    /* private processSearchResults = (searchResult: ApiServiceResult) => {
 
         this.result = [];
 
@@ -222,6 +224,6 @@ export class SearchResultComponent implements OnInit {
             console.error('JSONLD could not be expanded:' + err);
         });
 
-    }
+    } */
 
 }
