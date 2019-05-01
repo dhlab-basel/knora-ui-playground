@@ -8,6 +8,7 @@ import { OntologyPgComponent } from './ontology-pg/ontology-pg.component';
 import { SearchPgComponent } from './search-pg/search-pg.component';
 // import { SearchResultsComponent } from '@knora/viewer';
 import { SearchResultComponent } from './search-pg/search-result/search-result.component';
+import { NewSearchPgComponent } from './new-search-pg/new-search-pg.component';
 
 
 const appRoutes: Routes = [
@@ -22,6 +23,10 @@ const appRoutes: Routes = [
     {
         path: 'resource/:id',
         component: ViewerPgComponent
+    },
+    {
+        path: 'new-search',
+        component: NewSearchPgComponent,
     },
     {
         path: 'search',
