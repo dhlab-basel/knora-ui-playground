@@ -3,7 +3,7 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 import { MarkdownModule } from 'ngx-markdown';
 
@@ -59,6 +59,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     KuiViewerModule,
     KuiAuthenticationModule,
     FlexLayoutModule,
+    FormsModule,
     ReactiveFormsModule,
     OverlayModule
   ],

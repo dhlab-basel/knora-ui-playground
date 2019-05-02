@@ -1,6 +1,7 @@
 import { ConnectionPositionPair, Overlay, OverlayConfig, OverlayRef, PositionStrategy } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiServiceError, Project, ProjectsService } from '@knora/core';
 
 export interface PrevSearchItem {
@@ -51,6 +52,8 @@ export class NewSearchPgComponent implements OnInit {
 
   // selected project, in case of filterbyproject and/or projectfilter is true
   project: Project;
+  projectLabel: string = 'Filter project';
+  projectIri: string;
 
   // in case of an (api) error
   error: any;
@@ -63,6 +66,7 @@ export class NewSearchPgComponent implements OnInit {
 
   constructor (
     private _overlay: Overlay,
+    private _router: Router,
     private _viewContainerRef: ViewContainerRef,
     private _projectsService: ProjectsService
   ) { }
@@ -144,23 +148,86 @@ export class NewSearchPgComponent implements OnInit {
   setProject(project?: Project): void {
     if (!project) {
       // set default project: all
-      this.project = new Project();
-      this.project.shortname = 'Filter project';
-      this.project.id = undefined;
+      this.projectLabel = 'Filter project';
+      this.projectIri = undefined;
       localStorage.removeItem('currentProject');
     } else {
       // set current project shortname and id
+      this.projectLabel = project.shortname;
+      this.projectIri = project.id;
       localStorage.setItem('currentProject', JSON.stringify(project));
     }
   }
 
-  doSearch(): void {
+  onKey(search_ele: HTMLElement, event: any): void {
+    this.prevSearch = JSON.parse(localStorage.getItem('prevSearch'));
+    if (this.searchQuery && (event.key === 'Enter' || event.keyCode === 13 || event.which === 13)) {
+      this.doSearch();
+    }
+    if (event.key === 'Escape' || event.keyCode === 27 || event.which === 27) {
+      this.resetSearch();
+    }
+  }
 
+  doSearch(): void {
+    if (this.searchQuery !== undefined && this.searchQuery !== null) {
+      if (this.projectIri !== undefined) {
+        this._router.navigate([
+          this.route +
+          '/fulltext/' +
+          this.searchQuery +
+          '/' +
+          encodeURIComponent(this.projectIri)
+        ]);
+      } else {
+        this._router.navigate([
+          this.route + '/fulltext/' + this.searchQuery
+        ]);
+      }
+      // push the search query into the local storage prevSearch array (previous search)
+      // to have a list of recent search requests
+      let existingPrevSearch: PrevSearchItem[] = JSON.parse(
+        localStorage.getItem('prevSearch')
+      );
+      if (existingPrevSearch === null) {
+        existingPrevSearch = [];
+      }
+      let i: number = 0;
+      for (const entry of existingPrevSearch) {
+        // remove entry, if exists already
+        if (this.searchQuery === entry.query && this.projectIri === entry.projectIri) {
+          existingPrevSearch.splice(i, 1);
+        }
+        i++;
+      }
+
+      // A search value is expected to have at least length of 3
+      if (this.searchQuery.length > 2) {
+        let currentQuery: PrevSearchItem = {
+          query: this.searchQuery
+        };
+
+        if (this.projectIri) {
+          currentQuery = {
+            projectIri: this.projectIri,
+            projectLabel: this.projectLabel,
+            query: this.searchQuery
+          };
+        }
+
+        existingPrevSearch.push(currentQuery);
+
+        localStorage.setItem(
+          'prevSearch',
+          JSON.stringify(existingPrevSearch)
+        );
+      }
+    }
     this.overlayRef.dispose();
   }
 
   resetSearch(): void {
-
+    // this.searchPanel
   }
 
   doPrevSearch(prevSearch: PrevSearchItem): void {
