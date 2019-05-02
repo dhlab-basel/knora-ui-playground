@@ -25,10 +25,6 @@ const appRoutes: Routes = [
         component: ViewerPgComponent
     },
     {
-        path: 'new-search',
-        component: NewSearchPgComponent,
-    },
-    {
         path: 'search',
         component: SearchPgComponent,
         children: [

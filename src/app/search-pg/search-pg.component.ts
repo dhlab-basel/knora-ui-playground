@@ -44,6 +44,10 @@ export class SearchPgComponent implements OnInit {
     {
       id: 'search-panel',
       label: 'Full search panel'
+    },
+    {
+      id: 'new-search',
+      label: 'New full-text search'
     }
   ];
 
@@ -60,7 +64,7 @@ export class SearchPgComponent implements OnInit {
 
   ngOnInit() {
     // set the default search view
-    this.option = this.selection[5];
+    this.option = this.selection[6];
 
     this.form = this.fb.group({
       selectSearch: [this.option, Validators.required]

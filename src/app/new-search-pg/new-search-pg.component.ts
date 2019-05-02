@@ -39,6 +39,7 @@ export class NewSearchPgComponent implements OnInit {
   @Input() filterbyproject?: string;
 
   @ViewChild('fulltextSearchPanel') searchPanel: ElementRef;
+  @ViewChild('fulltextSearchInput') searchInput: ElementRef;
   @ViewChild('fulltextSearchMenu') searchMenu: TemplateRef<any>;
 
   // search query
@@ -84,7 +85,6 @@ export class NewSearchPgComponent implements OnInit {
           JSON.parse(localStorage.getItem('currentProject'))
         );
       }
-      this.openPanelWithBackdrop();
     }
   }
 
@@ -159,15 +159,16 @@ export class NewSearchPgComponent implements OnInit {
     }
   }
 
-  onKey(search_ele: HTMLElement, event: any): void {
-    this.prevSearch = JSON.parse(localStorage.getItem('prevSearch'));
-    if (this.searchQuery && (event.key === 'Enter' || event.keyCode === 13 || event.which === 13)) {
-      this.doSearch();
-    }
-    if (event.key === 'Escape' || event.keyCode === 27 || event.which === 27) {
-      this.resetSearch();
-    }
-  }
+  /*   onKey(search_ele: HTMLElement, event: any): void {
+      this.prevSearch = JSON.parse(localStorage.getItem('prevSearch'));
+      if (this.searchQuery && (event.key === 'Enter' || event.keyCode === 13 || event.which === 13)) {
+        this.doSearch();
+      }
+      if (event.key === 'Escape' || event.keyCode === 27 || event.which === 27) {
+
+        this.resetSearch();
+      }
+    } */
 
   doSearch(): void {
     if (this.searchQuery !== undefined && this.searchQuery !== null) {
@@ -223,19 +224,49 @@ export class NewSearchPgComponent implements OnInit {
         );
       }
     }
-    this.overlayRef.dispose();
+    this.resetSearch();
   }
 
   resetSearch(): void {
-    // this.searchPanel
+    this.searchPanelFocus = false;
+    this.searchInput.nativeElement.blur();
+    this.overlayRef.dispose();
+  }
+
+  setFocus(): void {
+    console.log('setFocus and open Backdrop');
+    this.searchPanelFocus = true;
+    this.openPanelWithBackdrop();
+    this.searchInput.nativeElement.focus();
   }
 
   doPrevSearch(prevSearch: PrevSearchItem): void {
+    this.searchQuery = prevSearch.query;
 
+    if (prevSearch.projectIri !== undefined) {
+      this.projectIri = prevSearch.projectIri;
+      this.projectLabel = prevSearch.projectLabel;
+      this._router.navigate([this.route + '/fulltext/' + this.searchQuery + '/' + encodeURIComponent(prevSearch.projectIri)]);
+    } else {
+      this.projectIri = undefined;
+      this.projectLabel = 'Filter project';
+      this._router.navigate([this.route + '/fulltext/' + this.searchQuery]);
+    }
+
+    this.resetSearch();
   }
 
   resetPrevSearch(prevSearch?: PrevSearchItem): void {
-
+    if (prevSearch) {
+      // delete only this item with the name ...
+      const i: number = this.prevSearch.indexOf(prevSearch);
+      this.prevSearch.splice(i, 1);
+      localStorage.setItem('prevSearch', JSON.stringify(this.prevSearch));
+    } else {
+      // delete the whole "previous search" array
+      localStorage.removeItem('prevSearch');
+    }
+    this.prevSearch = JSON.parse(localStorage.getItem('prevSearch'));
   }
 
 }

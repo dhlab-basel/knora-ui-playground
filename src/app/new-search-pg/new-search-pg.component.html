@@ -14,16 +14,15 @@
         <button mat-menu-item class="center" (click)="setProject();">All Projects</button>
         <mat-divider></mat-divider>
         <button mat-menu-item *ngFor="let project of projects"
-                (click)="setProject(project);">{{project.shortname}}</button>
+                (click)="searchInput.nativeElement.focus();setProject(project)">{{project.shortname}}</button>
       </mat-menu>
     </div>
 
     <div class="kui-fulltext-search" [class.with-project-filter]="projectfilter">
       <div class="kui-fulltext-search-field">
         <input #fulltextSearchInput class="kui-fulltext-search-input" type="search" [(ngModel)]="searchQuery"
-               name="search" minlength="3" autocomplete="off" [placeholder]="'Search'"
-               (keyup)="onKey(fulltextSearchInput, $event)" (click)="openPanelWithBackdrop()"
-               (focus)="openPanelWithBackdrop()">
+               [autofocus]="searchPanelFocus" name="search" minlength="3" autocomplete="off" [placeholder]="'Search'"
+               (keyup.esc)="resetSearch()" (keyup.enter)="doSearch()" (focus)="setFocus()">
       </div>
       <button class="kui-fulltext-search-button suffix" (click)="doSearch()" type="submit">
         <mat-icon>search</mat-icon>
