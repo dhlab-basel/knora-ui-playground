@@ -1,1 +1,7 @@
-<kui-login-form [navigate]="'authentication'"></kui-login-form>
+<!-- <kui-login-form [navigate]="'authentication'"></kui-login-form> -->
+
+<input type="text" #username>
+<input type="password" #password>
+<button type="button" (click)="login(username.value, password.value)">Login</button>
+
+<button type="button" (click)="logout()">Logout</button>
