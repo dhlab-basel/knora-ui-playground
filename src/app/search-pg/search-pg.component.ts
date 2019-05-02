@@ -18,7 +18,7 @@ export class SearchPgComponent implements OnInit {
 
   option: Selection;
 
-  gravsearchQuery: string;
+  gravsearch: string;
 
   selection: Selection[] = [
     {
@@ -42,6 +42,10 @@ export class SearchPgComponent implements OnInit {
       label: 'Extended search'
     },
     {
+      id: 'expert-search',
+      label: 'Expert search'
+    },
+    {
       id: 'search-panel',
       label: 'Full search panel'
     }
@@ -56,11 +60,11 @@ export class SearchPgComponent implements OnInit {
   }
   OFFSET 0`;
 
-  constructor (@Inject(FormBuilder) private fb: FormBuilder) { }
+  constructor(@Inject(FormBuilder) private fb: FormBuilder) { }
 
   ngOnInit() {
     // set the default search view
-    this.option = this.selection[4];
+    this.option = this.selection[6];
 
     this.form = this.fb.group({
       selectSearch: [this.option, Validators.required]
@@ -72,6 +76,6 @@ export class SearchPgComponent implements OnInit {
   }
 
   setGravsearch(query: string) {
-    this.gravsearchQuery = query;
+    this.gravsearch = query;
   }
 }
