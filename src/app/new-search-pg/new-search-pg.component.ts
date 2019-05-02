@@ -73,6 +73,9 @@ export class NewSearchPgComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.setFocus();
+
     if (this.filterbyproject) {
       this.getProject(this.filterbyproject);
     }
@@ -235,9 +238,8 @@ export class NewSearchPgComponent implements OnInit {
 
   setFocus(): void {
     console.log('setFocus and open Backdrop');
-    this.searchPanelFocus = true;
+    // this.searchPanelFocus = true;
     this.openPanelWithBackdrop();
-    this.searchInput.nativeElement.focus();
   }
 
   doPrevSearch(prevSearch: PrevSearchItem): void {
@@ -254,6 +256,7 @@ export class NewSearchPgComponent implements OnInit {
     }
 
     this.resetSearch();
+    this.overlayRef.detach();
   }
 
   resetPrevSearch(prevSearch?: PrevSearchItem): void {
