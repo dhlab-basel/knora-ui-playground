@@ -74,7 +74,7 @@ export class NewSearchPgComponent implements OnInit {
 
   ngOnInit() {
 
-    this.setFocus();
+    // this.setFocus();
 
     if (this.filterbyproject) {
       this.getProject(this.filterbyproject);
@@ -95,7 +95,8 @@ export class NewSearchPgComponent implements OnInit {
     const config = new OverlayConfig({
       hasBackdrop: true,
       backdropClass: 'cdk-overlay-transparent-backdrop',
-      positionStrategy: this.getOverlayPosition()
+      positionStrategy: this.getOverlayPosition(),
+      scrollStrategy: this._overlay.scrollStrategies.block()
       // positionStrategy: this._overlay.position().global().centerHorizontally()
     });
 
@@ -204,6 +205,9 @@ export class NewSearchPgComponent implements OnInit {
         }
         i++;
       }
+      // TODO: reload the menu with the new search queries in exising prev search
+
+
 
       // A search value is expected to have at least length of 3
       if (this.searchQuery.length > 2) {
@@ -228,18 +232,22 @@ export class NewSearchPgComponent implements OnInit {
       }
     }
     this.resetSearch();
+    this.overlayRef.detach();
   }
 
   resetSearch(): void {
     this.searchPanelFocus = false;
     this.searchInput.nativeElement.blur();
-    this.overlayRef.dispose();
+    this.overlayRef.detach();
   }
 
   setFocus(): void {
     console.log('setFocus and open Backdrop');
-    // this.searchPanelFocus = true;
-    this.openPanelWithBackdrop();
+
+    this.searchPanelFocus = true;
+    setTimeout(() => {
+      this.openPanelWithBackdrop();
+    }, 500);
   }
 
   doPrevSearch(prevSearch: PrevSearchItem): void {
