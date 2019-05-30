@@ -3,6 +3,7 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServiceError, Project, ProjectsService } from '@knora/core';
+import { MatMenuTrigger } from '@angular/material';
 
 export interface PrevSearchItem {
   projectIri?: string;
@@ -41,6 +42,8 @@ export class NewSearchPgComponent implements OnInit {
   @ViewChild('fulltextSearchPanel') searchPanel: ElementRef;
   @ViewChild('fulltextSearchInput') searchInput: ElementRef;
   @ViewChild('fulltextSearchMenu') searchMenu: TemplateRef<any>;
+
+  @ViewChild('btnToSelectProject') selectProject: MatMenuTrigger;
 
   // search query
   searchQuery: string;
@@ -95,6 +98,7 @@ export class NewSearchPgComponent implements OnInit {
     const config = new OverlayConfig({
       hasBackdrop: true,
       backdropClass: 'cdk-overlay-transparent-backdrop',
+      // backdropClass: 'cdk-overlay-dark-backdrop',
       positionStrategy: this.getOverlayPosition(),
       scrollStrategy: this._overlay.scrollStrategies.block()
       // positionStrategy: this._overlay.position().global().centerHorizontally()
@@ -102,8 +106,16 @@ export class NewSearchPgComponent implements OnInit {
 
     this.overlayRef = this._overlay.create(config);
     // overlayRef.attach(this.searchMenu);
+
+    //console.log(this.overlayRef.getDirection());
+
+    // if (!this.overlayRef.hasAttached()) {
     this.overlayRef.attach(new TemplatePortal(this.searchMenu, this._viewContainerRef));
-    this.overlayRef.backdropClick().subscribe(() => this.overlayRef.detach());
+    // }
+    this.overlayRef.backdropClick().subscribe(() => {
+      this.searchPanelFocus = false;
+      this.overlayRef.detach();
+    });
   }
 
   getOverlayPosition(): PositionStrategy {
@@ -242,12 +254,9 @@ export class NewSearchPgComponent implements OnInit {
   }
 
   setFocus(): void {
-    console.log('setFocus and open Backdrop');
-
+    this.prevSearch = JSON.parse(localStorage.getItem('prevSearch'));
     this.searchPanelFocus = true;
-    setTimeout(() => {
-      this.openPanelWithBackdrop();
-    }, 500);
+    this.openPanelWithBackdrop();
   }
 
   doPrevSearch(prevSearch: PrevSearchItem): void {
@@ -280,4 +289,9 @@ export class NewSearchPgComponent implements OnInit {
     this.prevSearch = JSON.parse(localStorage.getItem('prevSearch'));
   }
 
+  changeFocus() {
+    this.selectProject.closeMenu();
+    this.searchInput.nativeElement.focus();
+    this.setFocus();
+  }
 }

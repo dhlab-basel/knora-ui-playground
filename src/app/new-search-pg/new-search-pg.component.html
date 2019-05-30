@@ -11,10 +11,10 @@
         <mat-icon class="icon" matSuffix>keyboard_arrow_down</mat-icon>
       </button>
       <mat-menu #selectProject="matMenu" class="kui-project-filter-menu">
-        <button mat-menu-item class="center" (click)="setProject()">All Projects</button>
+        <button mat-menu-item class="center" (click)="setProject();changeFocus()">All Projects</button>
         <mat-divider></mat-divider>
         <button mat-menu-item *ngFor="let project of projects"
-                (click)="setProject(project);fulltextSearchInput.focus()">{{project.shortname}}</button>
+                (click)="setProject(project);changeFocus()">{{project.shortname}}</button>
       </mat-menu>
     </div>
 
@@ -22,7 +22,7 @@
       <div class="kui-fulltext-search-field">
         <input #fulltextSearchInput class="kui-fulltext-search-input" type="search" [(ngModel)]="searchQuery"
                name="search" minlength="3" autocomplete="off" [placeholder]="'Search'" (keyup.esc)="resetSearch()"
-               (keyup.enter)="doSearch()" (focus)="setFocus()" [autofocus]="searchPanelFocus">
+               (keyup.enter)="doSearch()" (click)="setFocus()">
       </div>
       <button class="kui-fulltext-search-button suffix" (click)="doSearch()" type="submit">
         <mat-icon>search</mat-icon>

@@ -143,6 +143,10 @@ $border-radius: 4px;
       position: relative;
       width: 39px;
 
+      &.disabled {
+        cursor: auto;
+      }
+
       &:active {
         color: rgb(81, 81, 81);
       }
@@ -168,7 +172,10 @@ $border-radius: 4px;
 
   .kui-previous-search-list {
     .mat-list-item {
-      cursor: pointer;
+      .kui-previous-search-item {
+        cursor: pointer;
+        padding: 12px !important;
+      }
 
       &:hover {
         background-color: $grey;
