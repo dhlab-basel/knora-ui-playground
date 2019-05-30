@@ -35,7 +35,7 @@ export class SearchPgComponent implements OnInit {
     },
     {
       id: 'fulltext-combination',
-      label: 'Full-text search combination'
+      label: 'Full-text search combination: project filter & filter by project "anything"'
     },
     {
       id: 'extended-search',
@@ -64,7 +64,7 @@ export class SearchPgComponent implements OnInit {
 
   ngOnInit() {
     // set the default search view
-    this.option = this.selection[6];
+    this.option = this.selection[5];
 
     this.form = this.fb.group({
       selectSearch: [this.option, Validators.required]
