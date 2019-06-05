@@ -329,8 +329,10 @@
   dependencies:
     tslib "^1.9.0"
 
-"@knora/search@file:.yalc/@knora/search":
-  version "7.5.0-5c310e06"
+"@knora/search@^7.5.0":
+  version "7.5.0"
+  resolved "https://registry.yarnpkg.com/@knora/search/-/search-7.5.0.tgz#95d32a0e319d4ccbc1ddbfb518f66f1386147686"
+  integrity sha512-6hCPU2MJy+JzovR7Mu8t7l3k6aSEONbeuhqvW6HM9XQt9IU2rVwqHqBEwm71FLNsKo3EQGPwTEy/dKGlk1fN+g==
   dependencies:
     tslib "^1.9.0"
 
@@ -2791,7 +2793,7 @@ fsevents@^1.2.2, fsevents@^1.2.7:
     node-pre-gyp "^0.10.0"
 
 fstream@^1.0.0, fstream@^1.0.2:
-  version "1.0.12"
+  version "1.0.11"
   resolved "https://registry.yarnpkg.com/fstream/-/fstream-1.0.11.tgz#5c1fb1f117477114f0632a0eb4b71b3cb0fd3171"
   integrity sha1-XB+x8RdHcRTwYyoOtLcbPLD9MXE=
   dependencies:
