@@ -43,11 +43,16 @@
   </div>
 
   <div *ngSwitchCase="selection[4].id">
-    <!-- <kui-extended-search (gravsearch)="setGravsearch($event)"></kui-extended-search> -->
     <kui-extended-search [route]="'/search'"></kui-extended-search>
+    <!-- <kui-extended-search (gravsearch)="setGravsearch($event)"></kui-extended-search> -->
   </div>
 
   <div *ngSwitchCase="selection[5].id">
+    <kui-expert-search [route]="'/search'"></kui-expert-search>
+    <!-- <kui-expert-search (gravsearch)="setGravsearch($event)"></kui-expert-search> -->
+  </div>
+
+  <div *ngSwitchCase="selection[6].id">
     <kui-search-panel [route]="'/search'"></kui-search-panel>
   </div>
 </div>
@@ -57,11 +62,15 @@
 <!-- <kui-search-results [searchMode]="'extended'" [searchQuery]="searchQuery"></kui-search-results> -->
 
 <mat-divider></mat-divider>
-<!--
-<kui-search-results *ngIf="gravsearchQuery" [searchMode]="'extended'" [searchQuery]="gravsearchQuery"
-                    [complexView]="true">
-</kui-search-results>
--->
+
+<div class="search-results">
+  <h3>Search results if gravsearch emitted</h3>
+
+  <kui-search-results *ngIf="gravsearch" [searchMode]="'extended'" [searchQuery]="gravsearch" [complexView]="true">
+  </kui-search-results>
+</div>
+
+<mat-divider></mat-divider>
 
 <div class="search-results">
   <h3>Search results</h3>
