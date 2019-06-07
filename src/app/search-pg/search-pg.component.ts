@@ -12,70 +12,56 @@ interface Selection {
   styleUrls: ['./search-pg.component.scss']
 })
 export class SearchPgComponent implements OnInit {
+
+  loading: boolean = false;
+
   form: FormGroup;
 
   projectIri: string = 'http://rdfh.ch/projects/0001';
+  limitToProject: string;
 
-  option: Selection;
-
-  gravsearchQuery: string;
-
-  selection: Selection[] = [
-    {
-      id: 'fulltext',
-      label: 'Full-text search'
-    },
-    {
-      id: 'fulltext-projects-filter',
-      label: 'Full-text search with project filter'
-    },
-    {
-      id: 'fulltext-filter-by',
-      label: 'Full-text search, filter by anything project'
-    },
-    {
-      id: 'fulltext-combination',
-      label: 'Full-text search combination: project filter & filter by project "anything"'
-    },
-    {
-      id: 'extended-search',
-      label: 'Extended search'
-    },
-    {
-      id: 'search-panel',
-      label: 'Full search panel'
-    },
-    {
-      id: 'new-search',
-      label: 'New full-text search'
-    }
-  ];
-
-  searchQuery: string = `PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-  CONSTRUCT {
-  ?mainRes knora-api:isMainResource true .
-  } WHERE {
-  ?mainRes a knora-api:Resource .
-  ?mainRes a <http://0.0.0.0:3333/ontology/0001/anything/simple/v2#BlueThing> .
-  }
-  OFFSET 0`;
+  filterByProject: boolean = false;
+  projectFilter: boolean = false;
+  extendedSearch: boolean = false;
+  expertSearch: boolean = false;
 
   constructor (@Inject(FormBuilder) private fb: FormBuilder) { }
 
   ngOnInit() {
     // set the default search view
-    this.option = this.selection[5];
+    // this.option = this.selection[5];
 
     this.form = this.fb.group({
-      selectSearch: [this.option, Validators.required]
+      // selectSearch: [this.option, Validators.required],
+      filterbyproject: [this.filterByProject],
+      projectfilter: [this.projectFilter],
+      extendedsearch: [this.extendedSearch],
+      expertsearch: [this.expertSearch]
     });
 
     this.form.valueChanges.subscribe(data => {
-      this.option = data.selectSearch;
+      // this.option = data.selectSearch;
+
+      this.limitToProject = (data.filterbyproject ? this.projectIri : this.limitToProject = undefined);
+
+      this.projectFilter = data.projectfilter;
+      this.extendedSearch = data.extendedsearch;
+      this.expertSearch = data.expertsearch;
+
+      this.reload();
     });
   }
 
-  setGravsearch(query: string) {
-    this.gravsearchQuery = query;
+  /**
+   * reload the search panel component tag
+   * reset previous search and project filter
+   */
+  reload() {
+    if (!this.limitToProject) {
+      localStorage.removeItem('currentProject');
+    }
+    localStorage.removeItem('prevSearch')
+    this.loading = true;
+    setTimeout(x => this.loading = false);
   }
 }
