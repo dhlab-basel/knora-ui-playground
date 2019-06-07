@@ -8,10 +8,10 @@
   <mat-slide-toggle class="set-search-param" [formControl]="form.controls['projectfilter']">projectfilter
   </mat-slide-toggle>
 
-  <mat-slide-toggle class="set-search-param" [formControl]="form.controls['extendedsearch']">extendedsearch
+  <mat-slide-toggle class="set-search-param" [formControl]="form.controls['advancedsearch']">advanced
   </mat-slide-toggle>
 
-  <mat-slide-toggle class="set-search-param" [formControl]="form.controls['expertsearch']">expertsearch
+  <mat-slide-toggle class="set-search-param" [formControl]="form.controls['expertsearch']">expert
   </mat-slide-toggle>
 
 </form>
@@ -39,8 +39,8 @@
       &lt;kui-search-panel
         [filterbyproject]="{{limitToProject}}"
         [projectfilter]="{{projectFilter}}"
-        [extendedsearch]="{{extendedSearch}}"
-        [expertsearch]="{{expertSearch}}"&gt;
+        [advanced]="{{advancedSearch}}"
+        [expert]="{{expertSearch}}"&gt;
       &lt;/kui-search-panel&gt;
     </pre>
   </mat-expansion-panel>
@@ -51,8 +51,7 @@
   <!-- simulate header -->
   <div class="header">
     <kui-search-panel *ngIf="!loading" class="center" [route]="'/search'" [projectfilter]="projectFilter"
-                      [filterbyproject]="limitToProject" [extendedsearch]="extendedSearch"
-                      [expertsearch]="expertSearch">
+                      [filterbyproject]="limitToProject" [advanced]="advancedSearch" [expert]="expertSearch">
     </kui-search-panel>
     <!--  -->
 

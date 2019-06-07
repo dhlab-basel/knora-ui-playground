@@ -22,7 +22,7 @@ export class SearchPgComponent implements OnInit {
 
   filterByProject: boolean = false;
   projectFilter: boolean = false;
-  extendedSearch: boolean = false;
+  advancedSearch: boolean = false;
   expertSearch: boolean = false;
 
   constructor (@Inject(FormBuilder) private fb: FormBuilder) { }
@@ -35,7 +35,7 @@ export class SearchPgComponent implements OnInit {
       // selectSearch: [this.option, Validators.required],
       filterbyproject: [this.filterByProject],
       projectfilter: [this.projectFilter],
-      extendedsearch: [this.extendedSearch],
+      advancedsearch: [this.advancedSearch],
       expertsearch: [this.expertSearch]
     });
 
@@ -45,7 +45,7 @@ export class SearchPgComponent implements OnInit {
       this.limitToProject = (data.filterbyproject ? this.projectIri : this.limitToProject = undefined);
 
       this.projectFilter = data.projectfilter;
-      this.extendedSearch = data.extendedsearch;
+      this.advancedSearch = data.advancedsearch;
       this.expertSearch = data.expertsearch;
 
       this.reload();
