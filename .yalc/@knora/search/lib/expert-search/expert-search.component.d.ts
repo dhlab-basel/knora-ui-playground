@@ -17,6 +17,10 @@ export declare class ExpertSearchComponent implements OnInit {
      * @param gravsearch Send the gravsearch query back.
      */
     gravsearch: EventEmitter<string>;
+    /**
+     * @param  {boolean} toggleExtendedSearchForm Trigger toggle for extended search form.
+     */
+    toggleExpertSearchForm: EventEmitter<boolean>;
     expertSearchForm: FormGroup;
     constructor(fb: FormBuilder, _route: ActivatedRoute, _router: Router, _searchService: SearchService, _searchParamsService: SearchParamsService, config: any);
     ngOnInit(): void;

@@ -1,4 +1,4 @@
-import { OnInit } from '@angular/core';
+import { OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiServiceError, ExtendedSearchParams, KnoraConstants, OntologyInformation, ReadResource, SearchParamsService, SearchService } from '@knora/core';
 /**
@@ -6,7 +6,7 @@ import { ApiServiceError, ExtendedSearchParams, KnoraConstants, OntologyInformat
  * and returns the corresponding resources that are displayed in a list or a grid.
  * The results can be filtered by project.
  */
-export declare class SearchResultsComponent implements OnInit {
+export declare class SearchResultsComponent implements OnInit, OnChanges {
     private _route;
     private _searchService;
     private _searchParamsService;
@@ -40,13 +40,13 @@ export declare class SearchResultsComponent implements OnInit {
     result: ReadResource[];
     ontologyInfo: OntologyInformation;
     numberOfAllResults: number;
-    rerender: boolean;
     badRequest: boolean;
     loading: boolean;
     errorMessage: ApiServiceError;
     pagingLimit: number;
     constructor(_route: ActivatedRoute, _searchService: SearchService, _searchParamsService: SearchParamsService, _router: Router);
     ngOnInit(): void;
+    ngOnChanges(): void;
     /**
      * Generates the Gravsearch query for the current offset.
      * @ignore

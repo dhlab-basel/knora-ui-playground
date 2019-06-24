@@ -42,6 +42,7 @@ export declare class FulltextSearchComponent implements OnInit {
     prevSearch: PrevSearchItem[];
     projects: Project[];
     project: Project;
+    defaultProjectLabel: string;
     projectLabel: string;
     projectIri: string;
     error: any;
