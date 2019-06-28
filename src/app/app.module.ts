@@ -3,7 +3,7 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 import { MarkdownModule } from 'ngx-markdown';
 
@@ -26,12 +26,14 @@ import { KuiAuthenticationModule } from '@knora/authentication';
 
 import { AppInitService } from './app-init.service';
 import { ActionPgComponent } from './action-pg/action-pg.component';
+import { NewSearchPgComponent } from './new-search-pg/new-search-pg.component';
 
 export function initializeApp(appInitService: AppInitService) {
   return (): Promise<any> => {
-      return appInitService.Init();
+    return appInitService.Init();
   };
 }
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ export function initializeApp(appInitService: AppInitService) {
     SearchResultComponent,
     OntologyPgComponent,
     AuthenticationPgComponent,
-    ActionPgComponent
+    ActionPgComponent,
+    NewSearchPgComponent
   ],
   imports: [
     BrowserModule,
@@ -56,14 +59,17 @@ export function initializeApp(appInitService: AppInitService) {
     KuiViewerModule,
     KuiAuthenticationModule,
     FlexLayoutModule,
-    ReactiveFormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    OverlayModule
   ],
   entryComponents: [
+
   ],
   providers: [
     AppInitService,
     {
-        provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppInitService], multi: true
+      provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppInitService], multi: true
     },
     {
       provide: KuiCoreConfigToken, useFactory: () => AppInitService.coreConfig
@@ -71,7 +77,7 @@ export function initializeApp(appInitService: AppInitService) {
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,
       useValue: {
-          hasBackdrop: false
+        hasBackdrop: false
       }
     }
   ],

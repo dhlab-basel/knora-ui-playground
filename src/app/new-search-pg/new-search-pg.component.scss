@@ -1,0 +1,239 @@
+//
+// disable browser's input type appearance
+//
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+input[type="search"] {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+//
+// color variables
+//
+$bright: rgba(249, 249, 249, 1);
+$grey: rgba(184, 184, 184, 1);
+$dark: rgba(41, 41, 41, 1);
+$black: rgb(11, 11, 11);
+$black-12-opacity: rgba($black, 0.12);
+$black-14-opacity: rgba($black, 0.14);
+$black-20-opacity: rgba($black, 0.2);
+
+// sizes for search element
+// input field
+$search-width: 480px;
+// $search-height: $search-width;
+
+// width on smaller devices
+$search-width-small-device: 360px;
+
+// width of project filter
+$project-filter-width: 160px;
+
+// general border color
+$border-color: #ebebeb;
+
+// general border radius
+$border-radius: 4px;
+
+.center {
+  text-align: center;
+}
+
+.kui-fulltext-search-panel {
+  border-radius: $border-radius;
+  display: flex;
+  height: 40px;
+  position: relative;
+  width: $search-width;
+  z-index: 100;
+  background-color: $bright;
+
+  // border: 1px solid red;
+
+  &.active {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+
+  &.with-project-filter {
+    width: calc(#{$search-width} + #{$project-filter-width});
+  }
+
+  .kui-project-filter {
+    .kui-project-filter-button {
+      font-size: inherit;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: $project-filter-width;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: 0;
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: 0;
+      margin: 1px;
+    }
+  }
+
+  .kui-fulltext-search {
+    background-color: rgba(249, 249, 249, 1);
+    border-radius: $border-radius;
+    display: inline-flex;
+    position: relative;
+    z-index: 10;
+    border-radius: $border-radius;
+
+    &.with-project-filter {
+      width: calc(#{$search-width} + #{$project-filter-width});
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .kui-fulltext-search-field {
+      flex: 1;
+      width: calc(#{$search-width} - 40px);
+      margin: 1px;
+
+      .kui-fulltext-search-input {
+        border-style: none;
+        font-size: 14pt;
+        height: 38px;
+        //margin: 1px;
+        position: absolute;
+        padding-left: 12px;
+        width: calc(100% - 40px);
+
+        &.with-project-filter {
+          width: calc(100% - 40px - #{$project-filter-width});
+        }
+
+        &:active,
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    .suffix {
+      border-top-left-radius: 0;
+      border-top-right-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+      border-bottom-left-radius: 0;
+      margin: 1px 0 1px -3px;
+    }
+    .prefix {
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: $border-radius;
+      margin: 1px 0 1px 3px;
+    }
+    .prefix,
+    .suffix {
+      // background-color: #ffffff;
+      border-style: none;
+      color: rgba($dark, 0.4);
+      cursor: pointer;
+      height: 38px;
+      outline: none;
+      position: relative;
+      width: 39px;
+
+      &.disabled {
+        cursor: auto;
+      }
+
+      &:active {
+        color: rgb(81, 81, 81);
+      }
+    }
+  }
+}
+
+// should be defined global!
+.kui-fulltext-search-menu {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  background-color: $bright;
+  border-radius: $border-radius;
+  overflow-y: auto;
+  width: calc(#{$search-width} - 32px);
+  height: $search-width;
+  margin-top: 6px; // -40px
+  padding: 16px;
+  z-index: -1;
+
+  &.with-project-filter {
+    width: calc(#{$search-width} + #{$project-filter-width} - 32px);
+  }
+
+  .kui-previous-search-list {
+    .mat-list-item {
+      .kui-previous-search-item {
+        cursor: pointer;
+        padding: 12px !important;
+      }
+
+      &:hover {
+        background-color: $grey;
+
+        .mat-icon {
+          display: inline-block;
+        }
+      }
+
+      .mat-icon {
+        display: none;
+      }
+
+      .kui-previous-search-item {
+        display: inherit;
+
+        .kui-project-filter-label {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: $project-filter-width;
+
+          &.not-empty {
+            &::before {
+              content: "[";
+            }
+            &::after {
+              content: "]";
+            }
+          }
+        }
+
+        .kui-previous-search-query {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .kui-menu-action {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    .center {
+      display: block;
+      margin: 12px auto;
+    }
+  }
+}
+
+// simulate header, which is normally defined in the app itself; do not copy these lines
+.header {
+  width: 100%;
+  height: 64px;
+  background: #ebebeb;
+
+  .kui-fulltext-search-panel {
+    top: 12px;
+    margin: 0 auto;
+    // display: block;
+  }
+}
