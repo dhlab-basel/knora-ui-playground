@@ -6,7 +6,7 @@ import { NG_VALIDATORS, Validators } from '@angular/forms';
 import { JDNConvertibleCalendarDateAdapter } from 'jdnconvertiblecalendardateadapter';
 import { Location, CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Component, Input, EventEmitter, Output, Injectable, Inject, Directive, ElementRef, Renderer2, Pipe, defineInjectable, NgModule } from '@angular/core';
+import { Component, Input, EventEmitter, Output, Injectable, Inject, Directive, ElementRef, Renderer2, Pipe, NgModule, defineInjectable } from '@angular/core';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef, MatButtonModule, MatIconModule, MatMenuModule, MatCardModule, MatListModule } from '@angular/material';
 
 /**
@@ -620,6 +620,7 @@ var AdminImageDirective = /** @class */ (function () {
         this.source = this.image;
         switch (this.type) {
             case 'user':
+                this.onError = AdminImageConfig.defaultUser;
                 if (this.image === null || this.image === undefined) {
                     this.source = AdminImageConfig.defaultUser;
                 }
@@ -628,6 +629,7 @@ var AdminImageDirective = /** @class */ (function () {
                 }
                 break;
             case 'project':
+                this.onError = AdminImageConfig.defaultProject;
                 if (this.image === null || this.image === undefined) {
                     this.source = AdminImageConfig.defaultProject;
                 }

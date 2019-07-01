@@ -1,1 +1,14 @@
-<kui-resource-view [iri]="resourceIri"></kui-resource-view>
+<p>Select a resource type:</p>
+<mat-button-toggle-group #group="matButtonToggleGroup">
+
+    <mat-button-toggle *ngFor="let item of resourceExamples; let first = first" [value]="item.id"
+                       (click)="openRes(item.id)" [disabled]="item.disabled" [aria-label]="item.type" [checked]="first">
+        <mat-icon>{{item.icon}}</mat-icon> {{item.type}}
+    </mat-button-toggle>
+</mat-button-toggle-group>
+<br>
+<mat-divider></mat-divider>
+
+<div *ngIf="resourceIri">
+    <kui-resource-view [iri]="resourceIri"></kui-resource-view>
+</div>

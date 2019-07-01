@@ -617,6 +617,7 @@
             this.source = this.image;
             switch (this.type) {
                 case 'user':
+                    this.onError = AdminImageConfig.defaultUser;
                     if (this.image === null || this.image === undefined) {
                         this.source = AdminImageConfig.defaultUser;
                     }
@@ -625,6 +626,7 @@
                     }
                     break;
                 case 'project':
+                    this.onError = AdminImageConfig.defaultProject;
                     if (this.image === null || this.image === undefined) {
                         this.source = AdminImageConfig.defaultProject;
                     }

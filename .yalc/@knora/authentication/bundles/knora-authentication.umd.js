@@ -342,6 +342,7 @@
          */
         AuthenticationService.prototype.handleRequestError = function (error) {
             var serviceError = new i2$1.ApiServiceError();
+            serviceError.header = { 'server': error.headers.get('Server') };
             serviceError.status = error.status;
             serviceError.statusText = error.statusText;
             serviceError.errorInfo = error.message;

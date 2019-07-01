@@ -3,6 +3,10 @@
  */
 export declare class ApiServiceError {
     /**
+     * Header contains the Knora / Server version
+     */
+    header?: any;
+    /**
      * Status number
      */
     status: number;

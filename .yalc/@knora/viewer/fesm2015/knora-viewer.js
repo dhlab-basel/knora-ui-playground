@@ -6,7 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatNativeDateModule, MatSlideToggleModule, MatTabsModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { KuiActionModule } from '@knora/action';
-import { KnoraConstants, Point2D, DateRangeSalsah, Precision, ListCacheService, ImageRegion, IncomingService, ResourceService, StillImageRepresentation, ApiServiceError, SearchParamsService, SearchService, KuiCoreModule } from '@knora/core';
+import { KnoraConstants, Point2D, DateRangeSalsah, Precision, ListCacheService, IncomingService, ResourceService, ApiServiceError, SearchParamsService, SearchService, KuiCoreModule } from '@knora/core';
 
 class AnnotationComponent {
     constructor() { }
@@ -106,7 +106,7 @@ class MovingImageComponent {
 MovingImageComponent.decorators = [
     { type: Component, args: [{
                 selector: 'kui-moving-image',
-                template: "<p>\n  moving-image works!\n</p>\n",
+                template: "<!-- video container -->\n<div class=\"moving-image-viewer\">\n\n  <!-- video source -->\n  <video></video>\n\n  <!-- timeline incl. preview -->\n  <div class=\"kui-mi-timeline\">\n\n  </div>\n  <div class=\"kui-mi-navigation\">\n\n\n  </div>\n\n</div>\n",
                 styles: [""]
             }] }
 ];
@@ -147,7 +147,7 @@ RegionComponent.ctorParameters = () => [];
  * Represents a region.
  * Contains a reference to the resource representing the region and its geometries.
  */
-class ImageRegion$1 {
+class ImageRegion {
     /**
      *
      * @param regionResource a resource of type Region
@@ -167,7 +167,7 @@ class ImageRegion$1 {
 /**
  * Represents an image including its regions.
  */
-class StillImageRepresentation$1 {
+class StillImageRepresentation {
     /**
      *
      * @param stillImageFileValue a [[ReadStillImageFileValue]] representing an image.
@@ -1188,20 +1188,43 @@ ListViewComponent.propDecorators = {
 };
 
 /**
- * Deprecated!?
+ * Shows all metadata (properties) in the resource viewer
+ *
  */
 class PropertiesViewComponent {
-    constructor() { }
+    constructor(_router) {
+        this._router = _router;
+        this.loading = false;
+        this.KnoraConstants = KnoraConstants;
+    }
+    /**
+     * Navigate to the incoming resource view.
+     *
+     * @param {string} id Incoming resource iri
+     */
+    openLink(id) {
+        this.loading = true;
+        this._router.navigate(['/resource/' + encodeURIComponent(id)]);
+    }
 }
 PropertiesViewComponent.decorators = [
     { type: Component, args: [{
                 selector: 'kui-properties-view',
-                template: "<p>\n    properties-view works!\n</p>",
+                template: "<mat-tab-group class=\"full-width\">\n    <mat-tab label=\"Metadata\">\n        <mat-list>\n            <div *ngFor=\"let prop of guiOrder; let last = last\" class=\"property\">\n                <div *ngIf=\"properties[prop?.property]\">\n                    <!-- label of the property -->\n                    <h3 mat-subheader class=\"property-label\">\n                        {{ontologyInfo.getLabelForProperty(prop?.property)}}\n                    </h3>\n                    <!-- the value(s) of the property -->\n                    <mat-list-item class=\"property-value-item\"\n                                   *ngFor=\"let val of properties[prop?.property]; let lastItem = last\">\n                        <li [ngSwitch]=\"val.getClassName()\" [class.list]=\"properties[prop?.property].length > 1\"\n                            [class.lastItem]=\"lastItem\">\n                            <kui-text-value-as-string *ngSwitchCase=\"KnoraConstants.ReadTextValueAsString\"\n                                                      [valueObject]=\"val\"></kui-text-value-as-string>\n                            <kui-text-value-as-xml *ngSwitchCase=\"KnoraConstants.ReadTextValueAsXml\"\n                                                   [valueObject]=\"val\"></kui-text-value-as-xml>\n                            <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val\"\n                                            [calendar]=\"true\" [era]=\"true\">\n                            </kui-date-value>\n                            <kui-link-value class=\"app-link\" *ngSwitchCase=\"KnoraConstants.ReadLinkValue\"\n                                            [valueObject]=\"val\" [ontologyInfo]=\"ontologyInfo\"\n                                            (referredResourceClicked)=\"openLink(val.referredResourceIri)\">\n                            </kui-link-value>\n                            <kui-integer-value *ngSwitchCase=\"KnoraConstants.ReadIntegerValue\" [valueObject]=\"val\">\n                            </kui-integer-value>\n                            <kui-decimal-value *ngSwitchCase=\"KnoraConstants.ReadDecimalValue\" [valueObject]=\"val\">\n                            </kui-decimal-value>\n                            <kui-geometry-value *ngSwitchCase=\"KnoraConstants.ReadGeomValue\" [valueObject]=\"val\">\n                            </kui-geometry-value>\n                            <kui-color-value *ngSwitchCase=\"KnoraConstants.ReadColorValue\" [valueObject]=\"val\">\n                            </kui-color-value>\n                            <kui-uri-value *ngSwitchCase=\"KnoraConstants.ReadUriValue\" [valueObject]=\"val\">\n                            </kui-uri-value>\n                            <kui-boolean-value *ngSwitchCase=\"KnoraConstants.ReadBooleanValue\" [valueObject]=\"val\">\n                            </kui-boolean-value>\n                            <kui-interval-value *ngSwitchCase=\"KnoraConstants.ReadIntervalValue\" [valueObject]=\"val\">\n                            </kui-interval-value>\n                            <kui-list-value *ngSwitchCase=\"KnoraConstants.ReadListValue\" [valueObject]=\"val\">\n                            </kui-list-value>\n                            <kui-textfile-value *ngSwitchCase=\"KnoraConstants.TextFileValue\" [valueObject]=\"val\">\n                            </kui-textfile-value>\n                            <span *ngSwitchDefault>Not supported {{val.getClassName()}}</span>\n                        </li>\n                    </mat-list-item>\n                </div>\n            </div>\n        </mat-list>\n    </mat-tab>\n\n    <mat-tab label=\"Annotations\" *ngIf=\"annotations?.length > 0\">\n\n    </mat-tab>\n\n    <mat-tab label=\"Links / Connections\" *ngIf=\"incomingLinks?.length > 0\">\n        <div>\n            <mat-list *ngFor=\"let incoming of incomingLinks\">\n                <mat-list-item class=\"app-link\" (click)=\"openLink(incoming.id)\">\n                    <span>{{incoming.label}}</span>\n                </mat-list-item>\n            </mat-list>\n        </div>\n    </mat-tab>\n\n</mat-tab-group>\n",
                 styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
             }] }
 ];
 /** @nocollapse */
-PropertiesViewComponent.ctorParameters = () => [];
+PropertiesViewComponent.ctorParameters = () => [
+    { type: Router }
+];
+PropertiesViewComponent.propDecorators = {
+    guiOrder: [{ type: Input }],
+    properties: [{ type: Input }],
+    annotations: [{ type: Input }],
+    incomingLinks: [{ type: Input }],
+    ontologyInfo: [{ type: Input }]
+};
 
 const jsonld = require('jsonld');
 class ResourceViewComponent {
@@ -1213,7 +1236,7 @@ class ResourceViewComponent {
         this.KnoraConstants = KnoraConstants;
     }
     ngOnInit() {
-        this.getResource(this.iri);
+        // this.getResource(this.iri);
     }
     ngOnChanges() {
         this.getResource(this.iri);
@@ -1225,20 +1248,27 @@ class ResourceViewComponent {
      */
     getResource(id) {
         this.loading = true;
-        this._resourceService.getReadResource(decodeURIComponent(id)).subscribe((result) => {
+        this._resourceService.getResource(decodeURIComponent(id)).subscribe((result) => {
+            console.log('getResource result', result);
+            // result with resources only and WITHOUT incoming stuff
             this.sequence = result;
-            this.ontologyInfo = result.ontologyInformation;
-            const resType = this.sequence.resources[0].type;
-            this.guiOrder = result.ontologyInformation.getResourceClasses()[resType].guiOrder;
+            // this.ontologyInfo = result.ontologyInformation;
+            // const resType = this.sequence.resources[0].type;
+            this.guiOrder = result.ontologyInformation.getResourceClasses()[this.sequence.resources[0].type].guiOrder;
+            // collect all filerepresentations to display including annotations
+            // --> for the first resource only...
+            // this.sequence.resources[0].fileRepresentationsToDisplay = this.collectFileRepresentationsAndFileAnnotations(this.sequence.resources[0]);
             // collect images and regions
-            this.collectImagesAndRegionsForResource(this.sequence.resources[0]);
+            // --> for the first resource only...
+            // this.collectImagesAndRegionsForResource(this.sequence.resources[0]);
             // get incoming resources
-            this.requestIncomingResources();
+            //                this.requestIncomingResources();
             // this.fileRepresentation = this.sequence.resources[0].properties.indexOf(KnoraConstants.hasStillImageFileValue) > -1;
-            // console.log(this.fileRepresentation);
+            // console.log('fileRepresentation', this.sequence.resources[0].stillImageRepresentationsToDisplay[0].stillImageFileValue);
             // wait until the resource is ready
             setTimeout(() => {
                 // console.log(this.sequence);
+                console.log('sequence', this.sequence);
                 this.loading = false;
             }, 1000);
         }, (error) => {
@@ -1250,52 +1280,89 @@ class ResourceViewComponent {
      *
      * @param resource
      */
-    collectFileRepresentationsAndFileAnnotations(resource) {
-    }
-    collectImagesAndRegionsForResource(resource) {
-        const imgRepresentations = [];
+    /*
+    collectFileRepresentationsAndFileAnnotations(resource: Resource): FileRepresentation[] {
+        const fileRepresentations: FileRepresentation[] = [];
+
         if (resource.properties[KnoraConstants.hasStillImageFileValue] !== undefined) {
-            // TODO: check if resources is a StillImageRepresentation using the ontology responder (support for subclass relations required)
-            // resource has StillImageFileValues that are directly attached to it (properties)
-            const fileValues = resource.properties[KnoraConstants.hasStillImageFileValue];
-            const imagesToDisplay = fileValues.filter((image) => {
-                return !image.isPreview;
-            });
-            for (const img of imagesToDisplay) {
-                const regions = [];
-                for (const incomingRegion of resource.incomingRegions) {
-                    const region = new ImageRegion(incomingRegion);
-                    regions.push(region);
-                }
-                const stillImage = new StillImageRepresentation(img, regions);
-                imgRepresentations.push(stillImage);
-            }
+            const fileValues: ReadStillImageFileValue[] = resource.properties[KnoraConstants.hasStillImageFileValue] as ReadStillImageFileValue[];
         }
-        else if (resource.incomingStillImageRepresentations.length > 0) {
-            // there are StillImageRepresentations pointing to this resource (incoming)
-            const readStillImageFileValues = resource.incomingStillImageRepresentations.map((stillImageRes) => {
-                const fileValues = stillImageRes.properties[KnoraConstants.hasStillImageFileValue];
+
+        return fileRepresentations;
+    }
+
+    /*
+
+        collectImagesAndRegionsForResource(resource: Resource): void {
+
+            const imgRepresentations: StillImageRepresentation[] = [];
+
+            if (resource.properties[KnoraConstants.hasStillImageFileValue] !== undefined) {
                 // TODO: check if resources is a StillImageRepresentation using the ontology responder (support for subclass relations required)
-                const imagesToDisplay = fileValues.filter((image) => {
+                // resource has StillImageFileValues that are directly attached to it (properties)
+
+                const fileValues: ReadStillImageFileValue[] = resource.properties[KnoraConstants.hasStillImageFileValue] as ReadStillImageFileValue[];
+                const imagesToDisplay: ReadStillImageFileValue[] = fileValues.filter((image) => {
                     return !image.isPreview;
                 });
-                return imagesToDisplay;
-            }).reduce(function (prev, curr) {
-                // transform ReadStillImageFileValue[][] to ReadStillImageFileValue[]
-                return prev.concat(curr);
-            });
-            for (const img of readStillImageFileValues) {
-                const regions = [];
-                for (const incomingRegion of resource.incomingRegions) {
-                    const region = new ImageRegion(incomingRegion);
-                    regions.push(region);
+
+
+                for (const img of imagesToDisplay) {
+
+                    const regions: ImageRegion[] = [];
+                    for (const incomingRegion of resource.incomingAnnotations) {
+
+                        const region = new ImageRegion(incomingRegion);
+
+                        regions.push(region);
+
+                    }
+
+                    const stillImage = new StillImageRepresentation(img, regions);
+                    imgRepresentations.push(stillImage);
+
                 }
-                const stillImage = new StillImageRepresentation(img, regions);
-                imgRepresentations.push(stillImage);
+
+
+            } else if (resource.incomingStillImageRepresentations.length > 0) {
+                // there are StillImageRepresentations pointing to this resource (incoming)
+
+                const readStillImageFileValues: ReadStillImageFileValue[] = resource.incomingStillImageRepresentations.map(
+                    (stillImageRes: ReadResource) => {
+                        const fileValues = stillImageRes.properties[KnoraConstants.hasStillImageFileValue] as ReadStillImageFileValue[];
+                        // TODO: check if resources is a StillImageRepresentation using the ontology responder (support for subclass relations required)
+                        const imagesToDisplay = fileValues.filter((image) => {
+                            return !image.isPreview;
+
+                        });
+
+                        return imagesToDisplay;
+                    }
+                ).reduce(function (prev, curr) {
+                    // transform ReadStillImageFileValue[][] to ReadStillImageFileValue[]
+                    return prev.concat(curr);
+                });
+
+                for (const img of readStillImageFileValues) {
+
+                    const regions: ImageRegion[] = [];
+                    for (const incomingRegion of resource.incomingRegions) {
+
+                        const region = new ImageRegion(incomingRegion);
+                        regions.push(region);
+
+                    }
+
+                    const stillImage = new StillImageRepresentation(img, regions);
+                    imgRepresentations.push(stillImage);
+                }
+
             }
+
+            resource.stillImageRepresentationsToDisplay = imgRepresentations;
+
         }
-        resource.stillImageRepresentationsToDisplay = imgRepresentations;
-    }
+        */
     /**
      * Get incoming resources: incoming links, incoming regions, incoming still image representations.
      */
@@ -1305,11 +1372,7 @@ class ResourceViewComponent {
             return;
         }
         // request incoming regions
-        if (this.sequence.resources[0].properties[KnoraConstants.hasStillImageFileValue]) {
-            // TODO: check if resources is a StillImageRepresentation using the ontology responder (support for subclass relations required)
-            // the resource is a StillImageRepresentation, check if there are regions pointing to it
-            this.getIncomingRegions(0);
-        }
+        if (this.sequence.resources[0].properties[KnoraConstants.hasStillImageFileValue]) ;
         // check for incoming links for the current resource
         this.getIncomingLinks(0);
     }
@@ -1318,28 +1381,37 @@ class ResourceViewComponent {
      *
      * @param offset
      * @param callback
-     */
-    getIncomingRegions(offset, callback) {
-        this._incomingService.getIncomingRegions(this.sequence.resources[0].id, offset).subscribe((regions) => {
-            // update ontology information
-            this.ontologyInfo.updateOntologyInformation(regions.ontologyInformation);
-            // Append elements of regions.resources to resource.incoming
-            Array.prototype.push.apply(this.sequence.resources[0].incomingRegions, regions.resources);
-            // prepare regions to be displayed
-            this.collectImagesAndRegionsForResource(this.sequence.resources[0]);
-            // TODO: implement osdViewer
-            /* if (this.osdViewer) {
-              this.osdViewer.updateRegions();
-            } */
-            // if callback is given, execute function with the amount of new images as the parameter
-            if (callback !== undefined) {
-                callback(regions.resources.length);
+     *
+    getIncomingRegions(offset: number, callback?: (numberOfResources: number) => void): void {
+        this._incomingService.getIncomingRegions(this.sequence.resources[0].id, offset).subscribe(
+            (regions: ReadResourcesSequence) => {
+                // update ontology information
+                this.ontologyInfo.updateOntologyInformation(regions.ontologyInformation);
+
+                // Append elements of regions.resources to resource.incoming
+                Array.prototype.push.apply(this.sequence.resources[0].incomingRegions, regions.resources);
+
+                // prepare regions to be displayed
+                this.collectImagesAndRegionsForResource(this.sequence.resources[0]);
+
+                // TODO: implement osdViewer
+                /* if (this.osdViewer) {
+                  this.osdViewer.updateRegions();
+                } *
+
+                // if callback is given, execute function with the amount of new images as the parameter
+                if (callback !== undefined) {
+                    callback(regions.resources.length);
+                }
+            },
+            (error: any) => {
+                console.error(error);
+                this.loading = false;
             }
-        }, (error) => {
-            console.error(error);
-            this.loading = false;
-        });
+        );
     }
+
+    */
     /**
      * Get incoming links for a resource.
      *
@@ -1363,21 +1435,12 @@ class ResourceViewComponent {
             this.loading = false;
         });
     }
-    /**
-     * Navigate to the incoming resource view.
-     *
-     * @param {string} id Incoming resource iri
-     */
-    openLink(id) {
-        this.loading = true;
-        this._router.navigate(['/resource/' + encodeURIComponent(id)]);
-    }
 }
 ResourceViewComponent.decorators = [
     { type: Component, args: [{
                 selector: 'kui-resource-view',
-                template: "<div class=\"resource-view\">\n\n    <kui-progress-indicator *ngIf=\"loading\"></kui-progress-indicator>\n\n    <div *ngIf=\"!loading\">\n\n        <div class=\"resource\" *ngFor=\"let resource of sequence.resources; let last = last\">\n\n            <!-- 0) Title first? -->\n            <mat-list>\n\n                <h3 class=\"mat-subheader\">\n                    {{sequence.ontologyInformation.getLabelForResourceClass(resource.type)}}\n                </h3>\n\n                <mat-list-item>\n                    <h2 class=\"mat-headline\">{{resource.label}}</h2>\n                </mat-list-item>\n\n            </mat-list>\n\n            <!-- 1) show fileRepresentation first-->\n            <div *ngFor=\"let prop of resource.properties | kuiKey\">\n                <div [ngSwitch]=\"prop.key\">\n\n                    <div *ngSwitchCase=\"KnoraConstants.hasStillImageFileValue\" class=\"media\">\n                        <!-- if the property is of type stillImageFileValue, show the image with osd viewer from @knora/viewer TODO: the fileValue will be part of an own resource property -->\n                        <kui-still-image *ngIf=\"resource.stillImageRepresentationsToDisplay.length > 0\" class=\"osd-viewer\" [imageCaption]=\"sequence.ontologyInformation.getLabelForProperty(prop.key)\" [images]=\"resource.stillImageRepresentationsToDisplay\">\n                        </kui-still-image>\n                    </div>\n\n                    <!-- TODO: switch through all other media type -->\n                    <!--\n                    <kui-moving-image></kui-moving-image>\n                    <kui-audio></kui-audio>\n                    <kui-ddd></kui-ddd>\n                    <kui-document></kui-document>\n  \n                    <kui-collection></kui-collection>\n  \n                    <kui-annotation></kui-annotation>\n                    <kui-link-obj></kui-link-obj>\n                    <kui-object></kui-object>\n                    <kui-region></kui-region>\n                    <kui-text></kui-text>\n                    -->\n\n                    <div *ngSwitchDefault class=\"hidden\">\n                        <!--<p>This media type ({{prop.key}}) is not yet implemented</p>-->\n                    </div>\n                </div>\n            </div>\n\n            <!-- 2) show properties, annotations (list of regions, sequences etc.), incomming resources (links, files) -->\n            <div class=\"data\">\n\n                <mat-tab-group class=\"full-width\">\n                    <mat-tab label=\"Metadata\">\n                        <mat-list>\n                            <div *ngFor=\"let prop of guiOrder; let last = last\" class=\"property\">\n                                <div *ngIf=\"resource.properties[prop?.property]\">\n                                    <!-- label of the property -->\n                                    <h3 mat-subheader class=\"property-label\">\n                                        {{sequence.ontologyInformation.getLabelForProperty(prop?.property)}}\n                                    </h3>\n                                    <!-- the value(s) of the property -->\n                                    <mat-list-item class=\"property-value-item\" *ngFor=\"let val of resource.properties[prop?.property]; let lastItem = last\">\n                                        <li [ngSwitch]=\"val.getClassName()\" [class.list]=\"resource.properties[prop?.property].length > 1\" [class.lastItem]=\"lastItem\">\n                                            <kui-text-value-as-string *ngSwitchCase=\"KnoraConstants.ReadTextValueAsString\" [valueObject]=\"val\"></kui-text-value-as-string>\n                                            <kui-text-value-as-xml *ngSwitchCase=\"KnoraConstants.ReadTextValueAsXml\" [valueObject]=\"val\"></kui-text-value-as-xml>\n                                            <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val\" [calendar]=\"true\" [era]=\"true\"></kui-date-value>\n                                            <kui-link-value class=\"app-link\" *ngSwitchCase=\"KnoraConstants.ReadLinkValue\" [valueObject]=\"val\" [ontologyInfo]=\"ontologyInfo\" (referredResourceClicked)=\"openLink(val.referredResourceIri)\">\n                                            </kui-link-value>\n                                            <kui-integer-value *ngSwitchCase=\"KnoraConstants.ReadIntegerValue\" [valueObject]=\"val\"></kui-integer-value>\n                                            <kui-decimal-value *ngSwitchCase=\"KnoraConstants.ReadDecimalValue\" [valueObject]=\"val\"></kui-decimal-value>\n                                            <kui-geometry-value *ngSwitchCase=\"KnoraConstants.ReadGeomValue\" [valueObject]=\"val\"></kui-geometry-value>\n                                            <kui-color-value *ngSwitchCase=\"KnoraConstants.ReadColorValue\" [valueObject]=\"val\"></kui-color-value>\n                                            <kui-uri-value *ngSwitchCase=\"KnoraConstants.ReadUriValue\" [valueObject]=\"val\"></kui-uri-value>\n                                            <kui-boolean-value *ngSwitchCase=\"KnoraConstants.ReadBooleanValue\" [valueObject]=\"val\"></kui-boolean-value>\n                                            <kui-interval-value *ngSwitchCase=\"KnoraConstants.ReadIntervalValue\" [valueObject]=\"val\"></kui-interval-value>\n                                            <kui-list-value *ngSwitchCase=\"KnoraConstants.ReadListValue\" [valueObject]=\"val\"></kui-list-value>\n                                            <kui-textfile-value *ngSwitchCase=\"KnoraConstants.TextFileValue\" [valueObject]=\"val\"></kui-textfile-value>\n                                            <span *ngSwitchDefault>Not supported {{val.getClassName()}}</span>\n                                        </li>\n                                    </mat-list-item>\n                                </div>\n                            </div>\n                        </mat-list>\n                    </mat-tab>\n\n                    <mat-tab label=\"Annotations\" *ngIf=\"resource.annotations?.length > 0\">\n\n                    </mat-tab>\n\n                    <mat-tab label=\"Links / Connections\" *ngIf=\"resource.incomingLinks?.length > 0\">\n                        <div>\n                            <mat-list *ngFor=\"let incoming of resource.incomingLinks\">\n                                <mat-list-item class=\"app-link\" (click)=\"openLink(incoming.id)\">\n                                    <span>{{incoming.label}}</span>\n                                </mat-list-item>\n                            </mat-list>\n                        </div>\n                    </mat-tab>\n\n                </mat-tab-group>\n\n            </div>\n\n            <!-- in case of more than one resource -->\n            <mat-divider *ngIf=\"!last\"></mat-divider>\n\n        </div>\n\n    </div>\n</div>\n\n\n<!-- OLD / first template\n  <mat-card>\n  \n  \n    <h2>metadata for resource {{ resource?.label}} ({{ resource?.id }})</h2>\n    <h3>type: {{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h3>\n  \n    <div *ngFor=\"let prop of resource?.properties | kuiKey\">\n        <mat-list>\n            <span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>\n            <mat-list-item *ngFor=\"let val of prop.value\">\n                <span [ngSwitch]=\"val.getClassName()\">\n                    <kui-color-value *ngSwitchCase=\"KnoraConstants.ReadColorValue\"\n                                     [valueObject]=\"val\"></kui-color-value>\n                    <kui-text-value-as-html *ngSwitchCase=\"KnoraConstants.ReadTextValueAsHtml\" [valueObject]=\"val\"\n                                            [ontologyInfo]=\"ontologyInfo\" [bindEvents]=\"true\"></kui-text-value-as-html>\n                    <kui-text-value-as-string *ngSwitchCase=\"KnoraConstants.ReadTextValueAsString\"\n                                              [valueObject]=\"val\"></kui-text-value-as-string>\n                    <kui-text-value-as-xml *ngSwitchCase=\"KnoraConstants.ReadTextValueAsXml\"\n                                           [valueObject]=\"val\"></kui-text-value-as-xml>\n                    <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val\"></kui-date-value>\n                    <kui-link-value *ngSwitchCase=\"KnoraConstants.ReadLinkValue\" [valueObject]=\"val\"\n                                    [ontologyInfo]=\"ontologyInfo\"></kui-link-value>\n                    <kui-integer-value *ngSwitchCase=\"KnoraConstants.ReadIntegerValue\"\n                                       [valueObject]=\"val\"></kui-integer-value>\n                    <kui-decimal-value *ngSwitchCase=\"KnoraConstants.ReadDecimalValue\"\n                                       [valueObject]=\"val\"></kui-decimal-value>\n                    <kui-geometry-value *ngSwitchCase=\"KnoraConstants.ReadGeomValue\"\n                                        [valueObject]=\"val\"></kui-geometry-value>\n                    <kui-uri-value *ngSwitchCase=\"KnoraConstants.ReadUriValue\" [valueObject]=\"val\"></kui-uri-value>\n                    <kui-boolean-value *ngSwitchCase=\"KnoraConstants.ReadBooleanValue\"\n                                       [valueObject]=\"val\"></kui-boolean-value>\n                    <kui-interval-value *ngSwitchCase=\"KnoraConstants.ReadIntervalValue\"\n                                        [valueObject]=\"val\"></kui-interval-value>\n                    <kui-list-value *ngSwitchCase=\"KnoraConstants.ReadListValue\" [valueObject]=\"val\"></kui-list-value>\n                    <kui-textfile-value *ngSwitchCase=\"KnoraConstants.TextFileValue\"\n                                        [valueObject]=\"val\"></kui-textfile-value>\n                    <span *ngSwitchDefault=\"\">Not supported {{val.getClassName()}}</span>\n                </span>\n            </mat-list-item>\n        </mat-list>\n    </div>\n  \n  </mat-card>\n  -->\n",
-                styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.resource-view{max-width:720px;margin:0 auto}.resource-view .resource .media{width:720px;height:calc(720px / (4 / 3))}.resource-view .resource .data{min-height:700px;padding:24px 36px}.hidden{display:none}.property{margin-bottom:12px}.property .property-value-item{min-height:48px;height:auto}.property .property-value-item li{list-style-type:none}.property .property-value-item li.list:before{content:'-    '}.property .property-value-item li.lastItem{margin-bottom:12px}"]
+                template: "<div class=\"resource-view\">\n\n    <kui-progress-indicator *ngIf=\"loading\"></kui-progress-indicator>\n\n    <div *ngIf=\"!loading\">\n\n        <div class=\"resource\" *ngFor=\"let resource of sequence.resources; let last = last\">\n\n            <!-- 0) Title first? -->\n            <mat-list>\n\n                <h3 class=\"mat-subheader\">\n                    {{sequence.ontologyInformation.getLabelForResourceClass(resource.type)}}\n                </h3>\n\n                <mat-list-item>\n                    <h2 class=\"mat-headline\">{{resource.label}}</h2>\n                </mat-list-item>\n\n            </mat-list>\n\n            <!-- 1) show fileRepresentation first-->\n            <div *ngFor=\"let prop of resource.properties | kuiKey\">\n                <div [ngSwitch]=\"prop.key\">\n                    <p>{{prop.key}}</p>\n\n                    <div *ngSwitchCase=\"KnoraConstants.hasStillImageFileValue\" class=\"media\">\n                        <!-- if the property is of type stillImageFileValue, show the image with osd viewer from @knora/viewer TODO: the fileValue will be part of an own resource property -->\n                        <kui-still-image *ngIf=\"prop.value.length > 0\" class=\"osd-viewer\"\n                                         [imageCaption]=\"sequence.ontologyInformation.getLabelForProperty(prop.key)\"\n                                         [images]=\"prop.value\">\n                        </kui-still-image>\n\n                    </div>\n\n                    <div *ngSwitchCase=\"KnoraConstants.hasMovingImageFileValue\" class=\"media\">\n                        <kui-moving-image></kui-moving-image>\n                    </div>\n\n                    <!-- TODO: switch through all other media type -->\n                    <!--\n                    <kui-moving-image></kui-moving-image>\n                    <kui-audio></kui-audio>\n                    <kui-ddd></kui-ddd>\n                    <kui-document></kui-document>\n\n                    <kui-collection></kui-collection>\n\n                    <kui-annotation></kui-annotation>\n                    <kui-link-obj></kui-link-obj>\n                    <kui-object></kui-object>\n                    <kui-region></kui-region>\n                    <kui-text></kui-text>\n                    -->\n\n                    <div *ngSwitchDefault>\n                        <p>This media type ({{prop.key}}) is not yet implemented</p>\n                    </div>\n                </div>\n            </div>\n\n            <!-- 2) show properties, annotations (list of regions, sequences etc.), incomming resources (links, files) -->\n            <div class=\"data\">\n                <kui-properties-view [properties]=\"resource.properties\" [guiOrder]=\"guiOrder\"\n                                     [ontologyInfo]=\"sequence.ontologyInformation\"\n                                     [incomingLinks]=\"resource.incomingLinks\">\n                </kui-properties-view>\n            </div>\n\n            <!-- in case of more than one resource -->\n            <mat-divider *ngIf=\"!last\"></mat-divider>\n\n        </div>\n\n    </div>\n</div>\n",
+                styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.resource-view{max-width:720px;margin:0 auto}.resource-view .resource .media{width:720px;height:calc(720px / (4 / 3))}.resource-view .resource .data{min-height:700px;padding:24px 36px}.hidden{display:none}.property{margin-bottom:12px}.property .property-value-item{min-height:48px;height:auto}.property .property-value-item li{list-style-type:none}.property .property-value-item li.list:before{content:'-    '}.property .property-value-item li.lastItem{margin-bottom:12px}.app-link:hover{background-color:#f1f1f1}"]
             }] }
 ];
 /** @nocollapse */
@@ -1484,7 +1547,6 @@ class SearchResultsComponent {
     ngOnInit() {
     }
     ngOnChanges() {
-        // this.ngOnInit();
         this._route.paramMap.subscribe((params) => {
             // get the search mode
             if (!this.searchMode) {
@@ -1750,6 +1812,6 @@ KuiViewerModule.decorators = [
  * Generated bundle index. Do not edit.
  */
 
-export { BooleanValueComponent as ɵu, ColorValueComponent as ɵr, DateValueComponent as ɵp, DecimalValueComponent as ɵs, ExternalResValueComponent as ɵba, GeometryValueComponent as ɵv, GeonameValueComponent as ɵw, IntegerValueComponent as ɵq, IntervalValueComponent as ɵx, LinkValueComponent as ɵz, ListValueComponent as ɵy, TextValueAsHtmlComponent as ɵl, TextValueAsStringComponent as ɵm, TextValueAsXmlComponent as ɵn, TextfileValueComponent as ɵo, UriValueComponent as ɵt, AnnotationComponent as ɵa, AudioComponent as ɵb, CollectionComponent as ɵc, DddComponent as ɵd, DocumentComponent as ɵe, LinkObjComponent as ɵf, MovingImageComponent as ɵg, ObjectComponent as ɵh, RegionComponent as ɵi, StillImageComponent as ɵj, TextComponent as ɵk, CompareViewComponent as ɵbf, GraphViewComponent as ɵbg, GridViewComponent as ɵbc, ListViewComponent as ɵbb, PropertiesViewComponent as ɵbh, ResourceViewComponent as ɵbe, SearchResultsComponent as ɵbi, TableViewComponent as ɵbd, AnnotationComponent, AudioComponent, CollectionComponent, DddComponent, DocumentComponent, LinkObjComponent, MovingImageComponent, ObjectComponent, RegionComponent, ImageRegion$1 as ImageRegion, StillImageRepresentation$1 as StillImageRepresentation, GeometryForRegion, StillImageComponent, TextComponent, BooleanValueComponent, ColorValueComponent, DateValueComponent, DecimalValueComponent, ExternalResValueComponent, GeometryValueComponent, GeonameValueComponent, IntegerValueComponent, IntervalValueComponent, LinkValueComponent, ListValueComponent, TextValueAsHtmlComponent, TextValueAsStringComponent, TextValueAsXmlComponent, TextfileValueComponent, UriValueComponent, CompareViewComponent, GraphViewComponent, GridViewComponent, ListViewComponent, PropertiesViewComponent, ResourceViewComponent, TableViewComponent, SearchResultsComponent, KuiViewerModule };
+export { BooleanValueComponent as ɵu, ColorValueComponent as ɵr, DateValueComponent as ɵp, DecimalValueComponent as ɵs, ExternalResValueComponent as ɵba, GeometryValueComponent as ɵv, GeonameValueComponent as ɵw, IntegerValueComponent as ɵq, IntervalValueComponent as ɵx, LinkValueComponent as ɵz, ListValueComponent as ɵy, TextValueAsHtmlComponent as ɵl, TextValueAsStringComponent as ɵm, TextValueAsXmlComponent as ɵn, TextfileValueComponent as ɵo, UriValueComponent as ɵt, AnnotationComponent as ɵa, AudioComponent as ɵb, CollectionComponent as ɵc, DddComponent as ɵd, DocumentComponent as ɵe, LinkObjComponent as ɵf, MovingImageComponent as ɵg, ObjectComponent as ɵh, RegionComponent as ɵi, StillImageComponent as ɵj, TextComponent as ɵk, CompareViewComponent as ɵbf, GraphViewComponent as ɵbg, GridViewComponent as ɵbc, ListViewComponent as ɵbb, PropertiesViewComponent as ɵbh, ResourceViewComponent as ɵbe, SearchResultsComponent as ɵbi, TableViewComponent as ɵbd, AnnotationComponent, AudioComponent, CollectionComponent, DddComponent, DocumentComponent, LinkObjComponent, MovingImageComponent, ObjectComponent, RegionComponent, ImageRegion, StillImageRepresentation, GeometryForRegion, StillImageComponent, TextComponent, BooleanValueComponent, ColorValueComponent, DateValueComponent, DecimalValueComponent, ExternalResValueComponent, GeometryValueComponent, GeonameValueComponent, IntegerValueComponent, IntervalValueComponent, LinkValueComponent, ListValueComponent, TextValueAsHtmlComponent, TextValueAsStringComponent, TextValueAsXmlComponent, TextfileValueComponent, UriValueComponent, CompareViewComponent, GraphViewComponent, GridViewComponent, ListViewComponent, PropertiesViewComponent, ResourceViewComponent, TableViewComponent, SearchResultsComponent, KuiViewerModule };
 
 //# sourceMappingURL=knora-viewer.js.map

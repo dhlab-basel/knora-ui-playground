@@ -48,6 +48,7 @@ export declare class FulltextSearchComponent implements OnInit {
     error: any;
     searchPanelFocus: boolean;
     overlayRef: OverlayRef;
+    doNotDisplay: string[];
     constructor(_overlay: Overlay, _router: Router, _viewContainerRef: ViewContainerRef, _projectsService: ProjectsService);
     ngOnInit(): void;
     openPanelWithBackdrop(): void;

@@ -145,11 +145,14 @@ class ApiServiceError {
 
 class KnoraConstants {
 }
+// The following version of Knora is needed to work properly with this module
+KnoraConstants.KnoraVersion = '8.0.0';
 KnoraConstants.KnoraApi = 'http://api.knora.org/ontology/knora-api';
 KnoraConstants.PathSeparator = '#';
 KnoraConstants.KnoraOntologyPath = 'http://www.knora.org/ontology';
 KnoraConstants.KnoraBase = KnoraConstants.KnoraOntologyPath + '/knora-base';
 KnoraConstants.KnoraAdmin = KnoraConstants.KnoraOntologyPath + '/knora-admin';
+KnoraConstants.DefaultSharedOntologyIRI = KnoraConstants.KnoraAdmin + '#DefaultSharedOntologiesProject';
 KnoraConstants.SystemProjectIRI = KnoraConstants.KnoraAdmin + '#SystemProject';
 KnoraConstants.SystemAdminGroupIRI = KnoraConstants.KnoraAdmin + '#SystemAdmin';
 KnoraConstants.ProjectAdminGroupIRI = KnoraConstants.KnoraAdmin + '#ProjectAdmin';
@@ -230,6 +233,8 @@ KnoraConstants.ReadStillImageFileValue = 'ReadStillImageFileValue';
 KnoraConstants.ReadMovingImageFileValue = 'ReadMovingImageFileValue';
 KnoraConstants.ReadAudioFileValue = 'ReadAudioFileValue';
 KnoraConstants.ReadTextFileValue = 'ReadTextFileValue';
+KnoraConstants.ReadDDDFileValue = 'ReadDDDFileValue';
+KnoraConstants.ReadDocumentFileValue = 'ReadDocumentFileValue';
 KnoraConstants.ReadGeomValue = 'ReadGeomValue';
 KnoraConstants.ReadColorValue = 'ReadColorValue';
 KnoraConstants.ReadUriValue = 'ReadUriValue';
@@ -263,6 +268,15 @@ KnoraConstants.hasStillImageFileValue = KnoraConstants.KnoraApiV2WithValueObject
 KnoraConstants.stillImageFileValueHasDimX = KnoraConstants.KnoraApiV2WithValueObjectPath + 'stillImageFileValueHasDimX';
 KnoraConstants.stillImageFileValueHasDimY = KnoraConstants.KnoraApiV2WithValueObjectPath + 'stillImageFileValueHasDimY';
 KnoraConstants.stillImageFileValueHasIIIFBaseUrl = KnoraConstants.KnoraApiV2WithValueObjectPath + 'stillImageFileValueHasIIIFBaseUrl';
+KnoraConstants.hasMovingImageFileValue = KnoraConstants.KnoraApiV2WithValueObjectPath + 'hasMovingImageFileValue';
+KnoraConstants.movingImageFileValueHasDimX = KnoraConstants.KnoraApiV2WithValueObjectPath + 'movingImageFileValueHasDimX';
+KnoraConstants.movingImageFileValueHasDimY = KnoraConstants.KnoraApiV2WithValueObjectPath + 'movingImageFileValueHasDimY';
+KnoraConstants.movingImageFileValueHasDuration = KnoraConstants.KnoraApiV2WithValueObjectPath + 'movingImageFileValueHasDuration';
+KnoraConstants.movingImageFileValueHasFps = KnoraConstants.KnoraApiV2WithValueObjectPath + 'movingImageFileValueHasFps';
+KnoraConstants.hasAudioFileValue = KnoraConstants.KnoraApiV2WithValueObjectPath + 'hasAudioFileValue';
+KnoraConstants.audioFileValueHasDuration = KnoraConstants.KnoraApiV2WithValueObjectPath + 'audioFileValueHasDuration';
+KnoraConstants.hasDocumentFileValue = KnoraConstants.KnoraApiV2WithValueObjectPath + 'hasDocumentFileValue';
+KnoraConstants.hasDDDFileValue = KnoraConstants.KnoraApiV2WithValueObjectPath + 'hasDDDFileValue';
 KnoraConstants.colorValueAsColor = KnoraConstants.KnoraApiV2WithValueObjectPath + 'colorValueAsColor';
 KnoraConstants.geometryValueAsGeometry = KnoraConstants.KnoraApiV2WithValueObjectPath + 'geometryValueAsGeometry';
 KnoraConstants.uriValueAsUri = KnoraConstants.KnoraApiV2WithValueObjectPath + 'uriValueAsUri';
@@ -1184,10 +1198,16 @@ class ReadDecimalValue {
     }
 }
 /**
+ * Abstract class for file representations like stillImage, movingImage, audio etc.
+ */
+class FileValue {
+}
+/**
  * Represents a still image value object.
  */
-class ReadStillImageFileValue {
+class ReadStillImageFileValue extends FileValue {
     constructor(id, propIri, imageFilename, imageServerIIIFBaseURL, imagePath, dimX, dimY) {
+        super();
         this.id = id;
         this.propIri = propIri;
         this.imageFilename = imageFilename;
@@ -1219,37 +1239,79 @@ class ReadStillImageFileValue {
 /**
  * Represents a moving image value object.
  */
-class ReadMovingImageFileValue {
-    constructor(id, propIri, filename, mediaServerIIIFBaseURL, path, dimX, dimY, duration, fps, aspectRatio) {
+class ReadMovingImageFileValue extends FileValue {
+    constructor(id, propIri, filename, path, dimX, dimY, duration, fps) {
+        super();
         this.id = id;
         this.propIri = propIri;
         this.filename = filename;
-        this.mediaServerIIIFBaseURL = mediaServerIIIFBaseURL;
         this.path = path;
         this.dimX = dimX;
         this.dimY = dimY;
         this.duration = duration;
         this.fps = fps;
-        this.aspectRatio = aspectRatio;
         this.type = KnoraConstants.MovingImageFileValue;
     }
-    /*
-    makeIIIFUrl(reduceFactor: number): string {
-
-        if (this.isPreview) {
-            return this.path;
-        } else {
-            let percentage = Math.floor(100 / reduceFactor);
-
-            percentage = (percentage > 0 && percentage <= 100) ? percentage : 50;
-
-            return this.mediaServerIIIFBaseURL + '/' + this.filename + '/full/pct:' + percentage.toString() + '/0/default.jpg';
-        }
-
-    }
-    */
     getClassName() {
         return KnoraConstants.ReadMovingImageFileValue;
+    }
+    getContent() {
+        return this.path;
+    }
+}
+/**
+ * Represents an audio value object.
+ */
+class ReadAudioFileValue extends FileValue {
+    constructor(id, propIri, filename, path, duration) {
+        super();
+        this.id = id;
+        this.propIri = propIri;
+        this.filename = filename;
+        this.path = path;
+        this.duration = duration;
+        this.type = KnoraConstants.AudioFileValue;
+    }
+    getClassName() {
+        return KnoraConstants.ReadAudioFileValue;
+    }
+    getContent() {
+        return this.path;
+    }
+}
+/**
+ * Represents a DDD value object.
+ */
+class ReadDDDFileValue extends FileValue {
+    constructor(id, propIri, filename, path) {
+        super();
+        this.id = id;
+        this.propIri = propIri;
+        this.filename = filename;
+        this.path = path;
+        this.type = KnoraConstants.DDDFileValue;
+    }
+    getClassName() {
+        return KnoraConstants.ReadDDDFileValue;
+    }
+    getContent() {
+        return this.path;
+    }
+}
+/**
+ * Represents a Document value object.
+ */
+class ReadDocumentFileValue extends FileValue {
+    constructor(id, propIri, filename, path) {
+        super();
+        this.id = id;
+        this.propIri = propIri;
+        this.filename = filename;
+        this.path = path;
+        this.type = KnoraConstants.DocumentFileValue;
+    }
+    getClassName() {
+        return KnoraConstants.ReadDocumentFileValue;
     }
     getContent() {
         return this.path;
@@ -1410,6 +1472,8 @@ class ReadListValue {
 }
 
 /**
+ * @deprecated Use **Resource** instead
+ *
  * Represents a resource and its properties.
  */
 class ReadResource {
@@ -1445,10 +1509,13 @@ class ReadResource {
 }
 /**
  * This is a temporary class, to test a new resource setup.
- * When it works, we will merge it with the ReadResource object
+ * When it works, we will replace the ReadResource object
  */
 class Resource {
-    constructor(id, type, label, incomingAnnotations, incomingFileRepresentations, incomingLinks, fileRepresentationsToDisplay, properties) {
+    constructor(id, type, label, incomingAnnotations, // = incomingRegions in ReadResource
+    incomingFileRepresentations, // = incomingStillImageRepresentations in ReadResource
+    incomingLinks, fileRepresentationsToDisplay, // = stillImageRepresentationsToDisplay in ReadResource
+    properties) {
         this.id = id;
         this.type = type;
         this.label = label;
@@ -1459,8 +1526,36 @@ class Resource {
         this.properties = properties;
     }
 }
+/*
+fileRepresentationsToDisplay ==> what is the main media file to display?
+
+in case of
+
+property.hasStillImageFile
+property.hasMovingImageFile
+property.hasAudioFile
+property.hasTextFile
+property.hasDocumentFile
+property.hasDDDImageFile
+
+show this media file.
+
+Otherwise:
+
+resource.incomingStillImageRepresentations?
+resource.incomingMovingImageRepresentations?
+resource.incomingAudioRepresentations?
+resource.incomingTextRepresentations?
+resource.incomingDocumentRepresentations?
+resource.incomingDDDImageRepresentations?
+
+A resource can have more than one incomingRepresentation
+
+
+*/
 
 const jsonld = require('jsonld');
+const semver = require('semver');
 class ApiService {
     constructor(http, config) {
         this.http = http;
@@ -1483,6 +1578,8 @@ class ApiService {
         return this.http.get(this.config.api + path, { observe: 'response', params: params }).pipe(map((response) => {
             this.loading = false;
             const result = new ApiServiceResult();
+            result.header = { 'server': response.headers.get('Server') };
+            this.compareVersion(response.headers.get('Server'));
             result.status = response.status;
             result.statusText = response.statusText;
             result.url = path;
@@ -1503,6 +1600,7 @@ class ApiService {
         const resPromises = jsonld.promises;
         // compact JSON-LD using an empty context: expands all Iris
         const resPromise = resPromises.compact(resourceResponse.body, {});
+        console.log('resPromises', resPromises);
         // convert promise to Observable and return it
         // https://www.learnrxjs.io/operators/creation/frompromise.html
         return from(resPromise);
@@ -1520,6 +1618,8 @@ class ApiService {
         return this.http.post(this.config.api + path, body, { observe: 'response' }).pipe(map((response) => {
             this.loading = false;
             const result = new ApiServiceResult();
+            result.header = { 'server': response.headers.get('Server') };
+            this.compareVersion(result.header.server);
             result.status = response.status;
             result.statusText = response.statusText;
             result.url = path;
@@ -1545,6 +1645,8 @@ class ApiService {
             this.loading = false;
             // console.log(response);
             const result = new ApiServiceResult();
+            result.header = { 'server': response.headers.get('Server') };
+            this.compareVersion(result.header.server);
             result.status = response.status;
             result.statusText = response.statusText;
             result.url = path;
@@ -1569,6 +1671,8 @@ class ApiService {
             this.loading = false;
             // console.log(response);
             const result = new ApiServiceResult();
+            result.header = { 'server': response.headers.get('Server') };
+            this.compareVersion(result.header.server);
             result.status = response.status;
             result.statusText = response.statusText;
             result.url = path;
@@ -1589,6 +1693,7 @@ class ApiService {
     handleRequestError(error) {
         // console.error(error);
         const serviceError = new ApiServiceError();
+        serviceError.header = { 'server': error.headers.get('Server') };
         serviceError.status = error.status;
         serviceError.statusText = error.statusText;
         serviceError.errorInfo = error.message;
@@ -1605,11 +1710,25 @@ class ApiService {
         if (error instanceof ApiServiceError)
             return throwError(error);
         const serviceError = new ApiServiceError();
+        serviceError.header = { 'server': error.headers.get('Server') };
         serviceError.status = -1;
         serviceError.statusText = 'Invalid JSON';
         serviceError.errorInfo = error;
         serviceError.url = '';
         return throwError(serviceError);
+    }
+    compareVersion(server) {
+        // expected knora api version
+        const expected = KnoraConstants.KnoraVersion;
+        // existing knora api version
+        if (server) {
+            const versions = server.split(' ');
+            const existing = versions[0].split('/')[1];
+            // compare the two versions: expected vs existing
+            if (semver.diff(existing, expected) === 'major') {
+                console.warn('The version of the @knora/core module works with Knora v' + expected + ', but you are using it with Knora v' + existing);
+            }
+        }
     }
 }
 ApiService.decorators = [
@@ -1632,7 +1751,8 @@ class OntologyService extends ApiService {
     // GET list of ontologies
     // ------------------------------------------------------------------------
     /**
-     * DEPRECATED: You should use getAllOntologies()
+     * @deprecated: Use **getAllOntologies()** instead
+     *
      * Requests the metadata about all existing ontologies from Knora's ontologies route.
      *
      * @returns Observable<ApiServiceResult> - the metadata of all ontologies.
@@ -2511,6 +2631,8 @@ OntologyCacheService.ctorParameters = () => [
 OntologyCacheService.ngInjectableDef = defineInjectable({ factory: function OntologyCacheService_Factory() { return new OntologyCacheService(inject(OntologyService)); }, token: OntologyCacheService, providedIn: "root" });
 
 /**
+ * @deprecated Use **ResourceSequence** instead
+ *
  * Represents a sequence of resources.
  */
 class ReadResourcesSequence {
@@ -2524,6 +2646,21 @@ class ReadResourcesSequence {
         this.numberOfResources = numberOfResources;
         /**
          * Information about the entities used in the given collection of `ReadResource`.
+         */
+        this.ontologyInformation = new OntologyInformation({}, {}, {});
+    }
+}
+class ResourcesSequence {
+    /**
+     *
+     * @param {Array<Resource>} resources given sequence of resources.
+     * @param {number} numberOfResources number of given resources.
+     */
+    constructor(resources, numberOfResources) {
+        this.resources = resources;
+        this.numberOfResources = numberOfResources;
+        /**
+         * Information about the entities used in the given collection of `Resource`.
          */
         this.ontologyInformation = new OntologyInformation({}, {}, {});
     }
@@ -2551,9 +2688,10 @@ class StillImageRepresentation {
      * @param {ReadStillImageFileValue} stillImageFileValue a [[ReadStillImageFileValue]] representing an image.
      * @param {ImageRegion[]} regions the regions belonging to the image.
      */
-    constructor(stillImageFileValue, regions) {
+    constructor(stillImageFileValue, regions, type = KnoraConstants.StillImageFileValue) {
         this.stillImageFileValue = stillImageFileValue;
         this.regions = regions;
+        this.type = type;
     }
 }
 
@@ -3194,6 +3332,8 @@ var ConvertJSONLD;
             && propName !== KnoraConstants.versionArkUrl;
     };
     /**
+     * @deprecated Use **constructResource** instead
+     *
      * Constructs a [[ReadResource]] from JSON-LD.
      * Expects JSON-LD with all Iris fully expanded.
      *
@@ -3206,6 +3346,14 @@ var ConvertJSONLD;
         [], // to be updated once another request has been made
         [], // to be updated once another request has been made
         [], // to be updated once another request has been made
+        properties);
+    }
+    function constructResource(resourceJSONLD) {
+        const properties = constructReadProperties(resourceJSONLD);
+        return new Resource(resourceJSONLD['@id'], resourceJSONLD['@type'], resourceJSONLD[KnoraConstants.RdfsLabel], [], // incomingAnnotations; to be updated once another request has been made
+        [], // incomingFileRepresentations, to be updated once another request has been made
+        [], // incomingLinks; to be updated once another request has been made
+        [], // fileRepresentationsToDisplay; to be updated once another request has been made
         properties);
     }
     /**
@@ -3287,10 +3435,25 @@ var ConvertJSONLD;
                 const decimalValue = new ReadDecimalValue(propValue['@id'], propIri, decVal);
                 valueSpecificProp = decimalValue;
                 break;
-            // TODO: handle movingImageFileValue and the others here...
             case KnoraConstants.StillImageFileValue:
                 const stillImageFileValue = new ReadStillImageFileValue(propValue['@id'], propIri, propValue[KnoraConstants.fileValueHasFilename], propValue[KnoraConstants.stillImageFileValueHasIIIFBaseUrl]['@value'], propValue[KnoraConstants.fileValueAsUrl]['@value'], propValue[KnoraConstants.stillImageFileValueHasDimX], propValue[KnoraConstants.stillImageFileValueHasDimY]);
                 valueSpecificProp = stillImageFileValue;
+                break;
+            case KnoraConstants.MovingImageFileValue:
+                const movingImageFileValue = new ReadMovingImageFileValue(propValue['@id'], propIri, propValue[KnoraConstants.fileValueHasFilename], propValue[KnoraConstants.fileValueAsUrl]['@value'], propValue[KnoraConstants.movingImageFileValueHasDimX], propValue[KnoraConstants.movingImageFileValueHasDimY], propValue[KnoraConstants.movingImageFileValueHasDuration], propValue[KnoraConstants.movingImageFileValueHasFps]);
+                valueSpecificProp = movingImageFileValue;
+                break;
+            case KnoraConstants.AudioFileValue:
+                const audioFileValue = new ReadAudioFileValue(propValue['@id'], propIri, propValue[KnoraConstants.fileValueHasFilename], propValue[KnoraConstants.fileValueAsUrl]['@value'], propValue[KnoraConstants.audioFileValueHasDuration]);
+                valueSpecificProp = audioFileValue;
+                break;
+            case KnoraConstants.DDDFileValue:
+                const dddFileValue = new ReadDDDFileValue(propValue['@id'], propIri, propValue[KnoraConstants.fileValueHasFilename], propValue[KnoraConstants.fileValueAsUrl]['@value']);
+                valueSpecificProp = dddFileValue;
+                break;
+            case KnoraConstants.DocumentFileValue:
+                const documentFileValue = new ReadDocumentFileValue(propValue['@id'], propIri, propValue[KnoraConstants.fileValueHasFilename], propValue[KnoraConstants.fileValueAsUrl]['@value']);
+                valueSpecificProp = documentFileValue;
                 break;
             case KnoraConstants.TextFileValue:
                 const textFileValue = new ReadTextFileValue(propValue['@id'], propIri, propValue[KnoraConstants.fileValueHasFilename], propValue[KnoraConstants.fileValueAsUrl]['@value']);
@@ -3425,6 +3588,36 @@ var ConvertJSONLD;
         return new ReadResourcesSequence(resources, numberOfResources);
     }
     ConvertJSONLD.createReadResourcesSequenceFromJsonLD = createReadResourcesSequenceFromJsonLD;
+    function createResourcesSequenceFromJsonLD(resourcesResponseJSONLD) {
+        const resources = [];
+        let numberOfResources;
+        const resourcesGraph = resourcesResponseJSONLD['@graph'];
+        // either an array of resources or just one resource is given
+        if (resourcesGraph !== undefined) {
+            // an array of resources
+            numberOfResources = resourcesGraph.length;
+            for (const resourceJSONLD of resourcesGraph) {
+                const resource = constructResource(resourceJSONLD);
+                // add the resource to the resources array
+                resources.push(resource);
+            }
+        }
+        else {
+            if (Object.keys(resourcesResponseJSONLD).length === 0) {
+                // empty answer, no resources given
+                numberOfResources = 0;
+            }
+            else {
+                // only one resource
+                numberOfResources = 1;
+                const resource = constructResource(resourcesResponseJSONLD);
+                // add the resource to the resources array
+                resources.push(resource);
+            }
+        }
+        return new ResourcesSequence(resources, numberOfResources);
+    }
+    ConvertJSONLD.createResourcesSequenceFromJsonLD = createResourcesSequenceFromJsonLD;
     /**
      * Collects all the types (classes) of referred resources from a given resource (from its linking properties).
      * Expects JSON-LD with all Iris fully expanded.
@@ -3522,65 +3715,6 @@ var ConvertJSONLD;
 })(ConvertJSONLD || (ConvertJSONLD = {}));
 
 /**
- * Requests representation of resources from Knora.
- */
-class ResourceService extends ApiService {
-    constructor(http, config, _ontologyCacheService) {
-        super(http, config);
-        this.http = http;
-        this.config = config;
-        this._ontologyCacheService = _ontologyCacheService;
-    }
-    /**
-     * Given the Iri, requests the representation of a resource.
-     *
-     * @param {string} iri Iri of the resource (not yet URL encoded).
-     * @returns Observable<ApiServiceResult>
-     */
-    getResource(iri) {
-        return this.httpGet('/v2/resources/' + encodeURIComponent(iri));
-    }
-    /**
-     * Given the Iri, requests the representation of a resource as a `ReadResourceSequence`.
-     *
-     * @param {string} iri Iri of the resource (not yet URL encoded).
-     * @returns {Observable<ReadResourcesSequence>}
-     */
-    getReadResource(iri) {
-        const res = this.httpGet('/v2/resources/' + encodeURIComponent(iri));
-        // TODO: handle case of an ApiServiceError
-        return res.pipe(mergeMap(
-        // this would return an Observable of a PromiseObservable -> combine them into one Observable
-        this.processJSONLD), mergeMap(
-        // return Observable of ReadResourcesSequence
-        (resourceResponse) => {
-            // convert JSON-LD into a ReadResourceSequence
-            const resSeq = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(resourceResponse);
-            // collect resource class Iris
-            const resourceClassIris = ConvertJSONLD.getResourceClassesFromJsonLD(resourceResponse);
-            // request information about resource classes
-            return this._ontologyCacheService.getResourceClassDefinitions(resourceClassIris).pipe(map((ontoInfo) => {
-                // add ontology information to ReadResourceSequence
-                resSeq.ontologyInformation.updateOntologyInformation(ontoInfo);
-                return resSeq;
-            }));
-        }));
-    }
-}
-ResourceService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-ResourceService.ctorParameters = () => [
-    { type: HttpClient },
-    { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] },
-    { type: OntologyCacheService }
-];
-ResourceService.ngInjectableDef = defineInjectable({ factory: function ResourceService_Factory() { return new ResourceService(inject(HttpClient), inject(KuiCoreConfigToken), inject(OntologyCacheService)); }, token: ResourceService, providedIn: "root" });
-
-/**
  * Performs searches (fulltext or extended) and search count queries into Knora.
  */
 class SearchService extends ApiService {
@@ -3590,6 +3724,8 @@ class SearchService extends ApiService {
         this.config = config;
         this._ontologyCacheService = _ontologyCacheService;
         /**
+         * @deprecated
+         *
          * Converts a JSON-LD object to a `ReadResorceSequence`.
          * To be passed as a function pointer (arrow notation required).
          *
@@ -3604,6 +3740,23 @@ class SearchService extends ApiService {
             // request information about resource classes
             return this._ontologyCacheService.getResourceClassDefinitions(resourceClassIris).pipe(map((ontoInfo) => {
                 // add ontology information to ReadResourceSequence
+                resSeq.ontologyInformation.updateOntologyInformation(ontoInfo);
+                return resSeq;
+            }));
+        };
+        /**
+         * Converts a JSON-LD object to a `ResourcesSequence`
+         *
+         * @param  {Object} resourceResponse
+         */
+        this.convertJSONLDToResourcesSequence = (resourceResponse) => {
+            // convert JSON-LD into a ResourcesSequence
+            const resSeq = ConvertJSONLD.createResourcesSequenceFromJsonLD(resourceResponse);
+            // collect resource class Iris
+            const resourceClassIris = ConvertJSONLD.getResourceClassesFromJsonLD(resourceResponse);
+            // request information about resource classes
+            return this._ontologyCacheService.getResourceClassDefinitions(resourceClassIris).pipe(map((ontoInfo) => {
+                // add ontology information to ResourcesSequence
                 resSeq.ontologyInformation.updateOntologyInformation(ontoInfo);
                 return resSeq;
             }));
@@ -3748,6 +3901,7 @@ class SearchService extends ApiService {
         return this.httpPost('/v2/searchextended', gravsearchQuery);
     }
     /**
+     * @deprecated
      * Performs an extended search and turns the result into a `ReadResourceSequence`.
      *
      * @param gravsearchQuery the Sparql query string to be sent to Knora.
@@ -3759,6 +3913,19 @@ class SearchService extends ApiService {
         }
         const res = this.httpPost('/v2/searchextended', gravsearchQuery);
         return res.pipe(mergeMap(this.processJSONLD), mergeMap(this.convertJSONLDToReadResourceSequence));
+    }
+    /**
+     * Performs an extended search and turns the result into a `ResourcesSequence`.
+     *
+     * @param  {string} gravsearchQuery
+     * @returns Observable
+     */
+    doExtendedSearchResourcesSequence(gravsearchQuery) {
+        if (gravsearchQuery === undefined || gravsearchQuery.length === 0) {
+            return Observable.create(observer => observer.error('No Sparql string given for call of SearchService.doExtendedSearch'));
+        }
+        const res = this.httpPost('/v2/searchextended', gravsearchQuery);
+        return res.pipe(mergeMap(this.processJSONLD), mergeMap(this.convertJSONLDToResourcesSequence));
     }
     /**
      * Performs an extended search count query.
@@ -3849,6 +4016,10 @@ SearchService.ngInjectableDef = defineInjectable({ factory: function SearchServi
  * Requests incoming information (regions, links, stillImageRepresentations) from Knora.
  */
 class IncomingService extends SearchService {
+    // ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
+    // (incoming) annotations like region and sequences
+    // ------------------------------------------------------------------------
     /**
     * Returns all incoming regions for a particular resource.
     *
@@ -3896,6 +4067,10 @@ knora-api:hasColor knora-api:objectType knora-api:Color .
         // console.log('sparqlQueryStr ', sparqlQueryStr);
         return this.doExtendedSearchReadResourceSequence(sparqlQueryStr);
     }
+    // ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
+    // (incoming) file representations e.g. incomingStillImages in case of book
+    // ------------------------------------------------------------------------
     /**
      * Returns all the StillImageRepresentations for the given resource, if any.
      * StillImageRepresentations link to the given resource via knora-base:isPartOf.
@@ -3939,7 +4114,13 @@ OFFSET ${offset}
 `;
         return this.doExtendedSearchReadResourceSequence(sparqlQueryStr);
     }
+    // ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
+    // incoming links
+    // ------------------------------------------------------------------------
     /**
+     * @deprecated
+     *
      * Returns all incoming links for the given resource Iri but incoming regions and still image representations.
      *
      * @param {string} resourceIri the Iri of the resource whose incoming links should be returned.
@@ -3980,6 +4161,47 @@ FILTER NOT EXISTS {
 `;
         return this.doExtendedSearchReadResourceSequence(sparqlQueryStr);
     }
+    /**
+     * Returns all incoming links for the given resource Iri.
+     *
+     * @param {string} resourceIri the Iri of the resource whose incoming links should be returned.
+     * @param {number} offset the offset to be used for paging. 0 is the default and is used to get the first page of results.
+     * @returns {Observable<any>}
+     */
+    getIncomingLinks(resourceIri, offset) {
+        const sparqlQueryStr = `
+PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
+
+CONSTRUCT {
+?incomingRes knora-api:isMainResource true .
+
+?incomingRes ?incomingProp <${resourceIri}> .
+
+} WHERE {
+
+?incomingRes a knora-api:Resource .
+
+?incomingRes ?incomingProp <${resourceIri}> .
+
+<${resourceIri}> a knora-api:Resource .
+
+?incomingProp knora-api:objectType knora-api:Resource .
+
+knora-api:isRegionOf knora-api:objectType knora-api:Resource .
+knora-api:isPartOf knora-api:objectType knora-api:Resource .
+
+FILTER NOT EXISTS {
+ ?incomingRes  knora-api:isRegionOf <${resourceIri}> .
+}
+
+FILTER NOT EXISTS {
+ ?incomingRes  knora-api:isPartOf <${resourceIri}> .
+}
+
+} OFFSET ${offset}
+`;
+        return this.doExtendedSearchResourcesSequence(sparqlQueryStr);
+    }
 }
 IncomingService.decorators = [
     { type: Injectable, args: [{
@@ -3987,6 +4209,241 @@ IncomingService.decorators = [
             },] }
 ];
 IncomingService.ngInjectableDef = defineInjectable({ factory: function IncomingService_Factory() { return new IncomingService(inject(HttpClient), inject(KuiCoreConfigToken), inject(OntologyCacheService)); }, token: IncomingService, providedIn: "root" });
+
+/**
+ * Requests representation of resources from Knora.
+ */
+class ResourceService extends ApiService {
+    constructor(http, config, _incomingService, _ontologyCacheService) {
+        super(http, config);
+        this.http = http;
+        this.config = config;
+        this._incomingService = _incomingService;
+        this._ontologyCacheService = _ontologyCacheService;
+    }
+    /**
+     * Given the Iri, requests the representation of a resource.
+     *
+     * @param {string} iri Iri of the resource (not yet URL encoded).
+     * @returns Observable<ApiServiceResult>
+     */
+    // this should return a resource object with incoming links, annotations, file representations
+    // it includes a property: FileRepresentation to display with the parameters for the media type viewer
+    getResource(iri) {
+        const res = this.httpGet('/v2/resources/' + encodeURIComponent(iri));
+        return res.pipe(mergeMap(
+        // this would return an Observable of a PromiseObservable -> combine them into one Observable
+        this.processJSONLD), mergeMap(
+        // return Observable of ReadResourcesSequence
+        (resourceResponse) => {
+            // convert JSON-LD into a ReadResourceSequence
+            const resSeq = ConvertJSONLD.createResourcesSequenceFromJsonLD(resourceResponse);
+            // collect resource class Iris
+            const resourceClassIris = ConvertJSONLD.getResourceClassesFromJsonLD(resourceResponse);
+            const res = resSeq.resources[0];
+            // set file representation to display
+            console.log(Object.keys(res.properties));
+            const propKeys = Object.keys(res.properties);
+            switch (true) {
+                case propKeys.includes(KnoraConstants.hasStillImageFileValue):
+                    // res.fileRepresentationsToDisplay[0] = res.properties[KnoraConstants.hasStillImageFileValue];
+                    const imgRepresentations = [];
+                    const fileValues = res.properties[KnoraConstants.hasStillImageFileValue];
+                    const imagesToDisplay = fileValues.filter((image) => {
+                        return !image.isPreview;
+                    });
+                    for (const img of imagesToDisplay) {
+                        const regions = [];
+                        for (const incomingRegion of res.incomingAnnotations) {
+                            // TODO: change return type in ImageRegion from ReadResource into Resource
+                            // const region = new ImageRegion(incomingRegion);
+                            // regions.push(region);
+                        }
+                        const stillImage = new StillImageRepresentation(img, regions);
+                        imgRepresentations.push(stillImage);
+                    }
+                    res.fileRepresentationsToDisplay = imgRepresentations;
+                    break;
+                case propKeys.includes(KnoraConstants.hasMovingImageFileValue):
+                    res.fileRepresentationsToDisplay = res.properties[KnoraConstants.hasMovingImageFileValue];
+                    break;
+                case propKeys.includes(KnoraConstants.hasAudioFileValue):
+                    res.fileRepresentationsToDisplay = res.properties[KnoraConstants.hasAudioFileValue];
+                    break;
+                case propKeys.includes(KnoraConstants.hasDocumentFileValue):
+                    res.fileRepresentationsToDisplay = res.properties[KnoraConstants.hasDocumentFileValue];
+                    break;
+                case propKeys.includes(KnoraConstants.hasDDDFileValue):
+                    res.fileRepresentationsToDisplay = res.properties[KnoraConstants.hasDDDFileValue];
+                    break;
+                // NYI / TODO: TextFileValue
+                default:
+                    // look for incoming fileRepresentation to display
+                    // e.g. looking for incoming stillImage files
+                    this._incomingService.getStillImageRepresentationsForCompoundResource(res.id, 0).subscribe((incomingImageRepresentations) => {
+                        if (incomingImageRepresentations.resources.length > 0) {
+                            // update ontology information
+                            resSeq.ontologyInformation.updateOntologyInformation(incomingImageRepresentations.ontologyInformation);
+                            // set current offset
+                            // this.incomingStillImageRepresentationCurrentOffset = offset;
+                            // TODO: implement prepending of StillImageRepresentations when moving to the left (getting previous pages)
+                            // TODO: append existing images to response and then assign response to `this.resource.incomingStillImageRepresentations`
+                            // TODO: maybe we have to support non consecutive arrays (sparse arrays)
+                            // append incomingImageRepresentations.resources to this.resource.incomingStillImageRepresentations
+                            Array.prototype.push.apply(resSeq.resources[0].incomingFileRepresentations, incomingImageRepresentations.resources);
+                            // prepare attached image files to be displayed
+                            // BeolResource.collectImagesAndRegionsForResource(this.resource);
+                        }
+                    }, (error) => {
+                        console.error(error);
+                    });
+                    console.log('incoming file representations to display');
+            }
+            // resource.properties[KnoraConstants.hasStillImageFileValue]
+            // get incoming links
+            this._incomingService.getIncomingLinks(resSeq.resources[0].id, 0).subscribe((incomingRes) => {
+                // update ontology information
+                resSeq.ontologyInformation.updateOntologyInformation(incomingRes.ontologyInformation);
+                // Append elements incomingResources to this.sequence.incomingLinks
+                Array.prototype.push.apply(resSeq.resources[0].incomingLinks, incomingRes.resources);
+            });
+            // get incoming annotations
+            // request information about resource classes
+            return this._ontologyCacheService.getResourceClassDefinitions(resourceClassIris).pipe(map((ontoInfo) => {
+                // add ontology information to ReadResourceSequence
+                resSeq.ontologyInformation.updateOntologyInformation(ontoInfo);
+                console.log('resSeq -- resourceServie', resSeq);
+                return resSeq;
+            }));
+        }));
+        // let resSeq: Observable<ResourcesSequence>;
+        /*
+        this.getResourcesSequence(iri).subscribe(
+            (sequence: ResourcesSequence) => {
+
+                // resSeq = sequence;
+
+                /* pipe(
+                    map((result: ApiServiceResult) => result.getBody(GroupsResponse).groups),
+                    catchError(this.handleJsonError)
+                );
+
+                resSeq.pipe(
+                    map((seq: ResourcesSequence) => sequence),
+                    catchError(this.handleJsonError)
+                ); *
+
+                // get incoming links
+                this._incomingService.getIncomingLinks(sequence.resources[0].id, 0).subscribe(
+                    (incomingResources: ResourcesSequence) => {
+                        // update ontology information
+                        sequence.ontologyInformation.updateOntologyInformation(incomingResources.ontologyInformation);
+
+                        // Append elements incomingResources to this.sequence.incomingLinks
+                        Array.prototype.push.apply(sequence.resources[0].incomingLinks, incomingResources.resources);
+
+                        // if callback is given, execute function with the amount of incoming resources as the parameter
+                        /* TODO: what is callback? Find a solution
+                        if (callback !== undefined) {
+                            callback(incomingResources.resources.length);
+                        }
+                        *
+
+                    },
+                    (error: any) => {
+                        console.error(error);
+                    }
+                );
+
+                // get incoming annotations
+
+                // get incoming filerepresentations
+
+
+
+            },
+            (error: ApiServiceError) => {
+                console.error(error);
+                return error;
+            }
+        );
+
+
+        return resSeq;
+        */
+    }
+    getResourcesSequence(iri) {
+        const res = this.httpGet('/v2/resources/' + encodeURIComponent(iri));
+        return res.pipe(mergeMap(
+        // this would return an Observable of a PromiseObservable -> combine them into one Observable
+        this.processJSONLD), mergeMap(
+        // return Observable of ReadResourcesSequence
+        (resourceResponse) => {
+            // convert JSON-LD into a ReadResourceSequence
+            const resSeq = ConvertJSONLD.createResourcesSequenceFromJsonLD(resourceResponse);
+            // collect resource class Iris
+            const resourceClassIris = ConvertJSONLD.getResourceClassesFromJsonLD(resourceResponse);
+            // request information about resource classes
+            return this._ontologyCacheService.getResourceClassDefinitions(resourceClassIris).pipe(map((ontoInfo) => {
+                // add ontology information to ReadResourceSequence
+                resSeq.ontologyInformation.updateOntologyInformation(ontoInfo);
+                return resSeq;
+            }));
+        }));
+    }
+    requestIncomingResources(sequence) {
+        // make sure that this.sequence has been initialized correctly
+        if (sequence === undefined) {
+            return;
+        }
+        // request incoming sequences in case of movingImage and audio
+        // request incoming regions in case of stillImage and dddImage
+        if (sequence.resources[0].properties[KnoraConstants.hasStillImageFileValue]) ;
+        // check for incoming links for the current resource
+        // this.getIncomingLinks(0);
+    }
+    /**
+     * @deprecated Use **getResourcesSequence** instead
+     *
+     * Given the Iri, requests the representation of a resource as a `ReadResourceSequence`.
+     *
+     * @param {string} iri Iri of the resource (not yet URL encoded).
+     * @returns {Observable<ReadResourcesSequence>}
+     */
+    getReadResource(iri) {
+        const res = this.httpGet('/v2/resources/' + encodeURIComponent(iri));
+        // TODO: handle case of an ApiServiceError
+        return res.pipe(mergeMap(
+        // this would return an Observable of a PromiseObservable -> combine them into one Observable
+        this.processJSONLD), mergeMap(
+        // return Observable of ReadResourcesSequence
+        (resourceResponse) => {
+            // convert JSON-LD into a ReadResourceSequence
+            const resSeq = ConvertJSONLD.createReadResourcesSequenceFromJsonLD(resourceResponse);
+            // collect resource class Iris
+            const resourceClassIris = ConvertJSONLD.getResourceClassesFromJsonLD(resourceResponse);
+            // request information about resource classes
+            return this._ontologyCacheService.getResourceClassDefinitions(resourceClassIris).pipe(map((ontoInfo) => {
+                // add ontology information to ReadResourceSequence
+                resSeq.ontologyInformation.updateOntologyInformation(ontoInfo);
+                return resSeq;
+            }));
+        }));
+    }
+}
+ResourceService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+ResourceService.ctorParameters = () => [
+    { type: HttpClient },
+    { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] },
+    { type: IncomingService },
+    { type: OntologyCacheService }
+];
+ResourceService.ngInjectableDef = defineInjectable({ factory: function ResourceService_Factory() { return new ResourceService(inject(HttpClient), inject(KuiCoreConfigToken), inject(IncomingService), inject(OntologyCacheService)); }, token: ResourceService, providedIn: "root" });
 
 /**
  * Represents the parameters of an extended search.
@@ -4689,6 +5146,6 @@ class PropertyWithValue {
  * Generated bundle index. Do not edit.
  */
 
-export { Property as ɵa, KuiCoreConfigToken, KuiCoreModule, KuiCoreConfig, ApiServiceResult, ApiServiceError, Utils, KnoraConstants, KnoraSchema, StringLiteral, Precision, DateSalsah, DateRangeSalsah, AuthenticationResponse, Group, GroupResponse, GroupsResponse, List, ListInfo, ListInfoResponse, ListNode, ListNodeInfo, ListNodeInfoResponse, ListResponse, ListsResponse, OntologyInfoShort, PermissionData, Project, ProjectMembersResponse, ProjectResponse, ProjectsResponse, UsersResponse, UserResponse, User, ReadTextValue, ReadTextValueAsString, ReferredResourcesByStandoffLink, ReadTextValueAsHtml, ReadTextValueAsXml, ReadDateValue, ReadLinkValue, ReadIntegerValue, ReadDecimalValue, ReadStillImageFileValue, ReadMovingImageFileValue, ReadTextFileValue, ReadColorValue, Point2D, RegionGeometry, ReadGeomValue, ReadUriValue, ReadBooleanValue, ReadIntervalValue, ReadListValue, ReadResource, Resource, ReadResourcesSequence, CountQueryResult, StillImageRepresentation, ImageRegion, Equals, NotEquals, GreaterThanEquals, GreaterThan, LessThan, LessThanEquals, Exists, Like, Match, ComparisonOperatorAndValue, ValueLiteral, IRI, PropertyWithValue, ApiService, GroupsService, ListsService, ProjectsService, UsersService, LanguageService, StatusMsgService, OntologyService, OntologyMetadata, CardinalityOccurrence, Cardinality, GuiOrder, ResourceClass, ResourceClasses, Property, Properties, ResourceClassIrisForOntology, OntologyInformation, OntologyCacheService, ResourceService, SearchService, ConvertJSONLD, IncomingService, ExtendedSearchParams, SearchParamsService, GravsearchGenerationService, StoreService, BasicOntologyService, ResourceTypesService, ListNodeV2, ListCacheService };
+export { Property as ɵa, KuiCoreConfigToken, KuiCoreModule, KuiCoreConfig, ApiServiceResult, ApiServiceError, Utils, KnoraConstants, KnoraSchema, StringLiteral, Precision, DateSalsah, DateRangeSalsah, AuthenticationResponse, Group, GroupResponse, GroupsResponse, List, ListInfo, ListInfoResponse, ListNode, ListNodeInfo, ListNodeInfoResponse, ListResponse, ListsResponse, OntologyInfoShort, PermissionData, Project, ProjectMembersResponse, ProjectResponse, ProjectsResponse, UsersResponse, UserResponse, User, ReadTextValue, ReadTextValueAsString, ReferredResourcesByStandoffLink, ReadTextValueAsHtml, ReadTextValueAsXml, ReadDateValue, ReadLinkValue, ReadIntegerValue, ReadDecimalValue, FileValue, ReadStillImageFileValue, ReadMovingImageFileValue, ReadAudioFileValue, ReadDDDFileValue, ReadDocumentFileValue, ReadTextFileValue, ReadColorValue, Point2D, RegionGeometry, ReadGeomValue, ReadUriValue, ReadBooleanValue, ReadIntervalValue, ReadListValue, ReadResource, Resource, ReadResourcesSequence, ResourcesSequence, CountQueryResult, StillImageRepresentation, ImageRegion, Equals, NotEquals, GreaterThanEquals, GreaterThan, LessThan, LessThanEquals, Exists, Like, Match, ComparisonOperatorAndValue, ValueLiteral, IRI, PropertyWithValue, ApiService, GroupsService, ListsService, ProjectsService, UsersService, LanguageService, StatusMsgService, OntologyService, OntologyMetadata, CardinalityOccurrence, Cardinality, GuiOrder, ResourceClass, ResourceClasses, Property, Properties, ResourceClassIrisForOntology, OntologyInformation, OntologyCacheService, ResourceService, SearchService, ConvertJSONLD, IncomingService, ExtendedSearchParams, SearchParamsService, GravsearchGenerationService, StoreService, BasicOntologyService, ResourceTypesService, ListNodeV2, ListCacheService };
 
 //# sourceMappingURL=knora-core.js.map

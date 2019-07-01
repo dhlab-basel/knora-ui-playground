@@ -6,10 +6,11 @@ import { ImageRegion } from './image-region';
 export declare class StillImageRepresentation {
     readonly stillImageFileValue: ReadStillImageFileValue;
     readonly regions: ImageRegion[];
+    readonly type: string;
     /**
      *
      * @param {ReadStillImageFileValue} stillImageFileValue a [[ReadStillImageFileValue]] representing an image.
      * @param {ImageRegion[]} regions the regions belonging to the image.
      */
-    constructor(stillImageFileValue: ReadStillImageFileValue, regions: ImageRegion[]);
+    constructor(stillImageFileValue: ReadStillImageFileValue, regions: ImageRegion[], type?: string);
 }

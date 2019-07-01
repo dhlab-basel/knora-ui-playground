@@ -7,7 +7,8 @@ import { ApiService } from '../api.service';
  */
 export declare class OntologyService extends ApiService {
     /**
-     * DEPRECATED: You should use getAllOntologies()
+     * @deprecated: Use **getAllOntologies()** instead
+     *
      * Requests the metadata about all existing ontologies from Knora's ontologies route.
      *
      * @returns Observable<ApiServiceResult> - the metadata of all ontologies.

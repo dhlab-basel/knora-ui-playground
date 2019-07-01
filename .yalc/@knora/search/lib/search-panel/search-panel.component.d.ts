@@ -1,5 +1,5 @@
 import { Overlay, OverlayRef, PositionStrategy } from '@angular/cdk/overlay';
-import { TemplateRef, ViewContainerRef, ElementRef } from '@angular/core';
+import { ElementRef, TemplateRef, ViewContainerRef } from '@angular/core';
 /**
  * The search-panel contains the kui-fulltext-search and the kui-extended-search components.
  */
