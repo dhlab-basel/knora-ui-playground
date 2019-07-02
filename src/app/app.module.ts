@@ -4,7 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material-module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MarkdownModule } from 'ngx-markdown';
 
 import { RouterModule } from '@angular/router';

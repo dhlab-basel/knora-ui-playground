@@ -3,7 +3,7 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServiceError, Project, ProjectsService } from '@knora/core';
-import { MatMenuTrigger } from '@angular/material';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 export interface PrevSearchItem {
   projectIri?: string;
