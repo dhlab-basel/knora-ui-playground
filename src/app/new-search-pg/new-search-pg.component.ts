@@ -39,11 +39,11 @@ export class NewSearchPgComponent implements OnInit {
    */
   @Input() filterbyproject?: string;
 
-  @ViewChild('fulltextSearchPanel') searchPanel: ElementRef;
-  @ViewChild('fulltextSearchInput') searchInput: ElementRef;
-  @ViewChild('fulltextSearchMenu') searchMenu: TemplateRef<any>;
+  @ViewChild('fulltextSearchPanel', { static: true }) searchPanel: ElementRef;
+  @ViewChild('fulltextSearchInput', { static: true }) searchInput: ElementRef;
+  @ViewChild('fulltextSearchMenu', { static: true }) searchMenu: TemplateRef<any>;
 
-  @ViewChild('btnToSelectProject') selectProject: MatMenuTrigger;
+  @ViewChild('btnToSelectProject', { static: false }) selectProject: MatMenuTrigger;
 
   // search query
   searchQuery: string;
