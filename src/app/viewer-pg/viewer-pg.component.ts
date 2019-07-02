@@ -1,14 +1,12 @@
-import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'kuip-viewer-pg',
     templateUrl: './viewer-pg.component.html',
     styleUrls: ['./viewer-pg.component.scss']
 })
-export class ViewerPgComponent implements OnInit {
-
-    @ViewChild('group') group: any;
+export class ViewerPgComponent {
 
     resourceExamples: any = [
         {
@@ -19,7 +17,7 @@ export class ViewerPgComponent implements OnInit {
         },
         {
             type: 'Page',
-            icon: 'chrome_reader',
+            icon: 'chrome_reader_mode',
             id: 'http%3A%2F%2Frdfh.ch%2F0803%2F6ad3e2c47501',
             disabled: false
         },
@@ -37,34 +35,20 @@ export class ViewerPgComponent implements OnInit {
         },
     ];
 
-    pageResourceIri: string = 'http%3A%2F%2Frdfh.ch%2F0803%2F6ad3e2c47501';
-    // bookResourceIri: string = 'http%3A%2F%2Frdfh.ch%2F0803%2F2a6221216701';
-    bookResourceIri: string = 'http%3A%2F%2Frdfh.ch%2F0803%2F21abac2162';
-    testResourceIri: string;
-
     resourceIri: string;
 
     constructor (
         private _route: ActivatedRoute,
         private _router: Router
     ) {
-        this._route.paramMap.subscribe(
-            (params: Params) => {
-                this.resourceIri = (decodeURIComponent(params.get('id')) === null) ? this.testResourceIri : decodeURIComponent(params.get('id'));
 
-                // console.log(this.resourceIri)
-            }
-        );
-    }
-
-    ngOnInit() {
-
-        this.openRes(this.resourceExamples[0].id);
-
+        this.resourceIri = ((!this._route.snapshot.params.id) ? this.resourceExamples[0].id : decodeURIComponent(this._route.snapshot.params.id));
 
     }
+
 
     openRes(id: string) {
+        this.resourceIri = id;
         this._router.navigate(['/resource/' + encodeURIComponent(id)]);
     }
 }

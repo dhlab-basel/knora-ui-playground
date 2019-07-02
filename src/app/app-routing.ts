@@ -25,6 +25,10 @@ const appRoutes: Routes = [
         component: ViewerPgComponent
     },
     {
+        path: 'resource',
+        component: ViewerPgComponent
+    },
+    {
         path: 'search',
         component: SearchPgComponent,
         children: [
@@ -41,10 +45,6 @@ const appRoutes: Routes = [
     {
         path: 'authentication',
         component: AuthenticationPgComponent
-    },
-    {
-        path: 'viewer',
-        component: ViewerPgComponent
     },
     {
         path: 'ontology',
