@@ -1,0 +1,38 @@
+{
+  "name": "@knora/search",
+  "version": "8.1.0-5d131e88",
+  "description": "Knora ui module: search",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dhlab-basel/Knora-ui.git"
+  },
+  "homepage": "https://dhlab-basel.github.io/Knora-ui",
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "knora",
+    "digital humanities",
+    "dhlab basel"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^8.0.3",
+    "@angular/core": "^8.0.3",
+    "@knora/action": "8.1.0",
+    "@knora/core": "8.1.0",
+    "@knora/viewer": "8.1.0",
+    "jdnconvertiblecalendardateadapter": "^0.0.9"
+  },
+  "main": "bundles/knora-search.umd.js",
+  "module": "fesm5/knora-search.js",
+  "es2015": "fesm2015/knora-search.js",
+  "esm5": "esm5/knora-search.js",
+  "esm2015": "esm2015/knora-search.js",
+  "fesm5": "fesm5/knora-search.js",
+  "fesm2015": "fesm2015/knora-search.js",
+  "typings": "knora-search.d.ts",
+  "metadata": "knora-search.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}
