@@ -66,6 +66,11 @@ let KuiCoreConfig = class KuiCoreConfig {
          * @type {string}
          */
         this.media = undefined;
+        /**
+         * url of the ontology e.g. 'http://api.02.unibas.dasch.swiss'
+         * @type {string}
+         */
+        this.ontologyIRI = undefined;
     }
 };
 __decorate([
@@ -84,6 +89,10 @@ __decorate([
     JsonProperty('media', String),
     __metadata("design:type", String)
 ], KuiCoreConfig.prototype, "media", void 0);
+__decorate([
+    JsonProperty('ontologyIRI', String),
+    __metadata("design:type", String)
+], KuiCoreConfig.prototype, "ontologyIRI", void 0);
 KuiCoreConfig = __decorate([
     JsonObject('KuiCoreConfig')
 ], KuiCoreConfig);
@@ -1600,7 +1609,6 @@ class ApiService {
         const resPromises = jsonld.promises;
         // compact JSON-LD using an empty context: expands all Iris
         const resPromise = resPromises.compact(resourceResponse.body, {});
-        console.log('resPromises', resPromises);
         // convert promise to Observable and return it
         // https://www.learnrxjs.io/operators/creation/frompromise.html
         return from(resPromise);
@@ -2680,14 +2688,77 @@ class CountQueryResult {
 }
 
 /**
+ * Represents an audio file representation including its sequences.
+ */
+class AudioRepresentation {
+    /**
+     *
+     * @param {ReadAudioFileValue} audioFileValue a [[ReadAudioFileValue]] representing a audio file
+     * @param {Sequence[]} sequences the sequences belonging to the time-base media.
+     */
+    constructor(audioFileValue, sequences, type = KnoraConstants.AudioFileValue) {
+        this.audioFileValue = audioFileValue;
+        this.sequences = sequences;
+        this.type = type;
+    }
+}
+
+/**
+ * Represents one of the following media file types:
+ * - still-image including its regions
+ * - moving-image including its sequences
+ * - audio including its sequences
+ * - text
+ * - ddd rti
+ * - document
+ */
+class oldFileRepresentation {
+    /**
+     *
+     * @param {FileValue} fileValue a [[FileValue]] representing a file.
+     * @param {Region[]} [regions] the regions belonging to the image.
+     * @param {Sequence[]} [sequences] the sequences belonging to the time-based media.
+     */
+    constructor(fileValue, regions, sequences) {
+        this.fileValue = fileValue;
+        this.regions = regions;
+        this.sequences = sequences;
+    }
+}
+class FileRepresentation {
+    constructor(stillImage, movingImage, audio) {
+        this.stillImage = stillImage;
+        this.movingImage = movingImage;
+        this.audio = audio;
+    }
+}
+
+/**
+ * Represents a moving image including its sequences.
+ */
+class MovingImageRepresentation {
+    /**
+     *
+     * @param {MovingImageFileValue} movingImageFileValue a [[ReadMovingImageFileValue]] representing a moving-image file.
+     * @param {Sequence[]} sequences the sequences belonging to the time-base media.
+     */
+    constructor(movingImageFileValue, sequences, type = KnoraConstants.MovingImageFileValue) {
+        this.movingImageFileValue = movingImageFileValue;
+        this.sequences = sequences;
+        this.type = type;
+    }
+}
+
+/**
  * Represents an image including its regions.
  */
 class StillImageRepresentation {
     /**
      *
      * @param {ReadStillImageFileValue} stillImageFileValue a [[ReadStillImageFileValue]] representing an image.
-     * @param {ImageRegion[]} regions the regions belonging to the image.
+     * @param {Region[]} regions the regions belonging to the image.
      */
+    // TODO: remove "readonly type: string = KnoraConstants.StillImageFileValue"
     constructor(stillImageFileValue, regions, type = KnoraConstants.StillImageFileValue) {
         this.stillImageFileValue = stillImageFileValue;
         this.regions = regions;
@@ -2699,7 +2770,7 @@ class StillImageRepresentation {
  * Represents a region.
  * Contains a reference to the resource representing the region and its geometries.
  */
-class ImageRegion {
+class Region {
     /**
      *
      * @param {ReadResource} regionResource a resource of type Region
@@ -2714,6 +2785,28 @@ class ImageRegion {
      */
     getGeometries() {
         return this.regionResource.properties[KnoraConstants.hasGeometry];
+    }
+}
+
+/**
+ * Represents a sequence in time-base media.
+ * Contains a reference to the resource representing the sequence.
+ */
+class Sequence {
+    /**
+     *
+     * @param {ReadResource} sequenceResource a resource of type Region
+     */
+    constructor(sequenceResource) {
+        this.sequenceResource = sequenceResource;
+    }
+    /**
+     * Get all interval information belonging to this sequence.
+     *
+     * @returns {ReadIntervalValue[]}
+     */
+    getIntervals() {
+        return this.sequenceResource.properties[KnoraConstants.intervalValueHasStart];
     }
 }
 
@@ -3353,7 +3446,7 @@ var ConvertJSONLD;
         return new Resource(resourceJSONLD['@id'], resourceJSONLD['@type'], resourceJSONLD[KnoraConstants.RdfsLabel], [], // incomingAnnotations; to be updated once another request has been made
         [], // incomingFileRepresentations, to be updated once another request has been made
         [], // incomingLinks; to be updated once another request has been made
-        [], // fileRepresentationsToDisplay; to be updated once another request has been made
+        {}, // fileRepresentationsToDisplay; to be updated once another request has been made
         properties);
     }
     /**
@@ -4112,6 +4205,7 @@ knora-api:hasStillImageFile knora-api:objectType knora-api:File .
 } ORDER BY ?seqnum
 OFFSET ${offset}
 `;
+        console.log(sparqlQueryStr);
         return this.doExtendedSearchReadResourceSequence(sparqlQueryStr);
     }
     // ------------------------------------------------------------------------
@@ -4240,64 +4334,93 @@ class ResourceService extends ApiService {
             const resSeq = ConvertJSONLD.createResourcesSequenceFromJsonLD(resourceResponse);
             // collect resource class Iris
             const resourceClassIris = ConvertJSONLD.getResourceClassesFromJsonLD(resourceResponse);
-            const res = resSeq.resources[0];
+            const res0 = resSeq.resources[0];
             // set file representation to display
-            console.log(Object.keys(res.properties));
-            const propKeys = Object.keys(res.properties);
+            const propKeys = Object.keys(res0.properties);
             switch (true) {
                 case propKeys.includes(KnoraConstants.hasStillImageFileValue):
                     // res.fileRepresentationsToDisplay[0] = res.properties[KnoraConstants.hasStillImageFileValue];
                     const imgRepresentations = [];
-                    const fileValues = res.properties[KnoraConstants.hasStillImageFileValue];
+                    const fileValues = res0.properties[KnoraConstants.hasStillImageFileValue];
                     const imagesToDisplay = fileValues.filter((image) => {
                         return !image.isPreview;
                     });
                     for (const img of imagesToDisplay) {
                         const regions = [];
-                        for (const incomingRegion of res.incomingAnnotations) {
-                            // TODO: change return type in ImageRegion from ReadResource into Resource
-                            // const region = new ImageRegion(incomingRegion);
+                        for (const incomingRegion of res0.incomingAnnotations) {
+                            // TODO: change return type in Region from ReadResource into Resource
+                            // const region = new Region(incomingRegion);
                             // regions.push(region);
                         }
                         const stillImage = new StillImageRepresentation(img, regions);
                         imgRepresentations.push(stillImage);
                     }
-                    res.fileRepresentationsToDisplay = imgRepresentations;
+                    res0.fileRepresentationsToDisplay.stillImage = imgRepresentations;
                     break;
                 case propKeys.includes(KnoraConstants.hasMovingImageFileValue):
-                    res.fileRepresentationsToDisplay = res.properties[KnoraConstants.hasMovingImageFileValue];
+                    //                            res0.fileRepresentationsToDisplay = res0.properties[KnoraConstants.hasMovingImageFileValue];
                     break;
                 case propKeys.includes(KnoraConstants.hasAudioFileValue):
-                    res.fileRepresentationsToDisplay = res.properties[KnoraConstants.hasAudioFileValue];
+                    //                            res0.fileRepresentationsToDisplay = res0.properties[KnoraConstants.hasAudioFileValue];
                     break;
                 case propKeys.includes(KnoraConstants.hasDocumentFileValue):
-                    res.fileRepresentationsToDisplay = res.properties[KnoraConstants.hasDocumentFileValue];
+                    //                            res0.fileRepresentationsToDisplay = res0.properties[KnoraConstants.hasDocumentFileValue];
                     break;
                 case propKeys.includes(KnoraConstants.hasDDDFileValue):
-                    res.fileRepresentationsToDisplay = res.properties[KnoraConstants.hasDDDFileValue];
+                    //                            res0.fileRepresentationsToDisplay = res0.properties[KnoraConstants.hasDDDFileValue];
                     break;
-                // NYI / TODO: TextFileValue
+                // TODO: TextFileValue
                 default:
                     // look for incoming fileRepresentation to display
-                    // e.g. looking for incoming stillImage files
-                    this._incomingService.getStillImageRepresentationsForCompoundResource(res.id, 0).subscribe((incomingImageRepresentations) => {
-                        if (incomingImageRepresentations.resources.length > 0) {
+                    // get incoming stillImage files
+                    this._incomingService.getStillImageRepresentationsForCompoundResource(res0.id, 0).subscribe((incomingFiles) => {
+                        console.log('incomingFiles', incomingFiles);
+                        if (incomingFiles.resources.length > 0) {
                             // update ontology information
-                            resSeq.ontologyInformation.updateOntologyInformation(incomingImageRepresentations.ontologyInformation);
+                            resSeq.ontologyInformation.updateOntologyInformation(incomingFiles.ontologyInformation);
                             // set current offset
                             // this.incomingStillImageRepresentationCurrentOffset = offset;
                             // TODO: implement prepending of StillImageRepresentations when moving to the left (getting previous pages)
                             // TODO: append existing images to response and then assign response to `this.resource.incomingStillImageRepresentations`
                             // TODO: maybe we have to support non consecutive arrays (sparse arrays)
                             // append incomingImageRepresentations.resources to this.resource.incomingStillImageRepresentations
-                            Array.prototype.push.apply(resSeq.resources[0].incomingFileRepresentations, incomingImageRepresentations.resources);
+                            Array.prototype.push.apply(res0.incomingFileRepresentations, incomingFiles.resources);
+                            // Array.prototype.push.apply(resSeq.resources[0].incomingFileRepresentations, incomingImageRepresentations.resources);
+                            const incomingImgRepresentations = [];
+                            for (const inRes of incomingFiles.resources) {
+                                const incomingFileValues = inRes.properties[KnoraConstants.hasStillImageFileValue];
+                                const incomingImagesToDisplay = incomingFileValues.filter((image) => {
+                                    return !image.isPreview;
+                                });
+                                for (const img of incomingImagesToDisplay) {
+                                    const regions = [];
+                                    /*
+                                    for (const incomingRegion of inRes.incomingAnnotations) {
+
+                                        // TODO: change return type in Region from ReadResource into Resource
+                                        // const region = new Region(incomingRegion);
+
+                                        // regions.push(incomingRegion);
+
+                                    }
+                                    */
+                                    const stillImage = new StillImageRepresentation(img, regions);
+                                    incomingImgRepresentations.push(stillImage);
+                                }
+                                res0.fileRepresentationsToDisplay.stillImage = incomingImgRepresentations;
+                            }
                             // prepare attached image files to be displayed
                             // BeolResource.collectImagesAndRegionsForResource(this.resource);
                         }
                     }, (error) => {
                         console.error(error);
                     });
-                    console.log('incoming file representations to display');
+                // do the same for all other incoming file representations
+                // TODO: get incoming movingImage files
+                // TODO: get incoming audio files
+                // TODO: get incoming document files
+                // TODO: get incoming text files
+                // TODO: get ddd images files
             }
             // resource.properties[KnoraConstants.hasStillImageFileValue]
             // get incoming links
@@ -5146,6 +5269,6 @@ class PropertyWithValue {
  * Generated bundle index. Do not edit.
  */
 
-export { Property as ɵa, KuiCoreConfigToken, KuiCoreModule, KuiCoreConfig, ApiServiceResult, ApiServiceError, Utils, KnoraConstants, KnoraSchema, StringLiteral, Precision, DateSalsah, DateRangeSalsah, AuthenticationResponse, Group, GroupResponse, GroupsResponse, List, ListInfo, ListInfoResponse, ListNode, ListNodeInfo, ListNodeInfoResponse, ListResponse, ListsResponse, OntologyInfoShort, PermissionData, Project, ProjectMembersResponse, ProjectResponse, ProjectsResponse, UsersResponse, UserResponse, User, ReadTextValue, ReadTextValueAsString, ReferredResourcesByStandoffLink, ReadTextValueAsHtml, ReadTextValueAsXml, ReadDateValue, ReadLinkValue, ReadIntegerValue, ReadDecimalValue, FileValue, ReadStillImageFileValue, ReadMovingImageFileValue, ReadAudioFileValue, ReadDDDFileValue, ReadDocumentFileValue, ReadTextFileValue, ReadColorValue, Point2D, RegionGeometry, ReadGeomValue, ReadUriValue, ReadBooleanValue, ReadIntervalValue, ReadListValue, ReadResource, Resource, ReadResourcesSequence, ResourcesSequence, CountQueryResult, StillImageRepresentation, ImageRegion, Equals, NotEquals, GreaterThanEquals, GreaterThan, LessThan, LessThanEquals, Exists, Like, Match, ComparisonOperatorAndValue, ValueLiteral, IRI, PropertyWithValue, ApiService, GroupsService, ListsService, ProjectsService, UsersService, LanguageService, StatusMsgService, OntologyService, OntologyMetadata, CardinalityOccurrence, Cardinality, GuiOrder, ResourceClass, ResourceClasses, Property, Properties, ResourceClassIrisForOntology, OntologyInformation, OntologyCacheService, ResourceService, SearchService, ConvertJSONLD, IncomingService, ExtendedSearchParams, SearchParamsService, GravsearchGenerationService, StoreService, BasicOntologyService, ResourceTypesService, ListNodeV2, ListCacheService };
+export { Property as ɵa, KuiCoreConfigToken, KuiCoreModule, KuiCoreConfig, ApiServiceResult, ApiServiceError, Utils, KnoraConstants, KnoraSchema, StringLiteral, Precision, DateSalsah, DateRangeSalsah, AuthenticationResponse, Group, GroupResponse, GroupsResponse, List, ListInfo, ListInfoResponse, ListNode, ListNodeInfo, ListNodeInfoResponse, ListResponse, ListsResponse, OntologyInfoShort, PermissionData, Project, ProjectMembersResponse, ProjectResponse, ProjectsResponse, UsersResponse, UserResponse, User, ReadTextValue, ReadTextValueAsString, ReferredResourcesByStandoffLink, ReadTextValueAsHtml, ReadTextValueAsXml, ReadDateValue, ReadLinkValue, ReadIntegerValue, ReadDecimalValue, FileValue, ReadStillImageFileValue, ReadMovingImageFileValue, ReadAudioFileValue, ReadDDDFileValue, ReadDocumentFileValue, ReadTextFileValue, ReadColorValue, Point2D, RegionGeometry, ReadGeomValue, ReadUriValue, ReadBooleanValue, ReadIntervalValue, ReadListValue, ReadResource, Resource, ReadResourcesSequence, ResourcesSequence, CountQueryResult, AudioRepresentation, oldFileRepresentation, FileRepresentation, MovingImageRepresentation, StillImageRepresentation, Region, Sequence, Equals, NotEquals, GreaterThanEquals, GreaterThan, LessThan, LessThanEquals, Exists, Like, Match, ComparisonOperatorAndValue, ValueLiteral, IRI, PropertyWithValue, ApiService, GroupsService, ListsService, ProjectsService, UsersService, LanguageService, StatusMsgService, OntologyService, OntologyMetadata, CardinalityOccurrence, Cardinality, GuiOrder, ResourceClass, ResourceClasses, Property, Properties, ResourceClassIrisForOntology, OntologyInformation, OntologyCacheService, ResourceService, SearchService, ConvertJSONLD, IncomingService, ExtendedSearchParams, SearchParamsService, GravsearchGenerationService, StoreService, BasicOntologyService, ResourceTypesService, ListNodeV2, ListCacheService };
 
 //# sourceMappingURL=knora-core.js.map

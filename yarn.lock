@@ -319,7 +319,7 @@
     tslib "^1.9.0"
 
 "@knora/core@file:.yalc/@knora/core":
-  version "8.1.0-7e268d6e"
+  version "8.1.0-5adff482"
   dependencies:
     tslib "^1.9.0"
 
@@ -329,7 +329,7 @@
     tslib "^1.9.0"
 
 "@knora/viewer@file:.yalc/@knora/viewer":
-  version "8.1.0-44acbb7d"
+  version "8.1.0-a3856916"
   dependencies:
     tslib "^1.9.0"
 
@@ -687,6 +687,13 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
+
+angular-split@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/angular-split/-/angular-split-3.0.2.tgz#df7c52653b15a7307f143e127d7552039f526b13"
+  integrity sha512-km59k1kEgVlplo2t4t5Ob43Vx16qVXWXsl5gbsdQtqrOW7341So4CFUmCjcZgfk1swu9RBaCdSQEqzNWOe/89w==
+  dependencies:
+    tslib "^1.9.0"
 
 ansi-colors@^3.0.0:
   version "3.2.4"

@@ -1,4 +1,5 @@
-import { ReadGeomValue, ReadResource } from '../../../';
+import { ReadGeomValue } from '../properties/read-property-item';
+import { ReadResource } from '../resources/read-resource';
 /**
  * Represents a region.
  * Contains a reference to the resource representing the region and its geometries.

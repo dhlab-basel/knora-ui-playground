@@ -121,6 +121,11 @@
              * @type {string}
              */
             this.media = undefined;
+            /**
+             * url of the ontology e.g. 'http://api.02.unibas.dasch.swiss'
+             * @type {string}
+             */
+            this.ontologyIRI = undefined;
         }
         __decorate([
             json2typescript.JsonProperty('name', String),
@@ -138,6 +143,10 @@
             json2typescript.JsonProperty('media', String),
             __metadata("design:type", String)
         ], KuiCoreConfig.prototype, "media", void 0);
+        __decorate([
+            json2typescript.JsonProperty('ontologyIRI', String),
+            __metadata("design:type", String)
+        ], KuiCoreConfig.prototype, "ontologyIRI", void 0);
         KuiCoreConfig = __decorate([
             json2typescript.JsonObject('KuiCoreConfig')
         ], KuiCoreConfig);
@@ -1751,7 +1760,6 @@
             var resPromises = jsonld.promises;
             // compact JSON-LD using an empty context: expands all Iris
             var resPromise = resPromises.compact(resourceResponse.body, {});
-            console.log('resPromises', resPromises);
             // convert promise to Observable and return it
             // https://www.learnrxjs.io/operators/creation/frompromise.html
             return rxjs.from(resPromise);
@@ -2976,14 +2984,87 @@
     }());
 
     /**
+     * Represents an audio file representation including its sequences.
+     */
+    var AudioRepresentation = /** @class */ (function () {
+        /**
+         *
+         * @param {ReadAudioFileValue} audioFileValue a [[ReadAudioFileValue]] representing a audio file
+         * @param {Sequence[]} sequences the sequences belonging to the time-base media.
+         */
+        function AudioRepresentation(audioFileValue, sequences, type) {
+            if (type === void 0) {
+                type = KnoraConstants.AudioFileValue;
+            }
+            this.audioFileValue = audioFileValue;
+            this.sequences = sequences;
+            this.type = type;
+        }
+        return AudioRepresentation;
+    }());
+
+    /**
+     * Represents one of the following media file types:
+     * - still-image including its regions
+     * - moving-image including its sequences
+     * - audio including its sequences
+     * - text
+     * - ddd rti
+     * - document
+     */
+    var oldFileRepresentation = /** @class */ (function () {
+        /**
+         *
+         * @param {FileValue} fileValue a [[FileValue]] representing a file.
+         * @param {Region[]} [regions] the regions belonging to the image.
+         * @param {Sequence[]} [sequences] the sequences belonging to the time-based media.
+         */
+        function oldFileRepresentation(fileValue, regions, sequences) {
+            this.fileValue = fileValue;
+            this.regions = regions;
+            this.sequences = sequences;
+        }
+        return oldFileRepresentation;
+    }());
+    var FileRepresentation = /** @class */ (function () {
+        function FileRepresentation(stillImage, movingImage, audio) {
+            this.stillImage = stillImage;
+            this.movingImage = movingImage;
+            this.audio = audio;
+        }
+        return FileRepresentation;
+    }());
+
+    /**
+     * Represents a moving image including its sequences.
+     */
+    var MovingImageRepresentation = /** @class */ (function () {
+        /**
+         *
+         * @param {MovingImageFileValue} movingImageFileValue a [[ReadMovingImageFileValue]] representing a moving-image file.
+         * @param {Sequence[]} sequences the sequences belonging to the time-base media.
+         */
+        function MovingImageRepresentation(movingImageFileValue, sequences, type) {
+            if (type === void 0) {
+                type = KnoraConstants.MovingImageFileValue;
+            }
+            this.movingImageFileValue = movingImageFileValue;
+            this.sequences = sequences;
+            this.type = type;
+        }
+        return MovingImageRepresentation;
+    }());
+
+    /**
      * Represents an image including its regions.
      */
     var StillImageRepresentation = /** @class */ (function () {
         /**
          *
          * @param {ReadStillImageFileValue} stillImageFileValue a [[ReadStillImageFileValue]] representing an image.
-         * @param {ImageRegion[]} regions the regions belonging to the image.
+         * @param {Region[]} regions the regions belonging to the image.
          */
+        // TODO: remove "readonly type: string = KnoraConstants.StillImageFileValue"
         function StillImageRepresentation(stillImageFileValue, regions, type) {
             if (type === void 0) {
                 type = KnoraConstants.StillImageFileValue;
@@ -2999,12 +3080,12 @@
      * Represents a region.
      * Contains a reference to the resource representing the region and its geometries.
      */
-    var ImageRegion = /** @class */ (function () {
+    var Region = /** @class */ (function () {
         /**
          *
          * @param {ReadResource} regionResource a resource of type Region
          */
-        function ImageRegion(regionResource) {
+        function Region(regionResource) {
             this.regionResource = regionResource;
         }
         /**
@@ -3012,10 +3093,33 @@
          *
          * @returns {ReadGeomValue[]}
          */
-        ImageRegion.prototype.getGeometries = function () {
+        Region.prototype.getGeometries = function () {
             return this.regionResource.properties[KnoraConstants.hasGeometry];
         };
-        return ImageRegion;
+        return Region;
+    }());
+
+    /**
+     * Represents a sequence in time-base media.
+     * Contains a reference to the resource representing the sequence.
+     */
+    var Sequence = /** @class */ (function () {
+        /**
+         *
+         * @param {ReadResource} sequenceResource a resource of type Region
+         */
+        function Sequence(sequenceResource) {
+            this.sequenceResource = sequenceResource;
+        }
+        /**
+         * Get all interval information belonging to this sequence.
+         *
+         * @returns {ReadIntervalValue[]}
+         */
+        Sequence.prototype.getIntervals = function () {
+            return this.sequenceResource.properties[KnoraConstants.intervalValueHasStart];
+        };
+        return Sequence;
     }());
 
     /**
@@ -3669,7 +3773,7 @@
             return new Resource(resourceJSONLD['@id'], resourceJSONLD['@type'], resourceJSONLD[KnoraConstants.RdfsLabel], [], // incomingAnnotations; to be updated once another request has been made
             [], // incomingFileRepresentations, to be updated once another request has been made
             [], // incomingLinks; to be updated once another request has been made
-            [], // fileRepresentationsToDisplay; to be updated once another request has been made
+            {}, // fileRepresentationsToDisplay; to be updated once another request has been made
             properties);
         }
         /**
@@ -4533,6 +4637,7 @@
          */
         IncomingService.prototype.getStillImageRepresentationsForCompoundResource = function (resourceIri, offset) {
             var sparqlQueryStr = "\nPREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>\n\nCONSTRUCT {\n?page knora-api:isMainResource true .\n\n?page knora-api:seqnum ?seqnum .\n\n?page knora-api:hasStillImageFile ?file .\n} WHERE {\n\n?page a knora-api:StillImageRepresentation .\n?page a knora-api:Resource .\n\n?page knora-api:isPartOf <" + resourceIri + "> .\nknora-api:isPartOf knora-api:objectType knora-api:Resource .\n\n<" + resourceIri + "> a knora-api:Resource .\n\n?page knora-api:seqnum ?seqnum .\nknora-api:seqnum knora-api:objectType xsd:integer .\n\n?seqnum a xsd:integer .\n\n?page knora-api:hasStillImageFile ?file .\nknora-api:hasStillImageFile knora-api:objectType knora-api:File .\n\n?file a knora-api:File .\n\n} ORDER BY ?seqnum\nOFFSET " + offset + "\n";
+            console.log(sparqlQueryStr);
             return this.doExtendedSearchReadResourceSequence(sparqlQueryStr);
         };
         // ------------------------------------------------------------------------
@@ -4606,15 +4711,14 @@
                 var resSeq = exports.ConvertJSONLD.createResourcesSequenceFromJsonLD(resourceResponse);
                 // collect resource class Iris
                 var resourceClassIris = exports.ConvertJSONLD.getResourceClassesFromJsonLD(resourceResponse);
-                var res = resSeq.resources[0];
+                var res0 = resSeq.resources[0];
                 // set file representation to display
-                console.log(Object.keys(res.properties));
-                var propKeys = Object.keys(res.properties);
+                var propKeys = Object.keys(res0.properties);
                 switch (true) {
                     case propKeys.includes(KnoraConstants.hasStillImageFileValue):
                         // res.fileRepresentationsToDisplay[0] = res.properties[KnoraConstants.hasStillImageFileValue];
                         var imgRepresentations = [];
-                        var fileValues = res.properties[KnoraConstants.hasStillImageFileValue];
+                        var fileValues = res0.properties[KnoraConstants.hasStillImageFileValue];
                         var imagesToDisplay = fileValues.filter(function (image) {
                             return !image.isPreview;
                         });
@@ -4623,10 +4727,10 @@
                                 var img = imagesToDisplay_1_1.value;
                                 var regions = [];
                                 try {
-                                    for (var _c = __values(res.incomingAnnotations), _d = _c.next(); !_d.done; _d = _c.next()) {
+                                    for (var _c = __values(res0.incomingAnnotations), _d = _c.next(); !_d.done; _d = _c.next()) {
                                         var incomingRegion = _d.value;
-                                        // TODO: change return type in ImageRegion from ReadResource into Resource
-                                        // const region = new ImageRegion(incomingRegion);
+                                        // TODO: change return type in Region from ReadResource into Resource
+                                        // const region = new Region(incomingRegion);
                                         // regions.push(region);
                                     }
                                 }
@@ -4660,42 +4764,105 @@
                                     throw e_1.error;
                             }
                         }
-                        res.fileRepresentationsToDisplay = imgRepresentations;
+                        res0.fileRepresentationsToDisplay.stillImage = imgRepresentations;
                         break;
                     case propKeys.includes(KnoraConstants.hasMovingImageFileValue):
-                        res.fileRepresentationsToDisplay = res.properties[KnoraConstants.hasMovingImageFileValue];
+                        //                            res0.fileRepresentationsToDisplay = res0.properties[KnoraConstants.hasMovingImageFileValue];
                         break;
                     case propKeys.includes(KnoraConstants.hasAudioFileValue):
-                        res.fileRepresentationsToDisplay = res.properties[KnoraConstants.hasAudioFileValue];
+                        //                            res0.fileRepresentationsToDisplay = res0.properties[KnoraConstants.hasAudioFileValue];
                         break;
                     case propKeys.includes(KnoraConstants.hasDocumentFileValue):
-                        res.fileRepresentationsToDisplay = res.properties[KnoraConstants.hasDocumentFileValue];
+                        //                            res0.fileRepresentationsToDisplay = res0.properties[KnoraConstants.hasDocumentFileValue];
                         break;
                     case propKeys.includes(KnoraConstants.hasDDDFileValue):
-                        res.fileRepresentationsToDisplay = res.properties[KnoraConstants.hasDDDFileValue];
+                        //                            res0.fileRepresentationsToDisplay = res0.properties[KnoraConstants.hasDDDFileValue];
                         break;
-                    // NYI / TODO: TextFileValue
+                    // TODO: TextFileValue
                     default:
                         // look for incoming fileRepresentation to display
-                        // e.g. looking for incoming stillImage files
-                        _this._incomingService.getStillImageRepresentationsForCompoundResource(res.id, 0).subscribe(function (incomingImageRepresentations) {
-                            if (incomingImageRepresentations.resources.length > 0) {
+                        // get incoming stillImage files
+                        _this._incomingService.getStillImageRepresentationsForCompoundResource(res0.id, 0).subscribe(function (incomingFiles) {
+                            var e_3, _a, e_4, _b;
+                            console.log('incomingFiles', incomingFiles);
+                            if (incomingFiles.resources.length > 0) {
                                 // update ontology information
-                                resSeq.ontologyInformation.updateOntologyInformation(incomingImageRepresentations.ontologyInformation);
+                                resSeq.ontologyInformation.updateOntologyInformation(incomingFiles.ontologyInformation);
                                 // set current offset
                                 // this.incomingStillImageRepresentationCurrentOffset = offset;
                                 // TODO: implement prepending of StillImageRepresentations when moving to the left (getting previous pages)
                                 // TODO: append existing images to response and then assign response to `this.resource.incomingStillImageRepresentations`
                                 // TODO: maybe we have to support non consecutive arrays (sparse arrays)
                                 // append incomingImageRepresentations.resources to this.resource.incomingStillImageRepresentations
-                                Array.prototype.push.apply(resSeq.resources[0].incomingFileRepresentations, incomingImageRepresentations.resources);
+                                Array.prototype.push.apply(res0.incomingFileRepresentations, incomingFiles.resources);
+                                // Array.prototype.push.apply(resSeq.resources[0].incomingFileRepresentations, incomingImageRepresentations.resources);
+                                var incomingImgRepresentations = [];
+                                try {
+                                    for (var _c = __values(incomingFiles.resources), _d = _c.next(); !_d.done; _d = _c.next()) {
+                                        var inRes = _d.value;
+                                        var incomingFileValues = inRes.properties[KnoraConstants.hasStillImageFileValue];
+                                        var incomingImagesToDisplay = incomingFileValues.filter(function (image) {
+                                            return !image.isPreview;
+                                        });
+                                        try {
+                                            for (var incomingImagesToDisplay_1 = __values(incomingImagesToDisplay), incomingImagesToDisplay_1_1 = incomingImagesToDisplay_1.next(); !incomingImagesToDisplay_1_1.done; incomingImagesToDisplay_1_1 = incomingImagesToDisplay_1.next()) {
+                                                var img = incomingImagesToDisplay_1_1.value;
+                                                var regions = [];
+                                                /*
+                                                for (const incomingRegion of inRes.incomingAnnotations) {
+
+                                                    // TODO: change return type in Region from ReadResource into Resource
+                                                    // const region = new Region(incomingRegion);
+
+                                                    // regions.push(incomingRegion);
+
+                                                }
+                                                */
+                                                var stillImage = new StillImageRepresentation(img, regions);
+                                                incomingImgRepresentations.push(stillImage);
+                                            }
+                                        }
+                                        catch (e_4_1) {
+                                            e_4 = { error: e_4_1 };
+                                        }
+                                        finally {
+                                            try {
+                                                if (incomingImagesToDisplay_1_1 && !incomingImagesToDisplay_1_1.done && (_b = incomingImagesToDisplay_1.return))
+                                                    _b.call(incomingImagesToDisplay_1);
+                                            }
+                                            finally {
+                                                if (e_4)
+                                                    throw e_4.error;
+                                            }
+                                        }
+                                        res0.fileRepresentationsToDisplay.stillImage = incomingImgRepresentations;
+                                    }
+                                }
+                                catch (e_3_1) {
+                                    e_3 = { error: e_3_1 };
+                                }
+                                finally {
+                                    try {
+                                        if (_d && !_d.done && (_a = _c.return))
+                                            _a.call(_c);
+                                    }
+                                    finally {
+                                        if (e_3)
+                                            throw e_3.error;
+                                    }
+                                }
                                 // prepare attached image files to be displayed
                                 // BeolResource.collectImagesAndRegionsForResource(this.resource);
                             }
                         }, function (error) {
                             console.error(error);
                         });
-                        console.log('incoming file representations to display');
+                    // do the same for all other incoming file representations
+                    // TODO: get incoming movingImage files
+                    // TODO: get incoming audio files
+                    // TODO: get incoming document files
+                    // TODO: get incoming text files
+                    // TODO: get ddd images files
                 }
                 // resource.properties[KnoraConstants.hasStillImageFileValue]
                 // get incoming links
@@ -5641,8 +5808,13 @@
     exports.ReadResourcesSequence = ReadResourcesSequence;
     exports.ResourcesSequence = ResourcesSequence;
     exports.CountQueryResult = CountQueryResult;
+    exports.AudioRepresentation = AudioRepresentation;
+    exports.oldFileRepresentation = oldFileRepresentation;
+    exports.FileRepresentation = FileRepresentation;
+    exports.MovingImageRepresentation = MovingImageRepresentation;
     exports.StillImageRepresentation = StillImageRepresentation;
-    exports.ImageRegion = ImageRegion;
+    exports.Region = Region;
+    exports.Sequence = Sequence;
     exports.Equals = Equals;
     exports.NotEquals = NotEquals;
     exports.GreaterThanEquals = GreaterThanEquals;

@@ -10,6 +10,8 @@
 <br>
 <mat-divider></mat-divider>
 
-<div *ngIf="resourceIri !== null">
+<div *ngIf="resourceIri !== null && !loading">
     <kui-resource-view [iri]="resourceIri"></kui-resource-view>
 </div>
+
+<kui-progress-indicator *ngIf="loading"></kui-progress-indicator>

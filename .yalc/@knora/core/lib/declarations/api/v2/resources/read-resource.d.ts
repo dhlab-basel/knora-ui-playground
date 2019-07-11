@@ -1,6 +1,6 @@
-import { ReadProperties, StillImageRepresentation } from '../../../';
-import { MovingImageRepresentation } from '../moving-image/moving-image-representation';
-import { ReadPropertyItem } from '@knora/core/public_api';
+import { ReadProperties } from '../properties/read-properties';
+import { FileRepresentation } from '../representations/fileRepresentation';
+import { StillImageRepresentation } from '../representations/still-image-representation';
 /**
  * @deprecated Use **Resource** instead
  *
@@ -37,12 +37,12 @@ export declare class Resource {
     readonly type: string;
     readonly label: string;
     incomingAnnotations: Array<Resource>;
-    incomingFileRepresentations: Array<Resource>;
+    incomingFileRepresentations: Array<ReadResource>;
     incomingLinks: Array<Resource>;
-    fileRepresentationsToDisplay: Array<StillImageRepresentation | MovingImageRepresentation | ReadPropertyItem>;
+    fileRepresentationsToDisplay: FileRepresentation;
     readonly properties?: ReadProperties;
     constructor(id: string, type: string, label: string, incomingAnnotations: Array<Resource>, // = incomingRegions in ReadResource
-    incomingFileRepresentations: Array<Resource>, // = incomingStillImageRepresentations in ReadResource
-    incomingLinks: Array<Resource>, fileRepresentationsToDisplay: Array<StillImageRepresentation | MovingImageRepresentation | ReadPropertyItem>, // = stillImageRepresentationsToDisplay in ReadResource
+    incomingFileRepresentations: Array<ReadResource>, // = incomingStillImageRepresentations in ReadResource
+    incomingLinks: Array<Resource>, fileRepresentationsToDisplay: FileRepresentation, // = stillImageRepresentationsToDisplay in ReadResource
     properties?: ReadProperties);
 }
