@@ -587,7 +587,7 @@ class ExpertSearchComponent {
             gravquery: [
                 `
 PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
-PREFIX incunabula: <${this.config.api}/ontology/0803/incunabula/simple/v2#>
+PREFIX incunabula: <${this.config.ontologyIRI}/ontology/0803/incunabula/simple/v2#>
 
 CONSTRUCT {
     ?book knora-api:isMainResource true .

@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Md5 } from 'ts-md5/dist/md5';
+import { Md5 } from 'ts-md5';
 import { KnoraConstants } from '@knora/core';
 import { __values } from 'tslib';
 import { NG_VALIDATORS, Validators } from '@angular/forms';
@@ -7,7 +7,7 @@ import { JDNConvertibleCalendarDateAdapter } from 'jdnconvertiblecalendardateada
 import { Location, CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Component, Input, EventEmitter, Output, Injectable, Inject, Directive, ElementRef, Renderer2, Pipe, NgModule, defineInjectable } from '@angular/core';
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef, MatButtonModule, MatIconModule, MatMenuModule, MatCardModule, MatListModule } from '@angular/material';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef, MatButtonModule, MatCardModule, MatIconModule, MatListModule, MatMenuModule } from '@angular/material';
 
 /**
  * The progress indicator can be used to show the status of loading something.

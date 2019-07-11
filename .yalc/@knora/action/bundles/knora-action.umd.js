@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/router'), require('ts-md5/dist/md5'), require('@knora/core'), require('@angular/forms'), require('jdnconvertiblecalendardateadapter'), require('@angular/common'), require('@angular/platform-browser/animations'), require('@angular/core'), require('@angular/material')) :
-    typeof define === 'function' && define.amd ? define('@knora/action', ['exports', '@angular/router', 'ts-md5/dist/md5', '@knora/core', '@angular/forms', 'jdnconvertiblecalendardateadapter', '@angular/common', '@angular/platform-browser/animations', '@angular/core', '@angular/material'], factory) :
-    (factory((global.knora = global.knora || {}, global.knora.action = {}),global.ng.router,global.md5,global['@knora/core'],global.ng.forms,global.jdnconvertiblecalendardateadapter,global.ng.common,global.ng.platformBrowser.animations,global.ng.core,global.ng.material));
-}(this, (function (exports,router,md5,core,forms,jdnconvertiblecalendardateadapter,common,animations,i0,material) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/router'), require('ts-md5'), require('@knora/core'), require('@angular/forms'), require('jdnconvertiblecalendardateadapter'), require('@angular/common'), require('@angular/platform-browser/animations'), require('@angular/core'), require('@angular/material')) :
+    typeof define === 'function' && define.amd ? define('@knora/action', ['exports', '@angular/router', 'ts-md5', '@knora/core', '@angular/forms', 'jdnconvertiblecalendardateadapter', '@angular/common', '@angular/platform-browser/animations', '@angular/core', '@angular/material'], factory) :
+    (factory((global.knora = global.knora || {}, global.knora.action = {}),global.ng.router,global.tsMd5,global['@knora/core'],global.ng.forms,global.jdnconvertiblecalendardateadapter,global.ng.common,global.ng.platformBrowser.animations,global.ng.core,global.ng.material));
+}(this, (function (exports,router,tsMd5,core,forms,jdnconvertiblecalendardateadapter,common,animations,i0,material) { 'use strict';
 
     /**
      * The progress indicator can be used to show the status of loading something.
@@ -622,7 +622,7 @@
                         this.source = AdminImageConfig.defaultUser;
                     }
                     else {
-                        this.source = 'http://www.gravatar.com/avatar/' + md5.Md5.hashStr(this.image) + '?d=mp&s=256';
+                        this.source = 'http://www.gravatar.com/avatar/' + tsMd5.Md5.hashStr(this.image) + '?d=mp&s=256';
                     }
                     break;
                 case 'project':

@@ -4205,7 +4205,6 @@ knora-api:hasStillImageFile knora-api:objectType knora-api:File .
 } ORDER BY ?seqnum
 OFFSET ${offset}
 `;
-        console.log(sparqlQueryStr);
         return this.doExtendedSearchReadResourceSequence(sparqlQueryStr);
     }
     // ------------------------------------------------------------------------
