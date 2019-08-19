@@ -1,7 +1,6 @@
-import { OnChanges, OnInit } from '@angular/core';
+import { OnInit, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GuiOrder, IncomingService, KnoraConstants, OntologyInformation, ReadResource, ResourceService, ResourcesSequence } from '@knora/core';
-import { StillImageComponent } from '../../resource';
+import { GuiOrder, IncomingService, KnoraConstants, OntologyInformation, ReadResource, ReadResourcesSequence, ResourceService } from '@knora/core';
 export declare class ResourceViewComponent implements OnInit, OnChanges {
     protected _route: ActivatedRoute;
     protected _router: Router;
@@ -11,15 +10,13 @@ export declare class ResourceViewComponent implements OnInit, OnChanges {
      * @param {string} [iri] Resource iri
      */
     iri?: string;
-    kuiStillImage: StillImageComponent;
-    sequence: ResourcesSequence;
+    sequence: ReadResourcesSequence;
     ontologyInfo: OntologyInformation;
     guiOrder: GuiOrder[];
     loading: boolean;
     error: any;
     KnoraConstants: typeof KnoraConstants;
     fileRepresentation: boolean;
-    currentResource: ReadResource;
     constructor(_route: ActivatedRoute, _router: Router, _resourceService: ResourceService, _incomingService: IncomingService);
     ngOnInit(): void;
     ngOnChanges(): void;
@@ -34,6 +31,8 @@ export declare class ResourceViewComponent implements OnInit, OnChanges {
      *
      * @param resource
      */
+    collectFileRepresentationsAndFileAnnotations(resource: ReadResource): void;
+    collectImagesAndRegionsForResource(resource: ReadResource): void;
     /**
      * Get incoming resources: incoming links, incoming regions, incoming still image representations.
      */
@@ -43,37 +42,8 @@ export declare class ResourceViewComponent implements OnInit, OnChanges {
      *
      * @param offset
      * @param callback
-     *
-    getIncomingRegions(offset: number, callback?: (numberOfResources: number) => void): void {
-        this._incomingService.getIncomingRegions(this.sequence.resources[0].id, offset).subscribe(
-            (regions: ReadResourcesSequence) => {
-                // update ontology information
-                this.ontologyInfo.updateOntologyInformation(regions.ontologyInformation);
-
-                // Append elements of regions.resources to resource.incoming
-                Array.prototype.push.apply(this.sequence.resources[0].incomingRegions, regions.resources);
-
-                // prepare regions to be displayed
-                this.collectImagesAndRegionsForResource(this.sequence.resources[0]);
-
-                // TODO: implement osdViewer
-                /* if (this.osdViewer) {
-                  this.osdViewer.updateRegions();
-                } *
-
-                // if callback is given, execute function with the amount of new images as the parameter
-                if (callback !== undefined) {
-                    callback(regions.resources.length);
-                }
-            },
-            (error: any) => {
-                console.error(error);
-                this.loading = false;
-            }
-        );
-    }
-
-    */
+     */
+    getIncomingRegions(offset: number, callback?: (numberOfResources: number) => void): void;
     /**
      * Get incoming links for a resource.
      *
@@ -81,6 +51,10 @@ export declare class ResourceViewComponent implements OnInit, OnChanges {
      * @param callback
      */
     getIncomingLinks(offset: number, callback?: (numberOfResources: number) => void): void;
+    /**
+     * Navigate to the incoming resource view.
+     *
+     * @param {string} id Incoming resource iri
+     */
     openLink(id: string): void;
-    refreshProperties(index: number): void;
 }

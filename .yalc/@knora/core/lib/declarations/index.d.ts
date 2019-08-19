@@ -31,7 +31,9 @@ export * from './api/admin/lists/list-info-response';
 export * from './api/admin/lists/list-node';
 export * from './api/admin/lists/list-node-info';
 export * from './api/admin/lists/list-node-info-response';
+export * from './api/admin/lists/list-node-update-payload';
 export * from './api/admin/lists/list-response';
+export * from './api/admin/lists/list-node-response';
 export * from './api/admin/lists/lists-response';
 export * from './api/admin/lists/list-create-payload';
 export * from './api/admin/lists/list-info-update-payload';
@@ -78,12 +80,8 @@ export * from './api/v2/count-query/count-query-result';
 /**
  * Interfaces for resources
  */
-export * from './api/v2/representations/audio-representation';
-export * from './api/v2/representations/fileRepresentation';
-export * from './api/v2/representations/moving-image-representation';
-export * from './api/v2/representations/still-image-representation';
-export * from './api/v2/representations/region';
-export * from './api/v2/representations/sequence';
+export * from './api/v2/still-image/still-image-representation';
+export * from './api/v2/still-image/image-region';
 /**
  * Interfaces for ontologies
  */

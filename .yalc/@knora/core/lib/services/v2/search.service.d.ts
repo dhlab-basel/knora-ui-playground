@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiServiceResult, CountQueryResult, ReadResourcesSequence, ResourcesSequence } from '../../declarations';
+import { ApiServiceResult, CountQueryResult, ReadResourcesSequence } from '../../declarations';
 import { ApiService } from '../api.service';
 import { OntologyCacheService } from './ontology-cache.service';
 export interface FulltextSearchParams {
@@ -37,8 +37,6 @@ export declare class SearchService extends ApiService {
      */
     private processSearchByLabelParams;
     /**
-     * @deprecated
-     *
      * Converts a JSON-LD object to a `ReadResorceSequence`.
      * To be passed as a function pointer (arrow notation required).
      *
@@ -46,12 +44,6 @@ export declare class SearchService extends ApiService {
      * @returns {Observable<ReadResourcesSequence>}
      */
     private convertJSONLDToReadResourceSequence;
-    /**
-     * Converts a JSON-LD object to a `ResourcesSequence`
-     *
-     * @param  {Object} resourceResponse
-     */
-    private convertJSONLDToResourcesSequence;
     /**
      * Performs a fulltext search.
      * TODO: mark as deprecated, use of `doFullTextSearchReadResourceSequence` recommended
@@ -97,20 +89,12 @@ export declare class SearchService extends ApiService {
      */
     doExtendedSearch(gravsearchQuery: string): Observable<ApiServiceResult>;
     /**
-     * @deprecated
      * Performs an extended search and turns the result into a `ReadResourceSequence`.
      *
      * @param gravsearchQuery the Sparql query string to be sent to Knora.
      * @returns Observable<ApiServiceResult>
      */
     doExtendedSearchReadResourceSequence(gravsearchQuery: string): Observable<ReadResourcesSequence>;
-    /**
-     * Performs an extended search and turns the result into a `ResourcesSequence`.
-     *
-     * @param  {string} gravsearchQuery
-     * @returns Observable
-     */
-    doExtendedSearchResourcesSequence(gravsearchQuery: string): Observable<ResourcesSequence>;
     /**
      * Performs an extended search count query.
      * TODO: mark as deprecated, use of `doExtendedSearchReadResourceSequence` recommended

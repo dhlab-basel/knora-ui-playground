@@ -114,7 +114,7 @@
         MovingImageComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'kui-moving-image',
-                        template: "<!-- video container -->\n<div class=\"moving-image-viewer\">\n\n  <!-- video source -->\n  <video></video>\n\n  <!-- timeline incl. preview -->\n  <div class=\"kui-mi-timeline\">\n\n  </div>\n  <div class=\"kui-mi-navigation\">\n\n\n  </div>\n\n</div>\n",
+                        template: "<p>\n  moving-image works!\n</p>\n",
                         styles: [""]
                     }] }
         ];
@@ -244,7 +244,6 @@
     var StillImageComponent = /** @class */ (function () {
         function StillImageComponent(elementRef) {
             this.elementRef = elementRef;
-            this.currentImageIndex = new core.EventEmitter();
             this.regionHovered = new core.EventEmitter();
             this.regions = {};
         }
@@ -321,7 +320,6 @@
         StillImageComponent.prototype.ngOnChanges = function (changes) {
             if (changes['images'] && changes['images'].isFirstChange()) {
                 this.setupViewer();
-                // this.currentImageIri.emit(this.images[this.viewer.currentPage()].stillImageFileValue.id);
             }
             if (changes['images']) {
                 this.openImages();
@@ -337,7 +335,6 @@
                     this.highlightRegion(this.activateRegion);
                 }
             }
-            if (this.viewer) ;
         };
         StillImageComponent.prototype.ngOnInit = function () {
             // initialisation is done on first run of ngOnChanges
@@ -461,19 +458,6 @@
             this.viewer.addHandler('resize', function (args) {
                 args.eventSource.svgOverlay().resize();
             });
-            var fileValues = this.images.map(function (img) {
-                return img.stillImageFileValue;
-            });
-            this.viewer.addHandler('page', function (event) {
-                console.log('event on page', event);
-                console.log('Now on page', event.page);
-                var index = event.page;
-                console.log('= id', fileValues[index].id);
-                var id = fileValues[index].id;
-                // return id;
-            });
-            //
-            // this.currentImageIri.emit(this.viewer.getCurrentImage());
         };
         /**
          * Adds all images in this.images to the viewer.
@@ -737,12 +721,10 @@
             }
             return pointsString;
         };
-        StillImageComponent.prototype.getCurrentImage = function () {
-        };
         StillImageComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'kui-still-image',
-                        template: "<div class=\"still-image-viewer\">\n    <div class=\"navigation left\">\n        <button mat-button class=\"full-size\" id=\"KUI_OSD_PREV_PAGE\">\n            <mat-icon>keyboard_arrow_left</mat-icon>\n        </button>\n    </div>\n\n    <!-- main content with navigation and osd viewer -->\n    <div class=\"content\">\n\n        <!-- openseadragon (osd) viewer -->\n        <div class=\"osd-container\"></div>\n        <!-- /openseadragon (osd) -->\n\n        <!-- footer with image caption e.g. copyright information -->\n        <div class=\"footer\">\n            <p class=\"mat-caption\" [innerHtml]=\"imageCaption\"></p>\n        </div>\n\n        <!-- action panel with tools for image -->\n        <mat-toolbar class=\"action\">\n            <mat-toolbar-row>\n                <!-- home button -->\n                <span>\n                    <button mat-icon-button id=\"KUI_OSD_HOME\">\n                        <mat-icon>home</mat-icon>\n                    </button>\n                </span>\n                <!-- zoom buttons -->\n                <span class=\"fill-remaining-space\"></span>\n                <span>\n                    <button mat-icon-button id=\"KUI_OSD_ZOOM_IN\">\n                        <mat-icon>add</mat-icon>\n                    </button>\n                    <button mat-icon-button id=\"KUI_OSD_ZOOM_OUT\">\n                        <mat-icon>remove</mat-icon>\n                    </button>\n                </span>\n                <!-- window button -->\n                <span class=\"fill-remaining-space\"></span>\n                <span>\n                    <button mat-icon-button id=\"KUI_OSD_FULL_PAGE\">\n                        <mat-icon>fullscreen</mat-icon>\n                    </button>\n                </span>\n            </mat-toolbar-row>\n        </mat-toolbar>\n\n    </div>\n\n    <div class=\"navigation\">\n        <button mat-button class=\"full-size\" id=\"KUI_OSD_NEXT_PAGE\" (click)=\"getCurrentImage()\">\n            <mat-icon>keyboard_arrow_right</mat-icon>\n        </button>\n    </div>\n\n</div>\n\n<!-- simple image viewer e.g. as a preview -->\n<!-- TODO: handle images array -->\n<!--<img *ngIf=\"simple && images?.length === 1; else osdViewer\" [src]=\"simpleImageExample\">-->\n\n\n<!--\n    <div>\n        <span *ngIf=\"images.length > 1\" (click)=\"gotoLeft()\">&lt;&lt;</span>\n        <span *ngIf=\"images.length > 1\" (click)=\"gotoRight()\">&gt;&gt;</span>\n    </div>\n-->\n",
+                        template: "<div class=\"still-image-viewer\">\n    <div class=\"navigation left\">\n        <button mat-button class=\"full-size\" id=\"KUI_OSD_PREV_PAGE\">\n            <mat-icon>keyboard_arrow_left</mat-icon>\n        </button>\n    </div>\n\n    <!-- main content with navigation and osd viewer -->\n    <div class=\"content\">\n\n        <!-- openseadragon (osd) viewer -->\n        <div class=\"osd-container\"></div>\n        <!-- /openseadragon (osd) -->\n\n        <!-- footer with image caption e.g. copyright information -->\n        <div class=\"footer\">\n            <p class=\"mat-caption\" [innerHtml]=\"imageCaption\"></p>\n        </div>\n\n        <!-- action panel with tools for image -->\n        <mat-toolbar class=\"action\">\n            <mat-toolbar-row>\n                <!-- home button -->\n                <span>\n                <button mat-icon-button id=\"KUI_OSD_HOME\"><mat-icon>home</mat-icon></button>\n            </span>\n                <!-- zoom buttons -->\n                <span class=\"fill-remaining-space\"></span>\n                <span>\n                <button mat-icon-button id=\"KUI_OSD_ZOOM_IN\"><mat-icon>add</mat-icon></button>\n                <button mat-icon-button id=\"KUI_OSD_ZOOM_OUT\"><mat-icon>remove</mat-icon></button>\n            </span>\n                <!-- window button -->\n                <span class=\"fill-remaining-space\"></span>\n                <span>\n                <button mat-icon-button id=\"KUI_OSD_FULL_PAGE\"><mat-icon>fullscreen</mat-icon></button>\n            </span>\n            </mat-toolbar-row>\n        </mat-toolbar>\n\n    </div>\n\n    <div class=\"navigation right\">\n        <button mat-button class=\"full-size\" id=\"KUI_OSD_NEXT_PAGE\">\n            <mat-icon>keyboard_arrow_right</mat-icon>\n        </button>\n    </div>\n\n</div>\n\n<!-- simple image viewer e.g. as a preview -->\n<!-- TODO: handle images array -->\n<!--<img *ngIf=\"simple && images?.length === 1; else osdViewer\" [src]=\"simpleImageExample\">-->\n\n\n<!--\n    <div>\n        <span *ngIf=\"images.length > 1\" (click)=\"gotoLeft()\">&lt;&lt;</span>\n        <span *ngIf=\"images.length > 1\" (click)=\"gotoRight()\">&gt;&gt;</span>\n    </div>\n-->\n\n\n\n",
                         styles: [".still-image-viewer{display:inline-flex;height:400px;max-width:800px;width:100%}@media (max-height:636px){.still-image-viewer{height:300px}}.still-image-viewer .navigation{height:calc(400px + 64px + 24px);width:36px}.still-image-viewer .navigation .mat-button.full-size{height:100%!important;width:36px!important;padding:0!important;min-width:36px!important}.still-image-viewer .content{height:calc(400px + 64px + 24px);max-width:calc(800px - (2 * 36px));width:calc(100% - (2 * 36px))}.still-image-viewer .content .osd-container{color:#ccc;background-color:#000;height:400px}.still-image-viewer .content .osd-container.fullscreen{max-width:100vw}.still-image-viewer .content .footer p{color:#ccc;background-color:#000;height:24px;margin:0;padding:0 16px}/deep/ .roi-svgoverlay{opacity:.4;fill:transparent;stroke:#00695c;stroke-width:2px;vector-effect:non-scaling-stroke}.roi-svgoverlay:focus,/deep/ .roi-svgoverlay:hover{opacity:1}/deep/ .roi-svgoverlay.active{opacity:1}"]
                     }] }
         ];
@@ -756,7 +738,6 @@
             images: [{ type: core.Input }],
             imageCaption: [{ type: core.Input }],
             activateRegion: [{ type: core.Input }],
-            currentImageIndex: [{ type: core.Output }],
             regionHovered: [{ type: core.Output }]
         };
         return StillImageComponent;
@@ -796,7 +777,7 @@
             { type: core.Component, args: [{
                         selector: 'kui-boolean-value',
                         template: "<mat-checkbox [checked]=\"valueObject.bool\" disabled=\"true\"></mat-checkbox>\n",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
                     }] }
         ];
         /** @nocollapse */
@@ -824,7 +805,7 @@
             { type: core.Component, args: [{
                         selector: 'kui-color-value',
                         template: "<span [style.background-color]=\"valueObject.colorHex\">{{valueObject.colorHex}}</span>",
-                        styles: [".fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.mat-form-field{width:36px;overflow-x:visible}"]
+                        styles: [".fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.mat-form-field{width:36px;overflow-x:visible}"]
                     }] }
         ];
         /** @nocollapse */
@@ -919,7 +900,7 @@
             { type: core.Component, args: [{
                         selector: 'kui-date-value',
                         template: "<span *ngIf=\"period; else preciseDate\">\n    {{dates[0].date | date: dates[0].format}}\n    <span *ngIf=\"era\">\n        {{dates[0].era}}\n    </span>\n    - {{dates[1].date | date: dates[1].format}}\n    <span *ngIf=\"era\">\n        {{dates[1].era}}\n    </span>\n\n    <span *ngIf=\"calendar\">\n        ({{dates[0].calendar}})\n    </span>\n</span>\n\n<ng-template #preciseDate>\n\n    <span>\n        {{dates[0].date | date: dates[0].format}}\n        <span *ngIf=\"era\">\n            {{dates[0].era}}\n        </span>\n        <span *ngIf=\"calendar\">\n            ({{dates[0].calendar}})\n        </span>\n    </span>\n\n</ng-template>\n",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
                     }] }
         ];
         /** @nocollapse */
@@ -949,7 +930,7 @@
             { type: core.Component, args: [{
                         selector: 'kui-decimal-value',
                         template: "<span>{{valueObject.decimal}}</span>",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
                     }] }
         ];
         /** @nocollapse */
@@ -969,7 +950,7 @@
             { type: core.Component, args: [{
                         selector: 'kui-external-res-value',
                         template: "<p>\n  external-res-value works!\n</p>\n",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
                     }] }
         ];
         /** @nocollapse */
@@ -994,7 +975,7 @@
             { type: core.Component, args: [{
                         selector: 'kui-geometry-value',
                         template: "<span>{{valueObject.geometryString}}</span>",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
                     }] }
         ];
         /** @nocollapse */
@@ -1014,7 +995,7 @@
             { type: core.Component, args: [{
                         selector: 'kui-geoname-value',
                         template: "<p>\n  geoname-value works!\n</p>",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
                     }] }
         ];
         /** @nocollapse */
@@ -1039,7 +1020,7 @@
             { type: core.Component, args: [{
                         selector: 'kui-integer-value',
                         template: "<span>{{valueObject.integer}}</span>",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
                     }] }
         ];
         /** @nocollapse */
@@ -1067,7 +1048,7 @@
             { type: core.Component, args: [{
                         selector: 'kui-interval-value',
                         template: "<span>{{valueObject.intervalStart}} - {{valueObject.intervalEnd}}</span>",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
                     }] }
         ];
         /** @nocollapse */
@@ -1114,8 +1095,8 @@
         LinkValueComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'kui-link-value',
-                        template: "<a class=\"kui-link\" (click)=\"refResClicked()\">{{referredResource}}</a>\n",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+                        template: "<a class=\"salsah-link\" (click)=\"refResClicked()\">{{referredResource}}</a>",
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
                     }] }
         ];
         /** @nocollapse */
@@ -1150,7 +1131,7 @@
             { type: core.Component, args: [{
                         selector: 'kui-list-value',
                         template: "<span *ngIf=\"node | async\">{{(node | async )?.label}}</span>\n",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
                     }] }
         ];
         /** @nocollapse */
@@ -1255,24 +1236,13 @@
 
     var TextValueAsStringComponent = /** @class */ (function () {
         function TextValueAsStringComponent() {
-            this.regexUrl = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/;
         }
         Object.defineProperty(TextValueAsStringComponent.prototype, "valueObject", {
             get: function () {
                 return this._textStringValueObj;
             },
             set: function (value) {
-                // console.log(value);
-                var str = value.str;
-                if (this.regexUrl.exec(str)) {
-                    var url = this.regexUrl.exec(str)[0];
-                    var newStr = str.replace(this.regexUrl, '<a class="kui-link" href="' + url + '">' + url + '</a>');
-                    value.str = newStr;
-                    this._textStringValueObj = value;
-                }
-                else {
-                    this._textStringValueObj = value;
-                }
+                this._textStringValueObj = value;
             },
             enumerable: true,
             configurable: true
@@ -1280,8 +1250,8 @@
         TextValueAsStringComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'kui-text-value-as-string',
-                        template: "<span [innerHTML]=\"valueObject.str\"></span>\n",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}", ".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+                        template: "<span>{{valueObject.str}}</span>\n",
+                        styles: [""]
                     }] }
         ];
         /** @nocollapse */
@@ -1372,8 +1342,8 @@
         UriValueComponent.decorators = [
             { type: core.Component, args: [{
                         selector: '   kui-uri-value',
-                        template: "<a href=\"{{valueObject.uri}}\" target=\"_blank\" class=\"kui-link\">{{displayString}}</a>\n",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+                        template: "<a href=\"{{valueObject.uri}}\" target=\"_blank\">{{displayString}}</a>\n",
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
                     }] }
         ];
         /** @nocollapse */
@@ -1394,7 +1364,7 @@
             { type: core.Component, args: [{
                         selector: 'kui-compare-view',
                         template: "<p>\n  compare-view works!\n</p>\n",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
                     }] }
         ];
         /** @nocollapse */
@@ -1411,7 +1381,7 @@
             { type: core.Component, args: [{
                         selector: 'kui-graph-view',
                         template: "<p>This is the GraphView component to visualize the connection of a resource. This view will implement the d3js library</p>\n",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
                     }] }
         ];
         /** @nocollapse */
@@ -1439,7 +1409,7 @@
             { type: core.Component, args: [{
                         selector: 'kui-grid-view',
                         template: "<div>\n  <!-- <kui-progress-indicator *ngIf=\"isLoading\" [color]=\"'#D88958'\"></kui-progress-indicator> -->\n\n  <div fxLayout=\"row wrap\" fxLayout.xs=\"column\" fxLayoutGap=\"grid\">\n\n    <div fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.lg=\"20\" fxFlex.xl=\"16.6\" fxFlex=\"16.6\" *ngFor=\"let res of result\" class=\"gv-preview\">\n      <mat-card class=\"link\" (click)=\"openResource(res.id)\">\n\n        <mat-card-subtitle>{{ontologyInfo?.getLabelForResourceClass(res.type)}}</mat-card-subtitle>\n        <mat-card-title>{{res.label}}</mat-card-title>\n\n\n        <mat-card-content *ngFor=\"let prop of res.properties | kuiKey\">\n          <!-- description -->\n          <div *ngFor=\"let val of prop.value | kuiKey\">\n            <div [ngSwitch]=\"val.value.getClassName()\">\n              <div class=\"lv-html-text\" *ngSwitchCase=\"KnoraConstants.ReadTextValueAsHtml\">\n                <kui-text-value-as-html [valueObject]=\"val.value\" [ontologyInfo]=\"ontologyInfo\" [bindEvents]=\"false\"></kui-text-value-as-html>\n                <p class=\"lv-read-more\"></p>\n              </div>\n              <div>\n                <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val.value\" [calendar]=\"true\" [era]=\"true\"></kui-date-value>\n                <span *ngSwitchDefault=\"\">{{val.value.getContent()}}</span>\n              </div>\n              <br>\n              <span *ngIf=\"ontologyInfo?.getLabelForProperty(prop.key) !== 'Text'\">\n                {{ontologyInfo?.getLabelForProperty(prop.key)}}\n              </span>\n            </div>\n          </div>\n        </mat-card-content>\n\n      </mat-card>\n    </div>\n  </div>\n\n\n</div>",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.gv-preview{margin:6px 0;padding:24px;word-wrap:break-word;border-radius:5px}.gv-preview .mat-card{height:160px;color:rgba(0,0,0,.81);overflow:hidden;padding-bottom:25px}.gv-preview .mat-card:hover{background:rgba(0,105,92,.39);color:#000}.gv-preview .mat-card:active{background:rgba(0,105,92,.61)}.gv-preview .mat-card .mat-card-title{font-size:12pt;font-weight:600}"]
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.gv-preview{margin:6px 0;padding:24px;word-wrap:break-word;border-radius:5px}.gv-preview .mat-card{height:160px;color:rgba(0,0,0,.81);overflow:hidden;padding-bottom:25px}.gv-preview .mat-card:hover{background:rgba(0,105,92,.39);color:#000}.gv-preview .mat-card:active{background:rgba(0,105,92,.61)}.gv-preview .mat-card .mat-card-title{font-size:12pt;font-weight:600}"]
                     }] }
         ];
         /** @nocollapse */
@@ -1473,7 +1443,7 @@
             { type: core.Component, args: [{
                         selector: 'kui-list-view',
                         template: "<div>\n    <!-- <kui-progress-indicator *ngIf=\"isLoading\" [color]=\"'#D88958'\"></kui-progress-indicator> -->\n\n    <mat-list class=\"list-view lv-items\" *ngFor=\"let res of result; let i = index; let last = last;\">\n        <mat-list-item class=\"link\" (click)=\"openResource(res.id)\">\n            <mat-icon matListIcon>image_search</mat-icon>\n            <p matLine class=\"lv-res-label\">{{ontologyInfo?.getLabelForResourceClass(res.type)}}</p>\n            <h3 matLine class=\"lv-label\">{{res.label}}</h3>\n\n            <div matLine *ngFor=\"let prop of res.properties | kuiKey\">\n\n                <div matLine *ngFor=\"let val of prop.value | kuiKey\">\n\n                    <div [ngSwitch]=\"val.value.getClassName()\">\n                        <span *ngIf=\"ontologyInfo?.getLabelForProperty(prop.key) !== 'Text'\" class=\"lv-prop-label\">\n                            {{ontologyInfo?.getLabelForProperty(prop.key)}}:&nbsp;\n                        </span>\n\n                        <div class=\"lv-html-text\">\n\n                            <div *ngSwitchCase=\"KnoraConstants.ReadTextValueAsHtml\">\n                                <kui-text-value-as-html [valueObject]=\"val.value\" [ontologyInfo]=\"ontologyInfo\" [bindEvents]=\"false\"></kui-text-value-as-html>\n                            </div>\n\n                            <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val.value\" [calendar]=\"true\" [era]=\"true\"></kui-date-value>\n\n                            <span *ngSwitchDefault=\"\">{{val.value.getContent()}}</span>\n\n                            <!-- slice the end of long texts -->\n                            <p class=\"lv-read-more\"></p>\n\n                        </div>\n\n                    </div>\n\n                </div>\n\n            </div>\n\n        </mat-list-item>\n\n        <mat-divider *ngIf=\"!last\"></mat-divider>\n\n    </mat-list>\n</div>\n",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.mat-list .mat-list-item .mat-line{white-space:normal!important}.list-view .mat-list-item{height:auto;min-height:40px;padding:8px 0}.lv-label{font-weight:700!important;font-size:16px!important;line-height:1.5}.lv-res-label{color:rgba(0,0,0,.54);font-size:14px!important}.lv-prop-label{font-style:italic}"]
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.mat-list .mat-list-item .mat-line{white-space:normal!important}.list-view .mat-list-item{height:auto;min-height:40px;padding:8px 0}.lv-label{font-weight:700!important;font-size:16px!important;line-height:1.5}.lv-res-label{color:rgba(0,0,0,.54);font-size:14px!important}.lv-prop-label{font-style:italic}"]
                     }] }
         ];
         /** @nocollapse */
@@ -1490,46 +1460,20 @@
     }());
 
     /**
-     * Shows all metadata (properties) in the resource viewer
-     *
+     * Deprecated!?
      */
     var PropertiesViewComponent = /** @class */ (function () {
-        // @Output() routeChanged: EventEmitter<string> = new EventEmitter<string>();
-        function PropertiesViewComponent(_router) {
-            this._router = _router;
-            this.loading = false;
-            this.KnoraConstants = core$1.KnoraConstants;
+        function PropertiesViewComponent() {
         }
-        /**
-         * Navigate to the incoming resource view.
-         *
-         * @param {string} id Incoming resource iri
-         */
-        PropertiesViewComponent.prototype.openLink = function (id) {
-            this.loading = true;
-            // this.routeChanged.emit(id);
-            this._router.navigate(['/resource/' + encodeURIComponent(id)]);
-        };
         PropertiesViewComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'kui-properties-view',
-                        template: "<!-- properties -->\n<div class=\"properties\">\n    <div *ngFor=\"let prop of guiOrder; let last = last\">\n        <div *ngIf=\"properties[prop?.property]\" class=\"property\">\n            <div class=\"property-label\">\n                <!-- label of the property -->\n                <h3 class=\"label mat-subheading-1\">\n                    {{ontologyInfo.getLabelForProperty(prop?.property)}}\n                </h3>\n            </div>\n            <div class=\"property-value\">\n\n                <!-- the value(s) of the property -->\n                <div class=\"property-value-item\" *ngFor=\"let val of properties[prop?.property]; let lastItem = last\">\n                    <span [ngSwitch]=\"val.getClassName()\" [class.list]=\"properties[prop?.property].length > 1\"\n                          [class.lastItem]=\"lastItem\">\n                        <kui-text-value-as-string *ngSwitchCase=\"KnoraConstants.ReadTextValueAsString\"\n                                                  [valueObject]=\"val\">\n                        </kui-text-value-as-string>\n                        <kui-text-value-as-xml *ngSwitchCase=\"KnoraConstants.ReadTextValueAsXml\" [valueObject]=\"val\">\n                        </kui-text-value-as-xml>\n                        <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val\"\n                                        [calendar]=\"true\" [era]=\"true\">\n                        </kui-date-value>\n                        <kui-link-value class=\"app-link\" *ngSwitchCase=\"KnoraConstants.ReadLinkValue\"\n                                        [valueObject]=\"val\" [ontologyInfo]=\"ontologyInfo\"\n                                        (referredResourceClicked)=\"openLink(val.referredResourceIri)\">\n                        </kui-link-value>\n                        <kui-integer-value *ngSwitchCase=\"KnoraConstants.ReadIntegerValue\" [valueObject]=\"val\">\n                        </kui-integer-value>\n                        <kui-decimal-value *ngSwitchCase=\"KnoraConstants.ReadDecimalValue\" [valueObject]=\"val\">\n                        </kui-decimal-value>\n                        <kui-geometry-value *ngSwitchCase=\"KnoraConstants.ReadGeomValue\" [valueObject]=\"val\">\n                        </kui-geometry-value>\n                        <kui-color-value *ngSwitchCase=\"KnoraConstants.ReadColorValue\" [valueObject]=\"val\">\n                        </kui-color-value>\n                        <kui-uri-value *ngSwitchCase=\"KnoraConstants.ReadUriValue\" [valueObject]=\"val\">\n                        </kui-uri-value>\n                        <kui-boolean-value *ngSwitchCase=\"KnoraConstants.ReadBooleanValue\" [valueObject]=\"val\">\n                        </kui-boolean-value>\n                        <kui-interval-value *ngSwitchCase=\"KnoraConstants.ReadIntervalValue\" [valueObject]=\"val\">\n                        </kui-interval-value>\n                        <kui-list-value *ngSwitchCase=\"KnoraConstants.ReadListValue\" [valueObject]=\"val\">\n                        </kui-list-value>\n                        <kui-textfile-value *ngSwitchCase=\"KnoraConstants.TextFileValue\" [valueObject]=\"val\">\n                        </kui-textfile-value>\n                        <span *ngSwitchDefault>Not supported {{val.getClassName()}}</span>\n                        <br>\n                    </span>\n                </div>\n            </div>\n        </div>\n    </div>\n\n</div>\n<div class=\"incoming\">\n\n    <!-- annotations are resources like region, sequence etc. -->\n    <!-- TODO: we can't display incoming annotations as expected\n    <div class=\"annotations\">\n        <!-- *ngIf=\"annotations?.length > 0\"> --\n        <h3 class=\"label mat-subheading-1\">\n            Annotations\n        </h3>\n        <mat-list *ngFor=\"let annotation of annotations\">\n            <mat-list-item class=\"kui-link\" (click)=\"openLink(annotation.id)\">\n                <span>{{annotation.label}}</span>\n            </mat-list-item>\n        </mat-list>\n    </div>\n    -->\n\n    <!-- incoming links -->\n    <div class=\"links\" *ngIf=\"incomingLinks?.length > 0\">\n        <h3 class=\"label mat-subheading-1\">\n            Links\n        </h3>\n        <ul>\n            <li *ngFor=\"let incoming of incomingLinks\" class=\"kui-link\" (click)=\"openLink(incoming.id)\">\n                {{incoming.label}}\n            </li>\n        </ul>\n    </div>\n</div>\n",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}:host{display:-ms-grid;display:grid;-ms-grid-columns:(1fr)[6];grid-template-columns:repeat(6,1fr);gap:16px}:host .incoming,:host .properties{margin-top:16px}:host .properties{-ms-grid-column:1;-ms-grid-column-span:4;grid-column:1/span 4}:host .properties .property{-ms-grid-row:1;grid-row:1/1;display:-ms-grid;display:grid;-ms-grid-columns:(1fr)[4];grid-template-columns:repeat(4,1fr);gap:16px}:host .properties .property .property-label,:host .properties .property .property-value{padding:2px;overflow-wrap:break-word}:host .properties .property .property-label{-ms-grid-column:1;-ms-grid-column-span:1;grid-column:1/span 1}:host .properties .property .property-label .label{text-align:right}:host .properties .property .property-value{padding-top:5px;-ms-grid-column:2;-ms-grid-column-span:3;grid-column:2/span 3}:host .incoming{-ms-grid-column:5;-ms-grid-column-span:2;grid-column:5/span 2;display:-ms-grid;display:grid;gap:16px;-ms-grid-columns:1fr 1fr;grid-template-columns:1fr 1fr;-ms-grid-rows:(minmax(60px,auto))[6];grid-template-rows:repeat(6,minmax(60px,auto))}:host .incoming .annotations,:host .incoming .links{padding:16px;-ms-grid-column:1;-ms-grid-column-span:2;grid-column:1/span 2;border-radius:6px}:host .incoming .annotations ul,:host .incoming .links ul{-webkit-padding-start:5px;padding-inline-start:5px;list-style-type:none}:host .incoming .annotations ul li,:host .incoming .links ul li{margin-bottom:10px;text-indent:-8px}:host .incoming .annotations ul li:before,:host .incoming .links ul li:before{content:\"- \"}:host .incoming .annotations{background:rgba(245,222,179,.39)}:host .incoming .links{background:rgba(222,184,135,.39)}.label{color:rgba(0,0,0,.54)}@media screen and (max-width:768px){.incoming,.properties{-ms-grid-column:1!important;-ms-grid-column-span:6!important;grid-column:1/span 6!important;gap:0!important}.incoming .property,.properties .property{gap:0!important}.incoming .annotations,.incoming .links,.incoming .property-label,.incoming .property-value,.properties .annotations,.properties .links,.properties .property-label,.properties .property-value{-ms-grid-column:1!important;-ms-grid-column-span:4!important;grid-column:1/span 4!important}h3.label{text-align:left!important;margin:16px 0 0!important}}"]
+                        template: "<p>\n    properties-view works!\n</p>",
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
                     }] }
         ];
         /** @nocollapse */
-        PropertiesViewComponent.ctorParameters = function () {
-            return [
-                { type: router.Router }
-            ];
-        };
-        PropertiesViewComponent.propDecorators = {
-            guiOrder: [{ type: core.Input }],
-            properties: [{ type: core.Input }],
-            annotations: [{ type: core.Input }],
-            incomingLinks: [{ type: core.Input }],
-            ontologyInfo: [{ type: core.Input }]
-        };
+        PropertiesViewComponent.ctorParameters = function () { return []; };
         return PropertiesViewComponent;
     }());
 
@@ -1543,11 +1487,10 @@
             this.KnoraConstants = core$1.KnoraConstants;
         }
         ResourceViewComponent.prototype.ngOnInit = function () {
-            // this.getResource(this.iri);
+            this.getResource(this.iri);
         };
         ResourceViewComponent.prototype.ngOnChanges = function () {
             this.getResource(this.iri);
-            // console.log(this.kuiStillImage.k;
         };
         /**
          * Get a read resource sequence with ontology information and incoming resources.
@@ -1557,28 +1500,20 @@
         ResourceViewComponent.prototype.getResource = function (id) {
             var _this = this;
             this.loading = true;
-            this._resourceService.getResource(decodeURIComponent(id)).subscribe(function (result) {
-                console.log('getResource result', result);
-                // result with resources only and WITHOUT incoming stuff
+            this._resourceService.getReadResource(decodeURIComponent(id)).subscribe(function (result) {
                 _this.sequence = result;
-                // this.ontologyInfo = result.ontologyInformation;
-                // const resType = this.sequence.resources[0].type;
-                _this.guiOrder = result.ontologyInformation.getResourceClasses()[_this.sequence.resources[0].type].guiOrder;
-                // collect all filerepresentations to display including annotations
-                // --> for the first resource only...
-                // this.sequence.resources[0].fileRepresentationsToDisplay = this.collectFileRepresentationsAndFileAnnotations(this.sequence.resources[0]);
+                _this.ontologyInfo = result.ontologyInformation;
+                var resType = _this.sequence.resources[0].type;
+                _this.guiOrder = result.ontologyInformation.getResourceClasses()[resType].guiOrder;
                 // collect images and regions
-                // --> for the first resource only...
-                // this.collectImagesAndRegionsForResource(this.sequence.resources[0]);
+                _this.collectImagesAndRegionsForResource(_this.sequence.resources[0]);
                 // get incoming resources
-                //                this.requestIncomingResources();
+                _this.requestIncomingResources();
                 // this.fileRepresentation = this.sequence.resources[0].properties.indexOf(KnoraConstants.hasStillImageFileValue) > -1;
-                // console.log('fileRepresentation', this.sequence.resources[0].stillImageRepresentationsToDisplay[0].stillImageFileValue);
+                // console.log(this.fileRepresentation);
                 // wait until the resource is ready
                 setTimeout(function () {
                     // console.log(this.sequence);
-                    _this.currentResource = _this.sequence.resources[0].incomingFileRepresentations[0];
-                    console.log('currentResource', _this.sequence.resources[0].incomingFileRepresentations[0]);
                     _this.loading = false;
                 }, 1000);
             }, function (error) {
@@ -1590,89 +1525,117 @@
          *
          * @param resource
          */
-        /*
-        collectFileRepresentationsAndFileAnnotations(resource: Resource): FileRepresentation[] {
-            const fileRepresentations: FileRepresentation[] = [];
-
-            if (resource.properties[KnoraConstants.hasStillImageFileValue] !== undefined) {
-                const fileValues: ReadStillImageFileValue[] = resource.properties[KnoraConstants.hasStillImageFileValue] as ReadStillImageFileValue[];
+        ResourceViewComponent.prototype.collectFileRepresentationsAndFileAnnotations = function (resource) {
+        };
+        ResourceViewComponent.prototype.collectImagesAndRegionsForResource = function (resource) {
+            var e_1, _a, e_2, _b, e_3, _c, e_4, _d;
+            var imgRepresentations = [];
+            if (resource.properties[core$1.KnoraConstants.hasStillImageFileValue] !== undefined) {
+                // TODO: check if resources is a StillImageRepresentation using the ontology responder (support for subclass relations required)
+                // resource has StillImageFileValues that are directly attached to it (properties)
+                var fileValues = resource.properties[core$1.KnoraConstants.hasStillImageFileValue];
+                var imagesToDisplay = fileValues.filter(function (image) {
+                    return !image.isPreview;
+                });
+                try {
+                    for (var imagesToDisplay_1 = __values(imagesToDisplay), imagesToDisplay_1_1 = imagesToDisplay_1.next(); !imagesToDisplay_1_1.done; imagesToDisplay_1_1 = imagesToDisplay_1.next()) {
+                        var img = imagesToDisplay_1_1.value;
+                        var regions = [];
+                        try {
+                            for (var _e = __values(resource.incomingRegions), _f = _e.next(); !_f.done; _f = _e.next()) {
+                                var incomingRegion = _f.value;
+                                var region = new core$1.ImageRegion(incomingRegion);
+                                regions.push(region);
+                            }
+                        }
+                        catch (e_2_1) {
+                            e_2 = { error: e_2_1 };
+                        }
+                        finally {
+                            try {
+                                if (_f && !_f.done && (_b = _e.return))
+                                    _b.call(_e);
+                            }
+                            finally {
+                                if (e_2)
+                                    throw e_2.error;
+                            }
+                        }
+                        var stillImage = new core$1.StillImageRepresentation(img, regions);
+                        imgRepresentations.push(stillImage);
+                    }
+                }
+                catch (e_1_1) {
+                    e_1 = { error: e_1_1 };
+                }
+                finally {
+                    try {
+                        if (imagesToDisplay_1_1 && !imagesToDisplay_1_1.done && (_a = imagesToDisplay_1.return))
+                            _a.call(imagesToDisplay_1);
+                    }
+                    finally {
+                        if (e_1)
+                            throw e_1.error;
+                    }
+                }
             }
-
-            return fileRepresentations;
-        }
-
-        /*
-
-            collectImagesAndRegionsForResource(resource: Resource): void {
-
-                const imgRepresentations: StillImageRepresentation[] = [];
-
-                if (resource.properties[KnoraConstants.hasStillImageFileValue] !== undefined) {
+            else if (resource.incomingStillImageRepresentations.length > 0) {
+                // there are StillImageRepresentations pointing to this resource (incoming)
+                var readStillImageFileValues = resource.incomingStillImageRepresentations.map(function (stillImageRes) {
+                    var fileValues = stillImageRes.properties[core$1.KnoraConstants.hasStillImageFileValue];
                     // TODO: check if resources is a StillImageRepresentation using the ontology responder (support for subclass relations required)
-                    // resource has StillImageFileValues that are directly attached to it (properties)
-
-                    const fileValues: ReadStillImageFileValue[] = resource.properties[KnoraConstants.hasStillImageFileValue] as ReadStillImageFileValue[];
-                    const imagesToDisplay: ReadStillImageFileValue[] = fileValues.filter((image) => {
+                    var imagesToDisplay = fileValues.filter(function (image) {
                         return !image.isPreview;
                     });
-
-
-                    for (const img of imagesToDisplay) {
-
-                        const regions: ImageRegion[] = [];
-                        for (const incomingRegion of resource.incomingAnnotations) {
-
-                            const region = new ImageRegion(incomingRegion);
-
-                            regions.push(region);
-
+                    return imagesToDisplay;
+                }).reduce(function (prev, curr) {
+                    // transform ReadStillImageFileValue[][] to ReadStillImageFileValue[]
+                    return prev.concat(curr);
+                });
+                try {
+                    for (var readStillImageFileValues_1 = __values(readStillImageFileValues), readStillImageFileValues_1_1 = readStillImageFileValues_1.next(); !readStillImageFileValues_1_1.done; readStillImageFileValues_1_1 = readStillImageFileValues_1.next()) {
+                        var img = readStillImageFileValues_1_1.value;
+                        var regions = [];
+                        try {
+                            for (var _g = __values(resource.incomingRegions), _h = _g.next(); !_h.done; _h = _g.next()) {
+                                var incomingRegion = _h.value;
+                                var region = new core$1.ImageRegion(incomingRegion);
+                                regions.push(region);
+                            }
                         }
-
-                        const stillImage = new StillImageRepresentation(img, regions);
-                        imgRepresentations.push(stillImage);
-
-                    }
-
-
-                } else if (resource.incomingStillImageRepresentations.length > 0) {
-                    // there are StillImageRepresentations pointing to this resource (incoming)
-
-                    const readStillImageFileValues: ReadStillImageFileValue[] = resource.incomingStillImageRepresentations.map(
-                        (stillImageRes: ReadResource) => {
-                            const fileValues = stillImageRes.properties[KnoraConstants.hasStillImageFileValue] as ReadStillImageFileValue[];
-                            // TODO: check if resources is a StillImageRepresentation using the ontology responder (support for subclass relations required)
-                            const imagesToDisplay = fileValues.filter((image) => {
-                                return !image.isPreview;
-
-                            });
-
-                            return imagesToDisplay;
+                        catch (e_4_1) {
+                            e_4 = { error: e_4_1 };
                         }
-                    ).reduce(function (prev, curr) {
-                        // transform ReadStillImageFileValue[][] to ReadStillImageFileValue[]
-                        return prev.concat(curr);
-                    });
-
-                    for (const img of readStillImageFileValues) {
-
-                        const regions: ImageRegion[] = [];
-                        for (const incomingRegion of resource.incomingRegions) {
-
-                            const region = new ImageRegion(incomingRegion);
-                            regions.push(region);
-
+                        finally {
+                            try {
+                                if (_h && !_h.done && (_d = _g.return))
+                                    _d.call(_g);
+                            }
+                            finally {
+                                if (e_4)
+                                    throw e_4.error;
+                            }
                         }
-
-                        const stillImage = new StillImageRepresentation(img, regions);
+                        var stillImage = new core$1.StillImageRepresentation(img, regions);
                         imgRepresentations.push(stillImage);
                     }
-
                 }
-
-                resource.stillImageRepresentationsToDisplay = imgRepresentations;
-
+                catch (e_3_1) {
+                    e_3 = { error: e_3_1 };
+                }
+                finally {
+                    try {
+                        if (readStillImageFileValues_1_1 && !readStillImageFileValues_1_1.done && (_c = readStillImageFileValues_1.return))
+                            _c.call(readStillImageFileValues_1);
+                    }
+                    finally {
+                        if (e_3)
+                            throw e_3.error;
+                    }
+                }
             }
-            */
+            resource.stillImageRepresentationsToDisplay = imgRepresentations;
+        };
         /**
          * Get incoming resources: incoming links, incoming regions, incoming still image representations.
          */
@@ -1682,7 +1645,11 @@
                 return;
             }
             // request incoming regions
-            if (this.sequence.resources[0].properties[core$1.KnoraConstants.hasStillImageFileValue]) ;
+            if (this.sequence.resources[0].properties[core$1.KnoraConstants.hasStillImageFileValue]) {
+                // TODO: check if resources is a StillImageRepresentation using the ontology responder (support for subclass relations required)
+                // the resource is a StillImageRepresentation, check if there are regions pointing to it
+                this.getIncomingRegions(0);
+            }
             // check for incoming links for the current resource
             this.getIncomingLinks(0);
         };
@@ -1691,37 +1658,29 @@
          *
          * @param offset
          * @param callback
-         *
-        getIncomingRegions(offset: number, callback?: (numberOfResources: number) => void): void {
-            this._incomingService.getIncomingRegions(this.sequence.resources[0].id, offset).subscribe(
-                (regions: ReadResourcesSequence) => {
-                    // update ontology information
-                    this.ontologyInfo.updateOntologyInformation(regions.ontologyInformation);
-
-                    // Append elements of regions.resources to resource.incoming
-                    Array.prototype.push.apply(this.sequence.resources[0].incomingRegions, regions.resources);
-
-                    // prepare regions to be displayed
-                    this.collectImagesAndRegionsForResource(this.sequence.resources[0]);
-
-                    // TODO: implement osdViewer
-                    /* if (this.osdViewer) {
-                      this.osdViewer.updateRegions();
-                    } *
-
-                    // if callback is given, execute function with the amount of new images as the parameter
-                    if (callback !== undefined) {
-                        callback(regions.resources.length);
-                    }
-                },
-                (error: any) => {
-                    console.error(error);
-                    this.loading = false;
+         */
+        ResourceViewComponent.prototype.getIncomingRegions = function (offset, callback) {
+            var _this = this;
+            this._incomingService.getIncomingRegions(this.sequence.resources[0].id, offset).subscribe(function (regions) {
+                // update ontology information
+                _this.ontologyInfo.updateOntologyInformation(regions.ontologyInformation);
+                // Append elements of regions.resources to resource.incoming
+                Array.prototype.push.apply(_this.sequence.resources[0].incomingRegions, regions.resources);
+                // prepare regions to be displayed
+                _this.collectImagesAndRegionsForResource(_this.sequence.resources[0]);
+                // TODO: implement osdViewer
+                /* if (this.osdViewer) {
+                  this.osdViewer.updateRegions();
+                } */
+                // if callback is given, execute function with the amount of new images as the parameter
+                if (callback !== undefined) {
+                    callback(regions.resources.length);
                 }
-            );
-        }
-
-        */
+            }, function (error) {
+                console.error(error);
+                _this.loading = false;
+            });
+        };
         /**
          * Get incoming links for a resource.
          *
@@ -1746,21 +1705,20 @@
                 _this.loading = false;
             });
         };
+        /**
+         * Navigate to the incoming resource view.
+         *
+         * @param {string} id Incoming resource iri
+         */
         ResourceViewComponent.prototype.openLink = function (id) {
             this.loading = true;
-            // this.routeChanged.emit(id);
             this._router.navigate(['/resource/' + encodeURIComponent(id)]);
-        };
-        ResourceViewComponent.prototype.refreshProperties = function (index) {
-            console.log('from still-image-component: ', index);
-            this.currentResource = this.sequence.resources[0].incomingFileRepresentations[index];
-            console.log(this.currentResource);
         };
         ResourceViewComponent.decorators = [
             { type: core.Component, args: [{
                         selector: 'kui-resource-view',
-                        template: "<div class=\"resource-view\">\n    <kui-progress-indicator *ngIf=\"loading\"></kui-progress-indicator>\n\n    <div *ngIf=\"!loading && sequence?.resources.length > 0\">\n\n        <div class=\"resource\" *ngFor=\"let resource of sequence.resources; let last = last\">\n\n            <!-- 0) Title first? -->\n            <!--             <mat-list>\n\n                <h3 class=\"mat-subheader\">\n                    {{sequence.ontologyInformation.getLabelForResourceClass(resource.type)}}\n                </h3>\n\n                <mat-list-item>\n                    <h2 class=\"mat-headline\">{{resource.label}}</h2>\n                </mat-list-item>\n\n            </mat-list> -->\n\n            <!-- 1) show fileRepresentation first-->\n\n            <!-- show file representation -->\n            <div *ngIf=\"resource.fileRepresentationsToDisplay?.stillImage && resource.fileRepresentationsToDisplay?.stillImage.length > 0\"\n                 class=\"media\">\n                <kui-still-image #kuiStillImage class=\"osd-viewer\"\n                                 [images]=\"resource.fileRepresentationsToDisplay.stillImage\">\n                </kui-still-image>\n            </div>\n            <!--\n                <div [ngSwitch]=\"resource.fileRepresentationsToDisplay[0].type\" class=\"media\">\n                    <div *ngSwitchCase=\"KnoraConstants.StillImageFileValue\">\n                        <!-- TODO: fix: this shows only the first image, not all stillImages from fileRepresentationsToDisplay --\n\n                        <!-- [imageCaption]=\"sequence.ontologyInformation.getLabelForProperty(prop.key)\" --\n                    </div>\n\n\n                    <div *ngSwitchCase=\"KnoraConstants.hasMovingImageFileValue\" class=\"media\">\n                        <kui-moving-image></kui-moving-image>\n                    </div>\n\n                    <div *ngSwitchDefault>\n                        <p>This media type {{resource.fileRepresentationsToDisplay[0].type}} is not yet implemented</p>\n                    </div>\n                </div>\n                -->\n\n\n\n            <!--\n            <div *ngFor=\"let prop of resource.properties | kuiKey\">\n                <div [ngSwitch]=\"prop.key\">\n                    <!-- <p>{{prop.key}}</p> -->\n\n            <!-- <div *ngSwitchCase=\"KnoraConstants.hasStillImageFileValue\" class=\"media\"> -->\n            <!-- if the property is of type stillImageFileValue, show the image with osd viewer from @knora/viewer TODO: the fileValue will be part of an own resource property -->\n\n\n            <!-- </div> -->\n\n\n            <!-- TODO: switch through all other media type -->\n            <!--\n                    <kui-moving-image></kui-moving-image>\n                    <kui-audio></kui-audio>\n                    <kui-ddd></kui-ddd>\n                    <kui-document></kui-document>\n\n                    <kui-collection></kui-collection>\n\n                    <kui-annotation></kui-annotation>\n                    <kui-link-obj></kui-link-obj>\n                    <kui-object></kui-object>\n                    <kui-region></kui-region>\n                    <kui-text></kui-text>\n                    -->\n            <!--\n                    <div *ngSwitchDefault>\n                        <p>This media type ({{prop.key}}) is not yet implemented</p>\n                    </div>\n                </div>\n            </div>\n            -->\n            <!-- 2) show properties, annotations (list of regions, sequences etc.), incomming resources (links, files) -->\n            <mat-tab-group animationDuration=\"0ms\" class=\"full-width data\">\n                <!-- first tab for the main resource e.g. book -->\n                <mat-tab [label]=\"sequence.ontologyInformation.getLabelForResourceClass(resource.type)\">\n                    <kui-properties-view [properties]=\"resource.properties\" [guiOrder]=\"guiOrder\"\n                                         [ontologyInfo]=\"sequence.ontologyInformation\"\n                                         [incomingLinks]=\"resource.incomingLinks\">\n                    </kui-properties-view>\n                </mat-tab>\n                <!-- TODO: second tab for a \"part-of\"-resource e.g. book page -->\n\n                <mat-tab *ngIf=\"resource.incomingFileRepresentations.length > 0 && currentResource\"\n                         [label]=\"sequence.ontologyInformation.getLabelForResourceClass(currentResource.type)\">\n                    <kui-properties-view [properties]=\"currentResource?.properties\"\n                                         [guiOrder]=\"sequence.ontologyInformation.getResourceClasses()[currentResource.type].guiOrder\"\n                                         [ontologyInfo]=\"sequence.ontologyInformation\">\n                    </kui-properties-view>\n                    <!--\n                    <kui-properties-view [properties]=\"resource.incomingFileRepresentations[0].resource.properties\"\n                                         [guiOrder]=\"sequence.ontologyInformation.getResourceClasses()[resource.incomingFileRepresentations[0].type].guiOrder\"\n                                         [ontologyInfo]=\"sequence.ontologyInformation\"\n                                         [incomingLinks]=\"resource.incomingFileRepresentations[0].incomingLinks\">\n                    </kui-properties-view>\n                -->\n                </mat-tab>\n                <!-- TODO: third tab for a \"region\"-resource -->\n            </mat-tab-group>\n\n\n\n\n            <!-- in case of more than one resource -->\n            <mat-divider *ngIf=\"!last\"></mat-divider>\n\n        </div>\n\n    </div>\n</div>\n",
-                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}a{text-decoration:none;color:inherit}.kui-link{cursor:pointer;border-bottom:2px solid rgba(0,105,92,.25)}.kui-link:hover{box-shadow:0 -10px 0 rgba(0,105,92,.25) inset}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.resource-view{max-width:960px;margin:0 auto}.resource-view .resource .media{width:800px;height:500px;display:block;margin:0 auto}.resource-view .resource .data{min-height:700px;padding:24px 36px}.hidden{display:none}.property{margin-bottom:12px}.property .property-value-item{min-height:48px;height:auto}.property .property-value-item li{list-style-type:none}.property .property-value-item li.list:before{content:\"-    \"}.property .property-value-item li.lastItem{margin-bottom:12px}"]
+                        template: "<div class=\"resource-view\">\n\n    <kui-progress-indicator *ngIf=\"loading\"></kui-progress-indicator>\n\n    <div *ngIf=\"!loading\">\n\n        <div class=\"resource\" *ngFor=\"let resource of sequence.resources; let last = last\">\n\n            <!-- 0) Title first? -->\n            <mat-list>\n\n                <h3 class=\"mat-subheader\">\n                    {{sequence.ontologyInformation.getLabelForResourceClass(resource.type)}}\n                </h3>\n\n                <mat-list-item>\n                    <h2 class=\"mat-headline\">{{resource.label}}</h2>\n                </mat-list-item>\n\n            </mat-list>\n\n            <!-- 1) show fileRepresentation first-->\n            <div *ngFor=\"let prop of resource.properties | kuiKey\">\n                <div [ngSwitch]=\"prop.key\">\n\n                    <div *ngSwitchCase=\"KnoraConstants.hasStillImageFileValue\" class=\"media\">\n                        <!-- if the property is of type stillImageFileValue, show the image with osd viewer from @knora/viewer TODO: the fileValue will be part of an own resource property -->\n                        <kui-still-image *ngIf=\"resource.stillImageRepresentationsToDisplay.length > 0\" class=\"osd-viewer\" [imageCaption]=\"sequence.ontologyInformation.getLabelForProperty(prop.key)\" [images]=\"resource.stillImageRepresentationsToDisplay\">\n                        </kui-still-image>\n                    </div>\n\n                    <!-- TODO: switch through all other media type -->\n                    <!--\n                    <kui-moving-image></kui-moving-image>\n                    <kui-audio></kui-audio>\n                    <kui-ddd></kui-ddd>\n                    <kui-document></kui-document>\n  \n                    <kui-collection></kui-collection>\n  \n                    <kui-annotation></kui-annotation>\n                    <kui-link-obj></kui-link-obj>\n                    <kui-object></kui-object>\n                    <kui-region></kui-region>\n                    <kui-text></kui-text>\n                    -->\n\n                    <div *ngSwitchDefault class=\"hidden\">\n                        <!--<p>This media type ({{prop.key}}) is not yet implemented</p>-->\n                    </div>\n                </div>\n            </div>\n\n            <!-- 2) show properties, annotations (list of regions, sequences etc.), incomming resources (links, files) -->\n            <div class=\"data\">\n\n                <mat-tab-group class=\"full-width\">\n                    <mat-tab label=\"Metadata\">\n                        <mat-list>\n                            <div *ngFor=\"let prop of guiOrder; let last = last\" class=\"property\">\n                                <div *ngIf=\"resource.properties[prop?.property]\">\n                                    <!-- label of the property -->\n                                    <h3 mat-subheader class=\"property-label\">\n                                        {{sequence.ontologyInformation.getLabelForProperty(prop?.property)}}\n                                    </h3>\n                                    <!-- the value(s) of the property -->\n                                    <mat-list-item class=\"property-value-item\" *ngFor=\"let val of resource.properties[prop?.property]; let lastItem = last\">\n                                        <li [ngSwitch]=\"val.getClassName()\" [class.list]=\"resource.properties[prop?.property].length > 1\" [class.lastItem]=\"lastItem\">\n                                            <kui-text-value-as-string *ngSwitchCase=\"KnoraConstants.ReadTextValueAsString\" [valueObject]=\"val\"></kui-text-value-as-string>\n                                            <kui-text-value-as-xml *ngSwitchCase=\"KnoraConstants.ReadTextValueAsXml\" [valueObject]=\"val\"></kui-text-value-as-xml>\n                                            <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val\" [calendar]=\"true\" [era]=\"true\"></kui-date-value>\n                                            <kui-link-value class=\"app-link\" *ngSwitchCase=\"KnoraConstants.ReadLinkValue\" [valueObject]=\"val\" [ontologyInfo]=\"ontologyInfo\" (referredResourceClicked)=\"openLink(val.referredResourceIri)\">\n                                            </kui-link-value>\n                                            <kui-integer-value *ngSwitchCase=\"KnoraConstants.ReadIntegerValue\" [valueObject]=\"val\"></kui-integer-value>\n                                            <kui-decimal-value *ngSwitchCase=\"KnoraConstants.ReadDecimalValue\" [valueObject]=\"val\"></kui-decimal-value>\n                                            <kui-geometry-value *ngSwitchCase=\"KnoraConstants.ReadGeomValue\" [valueObject]=\"val\"></kui-geometry-value>\n                                            <kui-color-value *ngSwitchCase=\"KnoraConstants.ReadColorValue\" [valueObject]=\"val\"></kui-color-value>\n                                            <kui-uri-value *ngSwitchCase=\"KnoraConstants.ReadUriValue\" [valueObject]=\"val\"></kui-uri-value>\n                                            <kui-boolean-value *ngSwitchCase=\"KnoraConstants.ReadBooleanValue\" [valueObject]=\"val\"></kui-boolean-value>\n                                            <kui-interval-value *ngSwitchCase=\"KnoraConstants.ReadIntervalValue\" [valueObject]=\"val\"></kui-interval-value>\n                                            <kui-list-value *ngSwitchCase=\"KnoraConstants.ReadListValue\" [valueObject]=\"val\"></kui-list-value>\n                                            <kui-textfile-value *ngSwitchCase=\"KnoraConstants.TextFileValue\" [valueObject]=\"val\"></kui-textfile-value>\n                                            <span *ngSwitchDefault>Not supported {{val.getClassName()}}</span>\n                                        </li>\n                                    </mat-list-item>\n                                </div>\n                            </div>\n                        </mat-list>\n                    </mat-tab>\n\n                    <mat-tab label=\"Annotations\" *ngIf=\"resource.annotations?.length > 0\">\n\n                    </mat-tab>\n\n                    <mat-tab label=\"Links / Connections\" *ngIf=\"resource.incomingLinks?.length > 0\">\n                        <div>\n                            <mat-list *ngFor=\"let incoming of resource.incomingLinks\">\n                                <mat-list-item class=\"app-link link\" (click)=\"openLink(incoming.id)\">\n                                    <span>{{incoming.label}}</span>\n                                </mat-list-item>\n                            </mat-list>\n                        </div>\n                    </mat-tab>\n\n                </mat-tab-group>\n\n            </div>\n\n            <!-- in case of more than one resource -->\n            <mat-divider *ngIf=\"!last\"></mat-divider>\n\n        </div>\n\n    </div>\n</div>\n\n\n<!-- OLD / first template\n  <mat-card>\n  \n  \n    <h2>metadata for resource {{ resource?.label}} ({{ resource?.id }})</h2>\n    <h3>type: {{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h3>\n  \n    <div *ngFor=\"let prop of resource?.properties | kuiKey\">\n        <mat-list>\n            <span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>\n            <mat-list-item *ngFor=\"let val of prop.value\">\n                <span [ngSwitch]=\"val.getClassName()\">\n                    <kui-color-value *ngSwitchCase=\"KnoraConstants.ReadColorValue\"\n                                     [valueObject]=\"val\"></kui-color-value>\n                    <kui-text-value-as-html *ngSwitchCase=\"KnoraConstants.ReadTextValueAsHtml\" [valueObject]=\"val\"\n                                            [ontologyInfo]=\"ontologyInfo\" [bindEvents]=\"true\"></kui-text-value-as-html>\n                    <kui-text-value-as-string *ngSwitchCase=\"KnoraConstants.ReadTextValueAsString\"\n                                              [valueObject]=\"val\"></kui-text-value-as-string>\n                    <kui-text-value-as-xml *ngSwitchCase=\"KnoraConstants.ReadTextValueAsXml\"\n                                           [valueObject]=\"val\"></kui-text-value-as-xml>\n                    <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val\"></kui-date-value>\n                    <kui-link-value *ngSwitchCase=\"KnoraConstants.ReadLinkValue\" [valueObject]=\"val\"\n                                    [ontologyInfo]=\"ontologyInfo\"></kui-link-value>\n                    <kui-integer-value *ngSwitchCase=\"KnoraConstants.ReadIntegerValue\"\n                                       [valueObject]=\"val\"></kui-integer-value>\n                    <kui-decimal-value *ngSwitchCase=\"KnoraConstants.ReadDecimalValue\"\n                                       [valueObject]=\"val\"></kui-decimal-value>\n                    <kui-geometry-value *ngSwitchCase=\"KnoraConstants.ReadGeomValue\"\n                                        [valueObject]=\"val\"></kui-geometry-value>\n                    <kui-uri-value *ngSwitchCase=\"KnoraConstants.ReadUriValue\" [valueObject]=\"val\"></kui-uri-value>\n                    <kui-boolean-value *ngSwitchCase=\"KnoraConstants.ReadBooleanValue\"\n                                       [valueObject]=\"val\"></kui-boolean-value>\n                    <kui-interval-value *ngSwitchCase=\"KnoraConstants.ReadIntervalValue\"\n                                        [valueObject]=\"val\"></kui-interval-value>\n                    <kui-list-value *ngSwitchCase=\"KnoraConstants.ReadListValue\" [valueObject]=\"val\"></kui-list-value>\n                    <kui-textfile-value *ngSwitchCase=\"KnoraConstants.TextFileValue\"\n                                        [valueObject]=\"val\"></kui-textfile-value>\n                    <span *ngSwitchDefault=\"\">Not supported {{val.getClassName()}}</span>\n                </span>\n            </mat-list-item>\n        </mat-list>\n    </div>\n  \n  </mat-card>\n  -->\n",
+                        styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.resource-view{max-width:720px;margin:0 auto}.resource-view .resource .media{width:720px;height:calc(720px / (4 / 3))}.resource-view .resource .data{min-height:700px;padding:24px 36px}.hidden{display:none}.property{margin-bottom:12px}.property .property-value-item{min-height:48px;height:auto}.property .property-value-item li{list-style-type:none}.property .property-value-item li.list:before{content:'-    '}.property .property-value-item li.lastItem{margin-bottom:12px}.app-link:hover{background-color:#f1f1f1}@media (max-width:576px){.resource-view .resource .media{width:auto}}"]
                     }] }
         ];
         /** @nocollapse */
@@ -1773,8 +1731,7 @@
             ];
         };
         ResourceViewComponent.propDecorators = {
-            iri: [{ type: core.Input }],
-            kuiStillImage: [{ type: core.ViewChild, args: ['kuiStillImage',] }]
+            iri: [{ type: core.Input }]
         };
         return ResourceViewComponent;
     }());

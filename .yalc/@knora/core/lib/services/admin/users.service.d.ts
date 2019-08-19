@@ -19,7 +19,7 @@ export declare class UsersService extends ApiService {
      * @param  {String} identifierType
      * @returns Observable<User>
      */
-    private getUser;
+    getUser(identifier: string, identifierType: String): Observable<User>;
     /**
      * Get user by IRI
      *

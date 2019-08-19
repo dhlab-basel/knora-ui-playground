@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { SearchService } from './search.service';
-import { ReadResourcesSequence, ResourcesSequence } from '../../declarations';
+import { ReadResourcesSequence } from '../../declarations';
 /**
  * Requests incoming information (regions, links, stillImageRepresentations) from Knora.
  */
@@ -23,8 +23,6 @@ export declare class IncomingService extends SearchService {
      */
     getStillImageRepresentationsForCompoundResource(resourceIri: string, offset: number): Observable<ReadResourcesSequence>;
     /**
-     * @deprecated
-     *
      * Returns all incoming links for the given resource Iri but incoming regions and still image representations.
      *
      * @param {string} resourceIri the Iri of the resource whose incoming links should be returned.
@@ -32,12 +30,4 @@ export declare class IncomingService extends SearchService {
      * @returns {Observable<any>}
      */
     getIncomingLinksForResource(resourceIri: string, offset: number): Observable<ReadResourcesSequence>;
-    /**
-     * Returns all incoming links for the given resource Iri.
-     *
-     * @param {string} resourceIri the Iri of the resource whose incoming links should be returned.
-     * @param {number} offset the offset to be used for paging. 0 is the default and is used to get the first page of results.
-     * @returns {Observable<any>}
-     */
-    getIncomingLinks(resourceIri: string, offset: number): Observable<ResourcesSequence>;
 }

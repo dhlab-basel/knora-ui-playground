@@ -2,13 +2,14 @@ import { Observable } from 'rxjs';
 import { ApiServiceResult } from '../../declarations/api-service-result';
 import { NewOntology } from '../../declarations/api/v2/ontology/new-ontology';
 import { ApiService } from '../api.service';
+import { NewResourceClass } from '../../declarations/api/v2/ontology/new-resource-class';
+import { NewProperty } from '../../declarations/api/v2/ontology/new-property';
 /**
  * Requests ontology information from Knora.
  */
 export declare class OntologyService extends ApiService {
     /**
-     * @deprecated: Use **getAllOntologies()** instead
-     *
+     * DEPRECATED: You should use getAllOntologies()
      * Requests the metadata about all existing ontologies from Knora's ontologies route.
      *
      * @returns Observable<ApiServiceResult> - the metadata of all ontologies.
@@ -52,7 +53,10 @@ export declare class OntologyService extends ApiService {
      * Create new ontology.
      *
      * @param {NewOntology} data Data contains: projectIri, name, label
-     * @returns Observable<ApiServiceResult>
+     * @returns Observable<ApiServiceResult> incl. ontolog iri and knora-api:lastModificationDate
      */
     createOntology(data: NewOntology): Observable<ApiServiceResult>;
+    createResourceClass(data: NewResourceClass): Observable<ApiServiceResult>;
+    createProperty(data: NewProperty[]): Observable<ApiServiceResult>;
+    setCardinality(data: any): Observable<ApiServiceResult>;
 }

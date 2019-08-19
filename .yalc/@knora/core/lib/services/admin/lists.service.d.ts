@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { List, ListCreatePayload, ListInfo, ListInfoUpdatePayload, ListNodeInfo } from '../../declarations';
+import { List, ListCreatePayload, ListInfo, ListInfoUpdatePayload, ListNode, ListNodeUpdatePayload } from '../../declarations';
 import { ApiService } from '../api.service';
 /**
  * Request information about lists from Knora.
@@ -12,7 +12,7 @@ export declare class ListsService extends ApiService {
      * @param {string} [projectIri]
      * @returns Observable<ListNodeInfo[]>
      */
-    getLists(projectIri?: string): Observable<ListNodeInfo[]>;
+    getLists(projectIri?: string): Observable<ListNode[]>;
     /**
      * Return a list object.
      *
@@ -33,7 +33,7 @@ export declare class ListsService extends ApiService {
      * @param {string} nodeIri
      * @returns Observable<ListNodeInfo>
      */
-    getListNodeInfo(nodeIri: string): Observable<ListNodeInfo>;
+    getListNodeInfo(nodeIri: string): Observable<ListNode>;
     /**
      * Create new list.
      *
@@ -41,6 +41,13 @@ export declare class ListsService extends ApiService {
      * @returns Observable<List>
      */
     createList(payload: ListCreatePayload): Observable<List>;
+    /**
+     * Create new list node.
+     *
+     * @param {ListNodeUpdatePayload} payload
+     * @returns Observable<ListNode>
+     */
+    createListItem(listIri: string, payload: ListNodeUpdatePayload): Observable<ListNode>;
     /**
      * Edit list data.
      *
