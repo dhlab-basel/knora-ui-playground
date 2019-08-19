@@ -1,4 +1,7 @@
 {
+  "env": {
+    "name": "prod"
+  },
   "ontologyIRI": "http://0.0.0.0:3333",
   "apiURL": "http://0.0.0.0:3333",
   "externalApiURL": "http://0.0.0.0:3333",

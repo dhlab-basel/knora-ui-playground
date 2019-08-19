@@ -3,6 +3,10 @@ import { KuiCoreConfig } from '@knora/core';
 
 
 export interface IAppConfig {
+
+    env: {
+        name: string;
+    };
     ontologyIRI: string;
     apiURL: string;
     externalApiURL: string;
@@ -29,16 +33,19 @@ export class AppInitService {
             // console.log('AppInitService.init() called');
             // do your initialisation stuff here
 
-            const data = window['tempConfigStorage'] as IAppConfig;
-
+            const data = <IAppConfig> window['tempConfigStorage'];
+            // console.log('AppInitService: json', data);
             AppInitService.settings = data;
 
-            AppInitService.coreConfig = {
+            AppInitService.coreConfig = <KuiCoreConfig> {
                 name: AppInitService.settings.appName,
                 api: AppInitService.settings.apiURL,
                 media: AppInitService.settings.iiifURL,
-                app: AppInitService.settings.appURL
-            } as KuiCoreConfig;
+                app: AppInitService.settings.appURL,
+                ontologyIRI: AppInitService.settings.ontologyIRI
+            };
+
+            // console.log('AppInitService: finished');
 
             resolve();
         });

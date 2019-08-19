@@ -46,7 +46,7 @@ export declare abstract class ReadTextValue implements ReadPropertyItem {
 export declare class ReadTextValueAsString extends ReadTextValue {
     readonly id: string;
     readonly propIri: string;
-    readonly str: string;
+    str: string;
     constructor(id: string, propIri: string, str: string);
     getClassName(): string;
     getContent(): string;

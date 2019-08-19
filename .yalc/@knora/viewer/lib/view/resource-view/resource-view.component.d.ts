@@ -1,6 +1,7 @@
 import { OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GuiOrder, IncomingService, KnoraConstants, OntologyInformation, ResourceService, ResourcesSequence } from '@knora/core';
+import { GuiOrder, IncomingService, KnoraConstants, OntologyInformation, ReadResource, ResourceService, ResourcesSequence } from '@knora/core';
+import { StillImageComponent } from '../../resource';
 export declare class ResourceViewComponent implements OnInit, OnChanges {
     protected _route: ActivatedRoute;
     protected _router: Router;
@@ -10,6 +11,7 @@ export declare class ResourceViewComponent implements OnInit, OnChanges {
      * @param {string} [iri] Resource iri
      */
     iri?: string;
+    kuiStillImage: StillImageComponent;
     sequence: ResourcesSequence;
     ontologyInfo: OntologyInformation;
     guiOrder: GuiOrder[];
@@ -17,6 +19,7 @@ export declare class ResourceViewComponent implements OnInit, OnChanges {
     error: any;
     KnoraConstants: typeof KnoraConstants;
     fileRepresentation: boolean;
+    currentResource: ReadResource;
     constructor(_route: ActivatedRoute, _router: Router, _resourceService: ResourceService, _incomingService: IncomingService);
     ngOnInit(): void;
     ngOnChanges(): void;
@@ -78,4 +81,6 @@ export declare class ResourceViewComponent implements OnInit, OnChanges {
      * @param callback
      */
     getIncomingLinks(offset: number, callback?: (numberOfResources: number) => void): void;
+    openLink(id: string): void;
+    refreshProperties(index: number): void;
 }

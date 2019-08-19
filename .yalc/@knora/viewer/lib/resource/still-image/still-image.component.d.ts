@@ -54,6 +54,7 @@ export declare class StillImageComponent implements OnInit, OnChanges, OnDestroy
     images: StillImageRepresentation[];
     imageCaption?: string;
     activateRegion: string;
+    currentImageIndex: EventEmitter<number>;
     regionHovered: EventEmitter<string>;
     private viewer;
     private regions;
@@ -165,4 +166,5 @@ export declare class StillImageComponent implements OnInit, OnChanges, OnDestroy
      * @returns - the points serialized to a string in the format expected by the 'points' attribute of a SVGElement
      */
     private createSVGPolygonPointsAttribute;
+    getCurrentImage(): void;
 }
