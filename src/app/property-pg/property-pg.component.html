@@ -1,0 +1,29 @@
+<form [formGroup]="form">
+    <!-- select: button to select language -->
+    <button mat-button type="button" matPrefix class="select-lang" [matMenuTriggerFor]="selectLanguage"
+            #btnToSelectLanguage="matMenuTrigger" isIconButton>
+        <span class="label">{{selectedLang}}</span>
+        <mat-icon class="icon" matSuffix>keyboard_arrow_down</mat-icon>
+    </button>
+
+    <!-- select: menu with list of languages -->
+    <mat-menu #selectLanguage="matMenu" class="kui-project-filter-menu">
+        <button mat-menu-item type="button" *ngFor="let lang of languages" (click)="selectedLang = lang; switchFocus()"
+                (focus)="setLanguage(lang)">{{lang}}</button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item type="button" (click)="toggleAll()">
+            <span></span>
+            <span></span>
+        </button>
+        <!-- (click)="setProject(project);changeFocus()" -->
+    </mat-menu>
+    <mat-form-field class="string-literal">
+
+        <!-- input -->
+        <input matInput [placeholder]="placeholder" [formControl]="form.controls['text']" #textInput cdkFocusInitial
+               [autofocus]="focus">
+
+
+
+    </mat-form-field>
+</form>

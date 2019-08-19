@@ -9,6 +9,7 @@ import { SearchPgComponent } from './search-pg/search-pg.component';
 // import { SearchResultsComponent } from '@knora/viewer';
 import { SearchResultComponent } from './search-pg/search-result/search-result.component';
 import { NewSearchPgComponent } from './new-search-pg/new-search-pg.component';
+import { PropertyPgComponent } from './property-pg/property-pg.component';
 
 
 const appRoutes: Routes = [
@@ -47,8 +48,8 @@ const appRoutes: Routes = [
         component: AuthenticationPgComponent
     },
     {
-        path: 'ontology',
-        component: OntologyPgComponent
+        path: 'property',
+        component: PropertyPgComponent
     }
 ];
 

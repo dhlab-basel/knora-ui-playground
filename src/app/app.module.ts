@@ -24,6 +24,7 @@ import { OntologyPgComponent } from './ontology-pg/ontology-pg.component';
 import { SearchPgComponent } from './search-pg/search-pg.component';
 import { SearchResultComponent } from './search-pg/search-result/search-result.component';
 import { ViewerPgComponent } from './viewer-pg/viewer-pg.component';
+import { PropertyPgComponent } from './property-pg/property-pg.component';
 
 export function initializeApp(appInitService: AppInitService) {
     return (): Promise<any> => {
@@ -40,7 +41,8 @@ export function initializeApp(appInitService: AppInitService) {
         OntologyPgComponent,
         AuthenticationPgComponent,
         ActionPgComponent,
-        NewSearchPgComponent
+        NewSearchPgComponent,
+        PropertyPgComponent
     ],
     imports: [
         BrowserModule,

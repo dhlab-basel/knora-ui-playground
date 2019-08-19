@@ -10,7 +10,7 @@
       "prefix": "kuip",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "sass"
+          "style": "scss"
         }
       },
       "architect": {
