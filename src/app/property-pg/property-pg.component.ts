@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatMenuTrigger } from '@angular/material';
 import { StringLiteral } from '@knora/core';
+import { Session } from '@knora/authentication';
 
 @Component({
     selector: 'kuip-property-pg',
@@ -9,34 +11,98 @@ import { StringLiteral } from '@knora/core';
 })
 export class PropertyPgComponent implements OnInit {
 
+    languages: string[] = ['de', 'fr', 'it', 'en'];
+
+    /**
+     * placeholder label
+     */
     @Input() placeholder?: string = 'Label';
 
-    @Output() stringLiteral: EventEmitter<StringLiteral[]> = new EventEmitter<StringLiteral[]>();
+    /**
+     * predefined (selected) language
+     */
+    @Input() language?: string;
 
-    focus: boolean = false;
+    /**
+     * form field type: 'input' or 'textarea'
+     */
+    @Input() type?: string = 'input';
 
-    languages: string[] = [
-        'de',
-        'fr',
-        'it',
-        'en'
-    ];
+    /**
+     * form field value of type StringLiteral[]
+     */
+    @Input() value?: StringLiteral[] = [];
 
-    selectedLang: string = this.languages[0];
+    /**
+     * returns an array of StringLiteral
+     */
+    @Output() dataChanged: EventEmitter<StringLiteral[]> = new EventEmitter<StringLiteral[]>();
 
-    values: StringLiteral[] = [];
+    @ViewChild('textInput') textInput: ElementRef;
+
+    @ViewChild('btnToSelectLanguage') selectLanguage: MatMenuTrigger;
 
     form: FormGroup;
 
     constructor (
         private _fb: FormBuilder
-    ) { }
+    ) {
+
+
+        // set selected language, if it's not defined yet
+        if (!this.language) {
+            if (localStorage.getItem('session') !== null) {
+                // get language from the logged-in user profile data
+                this.language = JSON.parse(localStorage.getItem('session')).user.lang;
+            } else {
+                // get default language from browser
+                this.language = navigator.language.substr(0, 2);
+            }
+        }
+
+        // does the defined language exists in our supported languages list?
+        if (this.languages.indexOf(this.language) === -1) {
+            // if not, select the first language from our list of supported languages
+            this.language = this.languages[0];
+        }
+
+        /*         if (this.value.length === 0) {
+                    this.value.push(
+                        {
+                            language: this.language,
+                            value: ''
+                        }
+                    );
+                } */
+
+
+    }
 
     ngOnInit() {
+
+        let currentValue: string = '';
+
+        // get value for selected language
+        if (this.value.length === 0) {
+            // init value
+            this.value.push(
+                {
+                    language: this.language,
+                    value: ''
+                }
+            );
+        } else {
+            const index = this.value.findIndex(i => i.language === this.language);
+            if (index > -1) {
+                currentValue = this.value[index].value;
+            }
+        }
+
+        // build the form
         this.form = this._fb.group({
             text: new FormControl(
                 {
-                    value: '',
+                    value: currentValue,
                     disabled: false
                 }
             )
@@ -51,7 +117,26 @@ export class PropertyPgComponent implements OnInit {
             return;
         }
 
-        const form = this.form;
+
+        const index: number = this.value.findIndex(i => i.language === this.language);
+
+        console.log('onValueChanged', this.language + ' - ' + index);
+
+        if (index > 0) {
+
+        }
+
+        if (this.form.controls['text'].value !== '') {
+            this.value[index].value = this.form.controls['text'].value;
+        }
+        /*
+        else {
+            this.value.splice(index);
+        }
+        */
+
+        this.dataChanged.emit(this.value);
+
 
         // console.log(this.form.controls['input'].value);
         /* Object.keys(this.formErrors).map(field => {
@@ -66,15 +151,42 @@ export class PropertyPgComponent implements OnInit {
         }); */
     }
 
-    setLanguage(lang: string) {
-        // this.selectedLang = lang;
-        console.log(lang);
+    setValueForLanguage(lang: string) {
+
+        // set value depending on selected language
+        const index = this.value.findIndex(i => i.language === lang);
+
+        console.log('setValueForLanguage', lang + ' - ' + index);
+
+        if (index > -1) {
+            // value exist for this language --> set value in input field
+            this.form.controls['text'].setValue(this.value[index].value);
+        } else {
+            // add new stringLiteral to value
+            this.value.push(
+                {
+                    language: lang,
+                    value: ''
+                }
+            );
+            this.form.controls['text'].setValue('');
+        }
     }
 
-    switchFocus() {
-        this.focus = true;
-        console.log('focus', this.focus);
+    switchFocus(lang: string) {
 
+        // this.resetEmptyValues();
+
+        this.language = lang;
+
+
+        this.setValueForLanguage(lang);
+
+        // set focus
+        this.selectLanguage.closeMenu();
+        this.textInput.nativeElement.focus();
+
+        console.log(this.value);
     }
 
     toggleAll() {
