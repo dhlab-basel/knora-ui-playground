@@ -1,14 +1,15 @@
+import { __decorate, __metadata, __param } from 'tslib';
+import { InjectionToken, NgModule, ɵɵdefineInjectable, ɵɵinject, Injectable, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { __decorate, __metadata } from 'tslib';
-import { JsonObject, JsonProperty, JsonConvert, OperationMode, ValueCheckingMode } from 'json2typescript';
-import { throwError } from 'rxjs/internal/observable/throwError';
-import { from, Observable, forkJoin, of, Subject, BehaviorSubject } from 'rxjs';
-import { InjectionToken, NgModule, Inject, Injectable, defineInjectable, inject } from '@angular/core';
 import { HttpClientModule, HttpClient, HttpParams } from '@angular/common/http';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { JsonProperty, JsonObject, JsonConvert, OperationMode, ValueCheckingMode } from 'json2typescript';
+import { from, Observable, of, forkJoin, Subject, BehaviorSubject } from 'rxjs';
+import { map, catchError, mergeMap } from 'rxjs/operators';
+import { throwError } from 'rxjs/internal/observable/throwError';
 
+var KuiCoreModule_1;
 const KuiCoreConfigToken = new InjectionToken('KuiCoreConfigToken (knora.core.config)');
-class KuiCoreModule {
+let KuiCoreModule = KuiCoreModule_1 = class KuiCoreModule {
     /**
      *
      * @param {KuiCoreConfig} config
@@ -18,25 +19,25 @@ class KuiCoreModule {
         // get the app environment configuration here
         // console.log('KuiCoreModule - forRoot - config: ', config);
         return {
-            ngModule: KuiCoreModule,
+            ngModule: KuiCoreModule_1,
             providers: [
                 { provide: KuiCoreConfigToken, useValue: config }
             ]
         };
     }
-}
-KuiCoreModule.decorators = [
-    { type: NgModule, args: [{
-                imports: [
-                    CommonModule,
-                    HttpClientModule
-                ],
-                declarations: [],
-                exports: [
-                    HttpClientModule
-                ]
-            },] }
-];
+};
+KuiCoreModule = KuiCoreModule_1 = __decorate([
+    NgModule({
+        imports: [
+            CommonModule,
+            HttpClientModule
+        ],
+        declarations: [],
+        exports: [
+            HttpClientModule
+        ]
+    })
+], KuiCoreModule);
 
 /**
  * Knora-ui core configuration with the server definitions of:
@@ -45,6 +46,12 @@ KuiCoreModule.decorators = [
  *  - app: URL of the app e.g. salsah: http://localhost:4200
  */
 let KuiCoreConfig = class KuiCoreConfig {
+    /**
+     * Knora-ui core configuration with the server definitions of:
+     *  - api: URL of data service e.g. knora: http://localhost:3333
+     *  - media: URL of media server service e.g. sipi: http://localhost:1024
+     *  - app: URL of the app e.g. salsah: http://localhost:4200
+     */
     constructor() {
         /**
          * name of the app e.g. 'SALSAH'
@@ -774,6 +781,9 @@ ListInfoResponse = __decorate([
  * @deprecated You should use ListNode instead
  */
 let ListNodeInfo = class ListNodeInfo {
+    /**
+     * @deprecated You should use ListNode instead
+     */
     constructor() {
         this.id = undefined;
         this.name = undefined;
@@ -815,6 +825,9 @@ ListNodeInfo = __decorate([
  * @deprecated You should use ListNodeResponse instead
  */
 let ListNodeInfoResponse = class ListNodeInfoResponse {
+    /**
+     * @deprecated You should use ListNodeResponse instead
+     */
     constructor() {
         this.nodeinfo = undefined;
     }
@@ -1508,7 +1521,7 @@ class Resource {
 
 const jsonld = require('jsonld');
 const semver = require('semver');
-class ApiService {
+let ApiService = class ApiService {
     constructor(http, config) {
         this.http = http;
         this.config = config;
@@ -1681,23 +1694,20 @@ class ApiService {
             }
         }
     }
-}
-ApiService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root',
-            },] }
-];
-/** @nocollapse */
-ApiService.ctorParameters = () => [
-    { type: HttpClient },
-    { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] }
-];
-ApiService.ngInjectableDef = defineInjectable({ factory: function ApiService_Factory() { return new ApiService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: ApiService, providedIn: "root" });
+};
+ApiService.ngInjectableDef = ɵɵdefineInjectable({ factory: function ApiService_Factory() { return new ApiService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: ApiService, providedIn: "root" });
+ApiService = __decorate([
+    Injectable({
+        providedIn: 'root',
+    }),
+    __param(1, Inject(KuiCoreConfigToken)),
+    __metadata("design:paramtypes", [HttpClient, Object])
+], ApiService);
 
 /**
  * Requests ontology information from Knora.
  */
-class OntologyService extends ApiService {
+let OntologyService = class OntologyService extends ApiService {
     // ------------------------------------------------------------------------
     // GET list of ontologies
     // ------------------------------------------------------------------------
@@ -1910,13 +1920,13 @@ class OntologyService extends ApiService {
         };
         return this.httpPost(path, cardinality).pipe(map((result) => result.body), catchError(this.handleJsonError));
     }
-}
-OntologyService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root',
-            },] }
-];
-OntologyService.ngInjectableDef = defineInjectable({ factory: function OntologyService_Factory() { return new OntologyService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: OntologyService, providedIn: "root" });
+};
+OntologyService.ngInjectableDef = ɵɵdefineInjectable({ factory: function OntologyService_Factory() { return new OntologyService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: OntologyService, providedIn: "root" });
+OntologyService = __decorate([
+    Injectable({
+        providedIn: 'root',
+    })
+], OntologyService);
 
 const jsonld$1 = require('jsonld');
 /**
@@ -2246,7 +2256,7 @@ class OntologyInformation {
  * Requests ontology information from Knora and caches it.
  * Other components or services obtain ontology information through this service.
  */
-class OntologyCacheService {
+let OntologyCacheService = class OntologyCacheService {
     constructor(_ontologyService) {
         this._ontologyService = _ontologyService;
         /**
@@ -2681,17 +2691,14 @@ class OntologyCacheService {
             return of(this.getPropertyDefinitionsFromCache(propertyIris));
         }
     }
-}
-OntologyCacheService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-OntologyCacheService.ctorParameters = () => [
-    { type: OntologyService }
-];
-OntologyCacheService.ngInjectableDef = defineInjectable({ factory: function OntologyCacheService_Factory() { return new OntologyCacheService(inject(OntologyService)); }, token: OntologyCacheService, providedIn: "root" });
+};
+OntologyCacheService.ngInjectableDef = ɵɵdefineInjectable({ factory: function OntologyCacheService_Factory() { return new OntologyCacheService(ɵɵinject(OntologyService)); }, token: OntologyCacheService, providedIn: "root" });
+OntologyCacheService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __metadata("design:paramtypes", [OntologyService])
+], OntologyCacheService);
 
 /**
  * Represents a sequence of resources.
@@ -2765,7 +2772,10 @@ class ImageRegion {
 /**
  * Request information about group from Knora.
  */
-class GroupsService extends ApiService {
+let GroupsService = class GroupsService extends ApiService {
+    /**
+     * Request information about group from Knora.
+     */
     constructor() {
         super(...arguments);
         this.path = '/admin/groups';
@@ -2788,18 +2798,21 @@ class GroupsService extends ApiService {
         this.path += '/' + encodeURIComponent(iri);
         return this.httpGet(this.path).pipe(map((result) => result.getBody(GroupResponse).group), catchError(this.handleJsonError));
     }
-}
-GroupsService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-GroupsService.ngInjectableDef = defineInjectable({ factory: function GroupsService_Factory() { return new GroupsService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: GroupsService, providedIn: "root" });
+};
+GroupsService.ngInjectableDef = ɵɵdefineInjectable({ factory: function GroupsService_Factory() { return new GroupsService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: GroupsService, providedIn: "root" });
+GroupsService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+], GroupsService);
 
 /**
  * Request information about lists from Knora.
  */
-class ListsService extends ApiService {
+let ListsService = class ListsService extends ApiService {
+    /**
+     * Request information about lists from Knora.
+     */
     constructor() {
         super(...arguments);
         this.path = '/admin/lists';
@@ -2811,7 +2824,7 @@ class ListsService extends ApiService {
      * Returns a list of all lists.
      *
      * @param {string} [projectIri]
-     * @returns Observable<ListNodeInfo[]>
+     * @returns Observable<ListNode[]>
      */
     getLists(projectIri) {
         let newPath = this.path;
@@ -2842,7 +2855,7 @@ class ListsService extends ApiService {
      * Return a list node info object.
      *
      * @param {string} nodeIri
-     * @returns Observable<ListNodeInfo>
+     * @returns Observable<ListNode>
      */
     getListNodeInfo(nodeIri) {
         return this.httpGet(this.path + '/nodes/' + encodeURIComponent(nodeIri)).pipe(map((result) => result.getBody(ListNodeResponse).nodeinfo), catchError(this.handleJsonError));
@@ -2862,6 +2875,7 @@ class ListsService extends ApiService {
     /**
      * Create new list node.
      *
+     * @param {string} listIri
      * @param {ListNodeUpdatePayload} payload
      * @returns Observable<ListNode>
      */
@@ -2880,18 +2894,18 @@ class ListsService extends ApiService {
     updateListInfo(payload) {
         return this.httpPut(this.path + '/infos/' + encodeURIComponent(payload.listIri), payload).pipe(map((result) => result.getBody(ListInfoResponse).listinfo), catchError(this.handleJsonError));
     }
-}
-ListsService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-ListsService.ngInjectableDef = defineInjectable({ factory: function ListsService_Factory() { return new ListsService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: ListsService, providedIn: "root" });
+};
+ListsService.ngInjectableDef = ɵɵdefineInjectable({ factory: function ListsService_Factory() { return new ListsService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: ListsService, providedIn: "root" });
+ListsService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+], ListsService);
 
 /**
  * Request information about projects from Knora.
  */
-class ProjectsService extends ApiService {
+let ProjectsService = class ProjectsService extends ApiService {
     // ------------------------------------------------------------------------
     // GET
     // ------------------------------------------------------------------------
@@ -3039,18 +3053,18 @@ class ProjectsService extends ApiService {
         const url = '/admin/projects/iri/' + encodeURIComponent(iri);
         return this.httpDelete(url).pipe(map((result) => result.getBody(ProjectResponse).project), catchError(this.handleJsonError));
     }
-}
-ProjectsService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-ProjectsService.ngInjectableDef = defineInjectable({ factory: function ProjectsService_Factory() { return new ProjectsService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: ProjectsService, providedIn: "root" });
+};
+ProjectsService.ngInjectableDef = ɵɵdefineInjectable({ factory: function ProjectsService_Factory() { return new ProjectsService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: ProjectsService, providedIn: "root" });
+ProjectsService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+], ProjectsService);
 
 /**
  * This service uses the Knora admin API and handles all user data.
  */
-class UsersService extends ApiService {
+let UsersService = class UsersService extends ApiService {
     // ------------------------------------------------------------------------
     // GET
     // ------------------------------------------------------------------------
@@ -3297,15 +3311,15 @@ class UsersService extends ApiService {
         const path = '/admin/users/iri/' + encodeURIComponent(userIri);
         return this.httpDelete(path).pipe(map((result) => result.getBody(UserResponse).user), catchError(this.handleJsonError));
     }
-}
-UsersService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-UsersService.ngInjectableDef = defineInjectable({ factory: function UsersService_Factory() { return new UsersService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: UsersService, providedIn: "root" });
+};
+UsersService.ngInjectableDef = ɵɵdefineInjectable({ factory: function UsersService_Factory() { return new UsersService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: UsersService, providedIn: "root" });
+UsersService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+], UsersService);
 
-class LanguageService {
+let LanguageService = class LanguageService {
     constructor() {
         this.subject = new Subject();
     }
@@ -3315,15 +3329,15 @@ class LanguageService {
     getLanguage() {
         return this.subject.asObservable();
     }
-}
-LanguageService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-LanguageService.ngInjectableDef = defineInjectable({ factory: function LanguageService_Factory() { return new LanguageService(); }, token: LanguageService, providedIn: "root" });
+};
+LanguageService.ngInjectableDef = ɵɵdefineInjectable({ factory: function LanguageService_Factory() { return new LanguageService(); }, token: LanguageService, providedIn: "root" });
+LanguageService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+], LanguageService);
 
-class StatusMsgService {
+let StatusMsgService = class StatusMsgService {
     constructor(_http, config) {
         this._http = _http;
         this.config = config;
@@ -3342,18 +3356,15 @@ class StatusMsgService {
             console.error(err);
         }));
     }
-}
-StatusMsgService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-StatusMsgService.ctorParameters = () => [
-    { type: HttpClient },
-    { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] }
-];
-StatusMsgService.ngInjectableDef = defineInjectable({ factory: function StatusMsgService_Factory() { return new StatusMsgService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: StatusMsgService, providedIn: "root" });
+};
+StatusMsgService.ngInjectableDef = ɵɵdefineInjectable({ factory: function StatusMsgService_Factory() { return new StatusMsgService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: StatusMsgService, providedIn: "root" });
+StatusMsgService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __param(1, Inject(KuiCoreConfigToken)),
+    __metadata("design:paramtypes", [HttpClient, Object])
+], StatusMsgService);
 
 /**
  * Contains methods to convert JSON-LD representing resources and properties to classes.
@@ -3714,7 +3725,7 @@ var ConvertJSONLD;
 /**
  * Requests representation of resources from Knora.
  */
-class ResourceService extends ApiService {
+let ResourceService = class ResourceService extends ApiService {
     constructor(http, config, _ontologyCacheService) {
         super(http, config);
         this.http = http;
@@ -3756,24 +3767,20 @@ class ResourceService extends ApiService {
             }));
         }));
     }
-}
-ResourceService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-ResourceService.ctorParameters = () => [
-    { type: HttpClient },
-    { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] },
-    { type: OntologyCacheService }
-];
-ResourceService.ngInjectableDef = defineInjectable({ factory: function ResourceService_Factory() { return new ResourceService(inject(HttpClient), inject(KuiCoreConfigToken), inject(OntologyCacheService)); }, token: ResourceService, providedIn: "root" });
+};
+ResourceService.ngInjectableDef = ɵɵdefineInjectable({ factory: function ResourceService_Factory() { return new ResourceService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken), ɵɵinject(OntologyCacheService)); }, token: ResourceService, providedIn: "root" });
+ResourceService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __param(1, Inject(KuiCoreConfigToken)),
+    __metadata("design:paramtypes", [HttpClient, Object, OntologyCacheService])
+], ResourceService);
 
 /**
  * Performs searches (fulltext or extended) and search count queries into Knora.
  */
-class SearchService extends ApiService {
+let SearchService = class SearchService extends ApiService {
     constructor(http, config, _ontologyCacheService) {
         super(http, config);
         this.http = http;
@@ -4021,24 +4028,20 @@ class SearchService extends ApiService {
         const res = this.httpGet('/v2/searchbylabel/' + encodeURIComponent(searchTerm), httpParams);
         return res.pipe(mergeMap(this.processJSONLD), mergeMap(this.convertJSONLDToReadResourceSequence));
     }
-}
-SearchService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root',
-            },] }
-];
-/** @nocollapse */
-SearchService.ctorParameters = () => [
-    { type: HttpClient },
-    { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] },
-    { type: OntologyCacheService }
-];
-SearchService.ngInjectableDef = defineInjectable({ factory: function SearchService_Factory() { return new SearchService(inject(HttpClient), inject(KuiCoreConfigToken), inject(OntologyCacheService)); }, token: SearchService, providedIn: "root" });
+};
+SearchService.ngInjectableDef = ɵɵdefineInjectable({ factory: function SearchService_Factory() { return new SearchService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken), ɵɵinject(OntologyCacheService)); }, token: SearchService, providedIn: "root" });
+SearchService = __decorate([
+    Injectable({
+        providedIn: 'root',
+    }),
+    __param(1, Inject(KuiCoreConfigToken)),
+    __metadata("design:paramtypes", [HttpClient, Object, OntologyCacheService])
+], SearchService);
 
 /**
  * Requests incoming information (regions, links, stillImageRepresentations) from Knora.
  */
-class IncomingService extends SearchService {
+let IncomingService = class IncomingService extends SearchService {
     /**
     * Returns all incoming regions for a particular resource.
     *
@@ -4170,13 +4173,13 @@ FILTER NOT EXISTS {
 `;
         return this.doExtendedSearchReadResourceSequence(sparqlQueryStr);
     }
-}
-IncomingService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root',
-            },] }
-];
-IncomingService.ngInjectableDef = defineInjectable({ factory: function IncomingService_Factory() { return new IncomingService(inject(HttpClient), inject(KuiCoreConfigToken), inject(OntologyCacheService)); }, token: IncomingService, providedIn: "root" });
+};
+IncomingService.ngInjectableDef = ɵɵdefineInjectable({ factory: function IncomingService_Factory() { return new IncomingService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken), ɵɵinject(OntologyCacheService)); }, token: IncomingService, providedIn: "root" });
+IncomingService = __decorate([
+    Injectable({
+        providedIn: 'root',
+    })
+], IncomingService);
 
 /**
  * Represents the parameters of an extended search.
@@ -4194,6 +4197,7 @@ class ExtendedSearchParams {
         this.generateGravsearch = generateGravsearch;
     }
 }
+let SearchParamsService = 
 /**
  * Temporarily stores the parameters of an extended search.
  */
@@ -4220,20 +4224,24 @@ class SearchParamsService {
     getSearchParams() {
         return this._currentSearchParams.getValue();
     }
-}
-SearchParamsService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-SearchParamsService.ctorParameters = () => [];
-SearchParamsService.ngInjectableDef = defineInjectable({ factory: function SearchParamsService_Factory() { return new SearchParamsService(); }, token: SearchParamsService, providedIn: "root" });
+};
+SearchParamsService.ngInjectableDef = ɵɵdefineInjectable({ factory: function SearchParamsService_Factory() { return new SearchParamsService(); }, token: SearchParamsService, providedIn: "root" });
+SearchParamsService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+    /**
+     * Temporarily stores the parameters of an extended search.
+     */
+    ,
+    __metadata("design:paramtypes", [])
+], SearchParamsService);
 
+var GravsearchGenerationService_1;
 /**
  * Create GravSearch queries from provided parameters.
  */
-class GravsearchGenerationService {
+let GravsearchGenerationService = GravsearchGenerationService_1 = class GravsearchGenerationService {
     constructor(_searchParamsService) {
         this._searchParamsService = _searchParamsService;
     }
@@ -4297,13 +4305,13 @@ ${statement}
                 const propValueLiteral = `${propValue}Literal`;
                 if (propWithVal.valueLiteral.comparisonOperator.getClassName() === 'Like') {
                     // generate statement to value literal
-                    restriction = `${propValue} <${GravsearchGenerationService.complexTypeToProp[propWithVal.property.objectType]}> ${propValueLiteral}` + '\n';
+                    restriction = `${propValue} <${GravsearchGenerationService_1.complexTypeToProp[propWithVal.property.objectType]}> ${propValueLiteral}` + '\n';
                     // use regex function for LIKE
                     restriction += `FILTER regex(${propValueLiteral}, ${propWithVal.valueLiteral.value.toSparql(KnoraSchema.complex)}, "i")`;
                 }
                 else if (propWithVal.valueLiteral.comparisonOperator.getClassName() === 'Match') {
                     // generate statement to value literal
-                    restriction = `${propValue} <${GravsearchGenerationService.complexTypeToProp[propWithVal.property.objectType]}> ${propValueLiteral}` + '\n';
+                    restriction = `${propValue} <${GravsearchGenerationService_1.complexTypeToProp[propWithVal.property.objectType]}> ${propValueLiteral}` + '\n';
                     // use contains function for MATCH
                     restriction += `FILTER <${KnoraConstants.matchFunction}>(${propValueLiteral}, ${propWithVal.valueLiteral.value.toSparql(KnoraSchema.complex)})`;
                 }
@@ -4313,7 +4321,7 @@ ${statement}
                 }
                 else if (propWithVal.property.objectType === KnoraConstants.ListValue) {
                     // handle list node
-                    restriction = `${propValue} <${GravsearchGenerationService.complexTypeToProp[propWithVal.property.objectType]}> ${propWithVal.valueLiteral.value.toSparql(KnoraSchema.complex)}` + '\n';
+                    restriction = `${propValue} <${GravsearchGenerationService_1.complexTypeToProp[propWithVal.property.objectType]}> ${propWithVal.valueLiteral.value.toSparql(KnoraSchema.complex)}` + '\n';
                     // check for comparison operator "not equals"
                     if (propWithVal.valueLiteral.comparisonOperator.getClassName() === 'NotEquals') {
                         restriction = `FILTER NOT EXISTS {
@@ -4323,7 +4331,7 @@ ${statement}
                 }
                 else {
                     // generate statement to value literal
-                    restriction = `${propValue} <${GravsearchGenerationService.complexTypeToProp[propWithVal.property.objectType]}> ${propValueLiteral}` + '\n';
+                    restriction = `${propValue} <${GravsearchGenerationService_1.complexTypeToProp[propWithVal.property.objectType]}> ${propValueLiteral}` + '\n';
                     // generate filter expression
                     restriction += `FILTER(${propValueLiteral} ${propWithVal.valueLiteral.comparisonOperator.type} ${propWithVal.valueLiteral.value.toSparql(KnoraSchema.complex)})`;
                 }
@@ -4377,7 +4385,7 @@ OFFSET ${localOffset}
         }
         return gravsearchTemplate + offsetTemplate;
     }
-}
+};
 /**
  * @ignore
  *
@@ -4412,18 +4420,15 @@ GravsearchGenerationService.complexTypeToProp = {
     'http://api.knora.org/ontology/knora-api/v2#UriValue': KnoraConstants.uriValueAsUri,
     'http://api.knora.org/ontology/knora-api/v2#ListValue': KnoraConstants.listValueAsListNode
 };
-GravsearchGenerationService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-GravsearchGenerationService.ctorParameters = () => [
-    { type: SearchParamsService }
-];
-GravsearchGenerationService.ngInjectableDef = defineInjectable({ factory: function GravsearchGenerationService_Factory() { return new GravsearchGenerationService(inject(SearchParamsService)); }, token: GravsearchGenerationService, providedIn: "root" });
+GravsearchGenerationService.ngInjectableDef = ɵɵdefineInjectable({ factory: function GravsearchGenerationService_Factory() { return new GravsearchGenerationService(ɵɵinject(SearchParamsService)); }, token: GravsearchGenerationService, providedIn: "root" });
+GravsearchGenerationService = GravsearchGenerationService_1 = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __metadata("design:paramtypes", [SearchParamsService])
+], GravsearchGenerationService);
 
-class StoreService {
+let StoreService = class StoreService {
     constructor(http, config) {
         this.http = http;
         this.config = config;
@@ -4450,20 +4455,17 @@ class StoreService {
             throw error;
         }));
     }
-}
-StoreService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-StoreService.ctorParameters = () => [
-    { type: HttpClient },
-    { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] }
-];
-StoreService.ngInjectableDef = defineInjectable({ factory: function StoreService_Factory() { return new StoreService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: StoreService, providedIn: "root" });
+};
+StoreService.ngInjectableDef = ɵɵdefineInjectable({ factory: function StoreService_Factory() { return new StoreService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: StoreService, providedIn: "root" });
+StoreService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __param(1, Inject(KuiCoreConfigToken)),
+    __metadata("design:paramtypes", [HttpClient, Object])
+], StoreService);
 
-class BasicOntologyService extends ApiService {
+let BasicOntologyService = class BasicOntologyService extends ApiService {
     /**
        * returns our list of a basic ontology
        *
@@ -4478,15 +4480,15 @@ class BasicOntologyService extends ApiService {
         return this.httpGet(url + '/data/base-data/basic-ontology.json');
         // return this.httpGet(url + '/data/base-data/basic-ontology.json', {withCredentials: false});
     }
-}
-BasicOntologyService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-BasicOntologyService.ngInjectableDef = defineInjectable({ factory: function BasicOntologyService_Factory() { return new BasicOntologyService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: BasicOntologyService, providedIn: "root" });
+};
+BasicOntologyService.ngInjectableDef = ɵɵdefineInjectable({ factory: function BasicOntologyService_Factory() { return new BasicOntologyService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: BasicOntologyService, providedIn: "root" });
+BasicOntologyService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+], BasicOntologyService);
 
-class ResourceTypesService extends ApiService {
+let ResourceTypesService = class ResourceTypesService extends ApiService {
     /**
        * Get all resource types defined by the vocabulary.
        *
@@ -4505,15 +4507,15 @@ class ResourceTypesService extends ApiService {
     getResourceType(iri) {
         return this.httpGet('/v1/resourcetypes/' + encodeURIComponent(iri));
     }
-}
-ResourceTypesService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-ResourceTypesService.ngInjectableDef = defineInjectable({ factory: function ResourceTypesService_Factory() { return new ResourceTypesService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: ResourceTypesService, providedIn: "root" });
+};
+ResourceTypesService.ngInjectableDef = ɵɵdefineInjectable({ factory: function ResourceTypesService_Factory() { return new ResourceTypesService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: ResourceTypesService, providedIn: "root" });
+ResourceTypesService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+], ResourceTypesService);
 
-class ListService extends ApiService {
+let ListService = class ListService extends ApiService {
     constructor(http, config) {
         super(http, config);
         this.http = http;
@@ -4561,18 +4563,15 @@ class ListService extends ApiService {
         // this would return an Observable of a PromiseObservable -> combine them into one Observable
         this.processJSONLD));
     }
-}
-ListService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-ListService.ctorParameters = () => [
-    { type: HttpClient },
-    { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] }
-];
-ListService.ngInjectableDef = defineInjectable({ factory: function ListService_Factory() { return new ListService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: ListService, providedIn: "root" });
+};
+ListService.ngInjectableDef = ɵɵdefineInjectable({ factory: function ListService_Factory() { return new ListService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: ListService, providedIn: "root" });
+ListService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __param(1, Inject(KuiCoreConfigToken)),
+    __metadata("design:paramtypes", [HttpClient, Object])
+], ListService);
 
 /**
  * Represents a list node v2.
@@ -4592,7 +4591,7 @@ class ListCache {
 }
 class ListNodeIriToListNodeV2 {
 }
-class ListCacheService {
+let ListCacheService = class ListCacheService {
     constructor(_listService) {
         this._listService = _listService;
         this.listCache = new ListCache();
@@ -4688,21 +4687,14 @@ class ListCacheService {
             }));
         }
     }
-}
-ListCacheService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-ListCacheService.ctorParameters = () => [
-    { type: ListService }
-];
-ListCacheService.ngInjectableDef = defineInjectable({ factory: function ListCacheService_Factory() { return new ListCacheService(inject(ListService)); }, token: ListCacheService, providedIn: "root" });
-
-/**
- * main api services
- */
+};
+ListCacheService.ngInjectableDef = ɵɵdefineInjectable({ factory: function ListCacheService_Factory() { return new ListCacheService(ɵɵinject(ListService)); }, token: ListCacheService, providedIn: "root" });
+ListCacheService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __metadata("design:paramtypes", [ListService])
+], ListCacheService);
 
 class Equals {
     constructor() {
@@ -4871,14 +4863,5 @@ class PropertyWithValue {
     }
 }
 
-/*
- * Public API Surface of core
- */
-
-/**
- * Generated bundle index. Do not edit.
- */
-
-export { Property as ɵa, KuiCoreConfigToken, KuiCoreModule, KuiCoreConfig, ApiServiceResult, ApiServiceError, Utils, KnoraConstants, KnoraSchema, StringLiteral, Precision, DateSalsah, DateRangeSalsah, AuthenticationResponse, Group, GroupResponse, GroupsResponse, List, ListInfo, ListInfoResponse, ListNode, ListNodeInfo, ListNodeInfoResponse, ListResponse, ListNodeResponse, ListsResponse, OntologyInfoShort, PermissionData, Project, ProjectMembersResponse, ProjectResponse, ProjectsResponse, UsersResponse, UserResponse, User, ReadTextValue, ReadTextValueAsString, ReferredResourcesByStandoffLink, ReadTextValueAsHtml, ReadTextValueAsXml, ReadDateValue, ReadLinkValue, ReadIntegerValue, ReadDecimalValue, ReadStillImageFileValue, ReadMovingImageFileValue, ReadTextFileValue, ReadColorValue, Point2D, RegionGeometry, ReadGeomValue, ReadUriValue, ReadBooleanValue, ReadIntervalValue, ReadListValue, ReadResource, Resource, ReadResourcesSequence, CountQueryResult, StillImageRepresentation, ImageRegion, Equals, NotEquals, GreaterThanEquals, GreaterThan, LessThan, LessThanEquals, Exists, Like, Match, ComparisonOperatorAndValue, ValueLiteral, IRI, PropertyWithValue, ApiService, GroupsService, ListsService, ProjectsService, UsersService, LanguageService, StatusMsgService, OntologyService, OntologyMetadata, CardinalityOccurrence, Cardinality, GuiOrder, ResourceClass, ResourceClasses, Property, Properties, ResourceClassIrisForOntology, OntologyInformation, OntologyCacheService, ResourceService, SearchService, ConvertJSONLD, IncomingService, ExtendedSearchParams, SearchParamsService, GravsearchGenerationService, StoreService, BasicOntologyService, ResourceTypesService, ListNodeV2, ListCacheService };
-
+export { ApiService, ApiServiceError, ApiServiceResult, AuthenticationResponse, BasicOntologyService, Cardinality, CardinalityOccurrence, ComparisonOperatorAndValue, ConvertJSONLD, CountQueryResult, DateRangeSalsah, DateSalsah, Equals, Exists, ExtendedSearchParams, GravsearchGenerationService, GreaterThan, GreaterThanEquals, Group, GroupResponse, GroupsResponse, GroupsService, GuiOrder, IRI, ImageRegion, IncomingService, KnoraConstants, KnoraSchema, KuiCoreConfig, KuiCoreConfigToken, KuiCoreModule, LanguageService, LessThan, LessThanEquals, Like, List, ListCacheService, ListInfo, ListInfoResponse, ListNode, ListNodeInfo, ListNodeInfoResponse, ListNodeResponse, ListNodeV2, ListResponse, ListsResponse, ListsService, Match, NotEquals, OntologyCacheService, OntologyInfoShort, OntologyInformation, OntologyMetadata, OntologyService, PermissionData, Point2D, Precision, Project, ProjectMembersResponse, ProjectResponse, ProjectsResponse, ProjectsService, Properties, Property, PropertyWithValue, ReadBooleanValue, ReadColorValue, ReadDateValue, ReadDecimalValue, ReadGeomValue, ReadIntegerValue, ReadIntervalValue, ReadLinkValue, ReadListValue, ReadMovingImageFileValue, ReadResource, ReadResourcesSequence, ReadStillImageFileValue, ReadTextFileValue, ReadTextValue, ReadTextValueAsHtml, ReadTextValueAsString, ReadTextValueAsXml, ReadUriValue, ReferredResourcesByStandoffLink, RegionGeometry, Resource, ResourceClass, ResourceClassIrisForOntology, ResourceClasses, ResourceService, ResourceTypesService, SearchParamsService, SearchService, StatusMsgService, StillImageRepresentation, StoreService, StringLiteral, User, UserResponse, UsersResponse, UsersService, Utils, ValueLiteral, Property as ɵa };
 //# sourceMappingURL=knora-core.js.map

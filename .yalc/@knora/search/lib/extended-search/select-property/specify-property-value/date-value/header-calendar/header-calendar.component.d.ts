@@ -1,7 +1,8 @@
 import { OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { JDNConvertibleCalendar } from 'jdnconvertiblecalendar';
-import { DateAdapter, MatCalendar, MatDatepickerContent } from '@angular/material';
+import { DateAdapter } from '@angular/material/core';
+import { MatCalendar, MatDatepickerContent } from '@angular/material/datepicker';
 /** Custom header component containing a calendar format switcher */
 export declare class HeaderComponent<D> implements OnInit {
     private _calendar;

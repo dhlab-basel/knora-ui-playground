@@ -1,19 +1,26 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { __decorate, __metadata, __param } from 'tslib';
+import { Input, Component, EventEmitter, Output, ɵɵdefineInjectable, Injectable, Directive, Renderer2, ElementRef, Pipe, Inject, NgModule } from '@angular/core';
+import { Location, CommonModule } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Md5 } from 'ts-md5';
 import { KnoraConstants } from '@knora/core';
-import { NG_VALIDATORS, Validators } from '@angular/forms';
+import { Validators, NG_VALIDATORS } from '@angular/forms';
 import { JDNConvertibleCalendarDateAdapter } from 'jdnconvertiblecalendardateadapter';
-import { Location, CommonModule } from '@angular/common';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Component, Input, EventEmitter, Output, Injectable, Inject, Directive, ElementRef, Renderer2, Pipe, defineInjectable, NgModule } from '@angular/core';
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef, MatButtonModule, MatCardModule, MatIconModule, MatListModule, MatMenuModule } from '@angular/material';
+import { MatDialogConfig, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 /**
  * The progress indicator can be used to show the status of loading something.
  * This can be the simple loader or in case of submitting data it can show the status (not ready, loading, done or error).
  *
  */
-class ProgressIndicatorComponent {
+let ProgressIndicatorComponent = class ProgressIndicatorComponent {
     /**
      * @ignore
      */
@@ -28,26 +35,29 @@ class ProgressIndicatorComponent {
     }
     ngOnInit() {
     }
-}
-ProgressIndicatorComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'kui-progress-indicator',
-                template: "<!-- this is the progress indicator for forms -->\n<div class=\"kui-progress-indicator submit\" *ngIf=\"status !== undefined; else isLoading\">\n    <!-- spinner while on load / on submit -->\n    <div class=\"on-submit\" *ngIf=\"status === 0\">\n        <div class=\"spinner\" [style.border-top-color]=\"color\" [style.border-left-color]=\"color\"></div>\n    </div>\n\n    <div>\n        <!-- bullet point before submit -->\n        <mat-icon *ngIf=\"status === -1\" class=\"before-submit\">keyboard_arrow_right</mat-icon>\n        <!-- icon 'check' when done -->\n        <mat-icon *ngIf=\"status === 1\" class=\"after-submit\" [style.color]=\"color\">done</mat-icon>\n        <!-- in case of an error -->\n        <mat-icon *ngIf=\"status === 400\" class=\"submit-error\">not_interested</mat-icon>\n    </div>\n\n</div>\n\n<!-- default case: is loading -->\n<ng-template #isLoading>\n    <div class=\"kui-progress-indicator default\">\n        <div class=\"line\">\n            <div class=\"bounce1\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce2\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce3\" [style.background-color]=\"color\"></div>\n        </div>\n        <div class=\"line\">\n            <div class=\"bounce3\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce1\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce2\" [style.background-color]=\"color\"></div>\n        </div>\n    </div>\n</ng-template>\n\n\n<!-- another variety of isLoading (in one line) -->\n<!--\n<div class=\"loading-progress-indicator\">\n    <span class=\"text\">{{text}}</span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n</div>\n-->\n",
-                styles: [".kui-progress-indicator.default{height:56px;margin-left:auto;margin-right:auto;padding:24px 36px;top:60px;width:96px}.kui-progress-indicator.default.page-center{left:50%;position:absolute;top:39%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}.kui-progress-indicator.default h1,.kui-progress-indicator.default h2,.kui-progress-indicator.default h3,.kui-progress-indicator.default p{color:#555;text-align:center}.kui-progress-indicator.default .line{margin:0 auto;text-align:center;width:70px}.kui-progress-indicator.default .line>div{-webkit-animation:1.4s ease-in-out infinite both bounce-keyframes;animation:1.4s ease-in-out infinite both bounce-keyframes;background-color:#00695c;border-radius:6px;display:inline-block;height:18px;width:18px}.kui-progress-indicator.default .line .bounce1{-webkit-animation-delay:-.32s;animation-delay:-.32s}.kui-progress-indicator.default .line .bounce2{-webkit-animation-delay:-.16s;animation-delay:-.16s}@-webkit-keyframes bounce-keyframes{0%,100%,80%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}@keyframes bounce-keyframes{0%,100%,80%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}.kui-progress-indicator.submit{height:32px;width:32px}.kui-progress-indicator.submit .on-submit{-webkit-animation:.7s linear infinite spinner-keyframes;animation:.7s linear infinite spinner-keyframes;height:32px;width:32px}.kui-progress-indicator.submit .on-submit .spinner{border:2px solid #00695c;border-bottom-color:transparent;border-radius:50%;border-right-color:transparent;height:28px;width:28px}.kui-progress-indicator.submit .before-submit{color:rgba(128,128,128,.8)}.kui-progress-indicator.submit .after-submit{color:#00695c}.kui-progress-indicator.submit .submit-error{color:#f44336}@-webkit-keyframes spinner-keyframes{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes spinner-keyframes{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.loading-progress-indicator{text-align:center;width:100%}.loading-progress-indicator .text{color:#00695c;font-size:12pt}.loading-progress-indicator .dot{-webkit-animation:1.4s ease-in-out infinite dot-keyframes;animation:1.4s ease-in-out infinite dot-keyframes;background-color:#00695c;border-radius:2px;display:inline-block;height:6px;margin:3px 6px 2px;width:6px}.loading-progress-indicator .dot:nth-child(2){-webkit-animation-delay:.16s;animation-delay:.16s}.loading-progress-indicator .dot:nth-child(3){-webkit-animation-delay:.32s;animation-delay:.32s}.loading-progress-indicator .dot:nth-child(4){-webkit-animation-delay:.48s;animation-delay:.48s}.loading-progress-indicator .dot:nth-child(5){-webkit-animation-delay:.64s;animation-delay:.64s}.loading-progress-indicator .dot:nth-child(6){-webkit-animation-delay:.8s;animation-delay:.8s}@-webkit-keyframes dot-keyframes{0%,100%{opacity:.4;-webkit-transform:scale(1,1);transform:scale(1,1)}50%{opacity:1;-webkit-transform:scale(1.2,1.2);transform:scale(1.2,1.2)}}@keyframes dot-keyframes{0%,100%{opacity:.4;-webkit-transform:scale(1,1);transform:scale(1,1)}50%{opacity:1;-webkit-transform:scale(1.2,1.2);transform:scale(1.2,1.2)}}"]
-            }] }
-];
-/** @nocollapse */
-ProgressIndicatorComponent.ctorParameters = () => [];
-ProgressIndicatorComponent.propDecorators = {
-    status: [{ type: Input }],
-    color: [{ type: Input }]
 };
+__decorate([
+    Input(),
+    __metadata("design:type", Number)
+], ProgressIndicatorComponent.prototype, "status", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", String)
+], ProgressIndicatorComponent.prototype, "color", void 0);
+ProgressIndicatorComponent = __decorate([
+    Component({
+        selector: 'kui-progress-indicator',
+        template: "<!-- this is the progress indicator for forms -->\n<div class=\"kui-progress-indicator submit\" *ngIf=\"status !== undefined; else isLoading\">\n    <!-- spinner while on load / on submit -->\n    <div class=\"on-submit\" *ngIf=\"status === 0\">\n        <div class=\"spinner\" [style.border-top-color]=\"color\" [style.border-left-color]=\"color\"></div>\n    </div>\n\n    <div>\n        <!-- bullet point before submit -->\n        <mat-icon *ngIf=\"status === -1\" class=\"before-submit\">keyboard_arrow_right</mat-icon>\n        <!-- icon 'check' when done -->\n        <mat-icon *ngIf=\"status === 1\" class=\"after-submit\" [style.color]=\"color\">done</mat-icon>\n        <!-- in case of an error -->\n        <mat-icon *ngIf=\"status === 400\" class=\"submit-error\">not_interested</mat-icon>\n    </div>\n\n</div>\n\n<!-- default case: is loading -->\n<ng-template #isLoading>\n    <div class=\"kui-progress-indicator default\">\n        <div class=\"line\">\n            <div class=\"bounce1\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce2\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce3\" [style.background-color]=\"color\"></div>\n        </div>\n        <div class=\"line\">\n            <div class=\"bounce3\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce1\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce2\" [style.background-color]=\"color\"></div>\n        </div>\n    </div>\n</ng-template>\n\n\n<!-- another variety of isLoading (in one line) -->\n<!--\n<div class=\"loading-progress-indicator\">\n    <span class=\"text\">{{text}}</span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n</div>\n-->\n",
+        styles: [".kui-progress-indicator.default{height:56px;margin-left:auto;margin-right:auto;padding:24px 36px;top:60px;width:96px}.kui-progress-indicator.default.page-center{left:50%;position:absolute;top:39%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}.kui-progress-indicator.default h1,.kui-progress-indicator.default h2,.kui-progress-indicator.default h3,.kui-progress-indicator.default p{color:#555;text-align:center}.kui-progress-indicator.default .line{margin:0 auto;text-align:center;width:70px}.kui-progress-indicator.default .line>div{-webkit-animation:1.4s ease-in-out infinite both bounce-keyframes;animation:1.4s ease-in-out infinite both bounce-keyframes;background-color:#00695c;border-radius:6px;display:inline-block;height:18px;width:18px}.kui-progress-indicator.default .line .bounce1{-webkit-animation-delay:-.32s;animation-delay:-.32s}.kui-progress-indicator.default .line .bounce2{-webkit-animation-delay:-.16s;animation-delay:-.16s}@-webkit-keyframes bounce-keyframes{0%,100%,80%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}@keyframes bounce-keyframes{0%,100%,80%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}.kui-progress-indicator.submit{height:32px;width:32px}.kui-progress-indicator.submit .on-submit{-webkit-animation:.7s linear infinite spinner-keyframes;animation:.7s linear infinite spinner-keyframes;height:32px;width:32px}.kui-progress-indicator.submit .on-submit .spinner{border:2px solid #00695c;border-bottom-color:transparent;border-radius:50%;border-right-color:transparent;height:28px;width:28px}.kui-progress-indicator.submit .before-submit{color:rgba(128,128,128,.8)}.kui-progress-indicator.submit .after-submit{color:#00695c}.kui-progress-indicator.submit .submit-error{color:#f44336}@-webkit-keyframes spinner-keyframes{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes spinner-keyframes{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.loading-progress-indicator{text-align:center;width:100%}.loading-progress-indicator .text{color:#00695c;font-size:12pt}.loading-progress-indicator .dot{-webkit-animation:1.4s ease-in-out infinite dot-keyframes;animation:1.4s ease-in-out infinite dot-keyframes;background-color:#00695c;border-radius:2px;display:inline-block;height:6px;margin:3px 6px 2px;width:6px}.loading-progress-indicator .dot:nth-child(2){-webkit-animation-delay:.16s;animation-delay:.16s}.loading-progress-indicator .dot:nth-child(3){-webkit-animation-delay:.32s;animation-delay:.32s}.loading-progress-indicator .dot:nth-child(4){-webkit-animation-delay:.48s;animation-delay:.48s}.loading-progress-indicator .dot:nth-child(5){-webkit-animation-delay:.64s;animation-delay:.64s}.loading-progress-indicator .dot:nth-child(6){-webkit-animation-delay:.8s;animation-delay:.8s}@-webkit-keyframes dot-keyframes{0%,100%{opacity:.4;-webkit-transform:scale(1,1);transform:scale(1,1)}50%{opacity:1;-webkit-transform:scale(1.2,1.2);transform:scale(1.2,1.2)}}@keyframes dot-keyframes{0%,100%{opacity:.4;-webkit-transform:scale(1,1);transform:scale(1,1)}50%{opacity:1;-webkit-transform:scale(1.2,1.2);transform:scale(1.2,1.2)}}"]
+    }),
+    __metadata("design:paramtypes", [])
+], ProgressIndicatorComponent);
 
 /**
  * A component with a list of properties to sort a list by one of them.
  * It can be used together with the KuiSortBy pipe.
  */
-class SortButtonComponent {
+let SortButtonComponent = class SortButtonComponent {
     constructor() {
         /**
          * @ignore {string} sortKeyChange
@@ -91,25 +101,39 @@ class SortButtonComponent {
     sortBy(key) {
         this.sortKeyChange.emit(key);
     }
-}
-SortButtonComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'kui-sort-button',
-                template: "<span class=\"sort-button\" [class]=\"position + ' ' + icon\">\n    <button mat-icon-button [matMenuTriggerFor]=\"sortSelection\">\n        <mat-icon>{{icon}}</mat-icon>\n    </button>\n    <mat-menu #sortSelection=\"matMenu\" [xPosition]=\"menuXPos\">\n        <button mat-menu-item\n                *ngFor=\"let item of sortProps\"\n                (click)=\"sortBy(item.key)\"\n                [class.active]=\"activeKey === item.key\">\n            {{item.label}}\n        </button>\n    </mat-menu>\n</span>\n",
-                styles: [".active{background:rgba(128,128,128,.8)}.right.sort{float:right}.right.sort .mat-icon{-webkit-transform:scale(-1,1);transform:scale(-1,1)}"]
-            }] }
-];
-/** @nocollapse */
-SortButtonComponent.ctorParameters = () => [];
-SortButtonComponent.propDecorators = {
-    sortKeyChange: [{ type: Output }],
-    sortProps: [{ type: Input }],
-    position: [{ type: Input }],
-    icon: [{ type: Input }],
-    sortKey: [{ type: Input }]
 };
+__decorate([
+    Output(),
+    __metadata("design:type", EventEmitter)
+], SortButtonComponent.prototype, "sortKeyChange", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Array)
+], SortButtonComponent.prototype, "sortProps", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", String)
+], SortButtonComponent.prototype, "position", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", String)
+], SortButtonComponent.prototype, "icon", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], SortButtonComponent.prototype, "sortKey", null);
+SortButtonComponent = __decorate([
+    Component({
+        selector: 'kui-sort-button',
+        template: "<span class=\"sort-button\" [class]=\"position + ' ' + icon\">\n    <button mat-icon-button [matMenuTriggerFor]=\"sortSelection\">\n        <mat-icon>{{icon}}</mat-icon>\n    </button>\n    <mat-menu #sortSelection=\"matMenu\" [xPosition]=\"menuXPos\">\n        <button mat-menu-item\n                *ngFor=\"let item of sortProps\"\n                (click)=\"sortBy(item.key)\"\n                [class.active]=\"activeKey === item.key\">\n            {{item.label}}\n        </button>\n    </mat-menu>\n</span>\n",
+        styles: [".active{background:rgba(128,128,128,.8)}.right.sort{float:right}.right.sort .mat-icon{-webkit-transform:scale(-1,1);transform:scale(-1,1)}"]
+    }),
+    __metadata("design:paramtypes", [])
+], SortButtonComponent);
 
-class StatusMsg {
+let StatusMsg = class StatusMsg {
     constructor() {
         this.default = {
             '100': {
@@ -366,13 +390,13 @@ class StatusMsg {
             }
         };
     }
-}
-StatusMsg.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-StatusMsg.ngInjectableDef = defineInjectable({ factory: function StatusMsg_Factory() { return new StatusMsg(); }, token: StatusMsg, providedIn: "root" });
+};
+StatusMsg.ngInjectableDef = ɵɵdefineInjectable({ factory: function StatusMsg_Factory() { return new StatusMsg(); }, token: StatusMsg, providedIn: "root" });
+StatusMsg = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+], StatusMsg);
 
 /**
  * @ignore
@@ -385,7 +409,7 @@ class KuiMessageData {
  * If you set the paramater `[short]="true"` it shows a smaller message. It can be used to give feedbacks in a form e.g. update process: show success or error message.
  *
  */
-class MessageComponent {
+let MessageComponent = class MessageComponent {
     constructor(_router, _location, _activatedRoute, _status) {
         this._router = _router;
         this._location = _location;
@@ -544,26 +568,30 @@ class MessageComponent {
     closeMessage() {
         this.disable = !this.disable;
     }
-}
-MessageComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'kui-message',
-                template: "<mat-card *ngIf=\"!short\" class=\"fix-width kui-message\" [ngClass]=\"'kui-' + message?.type\">\n\n    <mat-card-subtitle class=\"message-subtitle\">\n        <span class=\"left\">{{message?.type | uppercase }} {{message?.status}} | {{message?.statusMsg}}</span>\n        <mat-icon class=\"right\">{{message?.type}}</mat-icon>\n    </mat-card-subtitle>\n\n    <mat-card-title class=\"message-title\" [innerHtml]=\"message?.statusText\"></mat-card-title>\n\n    <mat-card-content class=\"message-content\">\n        <mat-list *ngIf=\"message?.route\">\n            <mat-list-item>\n                <a [href]=\"message?.route\" target=\"_blank\">\n                    &rarr; {{message?.route}}\n                </a>\n            </mat-list-item>\n        </mat-list>\n\n        <mat-list *ngIf=\"showLinks\">\n            <p>{{links.title}}</p>\n            <mat-list-item *ngFor=\"let item of links.list\" class=\"link\" (click)=\"goToLocation(item.route)\">\n                <mat-icon mat-list-icon>{{item.icon}}</mat-icon>\n                <p mat-line>{{item.label}}</p>\n            </mat-list-item>\n        </mat-list>\n\n    </mat-card-content>\n\n    <mat-card-footer *ngIf=\"!medium\" class=\"message-footnote\" [innerHtml]=\"message?.footnote\"></mat-card-footer>\n\n</mat-card>\n\n<mat-card *ngIf=\"short && !disable\" class=\"fix-width kui-short-message\" [ngClass]=\"'kui-' + message?.type\">\n\n    <div class=\"kui-panel\">\n        <span class=\"kui-short-message-text\">\n            {{message?.statusText}}\n        </span>\n        <span class=\"fill-remaining-space\"></span>\n        <button mat-icon-button (click)=\"closeMessage()\">\n            <mat-icon>close</mat-icon>\n        </button>\n    </div>\n\n</mat-card>\n",
-                styles: [".kui-panel{display:flex;box-sizing:border-box;flex-direction:row;white-space:nowrap}.fill-remaining-space{flex-basis:auto;flex-grow:1;flex-shrink:1}.kui-error{background-color:rgba(244,67,54,.5)}.kui-warning{background-color:rgba(255,196,0,.5)}.kui-hint,.kui-note{background-color:rgba(0,105,92,.4)}.kui-error,.kui-hint,.kui-note,.kui-warning{margin:12px auto;max-width:640px}.kui-error .message-subtitle,.kui-hint .message-subtitle,.kui-note .message-subtitle,.kui-warning .message-subtitle{padding-bottom:12px}.kui-error .message-subtitle .left,.kui-hint .message-subtitle .left,.kui-note .message-subtitle .left,.kui-warning .message-subtitle .left{float:left;left:16px;position:absolute;text-align:left}.kui-error .message-subtitle .right,.kui-hint .message-subtitle .right,.kui-note .message-subtitle .right,.kui-warning .message-subtitle .right{float:right;right:16px;position:absolute;text-align:right}.kui-error .message-title,.kui-hint .message-title,.kui-note .message-title,.kui-warning .message-title{padding-top:12px}.kui-error .message-content,.kui-hint .message-content,.kui-note .message-content,.kui-warning .message-content{margin-bottom:48px;margin-top:48px}.kui-error .message-content .link,.kui-hint .message-content .link,.kui-note .message-content .link,.kui-warning .message-content .link{cursor:pointer}.kui-error .message-footnote,.kui-hint .message-footnote,.kui-note .message-footnote,.kui-warning .message-footnote{padding:24px}.kui-short-message .kui-short-message-text{font-weight:bolder;text-align:center}@media (max-width:576px){.kui-panel{white-space:normal}.kui-short-message .kui-short-message-text{text-align:left}}"]
-            }] }
-];
-/** @nocollapse */
-MessageComponent.ctorParameters = () => [
-    { type: Router },
-    { type: Location },
-    { type: ActivatedRoute },
-    { type: StatusMsg }
-];
-MessageComponent.propDecorators = {
-    message: [{ type: Input }],
-    short: [{ type: Input }],
-    medium: [{ type: Input }]
 };
+__decorate([
+    Input(),
+    __metadata("design:type", KuiMessageData)
+], MessageComponent.prototype, "message", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean)
+], MessageComponent.prototype, "short", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean)
+], MessageComponent.prototype, "medium", void 0);
+MessageComponent = __decorate([
+    Component({
+        selector: 'kui-message',
+        template: "<mat-card *ngIf=\"!short\" class=\"fix-width kui-message\" [ngClass]=\"'kui-' + message?.type\">\n\n    <mat-card-subtitle class=\"message-subtitle\">\n        <span class=\"left\">{{message?.type | uppercase }} {{message?.status}} | {{message?.statusMsg}}</span>\n        <mat-icon class=\"right\">{{message?.type}}</mat-icon>\n    </mat-card-subtitle>\n\n    <mat-card-title class=\"message-title\" [innerHtml]=\"message?.statusText\"></mat-card-title>\n\n    <mat-card-content class=\"message-content\">\n        <mat-list *ngIf=\"message?.route\">\n            <mat-list-item>\n                <a [href]=\"message?.route\" target=\"_blank\">\n                    &rarr; {{message?.route}}\n                </a>\n            </mat-list-item>\n        </mat-list>\n\n        <mat-list *ngIf=\"showLinks\">\n            <p>{{links.title}}</p>\n            <mat-list-item *ngFor=\"let item of links.list\" class=\"link\" (click)=\"goToLocation(item.route)\">\n                <mat-icon mat-list-icon>{{item.icon}}</mat-icon>\n                <p mat-line>{{item.label}}</p>\n            </mat-list-item>\n        </mat-list>\n\n    </mat-card-content>\n\n    <mat-card-footer *ngIf=\"!medium\" class=\"message-footnote\" [innerHtml]=\"message?.footnote\"></mat-card-footer>\n\n</mat-card>\n\n<mat-card *ngIf=\"short && !disable\" class=\"fix-width kui-short-message\" [ngClass]=\"'kui-' + message?.type\">\n\n    <div class=\"kui-panel\">\n        <span class=\"kui-short-message-text\">\n            {{message?.statusText}}\n        </span>\n        <span class=\"fill-remaining-space\"></span>\n        <button mat-icon-button (click)=\"closeMessage()\">\n            <mat-icon>close</mat-icon>\n        </button>\n    </div>\n\n</mat-card>\n",
+        styles: [".kui-panel{display:flex;box-sizing:border-box;flex-direction:row;white-space:nowrap}.fill-remaining-space{flex-basis:auto;flex-grow:1;flex-shrink:1}.kui-error{background-color:rgba(244,67,54,.5)}.kui-warning{background-color:rgba(255,196,0,.5)}.kui-hint,.kui-note{background-color:rgba(0,105,92,.4)}.kui-error,.kui-hint,.kui-note,.kui-warning{margin:12px auto;max-width:640px}.kui-error .message-subtitle,.kui-hint .message-subtitle,.kui-note .message-subtitle,.kui-warning .message-subtitle{padding-bottom:12px}.kui-error .message-subtitle .left,.kui-hint .message-subtitle .left,.kui-note .message-subtitle .left,.kui-warning .message-subtitle .left{float:left;left:16px;position:absolute;text-align:left}.kui-error .message-subtitle .right,.kui-hint .message-subtitle .right,.kui-note .message-subtitle .right,.kui-warning .message-subtitle .right{float:right;right:16px;position:absolute;text-align:right}.kui-error .message-title,.kui-hint .message-title,.kui-note .message-title,.kui-warning .message-title{padding-top:12px}.kui-error .message-content,.kui-hint .message-content,.kui-note .message-content,.kui-warning .message-content{margin-bottom:48px;margin-top:48px}.kui-error .message-content .link,.kui-hint .message-content .link,.kui-note .message-content .link,.kui-warning .message-content .link{cursor:pointer}.kui-error .message-footnote,.kui-hint .message-footnote,.kui-note .message-footnote,.kui-warning .message-footnote{padding:24px}.kui-short-message .kui-short-message-text{font-weight:bolder;text-align:center}@media (max-width:576px){.kui-panel{white-space:normal}.kui-short-message .kui-short-message-text{text-align:left}}"]
+    }),
+    __metadata("design:paramtypes", [Router,
+        Location,
+        ActivatedRoute,
+        StatusMsg])
+], MessageComponent);
 
 /**
  * @ignore
@@ -589,7 +617,7 @@ AdminImageConfig.defaultNotFound = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUg
  * The feature of this module ist the error handling: In case of a 404 error of the image source (img src) the module shows a default image-not-found image. Or a default user profile icon (type=user), or a default project icon (type=project).
  *
  */
-class AdminImageDirective {
+let AdminImageDirective = class AdminImageDirective {
     /**
      * @ignore
      */
@@ -628,26 +656,27 @@ class AdminImageDirective {
         this._renderer.setAttribute(this._ele.nativeElement, 'src', this.source);
         this._renderer.setAttribute(this._ele.nativeElement, 'onError', 'this.src=\'' + this.onError + '\'');
     }
-}
-AdminImageDirective.decorators = [
-    { type: Directive, args: [{
-                selector: '[kuiAdminImage]'
-            },] }
-];
-/** @nocollapse */
-AdminImageDirective.ctorParameters = () => [
-    { type: Renderer2 },
-    { type: ElementRef }
-];
-AdminImageDirective.propDecorators = {
-    image: [{ type: Input }],
-    type: [{ type: Input }]
 };
+__decorate([
+    Input(),
+    __metadata("design:type", String)
+], AdminImageDirective.prototype, "image", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", String)
+], AdminImageDirective.prototype, "type", void 0);
+AdminImageDirective = __decorate([
+    Directive({
+        selector: '[kuiAdminImage]'
+    }),
+    __metadata("design:paramtypes", [Renderer2,
+        ElementRef])
+], AdminImageDirective);
 
 /**
  * This directive renders a GND/IAF or a VIAF identifier as a link to the respective resolver.
  */
-class GndDirective {
+let GndDirective = class GndDirective {
     constructor(el) {
         this.el = el;
     }
@@ -677,21 +706,22 @@ class GndDirective {
             this.el.nativeElement.innerHTML = this._gnd;
         }
     }
-}
-GndDirective.decorators = [
-    { type: Directive, args: [{
-                // tslint:disable-next-line:directive-selector
-                selector: '[kuiGnd]'
-            },] }
-];
-/** @nocollapse */
-GndDirective.ctorParameters = () => [
-    { type: ElementRef }
-];
-GndDirective.propDecorators = {
-    kuiGnd: [{ type: Input }]
 };
+__decorate([
+    Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], GndDirective.prototype, "kuiGnd", null);
+GndDirective = __decorate([
+    Directive({
+        // tslint:disable-next-line:directive-selector
+        selector: '[kuiGnd]'
+    }),
+    __metadata("design:paramtypes", [ElementRef])
+], GndDirective);
 
+var ExistingNameDirective_1;
+let ExistingNameDirective = ExistingNameDirective_1 = 
 /**
  * With the ExistingNameDirective we could prevent to use a name which has to be unique but already exists
  * e.g. get a list of all project shortnames, then we can use this list as existing names;
@@ -726,16 +756,22 @@ class ExistingNameDirective {
     validate(control) {
         return this.valFn(control);
     }
-}
-ExistingNameDirective.decorators = [
-    { type: Directive, args: [{
-                selector: '[kuiExistingName]',
-                providers: [{ provide: NG_VALIDATORS, useExisting: ExistingNameDirective, multi: true }]
-            },] }
-];
-ExistingNameDirective.propDecorators = {
-    existingName: [{ type: Input }]
 };
+__decorate([
+    Input(),
+    __metadata("design:type", String)
+], ExistingNameDirective.prototype, "existingName", void 0);
+ExistingNameDirective = ExistingNameDirective_1 = __decorate([
+    Directive({
+        selector: '[kuiExistingName]',
+        providers: [{ provide: NG_VALIDATORS, useExisting: ExistingNameDirective_1, multi: true }]
+    })
+    /**
+     * With the ExistingNameDirective we could prevent to use a name which has to be unique but already exists
+     * e.g. get a list of all project shortnames, then we can use this list as existing names;
+     * you can also use it for a list of blacklisted (not allowed) words
+     */
+], ExistingNameDirective);
 /**
  * Validation of existing name value. String method (only one value);
  * Use it in a "formbuilder" group as a validator property
@@ -801,23 +837,20 @@ function notAllowed(pattern, regType) {
 /**
 * JdnDatepickerDirective creates a wrapper element that provides a new adapter with each instance of the datepicker.
 */
-class JdnDatepickerDirective {
+let JdnDatepickerDirective = class JdnDatepickerDirective {
     constructor(adapter) {
         this.adapter = adapter;
     }
-}
-JdnDatepickerDirective.decorators = [
-    { type: Directive, args: [{
-                selector: 'kuiJdnDatepicker',
-                providers: [
-                    { provide: DateAdapter, useClass: JDNConvertibleCalendarDateAdapter, deps: [MAT_DATE_LOCALE] }
-                ]
-            },] }
-];
-/** @nocollapse */
-JdnDatepickerDirective.ctorParameters = () => [
-    { type: DateAdapter }
-];
+};
+JdnDatepickerDirective = __decorate([
+    Directive({
+        selector: 'kuiJdnDatepicker',
+        providers: [
+            { provide: DateAdapter, useClass: JDNConvertibleCalendarDateAdapter, deps: [MAT_DATE_LOCALE] }
+        ]
+    }),
+    __metadata("design:paramtypes", [DateAdapter])
+], JdnDatepickerDirective);
 
 /**
  * This pipe can be used for "for loops", in the case of an array with non-numeric indexes.
@@ -828,7 +861,7 @@ JdnDatepickerDirective.ctorParameters = () => [
  * {{item.value.name}} and {{item.value.label}}
  *
  */
-class KeyPipe {
+let KeyPipe = class KeyPipe {
     transform(value, args) {
         const keys = [];
         for (const key in value) {
@@ -838,14 +871,14 @@ class KeyPipe {
         }
         return keys;
     }
-}
-KeyPipe.decorators = [
-    { type: Pipe, args: [{
-                name: 'kuiKey'
-            },] }
-];
+};
+KeyPipe = __decorate([
+    Pipe({
+        name: 'kuiKey'
+    })
+], KeyPipe);
 
-class ReversePipe {
+let ReversePipe = class ReversePipe {
     /**
      * TODO: add description
      */
@@ -854,14 +887,14 @@ class ReversePipe {
             return value.slice().reverse();
         }
     }
-}
-ReversePipe.decorators = [
-    { type: Pipe, args: [{
-                name: 'kuiReverse'
-            },] }
-];
+};
+ReversePipe = __decorate([
+    Pipe({
+        name: 'kuiReverse'
+    })
+], ReversePipe);
 
-class SortByPipe {
+let SortByPipe = class SortByPipe {
     /**
      * TODO: add description
      */
@@ -885,14 +918,14 @@ class SortByPipe {
         }
         return array;
     }
-}
-SortByPipe.decorators = [
-    { type: Pipe, args: [{
-                name: 'kuiSortBy'
-            },] }
-];
+};
+SortByPipe = __decorate([
+    Pipe({
+        name: 'kuiSortBy'
+    })
+], SortByPipe);
 
-class ResourceDialogComponent {
+let ResourceDialogComponent = class ResourceDialogComponent {
     constructor(_dialogRef, data) {
         this._dialogRef = _dialogRef;
         this.data = data;
@@ -934,86 +967,64 @@ class ResourceDialogComponent {
             this._dialogRef.updatePosition();
         }
     }
-}
-ResourceDialogComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'kui-resource-dialog',
-                template: "<div class=\"object-dialog\">\n  <!-- header with close (on the left hand side) and resize (on the right hand side) button\n      and with the title in the center -->\n  <div class=\"dialog-header\">\n    <span class=\"dialog-action-button\">\n      <button mat-icon-button class=\"resize-button\" (click)=\"toggleFullSize()\">\n        <mat-icon class=\"optimize-direction\" [innerHtml]=\"fullSize ? 'call_received' :'call_made'\"></mat-icon>\n      </button>\n    </span>\n    <span class=\"fill-remaining-space\"></span>\n    <span>\n      <h3 class=\"dialog-title\" mat-dialog-title>\n        Resource\n        <!--'salsahLabels.frameworkForListings.add.title' | translate -->\n      </h3>\n    </span>\n    <span class=\"fill-remaining-space\"></span>\n    <span class=\"dialog-action-button\">\n      <button mat-icon-button class=\"close-button\" (click)=\"_dialogRef.close()\">\n        <mat-icon>close</mat-icon>\n      </button>\n    </span>\n  </div>\n\n  <!-- <mat-dialog-content class=\"dialog-content\" [class.fullsize]=\"fullSize\">\n\n      <salsah-resource-object [iri]=\"data.iri\"></salsah-resource-object>\n\n  </mat-dialog-content> -->\n\n</div>",
-                styles: [""]
-            }] }
-];
-/** @nocollapse */
-ResourceDialogComponent.ctorParameters = () => [
-    { type: MatDialogRef },
-    { type: undefined, decorators: [{ type: Inject, args: [MAT_DIALOG_DATA,] }] }
-];
+};
+ResourceDialogComponent = __decorate([
+    Component({
+        selector: 'kui-resource-dialog',
+        template: "<div class=\"object-dialog\">\n  <!-- header with close (on the left hand side) and resize (on the right hand side) button\n      and with the title in the center -->\n  <div class=\"dialog-header\">\n    <span class=\"dialog-action-button\">\n      <button mat-icon-button class=\"resize-button\" (click)=\"toggleFullSize()\">\n        <mat-icon class=\"optimize-direction\" [innerHtml]=\"fullSize ? 'call_received' :'call_made'\"></mat-icon>\n      </button>\n    </span>\n    <span class=\"fill-remaining-space\"></span>\n    <span>\n      <h3 class=\"dialog-title\" mat-dialog-title>\n        Resource\n        <!--'salsahLabels.frameworkForListings.add.title' | translate -->\n      </h3>\n    </span>\n    <span class=\"fill-remaining-space\"></span>\n    <span class=\"dialog-action-button\">\n      <button mat-icon-button class=\"close-button\" (click)=\"_dialogRef.close()\">\n        <mat-icon>close</mat-icon>\n      </button>\n    </span>\n  </div>\n\n  <!-- <mat-dialog-content class=\"dialog-content\" [class.fullsize]=\"fullSize\">\n\n      <salsah-resource-object [iri]=\"data.iri\"></salsah-resource-object>\n\n  </mat-dialog-content> -->\n\n</div>",
+        styles: [""]
+    }),
+    __param(1, Inject(MAT_DIALOG_DATA)),
+    __metadata("design:paramtypes", [MatDialogRef, Object])
+], ResourceDialogComponent);
 
-/**
- * This module is part of the Knora-ui modules:
- * https://github.com/dhlab-basel/Knora-ui
- *
- * @copyright 2018
- * Digital Humanities Lab, University of Basel;
- * Data and Service Center for the Humanities DaSCH;
- * All Rights Reserved.
- *
- * @licence
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://opensource.org/licenses/MIT
- *
- */
+let KuiActionModule = 
 /**
  * export @dec class
  */
 class KuiActionModule {
-}
-KuiActionModule.decorators = [
-    { type: NgModule, args: [{
-                imports: [
-                    CommonModule,
-                    BrowserAnimationsModule,
-                    MatButtonModule,
-                    MatCardModule,
-                    MatIconModule,
-                    MatListModule,
-                    MatMenuModule
-                ],
-                declarations: [
-                    ProgressIndicatorComponent,
-                    SortButtonComponent,
-                    SortByPipe,
-                    AdminImageDirective,
-                    ExistingNameDirective,
-                    ReversePipe,
-                    KeyPipe,
-                    GndDirective,
-                    ResourceDialogComponent,
-                    JdnDatepickerDirective,
-                    MessageComponent
-                ],
-                exports: [
-                    ProgressIndicatorComponent,
-                    SortButtonComponent,
-                    SortByPipe,
-                    AdminImageDirective,
-                    ExistingNameDirective,
-                    ReversePipe,
-                    KeyPipe,
-                    GndDirective,
-                    JdnDatepickerDirective,
-                    MessageComponent
-                ]
-            },] }
-];
+};
+KuiActionModule = __decorate([
+    NgModule({
+        imports: [
+            CommonModule,
+            BrowserAnimationsModule,
+            MatButtonModule,
+            MatCardModule,
+            MatIconModule,
+            MatListModule,
+            MatMenuModule
+        ],
+        declarations: [
+            ProgressIndicatorComponent,
+            SortButtonComponent,
+            SortByPipe,
+            AdminImageDirective,
+            ExistingNameDirective,
+            ReversePipe,
+            KeyPipe,
+            GndDirective,
+            ResourceDialogComponent,
+            JdnDatepickerDirective,
+            MessageComponent
+        ],
+        exports: [
+            ProgressIndicatorComponent,
+            SortButtonComponent,
+            SortByPipe,
+            AdminImageDirective,
+            ExistingNameDirective,
+            ReversePipe,
+            KeyPipe,
+            GndDirective,
+            JdnDatepickerDirective,
+            MessageComponent
+        ]
+    })
+    /**
+     * export @dec class
+     */
+], KuiActionModule);
 
-/*
- * Public API Surface of action
- */
-
-/**
- * Generated bundle index. Do not edit.
- */
-
-export { StatusMsg as ɵa, ResourceDialogComponent as ɵb, ProgressIndicatorComponent, SortButtonComponent, KuiMessageData, MessageComponent, AdminImageDirective, GndDirective, ExistingNameDirective, existingNameValidator, existingNamesValidator, notAllowed, JdnDatepickerDirective, KuiActionModule, ReversePipe, KeyPipe, SortByPipe };
-
+export { AdminImageDirective, ExistingNameDirective, GndDirective, JdnDatepickerDirective, KeyPipe, KuiActionModule, KuiMessageData, MessageComponent, ProgressIndicatorComponent, ReversePipe, SortButtonComponent, SortByPipe, existingNameValidator, existingNamesValidator, notAllowed, StatusMsg as ɵa, ResourceDialogComponent as ɵb };
 //# sourceMappingURL=knora-action.js.map

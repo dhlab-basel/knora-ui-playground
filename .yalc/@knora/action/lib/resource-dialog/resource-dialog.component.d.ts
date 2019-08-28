@@ -1,5 +1,5 @@
 import { OnInit } from '@angular/core';
-import { MatDialogConfig, MatDialogRef } from '@angular/material';
+import { MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 export declare class ResourceDialogComponent implements OnInit {
     _dialogRef: MatDialogRef<ResourceDialogComponent>;
     data: any;

@@ -1,8 +1,49 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/router'), require('ts-md5'), require('@knora/core'), require('@angular/forms'), require('jdnconvertiblecalendardateadapter'), require('@angular/common'), require('@angular/platform-browser/animations'), require('@angular/core'), require('@angular/material')) :
-    typeof define === 'function' && define.amd ? define('@knora/action', ['exports', '@angular/router', 'ts-md5', '@knora/core', '@angular/forms', 'jdnconvertiblecalendardateadapter', '@angular/common', '@angular/platform-browser/animations', '@angular/core', '@angular/material'], factory) :
-    (factory((global.knora = global.knora || {}, global.knora.action = {}),global.ng.router,global.tsMd5,global['@knora/core'],global.ng.forms,global.jdnconvertiblecalendardateadapter,global.ng.common,global.ng.platformBrowser.animations,global.ng.core,global.ng.material));
-}(this, (function (exports,router,tsMd5,core,forms,jdnconvertiblecalendardateadapter,common,animations,i0,material) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/router'), require('ts-md5'), require('@knora/core'), require('@angular/forms'), require('jdnconvertiblecalendardateadapter'), require('@angular/material/core'), require('@angular/material/button'), require('@angular/material/card'), require('@angular/material/icon'), require('@angular/material/list'), require('@angular/material/menu'), require('@angular/platform-browser/animations'), require('@angular/material/dialog')) :
+    typeof define === 'function' && define.amd ? define('@knora/action', ['exports', '@angular/core', '@angular/common', '@angular/router', 'ts-md5', '@knora/core', '@angular/forms', 'jdnconvertiblecalendardateadapter', '@angular/material/core', '@angular/material/button', '@angular/material/card', '@angular/material/icon', '@angular/material/list', '@angular/material/menu', '@angular/platform-browser/animations', '@angular/material/dialog'], factory) :
+    (global = global || self, factory((global.knora = global.knora || {}, global.knora.action = {}), global.ng.core, global.ng.common, global.ng.router, global.tsMd5, global['@knora/core'], global.ng.forms, global.jdnconvertiblecalendardateadapter, global.ng.material.core, global.ng.material.button, global.ng.material.card, global.ng.material.icon, global.ng.material.list, global.ng.material.menu, global.ng.platformBrowser.animations, global.ng.material.dialog));
+}(this, function (exports, core, common, router, tsMd5, core$1, forms, jdnconvertiblecalendardateadapter, core$2, button, card, icon, list, menu, animations, dialog) { 'use strict';
+
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+    this file except in compliance with the License. You may obtain a copy of the
+    License at http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+    MERCHANTABLITY OR NON-INFRINGEMENT.
+
+    See the Apache Version 2.0 License for specific language governing permissions
+    and limitations under the License.
+    ***************************************************************************** */
+
+    function __decorate(decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    }
+
+    function __param(paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    }
+
+    function __metadata(metadataKey, metadataValue) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    }
+
+    function __values(o) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+        if (m) return m.call(o);
+        return {
+            next: function () {
+                if (o && i >= o.length) o = void 0;
+                return { value: o && o[i++], done: !o };
+            }
+        };
+    }
 
     /**
      * The progress indicator can be used to show the status of loading something.
@@ -24,19 +65,22 @@
         }
         ProgressIndicatorComponent.prototype.ngOnInit = function () {
         };
-        ProgressIndicatorComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'kui-progress-indicator',
-                        template: "<!-- this is the progress indicator for forms -->\n<div class=\"kui-progress-indicator submit\" *ngIf=\"status !== undefined; else isLoading\">\n    <!-- spinner while on load / on submit -->\n    <div class=\"on-submit\" *ngIf=\"status === 0\">\n        <div class=\"spinner\" [style.border-top-color]=\"color\" [style.border-left-color]=\"color\"></div>\n    </div>\n\n    <div>\n        <!-- bullet point before submit -->\n        <mat-icon *ngIf=\"status === -1\" class=\"before-submit\">keyboard_arrow_right</mat-icon>\n        <!-- icon 'check' when done -->\n        <mat-icon *ngIf=\"status === 1\" class=\"after-submit\" [style.color]=\"color\">done</mat-icon>\n        <!-- in case of an error -->\n        <mat-icon *ngIf=\"status === 400\" class=\"submit-error\">not_interested</mat-icon>\n    </div>\n\n</div>\n\n<!-- default case: is loading -->\n<ng-template #isLoading>\n    <div class=\"kui-progress-indicator default\">\n        <div class=\"line\">\n            <div class=\"bounce1\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce2\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce3\" [style.background-color]=\"color\"></div>\n        </div>\n        <div class=\"line\">\n            <div class=\"bounce3\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce1\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce2\" [style.background-color]=\"color\"></div>\n        </div>\n    </div>\n</ng-template>\n\n\n<!-- another variety of isLoading (in one line) -->\n<!--\n<div class=\"loading-progress-indicator\">\n    <span class=\"text\">{{text}}</span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n</div>\n-->\n",
-                        styles: [".kui-progress-indicator.default{height:56px;margin-left:auto;margin-right:auto;padding:24px 36px;top:60px;width:96px}.kui-progress-indicator.default.page-center{left:50%;position:absolute;top:39%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}.kui-progress-indicator.default h1,.kui-progress-indicator.default h2,.kui-progress-indicator.default h3,.kui-progress-indicator.default p{color:#555;text-align:center}.kui-progress-indicator.default .line{margin:0 auto;text-align:center;width:70px}.kui-progress-indicator.default .line>div{-webkit-animation:1.4s ease-in-out infinite both bounce-keyframes;animation:1.4s ease-in-out infinite both bounce-keyframes;background-color:#00695c;border-radius:6px;display:inline-block;height:18px;width:18px}.kui-progress-indicator.default .line .bounce1{-webkit-animation-delay:-.32s;animation-delay:-.32s}.kui-progress-indicator.default .line .bounce2{-webkit-animation-delay:-.16s;animation-delay:-.16s}@-webkit-keyframes bounce-keyframes{0%,100%,80%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}@keyframes bounce-keyframes{0%,100%,80%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}.kui-progress-indicator.submit{height:32px;width:32px}.kui-progress-indicator.submit .on-submit{-webkit-animation:.7s linear infinite spinner-keyframes;animation:.7s linear infinite spinner-keyframes;height:32px;width:32px}.kui-progress-indicator.submit .on-submit .spinner{border:2px solid #00695c;border-bottom-color:transparent;border-radius:50%;border-right-color:transparent;height:28px;width:28px}.kui-progress-indicator.submit .before-submit{color:rgba(128,128,128,.8)}.kui-progress-indicator.submit .after-submit{color:#00695c}.kui-progress-indicator.submit .submit-error{color:#f44336}@-webkit-keyframes spinner-keyframes{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes spinner-keyframes{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.loading-progress-indicator{text-align:center;width:100%}.loading-progress-indicator .text{color:#00695c;font-size:12pt}.loading-progress-indicator .dot{-webkit-animation:1.4s ease-in-out infinite dot-keyframes;animation:1.4s ease-in-out infinite dot-keyframes;background-color:#00695c;border-radius:2px;display:inline-block;height:6px;margin:3px 6px 2px;width:6px}.loading-progress-indicator .dot:nth-child(2){-webkit-animation-delay:.16s;animation-delay:.16s}.loading-progress-indicator .dot:nth-child(3){-webkit-animation-delay:.32s;animation-delay:.32s}.loading-progress-indicator .dot:nth-child(4){-webkit-animation-delay:.48s;animation-delay:.48s}.loading-progress-indicator .dot:nth-child(5){-webkit-animation-delay:.64s;animation-delay:.64s}.loading-progress-indicator .dot:nth-child(6){-webkit-animation-delay:.8s;animation-delay:.8s}@-webkit-keyframes dot-keyframes{0%,100%{opacity:.4;-webkit-transform:scale(1,1);transform:scale(1,1)}50%{opacity:1;-webkit-transform:scale(1.2,1.2);transform:scale(1.2,1.2)}}@keyframes dot-keyframes{0%,100%{opacity:.4;-webkit-transform:scale(1,1);transform:scale(1,1)}50%{opacity:1;-webkit-transform:scale(1.2,1.2);transform:scale(1.2,1.2)}}"]
-                    }] }
-        ];
-        /** @nocollapse */
-        ProgressIndicatorComponent.ctorParameters = function () { return []; };
-        ProgressIndicatorComponent.propDecorators = {
-            status: [{ type: i0.Input }],
-            color: [{ type: i0.Input }]
-        };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Number)
+        ], ProgressIndicatorComponent.prototype, "status", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], ProgressIndicatorComponent.prototype, "color", void 0);
+        ProgressIndicatorComponent = __decorate([
+            core.Component({
+                selector: 'kui-progress-indicator',
+                template: "<!-- this is the progress indicator for forms -->\n<div class=\"kui-progress-indicator submit\" *ngIf=\"status !== undefined; else isLoading\">\n    <!-- spinner while on load / on submit -->\n    <div class=\"on-submit\" *ngIf=\"status === 0\">\n        <div class=\"spinner\" [style.border-top-color]=\"color\" [style.border-left-color]=\"color\"></div>\n    </div>\n\n    <div>\n        <!-- bullet point before submit -->\n        <mat-icon *ngIf=\"status === -1\" class=\"before-submit\">keyboard_arrow_right</mat-icon>\n        <!-- icon 'check' when done -->\n        <mat-icon *ngIf=\"status === 1\" class=\"after-submit\" [style.color]=\"color\">done</mat-icon>\n        <!-- in case of an error -->\n        <mat-icon *ngIf=\"status === 400\" class=\"submit-error\">not_interested</mat-icon>\n    </div>\n\n</div>\n\n<!-- default case: is loading -->\n<ng-template #isLoading>\n    <div class=\"kui-progress-indicator default\">\n        <div class=\"line\">\n            <div class=\"bounce1\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce2\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce3\" [style.background-color]=\"color\"></div>\n        </div>\n        <div class=\"line\">\n            <div class=\"bounce3\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce1\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce2\" [style.background-color]=\"color\"></div>\n        </div>\n    </div>\n</ng-template>\n\n\n<!-- another variety of isLoading (in one line) -->\n<!--\n<div class=\"loading-progress-indicator\">\n    <span class=\"text\">{{text}}</span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n</div>\n-->\n",
+                styles: [".kui-progress-indicator.default{height:56px;margin-left:auto;margin-right:auto;padding:24px 36px;top:60px;width:96px}.kui-progress-indicator.default.page-center{left:50%;position:absolute;top:39%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}.kui-progress-indicator.default h1,.kui-progress-indicator.default h2,.kui-progress-indicator.default h3,.kui-progress-indicator.default p{color:#555;text-align:center}.kui-progress-indicator.default .line{margin:0 auto;text-align:center;width:70px}.kui-progress-indicator.default .line>div{-webkit-animation:1.4s ease-in-out infinite both bounce-keyframes;animation:1.4s ease-in-out infinite both bounce-keyframes;background-color:#00695c;border-radius:6px;display:inline-block;height:18px;width:18px}.kui-progress-indicator.default .line .bounce1{-webkit-animation-delay:-.32s;animation-delay:-.32s}.kui-progress-indicator.default .line .bounce2{-webkit-animation-delay:-.16s;animation-delay:-.16s}@-webkit-keyframes bounce-keyframes{0%,100%,80%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}@keyframes bounce-keyframes{0%,100%,80%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}.kui-progress-indicator.submit{height:32px;width:32px}.kui-progress-indicator.submit .on-submit{-webkit-animation:.7s linear infinite spinner-keyframes;animation:.7s linear infinite spinner-keyframes;height:32px;width:32px}.kui-progress-indicator.submit .on-submit .spinner{border:2px solid #00695c;border-bottom-color:transparent;border-radius:50%;border-right-color:transparent;height:28px;width:28px}.kui-progress-indicator.submit .before-submit{color:rgba(128,128,128,.8)}.kui-progress-indicator.submit .after-submit{color:#00695c}.kui-progress-indicator.submit .submit-error{color:#f44336}@-webkit-keyframes spinner-keyframes{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes spinner-keyframes{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.loading-progress-indicator{text-align:center;width:100%}.loading-progress-indicator .text{color:#00695c;font-size:12pt}.loading-progress-indicator .dot{-webkit-animation:1.4s ease-in-out infinite dot-keyframes;animation:1.4s ease-in-out infinite dot-keyframes;background-color:#00695c;border-radius:2px;display:inline-block;height:6px;margin:3px 6px 2px;width:6px}.loading-progress-indicator .dot:nth-child(2){-webkit-animation-delay:.16s;animation-delay:.16s}.loading-progress-indicator .dot:nth-child(3){-webkit-animation-delay:.32s;animation-delay:.32s}.loading-progress-indicator .dot:nth-child(4){-webkit-animation-delay:.48s;animation-delay:.48s}.loading-progress-indicator .dot:nth-child(5){-webkit-animation-delay:.64s;animation-delay:.64s}.loading-progress-indicator .dot:nth-child(6){-webkit-animation-delay:.8s;animation-delay:.8s}@-webkit-keyframes dot-keyframes{0%,100%{opacity:.4;-webkit-transform:scale(1,1);transform:scale(1,1)}50%{opacity:1;-webkit-transform:scale(1.2,1.2);transform:scale(1.2,1.2)}}@keyframes dot-keyframes{0%,100%{opacity:.4;-webkit-transform:scale(1,1);transform:scale(1,1)}50%{opacity:1;-webkit-transform:scale(1.2,1.2);transform:scale(1.2,1.2)}}"]
+            }),
+            __metadata("design:paramtypes", [])
+        ], ProgressIndicatorComponent);
         return ProgressIndicatorComponent;
     }());
 
@@ -53,7 +97,7 @@
              * EventEmitter when a user selected a sort property;
              * This is the selected key
              */
-            this.sortKeyChange = new i0.EventEmitter();
+            this.sortKeyChange = new core.EventEmitter();
             this.menuXPos = 'after';
             /**
              * @param {string} [position='left']
@@ -88,22 +132,36 @@
         SortButtonComponent.prototype.sortBy = function (key) {
             this.sortKeyChange.emit(key);
         };
-        SortButtonComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'kui-sort-button',
-                        template: "<span class=\"sort-button\" [class]=\"position + ' ' + icon\">\n    <button mat-icon-button [matMenuTriggerFor]=\"sortSelection\">\n        <mat-icon>{{icon}}</mat-icon>\n    </button>\n    <mat-menu #sortSelection=\"matMenu\" [xPosition]=\"menuXPos\">\n        <button mat-menu-item\n                *ngFor=\"let item of sortProps\"\n                (click)=\"sortBy(item.key)\"\n                [class.active]=\"activeKey === item.key\">\n            {{item.label}}\n        </button>\n    </mat-menu>\n</span>\n",
-                        styles: [".active{background:rgba(128,128,128,.8)}.right.sort{float:right}.right.sort .mat-icon{-webkit-transform:scale(-1,1);transform:scale(-1,1)}"]
-                    }] }
-        ];
-        /** @nocollapse */
-        SortButtonComponent.ctorParameters = function () { return []; };
-        SortButtonComponent.propDecorators = {
-            sortKeyChange: [{ type: i0.Output }],
-            sortProps: [{ type: i0.Input }],
-            position: [{ type: i0.Input }],
-            icon: [{ type: i0.Input }],
-            sortKey: [{ type: i0.Input }]
-        };
+        __decorate([
+            core.Output(),
+            __metadata("design:type", core.EventEmitter)
+        ], SortButtonComponent.prototype, "sortKeyChange", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Array)
+        ], SortButtonComponent.prototype, "sortProps", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], SortButtonComponent.prototype, "position", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], SortButtonComponent.prototype, "icon", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Function),
+            __metadata("design:paramtypes", [String]),
+            __metadata("design:returntype", void 0)
+        ], SortButtonComponent.prototype, "sortKey", null);
+        SortButtonComponent = __decorate([
+            core.Component({
+                selector: 'kui-sort-button',
+                template: "<span class=\"sort-button\" [class]=\"position + ' ' + icon\">\n    <button mat-icon-button [matMenuTriggerFor]=\"sortSelection\">\n        <mat-icon>{{icon}}</mat-icon>\n    </button>\n    <mat-menu #sortSelection=\"matMenu\" [xPosition]=\"menuXPos\">\n        <button mat-menu-item\n                *ngFor=\"let item of sortProps\"\n                (click)=\"sortBy(item.key)\"\n                [class.active]=\"activeKey === item.key\">\n            {{item.label}}\n        </button>\n    </mat-menu>\n</span>\n",
+                styles: [".active{background:rgba(128,128,128,.8)}.right.sort{float:right}.right.sort .mat-icon{-webkit-transform:scale(-1,1);transform:scale(-1,1)}"]
+            }),
+            __metadata("design:paramtypes", [])
+        ], SortButtonComponent);
         return SortButtonComponent;
     }());
 
@@ -364,12 +422,12 @@
                 }
             };
         }
-        StatusMsg.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        StatusMsg.ngInjectableDef = i0.defineInjectable({ factory: function StatusMsg_Factory() { return new StatusMsg(); }, token: StatusMsg, providedIn: "root" });
+        StatusMsg.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function StatusMsg_Factory() { return new StatusMsg(); }, token: StatusMsg, providedIn: "root" });
+        StatusMsg = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            })
+        ], StatusMsg);
         return StatusMsg;
     }());
 
@@ -547,27 +605,29 @@
         MessageComponent.prototype.closeMessage = function () {
             this.disable = !this.disable;
         };
-        MessageComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'kui-message',
-                        template: "<mat-card *ngIf=\"!short\" class=\"fix-width kui-message\" [ngClass]=\"'kui-' + message?.type\">\n\n    <mat-card-subtitle class=\"message-subtitle\">\n        <span class=\"left\">{{message?.type | uppercase }} {{message?.status}} | {{message?.statusMsg}}</span>\n        <mat-icon class=\"right\">{{message?.type}}</mat-icon>\n    </mat-card-subtitle>\n\n    <mat-card-title class=\"message-title\" [innerHtml]=\"message?.statusText\"></mat-card-title>\n\n    <mat-card-content class=\"message-content\">\n        <mat-list *ngIf=\"message?.route\">\n            <mat-list-item>\n                <a [href]=\"message?.route\" target=\"_blank\">\n                    &rarr; {{message?.route}}\n                </a>\n            </mat-list-item>\n        </mat-list>\n\n        <mat-list *ngIf=\"showLinks\">\n            <p>{{links.title}}</p>\n            <mat-list-item *ngFor=\"let item of links.list\" class=\"link\" (click)=\"goToLocation(item.route)\">\n                <mat-icon mat-list-icon>{{item.icon}}</mat-icon>\n                <p mat-line>{{item.label}}</p>\n            </mat-list-item>\n        </mat-list>\n\n    </mat-card-content>\n\n    <mat-card-footer *ngIf=\"!medium\" class=\"message-footnote\" [innerHtml]=\"message?.footnote\"></mat-card-footer>\n\n</mat-card>\n\n<mat-card *ngIf=\"short && !disable\" class=\"fix-width kui-short-message\" [ngClass]=\"'kui-' + message?.type\">\n\n    <div class=\"kui-panel\">\n        <span class=\"kui-short-message-text\">\n            {{message?.statusText}}\n        </span>\n        <span class=\"fill-remaining-space\"></span>\n        <button mat-icon-button (click)=\"closeMessage()\">\n            <mat-icon>close</mat-icon>\n        </button>\n    </div>\n\n</mat-card>\n",
-                        styles: [".kui-panel{display:flex;box-sizing:border-box;flex-direction:row;white-space:nowrap}.fill-remaining-space{flex-basis:auto;flex-grow:1;flex-shrink:1}.kui-error{background-color:rgba(244,67,54,.5)}.kui-warning{background-color:rgba(255,196,0,.5)}.kui-hint,.kui-note{background-color:rgba(0,105,92,.4)}.kui-error,.kui-hint,.kui-note,.kui-warning{margin:12px auto;max-width:640px}.kui-error .message-subtitle,.kui-hint .message-subtitle,.kui-note .message-subtitle,.kui-warning .message-subtitle{padding-bottom:12px}.kui-error .message-subtitle .left,.kui-hint .message-subtitle .left,.kui-note .message-subtitle .left,.kui-warning .message-subtitle .left{float:left;left:16px;position:absolute;text-align:left}.kui-error .message-subtitle .right,.kui-hint .message-subtitle .right,.kui-note .message-subtitle .right,.kui-warning .message-subtitle .right{float:right;right:16px;position:absolute;text-align:right}.kui-error .message-title,.kui-hint .message-title,.kui-note .message-title,.kui-warning .message-title{padding-top:12px}.kui-error .message-content,.kui-hint .message-content,.kui-note .message-content,.kui-warning .message-content{margin-bottom:48px;margin-top:48px}.kui-error .message-content .link,.kui-hint .message-content .link,.kui-note .message-content .link,.kui-warning .message-content .link{cursor:pointer}.kui-error .message-footnote,.kui-hint .message-footnote,.kui-note .message-footnote,.kui-warning .message-footnote{padding:24px}.kui-short-message .kui-short-message-text{font-weight:bolder;text-align:center}@media (max-width:576px){.kui-panel{white-space:normal}.kui-short-message .kui-short-message-text{text-align:left}}"]
-                    }] }
-        ];
-        /** @nocollapse */
-        MessageComponent.ctorParameters = function () {
-            return [
-                { type: router.Router },
-                { type: common.Location },
-                { type: router.ActivatedRoute },
-                { type: StatusMsg }
-            ];
-        };
-        MessageComponent.propDecorators = {
-            message: [{ type: i0.Input }],
-            short: [{ type: i0.Input }],
-            medium: [{ type: i0.Input }]
-        };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", KuiMessageData)
+        ], MessageComponent.prototype, "message", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean)
+        ], MessageComponent.prototype, "short", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean)
+        ], MessageComponent.prototype, "medium", void 0);
+        MessageComponent = __decorate([
+            core.Component({
+                selector: 'kui-message',
+                template: "<mat-card *ngIf=\"!short\" class=\"fix-width kui-message\" [ngClass]=\"'kui-' + message?.type\">\n\n    <mat-card-subtitle class=\"message-subtitle\">\n        <span class=\"left\">{{message?.type | uppercase }} {{message?.status}} | {{message?.statusMsg}}</span>\n        <mat-icon class=\"right\">{{message?.type}}</mat-icon>\n    </mat-card-subtitle>\n\n    <mat-card-title class=\"message-title\" [innerHtml]=\"message?.statusText\"></mat-card-title>\n\n    <mat-card-content class=\"message-content\">\n        <mat-list *ngIf=\"message?.route\">\n            <mat-list-item>\n                <a [href]=\"message?.route\" target=\"_blank\">\n                    &rarr; {{message?.route}}\n                </a>\n            </mat-list-item>\n        </mat-list>\n\n        <mat-list *ngIf=\"showLinks\">\n            <p>{{links.title}}</p>\n            <mat-list-item *ngFor=\"let item of links.list\" class=\"link\" (click)=\"goToLocation(item.route)\">\n                <mat-icon mat-list-icon>{{item.icon}}</mat-icon>\n                <p mat-line>{{item.label}}</p>\n            </mat-list-item>\n        </mat-list>\n\n    </mat-card-content>\n\n    <mat-card-footer *ngIf=\"!medium\" class=\"message-footnote\" [innerHtml]=\"message?.footnote\"></mat-card-footer>\n\n</mat-card>\n\n<mat-card *ngIf=\"short && !disable\" class=\"fix-width kui-short-message\" [ngClass]=\"'kui-' + message?.type\">\n\n    <div class=\"kui-panel\">\n        <span class=\"kui-short-message-text\">\n            {{message?.statusText}}\n        </span>\n        <span class=\"fill-remaining-space\"></span>\n        <button mat-icon-button (click)=\"closeMessage()\">\n            <mat-icon>close</mat-icon>\n        </button>\n    </div>\n\n</mat-card>\n",
+                styles: [".kui-panel{display:flex;box-sizing:border-box;flex-direction:row;white-space:nowrap}.fill-remaining-space{flex-basis:auto;flex-grow:1;flex-shrink:1}.kui-error{background-color:rgba(244,67,54,.5)}.kui-warning{background-color:rgba(255,196,0,.5)}.kui-hint,.kui-note{background-color:rgba(0,105,92,.4)}.kui-error,.kui-hint,.kui-note,.kui-warning{margin:12px auto;max-width:640px}.kui-error .message-subtitle,.kui-hint .message-subtitle,.kui-note .message-subtitle,.kui-warning .message-subtitle{padding-bottom:12px}.kui-error .message-subtitle .left,.kui-hint .message-subtitle .left,.kui-note .message-subtitle .left,.kui-warning .message-subtitle .left{float:left;left:16px;position:absolute;text-align:left}.kui-error .message-subtitle .right,.kui-hint .message-subtitle .right,.kui-note .message-subtitle .right,.kui-warning .message-subtitle .right{float:right;right:16px;position:absolute;text-align:right}.kui-error .message-title,.kui-hint .message-title,.kui-note .message-title,.kui-warning .message-title{padding-top:12px}.kui-error .message-content,.kui-hint .message-content,.kui-note .message-content,.kui-warning .message-content{margin-bottom:48px;margin-top:48px}.kui-error .message-content .link,.kui-hint .message-content .link,.kui-note .message-content .link,.kui-warning .message-content .link{cursor:pointer}.kui-error .message-footnote,.kui-hint .message-footnote,.kui-note .message-footnote,.kui-warning .message-footnote{padding:24px}.kui-short-message .kui-short-message-text{font-weight:bolder;text-align:center}@media (max-width:576px){.kui-panel{white-space:normal}.kui-short-message .kui-short-message-text{text-align:left}}"]
+            }),
+            __metadata("design:paramtypes", [router.Router,
+                common.Location,
+                router.ActivatedRoute,
+                StatusMsg])
+        ], MessageComponent);
         return MessageComponent;
     }());
 
@@ -637,22 +697,21 @@
             this._renderer.setAttribute(this._ele.nativeElement, 'src', this.source);
             this._renderer.setAttribute(this._ele.nativeElement, 'onError', 'this.src=\'' + this.onError + '\'');
         };
-        AdminImageDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: '[kuiAdminImage]'
-                    },] }
-        ];
-        /** @nocollapse */
-        AdminImageDirective.ctorParameters = function () {
-            return [
-                { type: i0.Renderer2 },
-                { type: i0.ElementRef }
-            ];
-        };
-        AdminImageDirective.propDecorators = {
-            image: [{ type: i0.Input }],
-            type: [{ type: i0.Input }]
-        };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], AdminImageDirective.prototype, "image", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], AdminImageDirective.prototype, "type", void 0);
+        AdminImageDirective = __decorate([
+            core.Directive({
+                selector: '[kuiAdminImage]'
+            }),
+            __metadata("design:paramtypes", [core.Renderer2,
+                core.ElementRef])
+        ], AdminImageDirective);
         return AdminImageDirective;
     }());
 
@@ -675,13 +734,13 @@
         });
         GndDirective.prototype.ngOnChanges = function () {
             if (this._gnd.length < 30) {
-                if (this._gnd.indexOf(core.KnoraConstants.GNDPrefix) === 0) {
+                if (this._gnd.indexOf(core$1.KnoraConstants.GNDPrefix) === 0) {
                     // GND/IAF identifier
-                    this.el.nativeElement.innerHTML = "<a href=\"" + (core.KnoraConstants.GNDResolver + this._gnd.replace(core.KnoraConstants.GNDPrefix, '')) + "\" target=\"_blank\">" + this._gnd + "</a>";
+                    this.el.nativeElement.innerHTML = "<a href=\"" + (core$1.KnoraConstants.GNDResolver + this._gnd.replace(core$1.KnoraConstants.GNDPrefix, '')) + "\" target=\"_blank\">" + this._gnd + "</a>";
                 }
-                else if (this._gnd.indexOf(core.KnoraConstants.VIAFPrefix) === 0) {
+                else if (this._gnd.indexOf(core$1.KnoraConstants.VIAFPrefix) === 0) {
                     // VIAF identifier
-                    this.el.nativeElement.innerHTML = "<a href=\"" + (core.KnoraConstants.VIAFResolver + this._gnd.replace(core.KnoraConstants.VIAFPrefix, '')) + "\" target=\"_blank\">" + this._gnd + "</a>";
+                    this.el.nativeElement.innerHTML = "<a href=\"" + (core$1.KnoraConstants.VIAFResolver + this._gnd.replace(core$1.KnoraConstants.VIAFPrefix, '')) + "\" target=\"_blank\">" + this._gnd + "</a>";
                 }
                 else {
                     // no identifier, leave unchanged
@@ -693,50 +752,20 @@
                 this.el.nativeElement.innerHTML = this._gnd;
             }
         };
-        GndDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        // tslint:disable-next-line:directive-selector
-                        selector: '[kuiGnd]'
-                    },] }
-        ];
-        /** @nocollapse */
-        GndDirective.ctorParameters = function () {
-            return [
-                { type: i0.ElementRef }
-            ];
-        };
-        GndDirective.propDecorators = {
-            kuiGnd: [{ type: i0.Input }]
-        };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String),
+            __metadata("design:paramtypes", [String])
+        ], GndDirective.prototype, "kuiGnd", null);
+        GndDirective = __decorate([
+            core.Directive({
+                // tslint:disable-next-line:directive-selector
+                selector: '[kuiGnd]'
+            }),
+            __metadata("design:paramtypes", [core.ElementRef])
+        ], GndDirective);
         return GndDirective;
     }());
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
-
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
-
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
-    ***************************************************************************** */
-    function __values(o) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
-        if (m)
-            return m.call(o);
-        return {
-            next: function () {
-                if (o && i >= o.length)
-                    o = void 0;
-                return { value: o && o[i++], done: !o };
-            }
-        };
-    }
 
     var ExistingNameDirective = /** @class */ (function () {
         function ExistingNameDirective() {
@@ -745,6 +774,7 @@
              */
             this.valFn = forms.Validators.nullValidator;
         }
+        ExistingNameDirective_1 = ExistingNameDirective;
         /**
          * @ignore
          * @param changes
@@ -767,15 +797,22 @@
         ExistingNameDirective.prototype.validate = function (control) {
             return this.valFn(control);
         };
-        ExistingNameDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: '[kuiExistingName]',
-                        providers: [{ provide: forms.NG_VALIDATORS, useExisting: ExistingNameDirective, multi: true }]
-                    },] }
-        ];
-        ExistingNameDirective.propDecorators = {
-            existingName: [{ type: i0.Input }]
-        };
+        var ExistingNameDirective_1;
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], ExistingNameDirective.prototype, "existingName", void 0);
+        ExistingNameDirective = ExistingNameDirective_1 = __decorate([
+            core.Directive({
+                selector: '[kuiExistingName]',
+                providers: [{ provide: forms.NG_VALIDATORS, useExisting: ExistingNameDirective_1, multi: true }]
+            })
+            /**
+             * With the ExistingNameDirective we could prevent to use a name which has to be unique but already exists
+             * e.g. get a list of all project shortnames, then we can use this list as existing names;
+             * you can also use it for a list of blacklisted (not allowed) words
+             */
+        ], ExistingNameDirective);
         return ExistingNameDirective;
     }());
     /**
@@ -821,18 +858,12 @@
                     }
                 }
             }
-            catch (e_1_1) {
-                e_1 = { error: e_1_1 };
-            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
             finally {
                 try {
-                    if (valArrayRegexp_1_1 && !valArrayRegexp_1_1.done && (_a = valArrayRegexp_1.return))
-                        _a.call(valArrayRegexp_1);
+                    if (valArrayRegexp_1_1 && !valArrayRegexp_1_1.done && (_a = valArrayRegexp_1.return)) _a.call(valArrayRegexp_1);
                 }
-                finally {
-                    if (e_1)
-                        throw e_1.error;
-                }
+                finally { if (e_1) throw e_1.error; }
             }
             return no ? { 'existingName': { name: name } } : null;
         };
@@ -864,20 +895,15 @@
         function JdnDatepickerDirective(adapter) {
             this.adapter = adapter;
         }
-        JdnDatepickerDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: 'kuiJdnDatepicker',
-                        providers: [
-                            { provide: material.DateAdapter, useClass: jdnconvertiblecalendardateadapter.JDNConvertibleCalendarDateAdapter, deps: [material.MAT_DATE_LOCALE] }
-                        ]
-                    },] }
-        ];
-        /** @nocollapse */
-        JdnDatepickerDirective.ctorParameters = function () {
-            return [
-                { type: material.DateAdapter }
-            ];
-        };
+        JdnDatepickerDirective = __decorate([
+            core.Directive({
+                selector: 'kuiJdnDatepicker',
+                providers: [
+                    { provide: core$2.DateAdapter, useClass: jdnconvertiblecalendardateadapter.JDNConvertibleCalendarDateAdapter, deps: [core$2.MAT_DATE_LOCALE] }
+                ]
+            }),
+            __metadata("design:paramtypes", [core$2.DateAdapter])
+        ], JdnDatepickerDirective);
         return JdnDatepickerDirective;
     }());
 
@@ -902,11 +928,11 @@
             }
             return keys;
         };
-        KeyPipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'kuiKey'
-                    },] }
-        ];
+        KeyPipe = __decorate([
+            core.Pipe({
+                name: 'kuiKey'
+            })
+        ], KeyPipe);
         return KeyPipe;
     }());
 
@@ -921,11 +947,11 @@
                 return value.slice().reverse();
             }
         };
-        ReversePipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'kuiReverse'
-                    },] }
-        ];
+        ReversePipe = __decorate([
+            core.Pipe({
+                name: 'kuiReverse'
+            })
+        ], ReversePipe);
         return ReversePipe;
     }());
 
@@ -955,11 +981,11 @@
             }
             return array;
         };
-        SortByPipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'kuiSortBy'
-                    },] }
-        ];
+        SortByPipe = __decorate([
+            core.Pipe({
+                name: 'kuiSortBy'
+            })
+        ], SortByPipe);
         return SortByPipe;
     }());
 
@@ -978,13 +1004,9 @@
          * @returns
          */
         ResourceDialogComponent.createConfiguration = function (resourceIri, widthPct, heightPct) {
-            if (widthPct === void 0) {
-                widthPct = 60;
-            }
-            if (heightPct === void 0) {
-                heightPct = 60;
-            }
-            var config = new material.MatDialogConfig();
+            if (widthPct === void 0) { widthPct = 60; }
+            if (heightPct === void 0) { heightPct = 60; }
+            var config = new dialog.MatDialogConfig();
             config.height = widthPct + "%";
             config.width = heightPct + "%";
             config.data = {
@@ -1011,109 +1033,87 @@
                 this._dialogRef.updatePosition();
             }
         };
-        ResourceDialogComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'kui-resource-dialog',
-                        template: "<div class=\"object-dialog\">\n  <!-- header with close (on the left hand side) and resize (on the right hand side) button\n      and with the title in the center -->\n  <div class=\"dialog-header\">\n    <span class=\"dialog-action-button\">\n      <button mat-icon-button class=\"resize-button\" (click)=\"toggleFullSize()\">\n        <mat-icon class=\"optimize-direction\" [innerHtml]=\"fullSize ? 'call_received' :'call_made'\"></mat-icon>\n      </button>\n    </span>\n    <span class=\"fill-remaining-space\"></span>\n    <span>\n      <h3 class=\"dialog-title\" mat-dialog-title>\n        Resource\n        <!--'salsahLabels.frameworkForListings.add.title' | translate -->\n      </h3>\n    </span>\n    <span class=\"fill-remaining-space\"></span>\n    <span class=\"dialog-action-button\">\n      <button mat-icon-button class=\"close-button\" (click)=\"_dialogRef.close()\">\n        <mat-icon>close</mat-icon>\n      </button>\n    </span>\n  </div>\n\n  <!-- <mat-dialog-content class=\"dialog-content\" [class.fullsize]=\"fullSize\">\n\n      <salsah-resource-object [iri]=\"data.iri\"></salsah-resource-object>\n\n  </mat-dialog-content> -->\n\n</div>",
-                        styles: [""]
-                    }] }
-        ];
-        /** @nocollapse */
-        ResourceDialogComponent.ctorParameters = function () {
-            return [
-                { type: material.MatDialogRef },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
-            ];
-        };
+        ResourceDialogComponent = __decorate([
+            core.Component({
+                selector: 'kui-resource-dialog',
+                template: "<div class=\"object-dialog\">\n  <!-- header with close (on the left hand side) and resize (on the right hand side) button\n      and with the title in the center -->\n  <div class=\"dialog-header\">\n    <span class=\"dialog-action-button\">\n      <button mat-icon-button class=\"resize-button\" (click)=\"toggleFullSize()\">\n        <mat-icon class=\"optimize-direction\" [innerHtml]=\"fullSize ? 'call_received' :'call_made'\"></mat-icon>\n      </button>\n    </span>\n    <span class=\"fill-remaining-space\"></span>\n    <span>\n      <h3 class=\"dialog-title\" mat-dialog-title>\n        Resource\n        <!--'salsahLabels.frameworkForListings.add.title' | translate -->\n      </h3>\n    </span>\n    <span class=\"fill-remaining-space\"></span>\n    <span class=\"dialog-action-button\">\n      <button mat-icon-button class=\"close-button\" (click)=\"_dialogRef.close()\">\n        <mat-icon>close</mat-icon>\n      </button>\n    </span>\n  </div>\n\n  <!-- <mat-dialog-content class=\"dialog-content\" [class.fullsize]=\"fullSize\">\n\n      <salsah-resource-object [iri]=\"data.iri\"></salsah-resource-object>\n\n  </mat-dialog-content> -->\n\n</div>",
+                styles: [""]
+            }),
+            __param(1, core.Inject(dialog.MAT_DIALOG_DATA)),
+            __metadata("design:paramtypes", [dialog.MatDialogRef, Object])
+        ], ResourceDialogComponent);
         return ResourceDialogComponent;
     }());
 
-    /**
-     * This module is part of the Knora-ui modules:
-     * https://github.com/dhlab-basel/Knora-ui
-     *
-     * @copyright 2018
-     * Digital Humanities Lab, University of Basel;
-     * Data and Service Center for the Humanities DaSCH;
-     * All Rights Reserved.
-     *
-     * @licence
-     * Use of this source code is governed by an MIT-style license that can be
-     * found in the LICENSE file at https://opensource.org/licenses/MIT
-     *
-     */
     var KuiActionModule = /** @class */ (function () {
+        /**
+         * export @dec class
+         */
         function KuiActionModule() {
         }
-        KuiActionModule.decorators = [
-            { type: i0.NgModule, args: [{
-                        imports: [
-                            common.CommonModule,
-                            animations.BrowserAnimationsModule,
-                            material.MatButtonModule,
-                            material.MatCardModule,
-                            material.MatIconModule,
-                            material.MatListModule,
-                            material.MatMenuModule
-                        ],
-                        declarations: [
-                            ProgressIndicatorComponent,
-                            SortButtonComponent,
-                            SortByPipe,
-                            AdminImageDirective,
-                            ExistingNameDirective,
-                            ReversePipe,
-                            KeyPipe,
-                            GndDirective,
-                            ResourceDialogComponent,
-                            JdnDatepickerDirective,
-                            MessageComponent
-                        ],
-                        exports: [
-                            ProgressIndicatorComponent,
-                            SortButtonComponent,
-                            SortByPipe,
-                            AdminImageDirective,
-                            ExistingNameDirective,
-                            ReversePipe,
-                            KeyPipe,
-                            GndDirective,
-                            JdnDatepickerDirective,
-                            MessageComponent
-                        ]
-                    },] }
-        ];
+        KuiActionModule = __decorate([
+            core.NgModule({
+                imports: [
+                    common.CommonModule,
+                    animations.BrowserAnimationsModule,
+                    button.MatButtonModule,
+                    card.MatCardModule,
+                    icon.MatIconModule,
+                    list.MatListModule,
+                    menu.MatMenuModule
+                ],
+                declarations: [
+                    ProgressIndicatorComponent,
+                    SortButtonComponent,
+                    SortByPipe,
+                    AdminImageDirective,
+                    ExistingNameDirective,
+                    ReversePipe,
+                    KeyPipe,
+                    GndDirective,
+                    ResourceDialogComponent,
+                    JdnDatepickerDirective,
+                    MessageComponent
+                ],
+                exports: [
+                    ProgressIndicatorComponent,
+                    SortButtonComponent,
+                    SortByPipe,
+                    AdminImageDirective,
+                    ExistingNameDirective,
+                    ReversePipe,
+                    KeyPipe,
+                    GndDirective,
+                    JdnDatepickerDirective,
+                    MessageComponent
+                ]
+            })
+            /**
+             * export @dec class
+             */
+        ], KuiActionModule);
         return KuiActionModule;
     }());
 
-    /*
-     * Public API Surface of action
-     */
-
-    /**
-     * Generated bundle index. Do not edit.
-     */
-
-    exports.ɵa = StatusMsg;
-    exports.ɵb = ResourceDialogComponent;
-    exports.ProgressIndicatorComponent = ProgressIndicatorComponent;
-    exports.SortButtonComponent = SortButtonComponent;
+    exports.AdminImageDirective = AdminImageDirective;
+    exports.ExistingNameDirective = ExistingNameDirective;
+    exports.GndDirective = GndDirective;
+    exports.JdnDatepickerDirective = JdnDatepickerDirective;
+    exports.KeyPipe = KeyPipe;
+    exports.KuiActionModule = KuiActionModule;
     exports.KuiMessageData = KuiMessageData;
     exports.MessageComponent = MessageComponent;
-    exports.AdminImageDirective = AdminImageDirective;
-    exports.GndDirective = GndDirective;
-    exports.ExistingNameDirective = ExistingNameDirective;
+    exports.ProgressIndicatorComponent = ProgressIndicatorComponent;
+    exports.ReversePipe = ReversePipe;
+    exports.SortButtonComponent = SortButtonComponent;
+    exports.SortByPipe = SortByPipe;
     exports.existingNameValidator = existingNameValidator;
     exports.existingNamesValidator = existingNamesValidator;
     exports.notAllowed = notAllowed;
-    exports.JdnDatepickerDirective = JdnDatepickerDirective;
-    exports.KuiActionModule = KuiActionModule;
-    exports.ReversePipe = ReversePipe;
-    exports.KeyPipe = KeyPipe;
-    exports.SortByPipe = SortByPipe;
+    exports.ɵa = StatusMsg;
+    exports.ɵb = ResourceDialogComponent;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
-
+}));
 //# sourceMappingURL=knora-action.umd.js.map

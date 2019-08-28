@@ -1,42 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('json2typescript'), require('rxjs/internal/observable/throwError'), require('rxjs'), require('@angular/core'), require('@angular/common/http'), require('rxjs/operators')) :
-    typeof define === 'function' && define.amd ? define('@knora/core', ['exports', '@angular/common', 'json2typescript', 'rxjs/internal/observable/throwError', 'rxjs', '@angular/core', '@angular/common/http', 'rxjs/operators'], factory) :
-    (factory((global.knora = global.knora || {}, global.knora.core = {}),global.ng.common,global.json2typescript,global.rxjs['internal/observable/throwError'],global.rxjs,global.ng.core,global.ng.common.http,global.rxjs.operators));
-}(this, (function (exports,common,json2typescript,throwError,rxjs,i0,i1,operators) { 'use strict';
-
-    var KuiCoreConfigToken = new i0.InjectionToken('KuiCoreConfigToken (knora.core.config)');
-    var KuiCoreModule = /** @class */ (function () {
-        function KuiCoreModule() {
-        }
-        /**
-         *
-         * @param {KuiCoreConfig} config
-         * @returns {ModuleWithProviders}
-         */
-        KuiCoreModule.forRoot = function (config) {
-            // get the app environment configuration here
-            // console.log('KuiCoreModule - forRoot - config: ', config);
-            return {
-                ngModule: KuiCoreModule,
-                providers: [
-                    { provide: KuiCoreConfigToken, useValue: config }
-                ]
-            };
-        };
-        KuiCoreModule.decorators = [
-            { type: i0.NgModule, args: [{
-                        imports: [
-                            common.CommonModule,
-                            i1.HttpClientModule
-                        ],
-                        declarations: [],
-                        exports: [
-                            i1.HttpClientModule
-                        ]
-                    },] }
-        ];
-        return KuiCoreModule;
-    }());
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/common/http'), require('json2typescript'), require('rxjs'), require('rxjs/operators'), require('rxjs/internal/observable/throwError')) :
+    typeof define === 'function' && define.amd ? define('@knora/core', ['exports', '@angular/core', '@angular/common', '@angular/common/http', 'json2typescript', 'rxjs', 'rxjs/operators', 'rxjs/internal/observable/throwError'], factory) :
+    (global = global || self, factory((global.knora = global.knora || {}, global.knora.core = {}), global.ng.core, global.ng.common, global.ng.common.http, global.json2typescript, global.rxjs, global.rxjs.operators, global.rxjs['internal/observable/throwError']));
+}(this, function (exports, core, common, http, json2typescript, rxjs, operators, throwError) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -53,45 +19,81 @@
     and limitations under the License.
     ***************************************************************************** */
     /* global Reflect, Promise */
-    var extendStatics = function (d, b) {
+
+    var extendStatics = function(d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b)
-                if (b.hasOwnProperty(p))
-                    d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
+
     function __extends(d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
+
     function __decorate(decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-            r = Reflect.decorate(decorators, target, key, desc);
-        else
-            for (var i = decorators.length - 1; i >= 0; i--)
-                if (d = decorators[i])
-                    r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     }
-    function __metadata(metadataKey, metadataValue) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
-            return Reflect.metadata(metadataKey, metadataValue);
+
+    function __param(paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
     }
+
+    function __metadata(metadataKey, metadataValue) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    }
+
     function __values(o) {
         var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
-        if (m)
-            return m.call(o);
+        if (m) return m.call(o);
         return {
             next: function () {
-                if (o && i >= o.length)
-                    o = void 0;
+                if (o && i >= o.length) o = void 0;
                 return { value: o && o[i++], done: !o };
             }
         };
     }
+
+    var KuiCoreConfigToken = new core.InjectionToken('KuiCoreConfigToken (knora.core.config)');
+    var KuiCoreModule = /** @class */ (function () {
+        function KuiCoreModule() {
+        }
+        KuiCoreModule_1 = KuiCoreModule;
+        /**
+         *
+         * @param {KuiCoreConfig} config
+         * @returns {ModuleWithProviders}
+         */
+        KuiCoreModule.forRoot = function (config) {
+            // get the app environment configuration here
+            // console.log('KuiCoreModule - forRoot - config: ', config);
+            return {
+                ngModule: KuiCoreModule_1,
+                providers: [
+                    { provide: KuiCoreConfigToken, useValue: config }
+                ]
+            };
+        };
+        var KuiCoreModule_1;
+        KuiCoreModule = KuiCoreModule_1 = __decorate([
+            core.NgModule({
+                imports: [
+                    common.CommonModule,
+                    http.HttpClientModule
+                ],
+                declarations: [],
+                exports: [
+                    http.HttpClientModule
+                ]
+            })
+        ], KuiCoreModule);
+        return KuiCoreModule;
+    }());
 
     /**
      * Knora-ui core configuration with the server definitions of:
@@ -382,6 +384,7 @@
         KnoraConstants.VIAFResolver = 'https://viaf.org/viaf/';
         return KnoraConstants;
     }());
+
     (function (KnoraSchema) {
         KnoraSchema[KnoraSchema["complex"] = 0] = "complex";
         KnoraSchema[KnoraSchema["simple"] = 1] = "simple";
@@ -498,6 +501,7 @@
     /**
      * Precision for DateSalsah.
      */
+
     (function (Precision) {
         Precision[Precision["yearPrecision"] = 0] = "yearPrecision";
         Precision[Precision["monthPrecision"] = 1] = "monthPrecision";
@@ -1487,18 +1491,12 @@
                     points.push(new Point2D(point.x, point.y));
                 }
             }
-            catch (e_1_1) {
-                e_1 = { error: e_1_1 };
-            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
             finally {
                 try {
-                    if (_c && !_c.done && (_a = _b.return))
-                        _a.call(_b);
+                    if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
                 }
-                finally {
-                    if (e_1)
-                        throw e_1.error;
-                }
+                finally { if (e_1) throw e_1.error; }
             }
             var radius;
             if (geometryJSON.radius) {
@@ -1820,19 +1818,14 @@
                 }
             }
         };
-        ApiService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root',
-                    },] }
-        ];
-        /** @nocollapse */
-        ApiService.ctorParameters = function () {
-            return [
-                { type: i1.HttpClient },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [KuiCoreConfigToken,] }] }
-            ];
-        };
-        ApiService.ngInjectableDef = i0.defineInjectable({ factory: function ApiService_Factory() { return new ApiService(i0.inject(i1.HttpClient), i0.inject(KuiCoreConfigToken)); }, token: ApiService, providedIn: "root" });
+        ApiService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function ApiService_Factory() { return new ApiService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(KuiCoreConfigToken)); }, token: ApiService, providedIn: "root" });
+        ApiService = __decorate([
+            core.Injectable({
+                providedIn: 'root',
+            }),
+            __param(1, core.Inject(KuiCoreConfigToken)),
+            __metadata("design:paramtypes", [http.HttpClient, Object])
+        ], ApiService);
         return ApiService;
     }());
 
@@ -1997,18 +1990,12 @@
                     graph.push(prop_obj);
                 }
             }
-            catch (e_1_1) {
-                e_1 = { error: e_1_1 };
-            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
             finally {
                 try {
-                    if (data_1_1 && !data_1_1.done && (_a = data_1.return))
-                        _a.call(data_1);
+                    if (data_1_1 && !data_1_1.done && (_a = data_1.return)) _a.call(data_1);
                 }
-                finally {
-                    if (e_1)
-                        throw e_1.error;
-                }
+                finally { if (e_1) throw e_1.error; }
             }
             var property = {
                 '@id': onto_iri,
@@ -2073,12 +2060,12 @@
             };
             return this.httpPost(path, cardinality).pipe(operators.map(function (result) { return result.body; }), operators.catchError(this.handleJsonError));
         };
-        OntologyService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root',
-                    },] }
-        ];
-        OntologyService.ngInjectableDef = i0.defineInjectable({ factory: function OntologyService_Factory() { return new OntologyService(i0.inject(i1.HttpClient), i0.inject(KuiCoreConfigToken)); }, token: OntologyService, providedIn: "root" });
+        OntologyService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function OntologyService_Factory() { return new OntologyService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(KuiCoreConfigToken)); }, token: OntologyService, providedIn: "root" });
+        OntologyService = __decorate([
+            core.Injectable({
+                providedIn: 'root',
+            })
+        ], OntologyService);
         return OntologyService;
     }(ApiService));
 
@@ -2111,6 +2098,10 @@
         }
         return OntologyMetadata;
     }());
+    /**
+     * Occurrence of a property for a resource class (its cardinality).
+     */
+
     (function (CardinalityOccurrence) {
         CardinalityOccurrence[CardinalityOccurrence["minCard"] = 0] = "minCard";
         CardinalityOccurrence[CardinalityOccurrence["card"] = 1] = "card";
@@ -2336,9 +2327,7 @@
          * @returns ResourceClass[]
          */
         OntologyInformation.prototype.getResourceClassesAsArray = function (sortAsc) {
-            if (sortAsc === void 0) {
-                sortAsc = true;
-            }
+            if (sortAsc === void 0) { sortAsc = true; }
             var resClasses = [];
             // tslint:disable-next-line:forin
             for (var resClassIri in this.resourceClasses) {
@@ -2388,9 +2377,7 @@
          * @returns Property[] - all properties as an array.
          */
         OntologyInformation.prototype.getPropertiesAsArray = function (sortAsc) {
-            if (sortAsc === void 0) {
-                sortAsc = true;
-            }
+            if (sortAsc === void 0) { sortAsc = true; }
             var properties = [];
             // tslint:disable-next-line:forin
             for (var propIri in this.properties) {
@@ -2532,18 +2519,12 @@
                     }
                 }
             }
-            catch (e_1_1) {
-                e_1 = { error: e_1_1 };
-            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
             finally {
                 try {
-                    if (classDefinitions_1_1 && !classDefinitions_1_1.done && (_a = classDefinitions_1.return))
-                        _a.call(classDefinitions_1);
+                    if (classDefinitions_1_1 && !classDefinitions_1_1.done && (_a = classDefinitions_1.return)) _a.call(classDefinitions_1);
                 }
-                finally {
-                    if (e_1)
-                        throw e_1.error;
-                }
+                finally { if (e_1) throw e_1.error; }
             }
             return resourceClassIris;
         };
@@ -2600,18 +2581,12 @@
                     allResourceClassIris = allResourceClassIris.concat(this.cacheOntology.resourceClassIrisForOntology[ontologyIri]);
                 }
             }
-            catch (e_2_1) {
-                e_2 = { error: e_2_1 };
-            }
+            catch (e_2_1) { e_2 = { error: e_2_1 }; }
             finally {
                 try {
-                    if (ontologyIris_1_1 && !ontologyIris_1_1.done && (_a = ontologyIris_1.return))
-                        _a.call(ontologyIris_1);
+                    if (ontologyIris_1_1 && !ontologyIris_1_1.done && (_a = ontologyIris_1.return)) _a.call(ontologyIris_1);
                 }
-                finally {
-                    if (e_2)
-                        throw e_2.error;
-                }
+                finally { if (e_2) throw e_2.error; }
             }
             // get resource class definitions for all requested ontologies
             return this.getResourceClassDefinitions(allResourceClassIris).pipe(operators.map(function (resClassDefs) {
@@ -2677,18 +2652,12 @@
                                 }
                             }
                         }
-                        catch (e_4_1) {
-                            e_4 = { error: e_4_1 };
-                        }
+                        catch (e_4_1) { e_4 = { error: e_4_1 }; }
                         finally {
                             try {
-                                if (subclassOfCollection_1_1 && !subclassOfCollection_1_1.done && (_b = subclassOfCollection_1.return))
-                                    _b.call(subclassOfCollection_1);
+                                if (subclassOfCollection_1_1 && !subclassOfCollection_1_1.done && (_b = subclassOfCollection_1.return)) _b.call(subclassOfCollection_1);
                             }
-                            finally {
-                                if (e_4)
-                                    throw e_4.error;
-                            }
+                            finally { if (e_4) throw e_4.error; }
                         }
                     }
                     var resClassObj = new ResourceClass(resClassIri, resClass[KnoraConstants.ResourceIcon], resClass[KnoraConstants.RdfsComment], resClass[KnoraConstants.RdfsLabel], cardinalities, guiOrder);
@@ -2696,18 +2665,12 @@
                     this.cacheOntology.resourceClasses[resClassIri] = resClassObj;
                 }
             }
-            catch (e_3_1) {
-                e_3 = { error: e_3_1 };
-            }
+            catch (e_3_1) { e_3 = { error: e_3_1 }; }
             finally {
                 try {
-                    if (resourceClassDefinitions_1_1 && !resourceClassDefinitions_1_1.done && (_a = resourceClassDefinitions_1.return))
-                        _a.call(resourceClassDefinitions_1);
+                    if (resourceClassDefinitions_1_1 && !resourceClassDefinitions_1_1.done && (_a = resourceClassDefinitions_1.return)) _a.call(resourceClassDefinitions_1);
                 }
-                finally {
-                    if (e_3)
-                        throw e_3.error;
-                }
+                finally { if (e_3) throw e_3.error; }
             }
             // cache the property definitions
             this.convertAndWriteKnoraPropertyDefinitionsToOntologyCache(propertyClassDefinitions);
@@ -2782,18 +2745,12 @@
                                     guiAttribute.push(attr);
                                 }
                             }
-                            catch (e_6_1) {
-                                e_6 = { error: e_6_1 };
-                            }
+                            catch (e_6_1) { e_6 = { error: e_6_1 }; }
                             finally {
                                 try {
-                                    if (_d && !_d.done && (_b = _c.return))
-                                        _b.call(_c);
+                                    if (_d && !_d.done && (_b = _c.return)) _b.call(_c);
                                 }
-                                finally {
-                                    if (e_6)
-                                        throw e_6.error;
-                                }
+                                finally { if (e_6) throw e_6.error; }
                             }
                         }
                         else {
@@ -2804,18 +2761,12 @@
                     this.cacheOntology.properties[propIri] = new Property(propIri, objectType, propDef[KnoraConstants.RdfsComment], propDef[KnoraConstants.RdfsLabel], subPropertyOf, isEditable, isLinkProperty, isLinkValueProperty, guiAttribute);
                 }
             }
-            catch (e_5_1) {
-                e_5 = { error: e_5_1 };
-            }
+            catch (e_5_1) { e_5 = { error: e_5_1 }; }
             finally {
                 try {
-                    if (propertyDefinitionsFromKnora_1_1 && !propertyDefinitionsFromKnora_1_1.done && (_a = propertyDefinitionsFromKnora_1.return))
-                        _a.call(propertyDefinitionsFromKnora_1);
+                    if (propertyDefinitionsFromKnora_1_1 && !propertyDefinitionsFromKnora_1_1.done && (_a = propertyDefinitionsFromKnora_1.return)) _a.call(propertyDefinitionsFromKnora_1);
                 }
-                finally {
-                    if (e_5)
-                        throw e_5.error;
-                }
+                finally { if (e_5) throw e_5.error; }
             }
         };
         /**
@@ -2973,18 +2924,13 @@
                 return rxjs.of(this.getPropertyDefinitionsFromCache(propertyIris));
             }
         };
-        OntologyCacheService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        OntologyCacheService.ctorParameters = function () {
-            return [
-                { type: OntologyService }
-            ];
-        };
-        OntologyCacheService.ngInjectableDef = i0.defineInjectable({ factory: function OntologyCacheService_Factory() { return new OntologyCacheService(i0.inject(OntologyService)); }, token: OntologyCacheService, providedIn: "root" });
+        OntologyCacheService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function OntologyCacheService_Factory() { return new OntologyCacheService(core.ɵɵinject(OntologyService)); }, token: OntologyCacheService, providedIn: "root" });
+        OntologyCacheService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            }),
+            __metadata("design:paramtypes", [OntologyService])
+        ], OntologyCacheService);
         return OntologyCacheService;
     }());
 
@@ -3089,12 +3035,12 @@
             this.path += '/' + encodeURIComponent(iri);
             return this.httpGet(this.path).pipe(operators.map(function (result) { return result.getBody(GroupResponse).group; }), operators.catchError(this.handleJsonError));
         };
-        GroupsService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        GroupsService.ngInjectableDef = i0.defineInjectable({ factory: function GroupsService_Factory() { return new GroupsService(i0.inject(i1.HttpClient), i0.inject(KuiCoreConfigToken)); }, token: GroupsService, providedIn: "root" });
+        GroupsService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function GroupsService_Factory() { return new GroupsService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(KuiCoreConfigToken)); }, token: GroupsService, providedIn: "root" });
+        GroupsService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            })
+        ], GroupsService);
         return GroupsService;
     }(ApiService));
 
@@ -3115,7 +3061,7 @@
          * Returns a list of all lists.
          *
          * @param {string} [projectIri]
-         * @returns Observable<ListNodeInfo[]>
+         * @returns Observable<ListNode[]>
          */
         ListsService.prototype.getLists = function (projectIri) {
             var newPath = this.path;
@@ -3146,7 +3092,7 @@
          * Return a list node info object.
          *
          * @param {string} nodeIri
-         * @returns Observable<ListNodeInfo>
+         * @returns Observable<ListNode>
          */
         ListsService.prototype.getListNodeInfo = function (nodeIri) {
             return this.httpGet(this.path + '/nodes/' + encodeURIComponent(nodeIri)).pipe(operators.map(function (result) { return result.getBody(ListNodeResponse).nodeinfo; }), operators.catchError(this.handleJsonError));
@@ -3166,6 +3112,7 @@
         /**
          * Create new list node.
          *
+         * @param {string} listIri
          * @param {ListNodeUpdatePayload} payload
          * @returns Observable<ListNode>
          */
@@ -3184,12 +3131,12 @@
         ListsService.prototype.updateListInfo = function (payload) {
             return this.httpPut(this.path + '/infos/' + encodeURIComponent(payload.listIri), payload).pipe(operators.map(function (result) { return result.getBody(ListInfoResponse).listinfo; }), operators.catchError(this.handleJsonError));
         };
-        ListsService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        ListsService.ngInjectableDef = i0.defineInjectable({ factory: function ListsService_Factory() { return new ListsService(i0.inject(i1.HttpClient), i0.inject(KuiCoreConfigToken)); }, token: ListsService, providedIn: "root" });
+        ListsService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function ListsService_Factory() { return new ListsService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(KuiCoreConfigToken)); }, token: ListsService, providedIn: "root" });
+        ListsService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            })
+        ], ListsService);
         return ListsService;
     }(ApiService));
 
@@ -3348,12 +3295,12 @@
             var url = '/admin/projects/iri/' + encodeURIComponent(iri);
             return this.httpDelete(url).pipe(operators.map(function (result) { return result.getBody(ProjectResponse).project; }), operators.catchError(this.handleJsonError));
         };
-        ProjectsService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        ProjectsService.ngInjectableDef = i0.defineInjectable({ factory: function ProjectsService_Factory() { return new ProjectsService(i0.inject(i1.HttpClient), i0.inject(KuiCoreConfigToken)); }, token: ProjectsService, providedIn: "root" });
+        ProjectsService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function ProjectsService_Factory() { return new ProjectsService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(KuiCoreConfigToken)); }, token: ProjectsService, providedIn: "root" });
+        ProjectsService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            })
+        ], ProjectsService);
         return ProjectsService;
     }(ApiService));
 
@@ -3611,12 +3558,12 @@
             var path = '/admin/users/iri/' + encodeURIComponent(userIri);
             return this.httpDelete(path).pipe(operators.map(function (result) { return result.getBody(UserResponse).user; }), operators.catchError(this.handleJsonError));
         };
-        UsersService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        UsersService.ngInjectableDef = i0.defineInjectable({ factory: function UsersService_Factory() { return new UsersService(i0.inject(i1.HttpClient), i0.inject(KuiCoreConfigToken)); }, token: UsersService, providedIn: "root" });
+        UsersService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function UsersService_Factory() { return new UsersService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(KuiCoreConfigToken)); }, token: UsersService, providedIn: "root" });
+        UsersService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            })
+        ], UsersService);
         return UsersService;
     }(ApiService));
 
@@ -3630,12 +3577,12 @@
         LanguageService.prototype.getLanguage = function () {
             return this.subject.asObservable();
         };
-        LanguageService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        LanguageService.ngInjectableDef = i0.defineInjectable({ factory: function LanguageService_Factory() { return new LanguageService(); }, token: LanguageService, providedIn: "root" });
+        LanguageService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function LanguageService_Factory() { return new LanguageService(); }, token: LanguageService, providedIn: "root" });
+        LanguageService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            })
+        ], LanguageService);
         return LanguageService;
     }());
 
@@ -3658,21 +3605,21 @@
                 console.error(err);
             }));
         };
-        StatusMsgService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        StatusMsgService.ctorParameters = function () {
-            return [
-                { type: i1.HttpClient },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [KuiCoreConfigToken,] }] }
-            ];
-        };
-        StatusMsgService.ngInjectableDef = i0.defineInjectable({ factory: function StatusMsgService_Factory() { return new StatusMsgService(i0.inject(i1.HttpClient), i0.inject(KuiCoreConfigToken)); }, token: StatusMsgService, providedIn: "root" });
+        StatusMsgService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function StatusMsgService_Factory() { return new StatusMsgService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(KuiCoreConfigToken)); }, token: StatusMsgService, providedIn: "root" });
+        StatusMsgService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            }),
+            __param(1, core.Inject(KuiCoreConfigToken)),
+            __metadata("design:paramtypes", [http.HttpClient, Object])
+        ], StatusMsgService);
         return StatusMsgService;
     }());
+
+    /**
+     * Contains methods to convert JSON-LD representing resources and properties to classes.
+     * These methods works only for instances of resources and properties, not for ontologies (data model).
+     */
 
     (function (ConvertJSONLD) {
         /**
@@ -3745,18 +3692,12 @@
                                 referredResources[referredRes.id] = referredRes;
                             }
                         }
-                        catch (e_1_1) {
-                            e_1 = { error: e_1_1 };
-                        }
+                        catch (e_1_1) { e_1 = { error: e_1_1 }; }
                         finally {
                             try {
-                                if (standoffLinkValues_1_1 && !standoffLinkValues_1_1.done && (_a = standoffLinkValues_1.return))
-                                    _a.call(standoffLinkValues_1);
+                                if (standoffLinkValues_1_1 && !standoffLinkValues_1_1.done && (_a = standoffLinkValues_1.return)) _a.call(standoffLinkValues_1);
                             }
-                            finally {
-                                if (e_1)
-                                    throw e_1.error;
-                            }
+                            finally { if (e_1) throw e_1.error; }
                         }
                         textValue = new ReadTextValueAsHtml(propValue['@id'], propIri, propValue[KnoraConstants.textValueAsHtml], referredResources);
                     }
@@ -3875,18 +3816,12 @@
                         standoffLinkValues.push(standoffVal);
                     }
                 }
-                catch (e_2_1) {
-                    e_2 = { error: e_2_1 };
-                }
+                catch (e_2_1) { e_2 = { error: e_2_1 }; }
                 finally {
                     try {
-                        if (standoffLinkValuesJSONLD_1_1 && !standoffLinkValuesJSONLD_1_1.done && (_a = standoffLinkValuesJSONLD_1.return))
-                            _a.call(standoffLinkValuesJSONLD_1);
+                        if (standoffLinkValuesJSONLD_1_1 && !standoffLinkValuesJSONLD_1_1.done && (_a = standoffLinkValuesJSONLD_1.return)) _a.call(standoffLinkValuesJSONLD_1);
                     }
-                    finally {
-                        if (e_2)
-                            throw e_2.error;
-                    }
+                    finally { if (e_2) throw e_2.error; }
                 }
             }
             else if (standoffLinkValuesJSONLD !== undefined) {
@@ -3917,18 +3852,12 @@
                                     propValues.push(valueSpecificProp);
                             }
                         }
-                        catch (e_4_1) {
-                            e_4 = { error: e_4_1 };
-                        }
+                        catch (e_4_1) { e_4 = { error: e_4_1 }; }
                         finally {
                             try {
-                                if (_e && !_e.done && (_c = _d.return))
-                                    _c.call(_d);
+                                if (_e && !_e.done && (_c = _d.return)) _c.call(_d);
                             }
-                            finally {
-                                if (e_4)
-                                    throw e_4.error;
-                            }
+                            finally { if (e_4) throw e_4.error; }
                         }
                     }
                     else {
@@ -3943,18 +3872,12 @@
                     properties[propName] = propValues;
                 }
             }
-            catch (e_3_1) {
-                e_3 = { error: e_3_1 };
-            }
+            catch (e_3_1) { e_3 = { error: e_3_1 }; }
             finally {
                 try {
-                    if (propNames_1_1 && !propNames_1_1.done && (_b = propNames_1.return))
-                        _b.call(propNames_1);
+                    if (propNames_1_1 && !propNames_1_1.done && (_b = propNames_1.return)) _b.call(propNames_1);
                 }
-                finally {
-                    if (e_3)
-                        throw e_3.error;
-                }
+                finally { if (e_3) throw e_3.error; }
             }
             return properties;
         }
@@ -3982,18 +3905,12 @@
                         resources.push(resource);
                     }
                 }
-                catch (e_5_1) {
-                    e_5 = { error: e_5_1 };
-                }
+                catch (e_5_1) { e_5 = { error: e_5_1 }; }
                 finally {
                     try {
-                        if (resourcesGraph_1_1 && !resourcesGraph_1_1.done && (_a = resourcesGraph_1.return))
-                            _a.call(resourcesGraph_1);
+                        if (resourcesGraph_1_1 && !resourcesGraph_1_1.done && (_a = resourcesGraph_1.return)) _a.call(resourcesGraph_1);
                     }
-                    finally {
-                        if (e_5)
-                            throw e_5.error;
-                    }
+                    finally { if (e_5) throw e_5.error; }
                 }
             }
             else {
@@ -4044,18 +3961,12 @@
                                 }
                             }
                         }
-                        catch (e_7_1) {
-                            e_7 = { error: e_7_1 };
-                        }
+                        catch (e_7_1) { e_7 = { error: e_7_1 }; }
                         finally {
                             try {
-                                if (_d && !_d.done && (_b = _c.return))
-                                    _b.call(_c);
+                                if (_d && !_d.done && (_b = _c.return)) _b.call(_c);
                             }
-                            finally {
-                                if (e_7)
-                                    throw e_7.error;
-                            }
+                            finally { if (e_7) throw e_7.error; }
                         }
                     }
                     else {
@@ -4076,18 +3987,12 @@
                     }
                 }
             }
-            catch (e_6_1) {
-                e_6 = { error: e_6_1 };
-            }
+            catch (e_6_1) { e_6 = { error: e_6_1 }; }
             finally {
                 try {
-                    if (propNames_2_1 && !propNames_2_1.done && (_a = propNames_2.return))
-                        _a.call(propNames_2);
+                    if (propNames_2_1 && !propNames_2_1.done && (_a = propNames_2.return)) _a.call(propNames_2);
                 }
-                finally {
-                    if (e_6)
-                        throw e_6.error;
-                }
+                finally { if (e_6) throw e_6.error; }
             }
             return referredResourceClasses;
         }
@@ -4115,18 +4020,12 @@
                         resourceClasses = resourceClasses.concat(referredResourceClasses);
                     }
                 }
-                catch (e_8_1) {
-                    e_8 = { error: e_8_1 };
-                }
+                catch (e_8_1) { e_8 = { error: e_8_1 }; }
                 finally {
                     try {
-                        if (resourcesGraph_2_1 && !resourcesGraph_2_1.done && (_a = resourcesGraph_2.return))
-                            _a.call(resourcesGraph_2);
+                        if (resourcesGraph_2_1 && !resourcesGraph_2_1.done && (_a = resourcesGraph_2.return)) _a.call(resourcesGraph_2);
                     }
-                    finally {
-                        if (e_8)
-                            throw e_8.error;
-                    }
+                    finally { if (e_8) throw e_8.error; }
                 }
             }
             else {
@@ -4206,20 +4105,14 @@
                 }));
             }));
         };
-        ResourceService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        ResourceService.ctorParameters = function () {
-            return [
-                { type: i1.HttpClient },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [KuiCoreConfigToken,] }] },
-                { type: OntologyCacheService }
-            ];
-        };
-        ResourceService.ngInjectableDef = i0.defineInjectable({ factory: function ResourceService_Factory() { return new ResourceService(i0.inject(i1.HttpClient), i0.inject(KuiCoreConfigToken), i0.inject(OntologyCacheService)); }, token: ResourceService, providedIn: "root" });
+        ResourceService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function ResourceService_Factory() { return new ResourceService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(KuiCoreConfigToken), core.ɵɵinject(OntologyCacheService)); }, token: ResourceService, providedIn: "root" });
+        ResourceService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            }),
+            __param(1, core.Inject(KuiCoreConfigToken)),
+            __metadata("design:paramtypes", [http.HttpClient, Object, OntologyCacheService])
+        ], ResourceService);
         return ResourceService;
     }(ApiService));
 
@@ -4305,13 +4198,11 @@
          * @returns Observable<ApiServiceResult>
          */
         SearchService.prototype.doFulltextSearch = function (searchTerm, offset, params) {
-            if (offset === void 0) {
-                offset = 0;
-            }
+            if (offset === void 0) { offset = 0; }
             if (searchTerm === undefined || searchTerm.length === 0) {
                 return rxjs.Observable.create(function (observer) { return observer.error('No search term given for call of SearchService.doFulltextSearch'); });
             }
-            var httpParams = new i1.HttpParams();
+            var httpParams = new http.HttpParams();
             httpParams = httpParams.set('offset', offset.toString());
             if (params !== undefined) {
                 httpParams = this.processFulltextSearchParams(params, httpParams);
@@ -4327,13 +4218,11 @@
          * @returns Observable<ApiServiceResult>
          */
         SearchService.prototype.doFullTextSearchReadResourceSequence = function (searchTerm, offset, params) {
-            if (offset === void 0) {
-                offset = 0;
-            }
+            if (offset === void 0) { offset = 0; }
             if (searchTerm === undefined || searchTerm.length === 0) {
                 return rxjs.Observable.create(function (observer) { return observer.error('No search term given for call of SearchService.doFulltextSearch'); });
             }
-            var httpParams = new i1.HttpParams();
+            var httpParams = new http.HttpParams();
             httpParams = httpParams.set('offset', offset.toString());
             if (params !== undefined) {
                 httpParams = this.processFulltextSearchParams(params, httpParams);
@@ -4357,7 +4246,7 @@
             if (searchTerm === undefined || searchTerm.length === 0) {
                 return rxjs.Observable.create(function (observer) { return observer.error('No search term given for call of SearchService.doFulltextSearchCountQuery'); });
             }
-            var httpParams = new i1.HttpParams();
+            var httpParams = new http.HttpParams();
             if (params !== undefined) {
                 httpParams = this.processFulltextSearchParams(params, httpParams);
             }
@@ -4374,7 +4263,7 @@
             if (searchTerm === undefined || searchTerm.length === 0) {
                 return rxjs.Observable.create(function (observer) { return observer.error('No search term given for call of SearchService.doFulltextSearchCountQuery'); });
             }
-            var httpParams = new i1.HttpParams();
+            var httpParams = new http.HttpParams();
             if (params !== undefined) {
                 httpParams = this.processFulltextSearchParams(params, httpParams);
             }
@@ -4451,13 +4340,11 @@
          * @returns Observable<ApiServiceResult>
          */
         SearchService.prototype.searchByLabel = function (searchTerm, offset, params) {
-            if (offset === void 0) {
-                offset = 0;
-            }
+            if (offset === void 0) { offset = 0; }
             if (searchTerm === undefined || searchTerm.length === 0) {
                 return rxjs.Observable.create(function (observer) { return observer.error('No search term given for call of SearchService.doFulltextSearch'); });
             }
-            var httpParams = new i1.HttpParams();
+            var httpParams = new http.HttpParams();
             httpParams = httpParams.set('offset', offset.toString());
             if (params !== undefined) {
                 httpParams = this.processSearchByLabelParams(params, httpParams);
@@ -4474,13 +4361,11 @@
          * @returns Observable<ApiServiceResult>
          */
         SearchService.prototype.searchByLabelReadResourceSequence = function (searchTerm, offset, params) {
-            if (offset === void 0) {
-                offset = 0;
-            }
+            if (offset === void 0) { offset = 0; }
             if (searchTerm === undefined || searchTerm.length === 0) {
                 return rxjs.Observable.create(function (observer) { return observer.error('No search term given for call of SearchService.doFulltextSearch'); });
             }
-            var httpParams = new i1.HttpParams();
+            var httpParams = new http.HttpParams();
             httpParams = httpParams.set('offset', offset.toString());
             if (params !== undefined) {
                 httpParams = this.processSearchByLabelParams(params, httpParams);
@@ -4488,20 +4373,14 @@
             var res = this.httpGet('/v2/searchbylabel/' + encodeURIComponent(searchTerm), httpParams);
             return res.pipe(operators.mergeMap(this.processJSONLD), operators.mergeMap(this.convertJSONLDToReadResourceSequence));
         };
-        SearchService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root',
-                    },] }
-        ];
-        /** @nocollapse */
-        SearchService.ctorParameters = function () {
-            return [
-                { type: i1.HttpClient },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [KuiCoreConfigToken,] }] },
-                { type: OntologyCacheService }
-            ];
-        };
-        SearchService.ngInjectableDef = i0.defineInjectable({ factory: function SearchService_Factory() { return new SearchService(i0.inject(i1.HttpClient), i0.inject(KuiCoreConfigToken), i0.inject(OntologyCacheService)); }, token: SearchService, providedIn: "root" });
+        SearchService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function SearchService_Factory() { return new SearchService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(KuiCoreConfigToken), core.ɵɵinject(OntologyCacheService)); }, token: SearchService, providedIn: "root" });
+        SearchService = __decorate([
+            core.Injectable({
+                providedIn: 'root',
+            }),
+            __param(1, core.Inject(KuiCoreConfigToken)),
+            __metadata("design:paramtypes", [http.HttpClient, Object, OntologyCacheService])
+        ], SearchService);
         return SearchService;
     }(ApiService));
 
@@ -4548,12 +4427,12 @@
             var sparqlQueryStr = "\nPREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>\n\nCONSTRUCT {\n?incomingRes knora-api:isMainResource true .\n\n?incomingRes ?incomingProp <" + resourceIri + "> .\n\n} WHERE {\n\n?incomingRes a knora-api:Resource .\n\n?incomingRes ?incomingProp <" + resourceIri + "> .\n\n<" + resourceIri + "> a knora-api:Resource .\n\n?incomingProp knora-api:objectType knora-api:Resource .\n\nknora-api:isRegionOf knora-api:objectType knora-api:Resource .\nknora-api:isPartOf knora-api:objectType knora-api:Resource .\n\nFILTER NOT EXISTS {\n ?incomingRes  knora-api:isRegionOf <" + resourceIri + "> .\n}\n\nFILTER NOT EXISTS {\n ?incomingRes  knora-api:isPartOf <" + resourceIri + "> .\n}\n\n} OFFSET " + offset + "\n";
             return this.doExtendedSearchReadResourceSequence(sparqlQueryStr);
         };
-        IncomingService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root',
-                    },] }
-        ];
-        IncomingService.ngInjectableDef = i0.defineInjectable({ factory: function IncomingService_Factory() { return new IncomingService(i0.inject(i1.HttpClient), i0.inject(KuiCoreConfigToken), i0.inject(OntologyCacheService)); }, token: IncomingService, providedIn: "root" });
+        IncomingService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function IncomingService_Factory() { return new IncomingService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(KuiCoreConfigToken), core.ɵɵinject(OntologyCacheService)); }, token: IncomingService, providedIn: "root" });
+        IncomingService = __decorate([
+            core.Injectable({
+                providedIn: 'root',
+            })
+        ], IncomingService);
         return IncomingService;
     }(SearchService));
 
@@ -4597,14 +4476,17 @@
         SearchParamsService.prototype.getSearchParams = function () {
             return this._currentSearchParams.getValue();
         };
-        SearchParamsService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        SearchParamsService.ctorParameters = function () { return []; };
-        SearchParamsService.ngInjectableDef = i0.defineInjectable({ factory: function SearchParamsService_Factory() { return new SearchParamsService(); }, token: SearchParamsService, providedIn: "root" });
+        SearchParamsService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function SearchParamsService_Factory() { return new SearchParamsService(); }, token: SearchParamsService, providedIn: "root" });
+        SearchParamsService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            })
+            /**
+             * Temporarily stores the parameters of an extended search.
+             */
+            ,
+            __metadata("design:paramtypes", [])
+        ], SearchParamsService);
         return SearchParamsService;
     }());
 
@@ -4615,6 +4497,7 @@
         function GravsearchGenerationService(_searchParamsService) {
             this._searchParamsService = _searchParamsService;
         }
+        GravsearchGenerationService_1 = GravsearchGenerationService;
         /**
          * Generates a Gravsearch query from the provided arguments.
          *
@@ -4624,9 +4507,7 @@
          * @returns string - a KnarQL query string.
          */
         GravsearchGenerationService.prototype.createGravsearchQuery = function (properties, mainResourceClassOption, offset) {
-            if (offset === void 0) {
-                offset = 0;
-            }
+            if (offset === void 0) { offset = 0; }
             // class restriction for the resource searched for
             var mainResourceClass = '';
             // if given, create the class restriction for the main resource
@@ -4670,13 +4551,13 @@
                     var propValueLiteral = propValue + "Literal";
                     if (propWithVal.valueLiteral.comparisonOperator.getClassName() === 'Like') {
                         // generate statement to value literal
-                        restriction = propValue + " <" + GravsearchGenerationService.complexTypeToProp[propWithVal.property.objectType] + "> " + propValueLiteral + '\n';
+                        restriction = propValue + " <" + GravsearchGenerationService_1.complexTypeToProp[propWithVal.property.objectType] + "> " + propValueLiteral + '\n';
                         // use regex function for LIKE
                         restriction += "FILTER regex(" + propValueLiteral + ", " + propWithVal.valueLiteral.value.toSparql(exports.KnoraSchema.complex) + ", \"i\")";
                     }
                     else if (propWithVal.valueLiteral.comparisonOperator.getClassName() === 'Match') {
                         // generate statement to value literal
-                        restriction = propValue + " <" + GravsearchGenerationService.complexTypeToProp[propWithVal.property.objectType] + "> " + propValueLiteral + '\n';
+                        restriction = propValue + " <" + GravsearchGenerationService_1.complexTypeToProp[propWithVal.property.objectType] + "> " + propValueLiteral + '\n';
                         // use contains function for MATCH
                         restriction += "FILTER <" + KnoraConstants.matchFunction + ">(" + propValueLiteral + ", " + propWithVal.valueLiteral.value.toSparql(exports.KnoraSchema.complex) + ")";
                     }
@@ -4686,7 +4567,7 @@
                     }
                     else if (propWithVal.property.objectType === KnoraConstants.ListValue) {
                         // handle list node
-                        restriction = propValue + " <" + GravsearchGenerationService.complexTypeToProp[propWithVal.property.objectType] + "> " + propWithVal.valueLiteral.value.toSparql(exports.KnoraSchema.complex) + '\n';
+                        restriction = propValue + " <" + GravsearchGenerationService_1.complexTypeToProp[propWithVal.property.objectType] + "> " + propWithVal.valueLiteral.value.toSparql(exports.KnoraSchema.complex) + '\n';
                         // check for comparison operator "not equals"
                         if (propWithVal.valueLiteral.comparisonOperator.getClassName() === 'NotEquals') {
                             restriction = "FILTER NOT EXISTS {\n                                " + restriction + "\n                            }";
@@ -4694,7 +4575,7 @@
                     }
                     else {
                         // generate statement to value literal
-                        restriction = propValue + " <" + GravsearchGenerationService.complexTypeToProp[propWithVal.property.objectType] + "> " + propValueLiteral + '\n';
+                        restriction = propValue + " <" + GravsearchGenerationService_1.complexTypeToProp[propWithVal.property.objectType] + "> " + propValueLiteral + '\n';
                         // generate filter expression
                         restriction += "FILTER(" + propValueLiteral + " " + propWithVal.valueLiteral.comparisonOperator.type + " " + propWithVal.valueLiteral.value.toSparql(exports.KnoraSchema.complex) + ")";
                     }
@@ -4723,6 +4604,7 @@
             }
             return gravsearchTemplate + offsetTemplate;
         };
+        var GravsearchGenerationService_1;
         /**
          * @ignore
          *
@@ -4757,18 +4639,13 @@
             'http://api.knora.org/ontology/knora-api/v2#UriValue': KnoraConstants.uriValueAsUri,
             'http://api.knora.org/ontology/knora-api/v2#ListValue': KnoraConstants.listValueAsListNode
         };
-        GravsearchGenerationService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        GravsearchGenerationService.ctorParameters = function () {
-            return [
-                { type: SearchParamsService }
-            ];
-        };
-        GravsearchGenerationService.ngInjectableDef = i0.defineInjectable({ factory: function GravsearchGenerationService_Factory() { return new GravsearchGenerationService(i0.inject(SearchParamsService)); }, token: GravsearchGenerationService, providedIn: "root" });
+        GravsearchGenerationService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function GravsearchGenerationService_Factory() { return new GravsearchGenerationService(core.ɵɵinject(SearchParamsService)); }, token: GravsearchGenerationService, providedIn: "root" });
+        GravsearchGenerationService = GravsearchGenerationService_1 = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            }),
+            __metadata("design:paramtypes", [SearchParamsService])
+        ], GravsearchGenerationService);
         return GravsearchGenerationService;
     }());
 
@@ -4799,19 +4676,14 @@
                 throw error;
             }));
         };
-        StoreService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        StoreService.ctorParameters = function () {
-            return [
-                { type: i1.HttpClient },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [KuiCoreConfigToken,] }] }
-            ];
-        };
-        StoreService.ngInjectableDef = i0.defineInjectable({ factory: function StoreService_Factory() { return new StoreService(i0.inject(i1.HttpClient), i0.inject(KuiCoreConfigToken)); }, token: StoreService, providedIn: "root" });
+        StoreService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function StoreService_Factory() { return new StoreService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(KuiCoreConfigToken)); }, token: StoreService, providedIn: "root" });
+        StoreService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            }),
+            __param(1, core.Inject(KuiCoreConfigToken)),
+            __metadata("design:paramtypes", [http.HttpClient, Object])
+        ], StoreService);
         return StoreService;
     }());
 
@@ -4834,12 +4706,12 @@
             return this.httpGet(url + '/data/base-data/basic-ontology.json');
             // return this.httpGet(url + '/data/base-data/basic-ontology.json', {withCredentials: false});
         };
-        BasicOntologyService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        BasicOntologyService.ngInjectableDef = i0.defineInjectable({ factory: function BasicOntologyService_Factory() { return new BasicOntologyService(i0.inject(i1.HttpClient), i0.inject(KuiCoreConfigToken)); }, token: BasicOntologyService, providedIn: "root" });
+        BasicOntologyService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function BasicOntologyService_Factory() { return new BasicOntologyService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(KuiCoreConfigToken)); }, token: BasicOntologyService, providedIn: "root" });
+        BasicOntologyService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            })
+        ], BasicOntologyService);
         return BasicOntologyService;
     }(ApiService));
 
@@ -4866,12 +4738,12 @@
         ResourceTypesService.prototype.getResourceType = function (iri) {
             return this.httpGet('/v1/resourcetypes/' + encodeURIComponent(iri));
         };
-        ResourceTypesService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        ResourceTypesService.ngInjectableDef = i0.defineInjectable({ factory: function ResourceTypesService_Factory() { return new ResourceTypesService(i0.inject(i1.HttpClient), i0.inject(KuiCoreConfigToken)); }, token: ResourceTypesService, providedIn: "root" });
+        ResourceTypesService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function ResourceTypesService_Factory() { return new ResourceTypesService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(KuiCoreConfigToken)); }, token: ResourceTypesService, providedIn: "root" });
+        ResourceTypesService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            })
+        ], ResourceTypesService);
         return ResourceTypesService;
     }(ApiService));
 
@@ -4925,19 +4797,14 @@
             // this would return an Observable of a PromiseObservable -> combine them into one Observable
             this.processJSONLD));
         };
-        ListService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        ListService.ctorParameters = function () {
-            return [
-                { type: i1.HttpClient },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [KuiCoreConfigToken,] }] }
-            ];
-        };
-        ListService.ngInjectableDef = i0.defineInjectable({ factory: function ListService_Factory() { return new ListService(i0.inject(i1.HttpClient), i0.inject(KuiCoreConfigToken)); }, token: ListService, providedIn: "root" });
+        ListService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function ListService_Factory() { return new ListService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(KuiCoreConfigToken)); }, token: ListService, providedIn: "root" });
+        ListService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            }),
+            __param(1, core.Inject(KuiCoreConfigToken)),
+            __metadata("design:paramtypes", [http.HttpClient, Object])
+        ], ListService);
         return ListService;
     }(ApiService));
 
@@ -4994,18 +4861,12 @@
                                 listNode.children.push(_this.convertJSONLDToListNode(subListNode));
                             }
                         }
-                        catch (e_1_1) {
-                            e_1 = { error: e_1_1 };
-                        }
+                        catch (e_1_1) { e_1 = { error: e_1_1 }; }
                         finally {
                             try {
-                                if (_c && !_c.done && (_a = _b.return))
-                                    _a.call(_b);
+                                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
                             }
-                            finally {
-                                if (e_1)
-                                    throw e_1.error;
-                            }
+                            finally { if (e_1) throw e_1.error; }
                         }
                     }
                     else {
@@ -5082,24 +4943,15 @@
                 }));
             }
         };
-        ListCacheService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        ListCacheService.ctorParameters = function () {
-            return [
-                { type: ListService }
-            ];
-        };
-        ListCacheService.ngInjectableDef = i0.defineInjectable({ factory: function ListCacheService_Factory() { return new ListCacheService(i0.inject(ListService)); }, token: ListCacheService, providedIn: "root" });
+        ListCacheService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function ListCacheService_Factory() { return new ListCacheService(core.ɵɵinject(ListService)); }, token: ListCacheService, providedIn: "root" });
+        ListCacheService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            }),
+            __metadata("design:paramtypes", [ListService])
+        ], ListCacheService);
         return ListCacheService;
     }());
-
-    /**
-     * main api services
-     */
 
     var Equals = /** @class */ (function () {
         function Equals() {
@@ -5281,118 +5133,109 @@
         return PropertyWithValue;
     }());
 
-    /*
-     * Public API Surface of core
-     */
-
-    /**
-     * Generated bundle index. Do not edit.
-     */
-
-    exports.ɵa = Property;
-    exports.KuiCoreConfigToken = KuiCoreConfigToken;
-    exports.KuiCoreModule = KuiCoreModule;
-    exports.KuiCoreConfig = KuiCoreConfig;
-    exports.ApiServiceResult = ApiServiceResult;
+    exports.ApiService = ApiService;
     exports.ApiServiceError = ApiServiceError;
-    exports.Utils = Utils;
-    exports.KnoraConstants = KnoraConstants;
-    exports.StringLiteral = StringLiteral;
-    exports.DateSalsah = DateSalsah;
-    exports.DateRangeSalsah = DateRangeSalsah;
+    exports.ApiServiceResult = ApiServiceResult;
     exports.AuthenticationResponse = AuthenticationResponse;
+    exports.BasicOntologyService = BasicOntologyService;
+    exports.Cardinality = Cardinality;
+    exports.ComparisonOperatorAndValue = ComparisonOperatorAndValue;
+    exports.CountQueryResult = CountQueryResult;
+    exports.DateRangeSalsah = DateRangeSalsah;
+    exports.DateSalsah = DateSalsah;
+    exports.Equals = Equals;
+    exports.Exists = Exists;
+    exports.ExtendedSearchParams = ExtendedSearchParams;
+    exports.GravsearchGenerationService = GravsearchGenerationService;
+    exports.GreaterThan = GreaterThan;
+    exports.GreaterThanEquals = GreaterThanEquals;
     exports.Group = Group;
     exports.GroupResponse = GroupResponse;
     exports.GroupsResponse = GroupsResponse;
+    exports.GroupsService = GroupsService;
+    exports.GuiOrder = GuiOrder;
+    exports.IRI = IRI;
+    exports.ImageRegion = ImageRegion;
+    exports.IncomingService = IncomingService;
+    exports.KnoraConstants = KnoraConstants;
+    exports.KuiCoreConfig = KuiCoreConfig;
+    exports.KuiCoreConfigToken = KuiCoreConfigToken;
+    exports.KuiCoreModule = KuiCoreModule;
+    exports.LanguageService = LanguageService;
+    exports.LessThan = LessThan;
+    exports.LessThanEquals = LessThanEquals;
+    exports.Like = Like;
     exports.List = List;
+    exports.ListCacheService = ListCacheService;
     exports.ListInfo = ListInfo;
     exports.ListInfoResponse = ListInfoResponse;
     exports.ListNode = ListNode;
     exports.ListNodeInfo = ListNodeInfo;
     exports.ListNodeInfoResponse = ListNodeInfoResponse;
-    exports.ListResponse = ListResponse;
     exports.ListNodeResponse = ListNodeResponse;
+    exports.ListNodeV2 = ListNodeV2;
+    exports.ListResponse = ListResponse;
     exports.ListsResponse = ListsResponse;
+    exports.ListsService = ListsService;
+    exports.Match = Match;
+    exports.NotEquals = NotEquals;
+    exports.OntologyCacheService = OntologyCacheService;
     exports.OntologyInfoShort = OntologyInfoShort;
+    exports.OntologyInformation = OntologyInformation;
+    exports.OntologyMetadata = OntologyMetadata;
+    exports.OntologyService = OntologyService;
     exports.PermissionData = PermissionData;
+    exports.Point2D = Point2D;
     exports.Project = Project;
     exports.ProjectMembersResponse = ProjectMembersResponse;
     exports.ProjectResponse = ProjectResponse;
     exports.ProjectsResponse = ProjectsResponse;
-    exports.UsersResponse = UsersResponse;
-    exports.UserResponse = UserResponse;
-    exports.User = User;
-    exports.ReadTextValue = ReadTextValue;
-    exports.ReadTextValueAsString = ReadTextValueAsString;
-    exports.ReferredResourcesByStandoffLink = ReferredResourcesByStandoffLink;
-    exports.ReadTextValueAsHtml = ReadTextValueAsHtml;
-    exports.ReadTextValueAsXml = ReadTextValueAsXml;
-    exports.ReadDateValue = ReadDateValue;
-    exports.ReadLinkValue = ReadLinkValue;
-    exports.ReadIntegerValue = ReadIntegerValue;
-    exports.ReadDecimalValue = ReadDecimalValue;
-    exports.ReadStillImageFileValue = ReadStillImageFileValue;
-    exports.ReadMovingImageFileValue = ReadMovingImageFileValue;
-    exports.ReadTextFileValue = ReadTextFileValue;
-    exports.ReadColorValue = ReadColorValue;
-    exports.Point2D = Point2D;
-    exports.RegionGeometry = RegionGeometry;
-    exports.ReadGeomValue = ReadGeomValue;
-    exports.ReadUriValue = ReadUriValue;
-    exports.ReadBooleanValue = ReadBooleanValue;
-    exports.ReadIntervalValue = ReadIntervalValue;
-    exports.ReadListValue = ReadListValue;
-    exports.ReadResource = ReadResource;
-    exports.Resource = Resource;
-    exports.ReadResourcesSequence = ReadResourcesSequence;
-    exports.CountQueryResult = CountQueryResult;
-    exports.StillImageRepresentation = StillImageRepresentation;
-    exports.ImageRegion = ImageRegion;
-    exports.Equals = Equals;
-    exports.NotEquals = NotEquals;
-    exports.GreaterThanEquals = GreaterThanEquals;
-    exports.GreaterThan = GreaterThan;
-    exports.LessThan = LessThan;
-    exports.LessThanEquals = LessThanEquals;
-    exports.Exists = Exists;
-    exports.Like = Like;
-    exports.Match = Match;
-    exports.ComparisonOperatorAndValue = ComparisonOperatorAndValue;
-    exports.ValueLiteral = ValueLiteral;
-    exports.IRI = IRI;
-    exports.PropertyWithValue = PropertyWithValue;
-    exports.ApiService = ApiService;
-    exports.GroupsService = GroupsService;
-    exports.ListsService = ListsService;
     exports.ProjectsService = ProjectsService;
-    exports.UsersService = UsersService;
-    exports.LanguageService = LanguageService;
-    exports.StatusMsgService = StatusMsgService;
-    exports.OntologyService = OntologyService;
-    exports.OntologyMetadata = OntologyMetadata;
-    exports.Cardinality = Cardinality;
-    exports.GuiOrder = GuiOrder;
-    exports.ResourceClass = ResourceClass;
-    exports.ResourceClasses = ResourceClasses;
-    exports.Property = Property;
     exports.Properties = Properties;
+    exports.Property = Property;
+    exports.PropertyWithValue = PropertyWithValue;
+    exports.ReadBooleanValue = ReadBooleanValue;
+    exports.ReadColorValue = ReadColorValue;
+    exports.ReadDateValue = ReadDateValue;
+    exports.ReadDecimalValue = ReadDecimalValue;
+    exports.ReadGeomValue = ReadGeomValue;
+    exports.ReadIntegerValue = ReadIntegerValue;
+    exports.ReadIntervalValue = ReadIntervalValue;
+    exports.ReadLinkValue = ReadLinkValue;
+    exports.ReadListValue = ReadListValue;
+    exports.ReadMovingImageFileValue = ReadMovingImageFileValue;
+    exports.ReadResource = ReadResource;
+    exports.ReadResourcesSequence = ReadResourcesSequence;
+    exports.ReadStillImageFileValue = ReadStillImageFileValue;
+    exports.ReadTextFileValue = ReadTextFileValue;
+    exports.ReadTextValue = ReadTextValue;
+    exports.ReadTextValueAsHtml = ReadTextValueAsHtml;
+    exports.ReadTextValueAsString = ReadTextValueAsString;
+    exports.ReadTextValueAsXml = ReadTextValueAsXml;
+    exports.ReadUriValue = ReadUriValue;
+    exports.ReferredResourcesByStandoffLink = ReferredResourcesByStandoffLink;
+    exports.RegionGeometry = RegionGeometry;
+    exports.Resource = Resource;
+    exports.ResourceClass = ResourceClass;
     exports.ResourceClassIrisForOntology = ResourceClassIrisForOntology;
-    exports.OntologyInformation = OntologyInformation;
-    exports.OntologyCacheService = OntologyCacheService;
+    exports.ResourceClasses = ResourceClasses;
     exports.ResourceService = ResourceService;
-    exports.SearchService = SearchService;
-    exports.IncomingService = IncomingService;
-    exports.ExtendedSearchParams = ExtendedSearchParams;
-    exports.SearchParamsService = SearchParamsService;
-    exports.GravsearchGenerationService = GravsearchGenerationService;
-    exports.StoreService = StoreService;
-    exports.BasicOntologyService = BasicOntologyService;
     exports.ResourceTypesService = ResourceTypesService;
-    exports.ListNodeV2 = ListNodeV2;
-    exports.ListCacheService = ListCacheService;
+    exports.SearchParamsService = SearchParamsService;
+    exports.SearchService = SearchService;
+    exports.StatusMsgService = StatusMsgService;
+    exports.StillImageRepresentation = StillImageRepresentation;
+    exports.StoreService = StoreService;
+    exports.StringLiteral = StringLiteral;
+    exports.User = User;
+    exports.UserResponse = UserResponse;
+    exports.UsersResponse = UsersResponse;
+    exports.UsersService = UsersService;
+    exports.Utils = Utils;
+    exports.ValueLiteral = ValueLiteral;
+    exports.ɵa = Property;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
-
+}));
 //# sourceMappingURL=knora-core.umd.js.map

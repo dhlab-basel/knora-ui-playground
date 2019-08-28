@@ -2,7 +2,7 @@ import { OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ListNodeV2, Property, PropertyValue, Value } from '@knora/core';
 import { ListCacheService } from '@knora/core';
-import { MatMenuTrigger } from '@angular/material';
+import { MatMenuTrigger } from '@angular/material/menu';
 export declare class ListValueComponent implements OnInit, OnDestroy, PropertyValue {
     private fb;
     private _listCacheService;
