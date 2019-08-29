@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatMenuTrigger } from '@angular/material';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { StringLiteral } from '@knora/core';
 import { Session } from '@knora/authentication';
 
@@ -38,9 +38,9 @@ export class PropertyPgComponent implements OnInit {
      */
     @Output() dataChanged: EventEmitter<StringLiteral[]> = new EventEmitter<StringLiteral[]>();
 
-    @ViewChild('textInput') textInput: ElementRef;
+    @ViewChild('textInput', { static: true }) textInput: ElementRef;
 
-    @ViewChild('btnToSelectLanguage') selectLanguage: MatMenuTrigger;
+    @ViewChild('btnToSelectLanguage', { static: true }) selectLanguage: MatMenuTrigger;
 
     form: FormGroup;
 

@@ -86,6 +86,8 @@ export declare class KnoraConstants {
     static ReadMovingImageFileValue: string;
     static ReadAudioFileValue: string;
     static ReadTextFileValue: string;
+    static ReadDDDFileValue: string;
+    static ReadDocumentFileValue: string;
     static ReadGeomValue: string;
     static ReadColorValue: string;
     static ReadUriValue: string;
@@ -119,6 +121,15 @@ export declare class KnoraConstants {
     static stillImageFileValueHasDimX: string;
     static stillImageFileValueHasDimY: string;
     static stillImageFileValueHasIIIFBaseUrl: string;
+    static hasMovingImageFileValue: string;
+    static movingImageFileValueHasDimX: string;
+    static movingImageFileValueHasDimY: string;
+    static movingImageFileValueHasDuration: string;
+    static movingImageFileValueHasFps: string;
+    static hasAudioFileValue: string;
+    static audioFileValueHasDuration: string;
+    static hasDocumentFileValue: string;
+    static hasDDDFileValue: string;
     static colorValueAsColor: string;
     static geometryValueAsGeometry: string;
     static uriValueAsUri: string;

@@ -3,7 +3,7 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiServiceError, Project, ProjectsService } from '@knora/core';
-import { MatMenuTrigger } from '@angular/material';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 export interface PrevSearchItem {
   projectIri?: string;
@@ -39,11 +39,11 @@ export class NewSearchPgComponent implements OnInit {
    */
   @Input() filterbyproject?: string;
 
-  @ViewChild('fulltextSearchPanel') searchPanel: ElementRef;
-  @ViewChild('fulltextSearchInput') searchInput: ElementRef;
-  @ViewChild('fulltextSearchMenu') searchMenu: TemplateRef<any>;
+  @ViewChild('fulltextSearchPanel', { static: true }) searchPanel: ElementRef;
+  @ViewChild('fulltextSearchInput', { static: true }) searchInput: ElementRef;
+  @ViewChild('fulltextSearchMenu', { static: true }) searchMenu: TemplateRef<any>;
 
-  @ViewChild('btnToSelectProject') selectProject: MatMenuTrigger;
+  @ViewChild('btnToSelectProject', { static: false }) selectProject: MatMenuTrigger;
 
   // search query
   searchQuery: string;
