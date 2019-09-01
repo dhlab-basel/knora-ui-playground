@@ -45,9 +45,9 @@ export declare abstract class ReadTextValue implements ReadPropertyItem {
  */
 export declare class ReadTextValueAsString extends ReadTextValue {
     readonly id: string;
-    readonly propIri: string;
-    str: string;
-    constructor(id: string, propIri: string, str: string);
+    readonly propIri: any;
+    readonly str: string;
+    constructor(id: string, propIri: any, str: string);
     getClassName(): string;
     getContent(): string;
 }
@@ -62,10 +62,10 @@ export declare class ReferredResourcesByStandoffLink {
  */
 export declare class ReadTextValueAsHtml extends ReadTextValue {
     readonly id: string;
-    readonly propIri: string;
+    readonly propIri: any;
     readonly html: string;
     readonly referredResources: ReferredResourcesByStandoffLink;
-    constructor(id: string, propIri: string, html: string, referredResources: ReferredResourcesByStandoffLink);
+    constructor(id: string, propIri: any, html: string, referredResources: ReferredResourcesByStandoffLink);
     /**
      * Gets information about a resource referred to by a standoff link from a text value.
      *
@@ -82,10 +82,10 @@ export declare class ReadTextValueAsHtml extends ReadTextValue {
  */
 export declare class ReadTextValueAsXml extends ReadTextValue {
     readonly id: string;
-    readonly propIri: string;
+    readonly propIri: any;
     readonly xml: string;
     readonly mappingIri: string;
-    constructor(id: string, propIri: string, xml: string, mappingIri: string);
+    constructor(id: string, propIri: any, xml: string, mappingIri: string);
     getClassName(): string;
     getContent(): string;
 }
@@ -94,7 +94,7 @@ export declare class ReadTextValueAsXml extends ReadTextValue {
  */
 export declare class ReadDateValue implements ReadPropertyItem {
     readonly id: string;
-    readonly propIri: string;
+    readonly propIri: any;
     readonly calendar: string;
     readonly startYear: number;
     readonly endYear: number;
@@ -104,7 +104,7 @@ export declare class ReadDateValue implements ReadPropertyItem {
     readonly endMonth?: number;
     readonly startDay?: number;
     readonly endDay?: number;
-    constructor(id: string, propIri: string, calendar: string, startYear: number, endYear: number, startEra: string, endEra: string, startMonth?: number, endMonth?: number, startDay?: number, endDay?: number);
+    constructor(id: string, propIri: any, calendar: string, startYear: number, endYear: number, startEra: string, endEra: string, startMonth?: number, endMonth?: number, startDay?: number, endDay?: number);
     readonly type: string;
     private separator;
     getDateSalsah(): DateSalsah | DateRangeSalsah;
@@ -116,10 +116,10 @@ export declare class ReadDateValue implements ReadPropertyItem {
  */
 export declare class ReadLinkValue implements ReadPropertyItem {
     readonly id: string;
-    readonly propIri: string;
+    readonly propIri: any;
     readonly referredResourceIri: string;
     readonly referredResource?: ReadResource;
-    constructor(id: string, propIri: string, referredResourceIri: string, referredResource?: ReadResource);
+    constructor(id: string, propIri: any, referredResourceIri: string, referredResource?: ReadResource);
     readonly type: string;
     getReferredResourceInfo(ontologyInfo: OntologyInformation): string;
     getClassName(): string;
@@ -130,9 +130,9 @@ export declare class ReadLinkValue implements ReadPropertyItem {
  */
 export declare class ReadIntegerValue implements ReadPropertyItem {
     readonly id: string;
-    readonly propIri: string;
+    readonly propIri: any;
     readonly integer: number;
-    constructor(id: string, propIri: string, integer: number);
+    constructor(id: string, propIri: any, integer: number);
     readonly type: string;
     getClassName(): string;
     getContent(): string;
@@ -142,35 +142,25 @@ export declare class ReadIntegerValue implements ReadPropertyItem {
  */
 export declare class ReadDecimalValue implements ReadPropertyItem {
     readonly id: string;
-    readonly propIri: string;
+    readonly propIri: any;
     readonly decimal: number;
-    constructor(id: string, propIri: string, decimal: number);
+    constructor(id: string, propIri: any, decimal: number);
     readonly type: string;
     getClassName(): string;
     getContent(): string;
 }
 /**
- * Abstract class for file representations like stillImage, movingImage, audio etc.
- */
-export declare abstract class FileValue implements ReadPropertyItem {
-    abstract id: string;
-    readonly type: string;
-    abstract propIri: string;
-    abstract getClassName(): string;
-    abstract getContent(): string;
-}
-/**
  * Represents a still image value object.
  */
-export declare class ReadStillImageFileValue extends FileValue {
+export declare class ReadStillImageFileValue implements ReadPropertyItem {
     readonly id: string;
-    readonly propIri: string;
+    readonly propIri: any;
     readonly imageFilename: string;
     readonly imageServerIIIFBaseURL: string;
     readonly imagePath: string;
     readonly dimX: number;
     readonly dimY: number;
-    constructor(id: string, propIri: string, imageFilename: string, imageServerIIIFBaseURL: string, imagePath: string, dimX: number, dimY: number);
+    constructor(id: string, propIri: any, imageFilename: string, imageServerIIIFBaseURL: string, imagePath: string, dimX: number, dimY: number);
     readonly type: string;
     readonly isPreview: boolean;
     makeIIIFUrl(reduceFactor: number): string;
@@ -180,58 +170,18 @@ export declare class ReadStillImageFileValue extends FileValue {
 /**
  * Represents a moving image value object.
  */
-export declare class ReadMovingImageFileValue extends FileValue {
+export declare class ReadMovingImageFileValue implements ReadPropertyItem {
     readonly id: string;
-    readonly propIri: string;
+    readonly propIri: any;
     readonly filename: string;
+    readonly mediaServerIIIFBaseURL: string;
     readonly path: string;
     readonly dimX: number;
     readonly dimY: number;
     readonly duration: number;
     readonly fps?: number;
-    constructor(id: string, propIri: string, filename: string, path: string, dimX: number, dimY: number, duration: number, fps?: number);
-    readonly type: string;
-    readonly isPreview: boolean;
-    getClassName(): string;
-    getContent(): string;
-}
-/**
- * Represents an audio value object.
- */
-export declare class ReadAudioFileValue extends FileValue {
-    readonly id: string;
-    readonly propIri: string;
-    readonly filename: string;
-    readonly path: string;
-    readonly duration: number;
-    constructor(id: string, propIri: string, filename: string, path: string, duration: number);
-    readonly type: string;
-    getClassName(): string;
-    getContent(): string;
-}
-/**
- * Represents a DDD value object.
- */
-export declare class ReadDDDFileValue extends FileValue {
-    readonly id: string;
-    readonly propIri: string;
-    readonly filename: string;
-    readonly path: string;
-    constructor(id: string, propIri: string, filename: string, path: string);
-    readonly type: string;
-    readonly isPreview: boolean;
-    getClassName(): string;
-    getContent(): string;
-}
-/**
- * Represents a Document value object.
- */
-export declare class ReadDocumentFileValue extends FileValue {
-    readonly id: string;
-    readonly propIri: string;
-    readonly filename: string;
-    readonly path: string;
-    constructor(id: string, propIri: string, filename: string, path: string);
+    readonly aspectRatio?: string;
+    constructor(id: string, propIri: any, filename: string, mediaServerIIIFBaseURL: string, path: string, dimX: number, dimY: number, duration: number, fps?: number, aspectRatio?: string);
     readonly type: string;
     readonly isPreview: boolean;
     getClassName(): string;
@@ -242,10 +192,10 @@ export declare class ReadDocumentFileValue extends FileValue {
  */
 export declare class ReadTextFileValue implements ReadPropertyItem {
     readonly id: string;
-    readonly propIri: string;
+    readonly propIri: any;
     readonly textFilename: string;
     readonly textFileURL: string;
-    constructor(id: string, propIri: string, textFilename: string, textFileURL: string);
+    constructor(id: string, propIri: any, textFilename: string, textFileURL: string);
     readonly type: string;
     getClassName(): string;
     getContent(): string;
@@ -255,9 +205,9 @@ export declare class ReadTextFileValue implements ReadPropertyItem {
  */
 export declare class ReadColorValue implements ReadPropertyItem {
     readonly id: string;
-    readonly propIri: string;
+    readonly propIri: any;
     readonly colorHex: string;
-    constructor(id: string, propIri: string, colorHex: string);
+    constructor(id: string, propIri: any, colorHex: string);
     readonly type: string;
     getClassName(): string;
     getContent(): string;

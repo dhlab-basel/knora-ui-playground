@@ -27,9 +27,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatTreeModule
-//    StyleModule
- } from '@angular/material/tree';
+import { MatTreeModule } from '@angular/material/tree';
 
 // import {CdkTableModule} from '@angular/cdk';
 
@@ -64,8 +62,8 @@ import { MatTreeModule
         MatToolbarModule,
         MatTooltipModule,
         MatTreeModule
-//        CdkTableModule,
-//        StyleModule
+        //        CdkTableModule,
+        //        StyleModule
     ],
 
     exports: [
@@ -98,8 +96,8 @@ import { MatTreeModule
         MatToolbarModule,
         MatTooltipModule,
         MatTreeModule
-//        CdkTableModule,
-//        StyleModule
+        //        CdkTableModule,
+        //        StyleModule
     ]
 })
 export class MaterialModule {

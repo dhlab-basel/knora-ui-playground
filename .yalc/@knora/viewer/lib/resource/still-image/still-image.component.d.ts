@@ -1,5 +1,5 @@
 import { ElementRef, EventEmitter, OnChanges, OnDestroy, OnInit, SimpleChange } from '@angular/core';
-import { ReadGeomValue, ReadResource, ReadStillImageFileValue, Region, RegionGeometry } from '@knora/core';
+import { ReadGeomValue, ReadResource, ReadStillImageFileValue, RegionGeometry } from '@knora/core';
 /**
  * Represents a region.
  * Contains a reference to the resource representing the region and its geometries.
@@ -23,13 +23,13 @@ export declare class ImageRegion {
  */
 export declare class StillImageRepresentation {
     readonly stillImageFileValue: ReadStillImageFileValue;
-    readonly regions: Region[];
+    readonly regions: ImageRegion[];
     /**
      *
      * @param stillImageFileValue a [[ReadStillImageFileValue]] representing an image.
      * @param regions the regions belonging to the image.
      */
-    constructor(stillImageFileValue: ReadStillImageFileValue, regions: Region[]);
+    constructor(stillImageFileValue: ReadStillImageFileValue, regions: ImageRegion[]);
 }
 /**
  * Represents a geometry belonging to a specific region.
@@ -54,7 +54,6 @@ export declare class StillImageComponent implements OnInit, OnChanges, OnDestroy
     images: StillImageRepresentation[];
     imageCaption?: string;
     activateRegion: string;
-    currentImageIndex: EventEmitter<number>;
     regionHovered: EventEmitter<string>;
     private viewer;
     private regions;
@@ -166,5 +165,4 @@ export declare class StillImageComponent implements OnInit, OnChanges, OnDestroy
      * @returns - the points serialized to a string in the format expected by the 'points' attribute of a SVGElement
      */
     private createSVGPolygonPointsAttribute;
-    getCurrentImage(): void;
 }

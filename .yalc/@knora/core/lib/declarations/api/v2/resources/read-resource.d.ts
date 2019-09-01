@@ -1,9 +1,5 @@
-import { ReadProperties } from '../properties/read-properties';
-import { FileRepresentation } from '../representations/fileRepresentation';
-import { StillImageRepresentation } from '../representations/still-image-representation';
+import { ReadProperties, StillImageRepresentation } from '../../../';
 /**
- * @deprecated Use **Resource** instead
- *
  * Represents a resource and its properties.
  */
 export declare class ReadResource {
@@ -30,19 +26,16 @@ export declare class ReadResource {
 }
 /**
  * This is a temporary class, to test a new resource setup.
- * When it works, we will replace the ReadResource object
+ * When it works, we will merge it with the ReadResource object
  */
 export declare class Resource {
     readonly id: string;
     readonly type: string;
     readonly label: string;
     incomingAnnotations: Array<Resource>;
-    incomingFileRepresentations: Array<ReadResource>;
-    incomingLinks: Array<Resource>;
-    fileRepresentationsToDisplay: FileRepresentation;
+    incomingFileRepresentations: Array<Resource>;
+    incomingLinks: Array<ReadResource>;
+    fileRepresentationsToDisplay: Array<ReadResource>;
     readonly properties?: ReadProperties;
-    constructor(id: string, type: string, label: string, incomingAnnotations: Array<Resource>, // = incomingRegions in ReadResource
-    incomingFileRepresentations: Array<ReadResource>, // = incomingStillImageRepresentations in ReadResource
-    incomingLinks: Array<Resource>, fileRepresentationsToDisplay: FileRepresentation, // = stillImageRepresentationsToDisplay in ReadResource
-    properties?: ReadProperties);
+    constructor(id: string, type: string, label: string, incomingAnnotations: Array<Resource>, incomingFileRepresentations: Array<Resource>, incomingLinks: Array<ReadResource>, fileRepresentationsToDisplay: Array<ReadResource>, properties?: ReadProperties);
 }
