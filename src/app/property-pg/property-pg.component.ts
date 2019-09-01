@@ -34,20 +34,24 @@ export class PropertyPgComponent implements OnInit {
     @Input() value?: StringLiteral[] = [];
 
     /**
+     * disable the input field
+     */
+    @Input() disabled?: boolean = false;
+
+    /**
      * returns an array of StringLiteral
      */
     @Output() dataChanged: EventEmitter<StringLiteral[]> = new EventEmitter<StringLiteral[]>();
 
     @ViewChild('textInput', { static: true }) textInput: ElementRef;
 
-    @ViewChild('btnToSelectLanguage', { static: true }) selectLanguage: MatMenuTrigger;
+    @ViewChild('btnToSelectLanguage', { static: true }) btnToSelectLanguage: MatMenuTrigger;
 
     form: FormGroup;
 
     constructor (
         private _fb: FormBuilder
     ) {
-
 
         // set selected language, if it's not defined yet
         if (!this.language) {
@@ -66,49 +70,50 @@ export class PropertyPgComponent implements OnInit {
             this.language = this.languages[0];
         }
 
-        /*         if (this.value.length === 0) {
-                    this.value.push(
-                        {
-                            language: this.language,
-                            value: ''
-                        }
-                    );
-                } */
-
-
     }
 
     ngOnInit() {
 
-        let currentValue: string = '';
 
-        // get value for selected language
-        if (this.value.length === 0) {
-            // init value
-            this.value.push(
-                {
-                    language: this.language,
-                    value: ''
-                }
-            );
-        } else {
-            const index = this.value.findIndex(i => i.language === this.language);
-            if (index > -1) {
-                currentValue = this.value[index].value;
+        let gaga = [
+            // this.value = [
+            {
+                'language': 'en',
+                'value': ''
+            },
+            {
+                'language': 'de',
+                'value': 'Konsole'
+            },
+            {
+                'language': 'fr',
+                'value': 'Console'
+            },
+            {
+                'language': 'it',
+                'value': ''
             }
-        }
+        ];
+
+        // reset stringLiterals if they have empty values
+        this.value = this.initValues(this.value);
 
         // build the form
         this.form = this._fb.group({
             text: new FormControl(
                 {
-                    value: currentValue,
-                    disabled: false
+                    value: '',
+                    disabled: this.disabled
+                },
+                {
+                    updateOn: 'blur'
                 }
             )
         });
-
+        // update values on form change
         this.form.valueChanges.subscribe(data => this.onValueChanged());
+
+        this.updateValues(this.language);
 
     }
 
@@ -117,80 +122,114 @@ export class PropertyPgComponent implements OnInit {
             return;
         }
 
-
         const index: number = this.value.findIndex(i => i.language === this.language);
+        if (this.form.controls['text'].value !== null && index > -1) {
+            // does the input field has a valid value?
+            if (this.form.controls['text'].value.length > 0) {
+                // yes
+                this.value[index].value = this.form.controls['text'].value;
 
-        console.log('onValueChanged', this.language + ' - ' + index);
-
-        if (index > 0) {
-
-        }
-
-        if (this.form.controls['text'].value !== '') {
-            this.value[index].value = this.form.controls['text'].value;
-        }
-        /*
-        else {
-            this.value.splice(index);
-        }
-        */
-
-        this.dataChanged.emit(this.value);
-
-
-        // console.log(this.form.controls['input'].value);
-        /* Object.keys(this.formErrors).map(field => {
-            this.formErrors[field] = '';
-            const control = form.get(field);
-            if (control && control.dirty && !control.valid) {
-                const messages = this.validationMessages[field];
-                Object.keys(control.errors).map(key => {
-                    this.formErrors[field] += messages[key] + ' ';
-                });
+            } else {
+                // no, the value is empty
+                this.value.splice(index, 1);
             }
-        }); */
+            // console.log('emit data', this.value);
+            this.dataChanged.emit(this.value);
+        }
     }
 
-    setValueForLanguage(lang: string) {
 
-        // set value depending on selected language
+
+    toggleAll() {
+        // TODO: open/show all languages with their values
+    }
+
+    setLanguage(lang: string) {
+        // do we have a value in the input field?
+        if (!this.form.controls['text'].value) {
+            const index = this.value.findIndex(i => i.language === lang);
+            this.value.splice(index, 1);
+        }
+
+        if (lang === this.language) {
+            // clicked on the same language again
+            // do we have a value for the re-selected language?
+            this.updateValues(lang);
+        } else {
+
+
+            // update current language
+            this.language = lang;
+
+            this.updateValues(lang);
+
+            // close the menu?
+            if (this.btnToSelectLanguage.menuOpened) {
+                this.btnToSelectLanguage.closeMenu();
+            }
+
+        }
+        // focus on input field if it isn't readonly (disabled = true);
+        if (!this.disabled) {
+            this.form.controls['text'].enable();
+            this.textInput.nativeElement.focus();
+        }
+
+
+    }
+
+    updateValues(lang: string) {
+        // get value from stringLiterals
         const index = this.value.findIndex(i => i.language === lang);
 
-        console.log('setValueForLanguage', lang + ' - ' + index);
-
-        if (index > -1) {
-            // value exist for this language --> set value in input field
+        // does a value for this language exist?
+        if (index > -1 && this.value[index].value.length > 0) {
+            // yes: update field value
             this.form.controls['text'].setValue(this.value[index].value);
+
         } else {
-            // add new stringLiteral to value
+            // no: add new StringLiteral to the values
             this.value.push(
                 {
                     language: lang,
                     value: ''
                 }
             );
-            this.form.controls['text'].setValue('');
+            // reset form field
+            this.form.controls['text'].reset();
         }
     }
 
-    switchFocus(lang: string) {
+    initValues(stringLiterals: StringLiteral[]): StringLiteral[] {
+        const length: number = stringLiterals.length;
+        if (length > 0) {
+            let index = length - 1;
+            while (index >= 0) {
+                // remove items with empty value
+                if (!stringLiterals[index].value.length) {
+                    stringLiterals.splice(index, 1);
+                }
+                index--;
+            }
 
-        // this.resetEmptyValues();
+            // does an item for selected lanuage exists
+            if (stringLiterals.findIndex(i => i.language === this.language) === -1) {
+                this.language = stringLiterals[0].language;
+            }
 
-        this.language = lang;
+        } else {
+            stringLiterals = [];
+        }
 
-
-        this.setValueForLanguage(lang);
-
-        // set focus
-        this.selectLanguage.closeMenu();
-        this.textInput.nativeElement.focus();
-
-        console.log(this.value);
+        return stringLiterals;
     }
 
-    toggleAll() {
-        // open all languages with their values
+    initLanguageAndValue() {
+
+    }
+
+    existingValue(lang: string): boolean {
+        return (this.value.findIndex(i => i.language === lang) > -1);
     }
 
 }

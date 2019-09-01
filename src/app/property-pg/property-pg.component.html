@@ -5,15 +5,16 @@
         <!-- select: button to select language -->
 
         <button mat-button type="button" matPrefix class="select-lang" [matMenuTriggerFor]="selectLanguage"
-                #btnToSelectLanguage="matMenuTrigger">
+                #btnToSelectLanguage="matMenuTrigger" (click)="form.controls['text'].disable()">
             <span class="label">{{language}}</span>
             <mat-icon class="icon" matSuffix>keyboard_arrow_down</mat-icon>
         </button>
 
         <!-- select: menu with list of languages -->
         <mat-menu #selectLanguage="matMenu">
-            <button mat-menu-item type="button" *ngFor="let lang of languages"
-                    (click)="switchFocus(lang)">{{lang}}</button>
+            <button mat-menu-item type="button" *ngFor="let lang of languages" (click)="setLanguage(lang)">
+                <span [class.existing-value]="existingValue(lang)">{{lang}}</span>
+            </button>
             <!--
 <mat-divider></mat-divider>
 <button mat-menu-item type="button" (click)="toggleAll()">
@@ -28,3 +29,14 @@
     </mat-form-field>
 
 </form>
+
+
+<mat-divider></mat-divider>
+
+<p>Result</p>
+
+<ul *ngIf="value.length > 0">
+    <li *ngFor="let v of value">
+        {{v.language}}: {{v.value}}
+    </li>
+</ul>
