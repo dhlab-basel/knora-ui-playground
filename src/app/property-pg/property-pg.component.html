@@ -1,6 +1,5 @@
 <form [formGroup]="form">
 
-
     <mat-form-field class="string-literal">
         <!-- select: button to select language -->
 
@@ -12,8 +11,9 @@
 
         <!-- select: menu with list of languages -->
         <mat-menu #selectLanguage="matMenu">
-            <button mat-menu-item type="button" *ngFor="let lang of languages" (click)="setLanguage(lang)">
-                <span [class.existing-value]="existingValue(lang)">{{lang}}</span>
+            <button mat-menu-item type="button" *ngFor="let lang of languages"
+                    (click)="setLanguage(lang);switchFocus()">
+                <span [class.existing-value]="getValueFromStringLiteral(lang)">{{lang}}</span>
             </button>
             <!--
 <mat-divider></mat-divider>
@@ -29,7 +29,6 @@
     </mat-form-field>
 
 </form>
-
 
 <mat-divider></mat-divider>
 
