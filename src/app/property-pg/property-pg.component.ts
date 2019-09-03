@@ -74,8 +74,8 @@ export class PropertyPgComponent implements OnInit {
     ngOnInit() {
 
 
-        // let gaga = [
-        this.value = [
+        let gaga = [
+            // this.value = [
             {
                 'language': 'en',
                 'value': ''
@@ -116,8 +116,6 @@ export class PropertyPgComponent implements OnInit {
         const val = this.getValueFromStringLiteral(this.language);
         this.updateFormField(val);
 
-        // this.setLanguage(this.language);
-        //        this.updateValues(this.language);
 
     }
 
@@ -130,52 +128,6 @@ export class PropertyPgComponent implements OnInit {
 
         this.dataChanged.emit(this.value);
 
-        /*
-        const val = this.existingValue(this.language);
-
-        if (val) {
-            // item exists in stringLiterals
-            console.log('update value?');
-            console.log(this.value);
-            const index: number = this.value.findIndex(i => i.language === this.language);
-            if (this.form.controls['text'].value && index > -1) {
-                this.value[index].value = this.form.controls['text'].value;
-            }
-        } {
-            // item doesn't exist in stringLiterals
-            console.log('no val');
-            console.log(this.value);
-            this.value.push({
-                language: this.language,
-                value: this.form.controls['text'].value
-            });
-        }
-
-
-        const index: number = this.value.findIndex(i => i.language === this.language);
-        if (this.form.controls['text'].value && index > -1) {
-            console.log('input has value and item exists');
-            // does the input field has a valid value?
-            if (this.form.controls['text'].value.length > 0) {
-                // yes
-                this.value[index].value = this.form.controls['text'].value;
-
-            } else {
-                // no, the value is empty
-                this.value.splice(index, 1);
-            }
-            // console.log('emit data', this.value);
-            this.dataChanged.emit(this.value);
-        } else {
-            // this.value = this.initValues(this.value);
-            this.resetValues();
-            this.value.push({
-                language: this.language,
-                value: ''
-            });
-            //            console.log('input doesnt have value and item doesnt exist');
-        }
-        */
     }
 
 
@@ -186,72 +138,17 @@ export class PropertyPgComponent implements OnInit {
 
     setLanguage(lang: string) {
 
-        this.language = lang;
+        if (this.language === lang) {
+            console.warn('DO NOTHING! this language was already selected');
+        } else {
+            // clean stringLIteral value for previous language, if text field is empty
+            this.updateStringLiterals(this.language, this.form.controls['text'].value);
 
-        // update form field value / reset in case of no value
-
-        /* let val = this.existingValue(lang);
-
-        console.log(val);
-
-
-        if (!val) {
-            val = '';
-            this.value.push({
-                language: lang,
-                value: val
-            });
-        }
-
-        this.form.controls['text'].setValue(val); */
-
-        // update value or field name here?
-        // this.updateValues(this.language, this.form.controls['text'].value);
-
-
-
-        // clean up stringLiterals where value is empty
-        // this.value = this.initValues(this.value);
-
-
-        //        this.value = this.initValues(this.value);
-        // set current language
-
-        /*
-        if (this.language !== lang) {
-            console.log(this.value);
             this.language = lang;
-            // this.updateValues(lang);
+            // update form field value / reset in case of no value
+            const val = this.getValueFromStringLiteral(lang);
+            this.updateFormField(val);
         }
-
-
-        /*
-                if (lang === this.language) {
-                    // clicked on the same language again
-                    // do we have a value for the re-selected language?
-                    this.updateValues(lang);
-                    console.log('do we have to update the stringLiterals?');
-                } else {
-                    // set current language
-                    this.language = lang;
-
-                    this.updateValues(lang);
-
-                    // close the menu?
-                    if (this.btnToSelectLanguage.menuOpened) {
-                        this.btnToSelectLanguage.closeMenu();
-                    }
-
-
-                }
-                */
-        // focus on input field if it isn't readonly (disabled = true);
-        /* if (!this.disabled) {
-            this.form.controls['text'].enable();
-            this.textInput.nativeElement.focus();
-        } */
-
-
     }
 
     switchFocus() {
@@ -276,7 +173,27 @@ export class PropertyPgComponent implements OnInit {
     updateStringLiterals(lang: string, value?: string) {
         const index = this.value.findIndex(i => i.language === lang);
 
-        console.log('update value for ' + lang + ' (' + value + ') on position ' + index + ' in ' + JSON.stringify(this.value));
+        if (index > -1 && this.value[index].value.length > 0) {
+            // update the form field for this language
+            // this.updateFormField(this.value[index].value);
+        }
+
+        // console.log('update value for ' + lang + ' (' + value + ') on position ' + index + ' in ' + JSON.stringify(this.value));
+        if ((!value || value.length === 0) && index > -1) {
+            // value is empty: delete stringLiteral item for this language
+            console.error('delete empty value for ' + lang + ' on position ' + index);
+            this.value.splice(index, 1);
+        }
+
+        if (index < 0 && value) {
+            // TODO: value should be '' if empty
+            // value doesn't exist in stringLiterals: add one
+            console.log('add new value (' + value + ') for ' + lang);
+            this.value.push({
+                language: lang,
+                value: value
+            });
+        }
 
         /*
         if (value && index > 0) {

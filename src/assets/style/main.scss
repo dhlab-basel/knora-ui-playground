@@ -6,6 +6,12 @@
 //@import 'pygments';
 @import "prism";
 
+.mat-datepicker-content {
+  .mat-calendar {
+    height: auto !important;
+  }
+}
+
 body {
   font-family: "Roboto", "Helvetica Neue", sans-serif;
   margin: 0;
