@@ -2,7 +2,7 @@
 
 
     <!-- default input element -->
-    <mat-form-field *ngIf="textarea" class="string-literal">
+    <mat-form-field *ngIf="!textarea" class="string-literal short-text">
 
         <!-- select: button to select language -->
         <button mat-button type="button" matPrefix class="select-lang" [matMenuTriggerFor]="selectLanguage"
@@ -31,12 +31,12 @@
     </mat-form-field>
 
     <!-- input element type is textarea -->
-    <div *ngIf="textarea" class="string-literal textarea">
+    <div *ngIf="textarea" class="string-literal long-text">
         <!-- button toggle group: buttons to select language -->
         <mat-button-toggle-group matPrefix #group="matButtonToggleGroup" vertical class="string-literal-select-lang">
             <mat-button-toggle *ngFor="let lang of languages" (click)="setLanguage(lang);switchFocus()"
                                [checked]="lang === language">
-                {{lang}}
+                <span [class.existing-value]="getValueFromStringLiteral(lang)">{{lang}}</span>
             </mat-button-toggle>
         </mat-button-toggle-group>
         <mat-form-field class="string-literal-textarea">

@@ -10,7 +10,7 @@ import { StringLiteral } from '@knora/core';
 })
 export class PropertyPgComponent implements OnInit {
 
-    languages: string[] = ['de', 'fr', 'it', 'en', 'es', 'cn', 'be'];
+    languages: string[] = ['de', 'fr', 'it', 'en'];
 
     /**
      * placeholder label
@@ -26,7 +26,7 @@ export class PropertyPgComponent implements OnInit {
      * form field input type: textarea? set to true for textarea
      */
     // @Input() type?: string = 'textarea';
-    @Input() textarea?: boolean = true;
+    @Input() textarea?: boolean = false;
 
     /**
      * form field value of type StringLiteral[]
@@ -140,7 +140,7 @@ export class PropertyPgComponent implements OnInit {
     setLanguage(lang: string) {
 
         if (this.language === lang) {
-            console.warn('DO NOTHING! this language was already selected');
+            // console.warn('DO NOTHING! this language was already selected');
         } else {
             // clean stringLIteral value for previous language, if text field is empty
             this.updateStringLiterals(this.language, this.form.controls['text'].value);
@@ -182,14 +182,14 @@ export class PropertyPgComponent implements OnInit {
         // console.log('update value for ' + lang + ' (' + value + ') on position ' + index + ' in ' + JSON.stringify(this.value));
         if ((!value || value.length === 0) && index > -1) {
             // value is empty: delete stringLiteral item for this language
-            console.error('delete empty value for ' + lang + ' on position ' + index);
+            // console.error('delete empty value for ' + lang + ' on position ' + index);
             this.value.splice(index, 1);
         }
 
         if (index < 0 && value) {
             // TODO: value should be '' if empty
             // value doesn't exist in stringLiterals: add one
-            console.log('add new value (' + value + ') for ' + lang);
+            // console.log('add new value (' + value + ') for ' + lang);
             this.value.push({
                 language: lang,
                 value: value
@@ -230,7 +230,7 @@ export class PropertyPgComponent implements OnInit {
                     }
                 );
             } else {
-                console.log('no value for this language');
+                // console.log('no value for this language');
             }
             // reset form field
             this.form.controls['text'].reset();
