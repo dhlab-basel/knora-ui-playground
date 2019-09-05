@@ -10,7 +10,7 @@ import { StringLiteral } from '@knora/core';
 })
 export class PropertyPgComponent implements OnInit {
 
-    languages: string[] = ['de', 'fr', 'it', 'en'];
+    languages: string[] = ['de', 'fr', 'it', 'en', 'es', 'cn', 'be'];
 
     /**
      * placeholder label
@@ -23,9 +23,10 @@ export class PropertyPgComponent implements OnInit {
     @Input() language?: string;
 
     /**
-     * form field type: 'input' or 'textarea'
+     * form field input type: textarea? set to true for textarea
      */
-    @Input() type?: string = 'input';
+    // @Input() type?: string = 'textarea';
+    @Input() textarea?: boolean = true;
 
     /**
      * form field value of type StringLiteral[]
@@ -42,7 +43,7 @@ export class PropertyPgComponent implements OnInit {
      */
     @Output() dataChanged: EventEmitter<StringLiteral[]> = new EventEmitter<StringLiteral[]>();
 
-    @ViewChild('textInput', { static: true }) textInput: ElementRef;
+    @ViewChild('textInput', { static: false }) textInput: ElementRef;
 
     @ViewChild('btnToSelectLanguage', { static: true }) btnToSelectLanguage: MatMenuTrigger;
 
@@ -153,7 +154,7 @@ export class PropertyPgComponent implements OnInit {
 
     switchFocus() {
         // close the menu
-        if (this.btnToSelectLanguage.menuOpen) {
+        if (!this.textarea && this.btnToSelectLanguage.menuOpen) {
             this.btnToSelectLanguage.closeMenu();
         }
 
