@@ -66,7 +66,7 @@ export class PropertyPgComponent implements OnInit {
 
             this.predefinedValues = data.values;
             this.values = (this.predefinedValues ? this.labels : []);
-            console.log('pg form changed', this.values);
+            // console.log('pg form changed', this.values);
 
             this.textarea = data.textarea;
             this.disabled = data.disabled;
@@ -79,7 +79,7 @@ export class PropertyPgComponent implements OnInit {
     handleData(data: StringLiteral[]) {
         this.values = data;
 
-        console.log('data from stringliteral input', data);
+        // console.log('data from stringliteral input', data);
     }
 
 }
