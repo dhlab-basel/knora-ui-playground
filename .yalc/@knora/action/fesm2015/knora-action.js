@@ -1,10 +1,11 @@
 import { __decorate, __metadata, __param } from 'tslib';
-import { Input, Component, EventEmitter, Output, ɵɵdefineInjectable, Injectable, Directive, Renderer2, ElementRef, Pipe, Inject, NgModule } from '@angular/core';
+import { Input, Component, EventEmitter, Output, ɵɵdefineInjectable, Injectable, ViewChild, ElementRef, Directive, Renderer2, Pipe, Inject, NgModule } from '@angular/core';
 import { Location, CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormControl, FormBuilder, Validators, NG_VALIDATORS, ReactiveFormsModule } from '@angular/forms';
+import { MatMenuTrigger, MatButtonToggleModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { Md5 } from 'ts-md5';
 import { KnoraConstants } from '@knora/core';
-import { Validators, NG_VALIDATORS } from '@angular/forms';
 import { JDNConvertibleCalendarDateAdapter } from 'jdnconvertiblecalendardateadapter';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -60,8 +61,7 @@ ProgressIndicatorComponent = __decorate([
 let SortButtonComponent = class SortButtonComponent {
     constructor() {
         /**
-         * @ignore {string} sortKeyChange
-         * @emits TODO: this would be the correct syntax for Output eventEmitter
+         * @emits {string} sortKeyChange
          *
          * EventEmitter when a user selected a sort property;
          * This is the selected key
@@ -593,6 +593,264 @@ MessageComponent = __decorate([
         StatusMsg])
 ], MessageComponent);
 
+let StringLiteralInputComponent = class StringLiteralInputComponent {
+    constructor(_fb) {
+        this._fb = _fb;
+        this.languages = ['de', 'fr', 'it', 'en'];
+        /**
+         * Optional placeholder for the input field e.g. Label
+         *
+         * @param  {string} [placeholder='Label']
+         */
+        this.placeholder = 'Label';
+        /**
+         * Optional form field input type: textarea? set to true for textarea
+         * otherwise it's a simple (short) input field
+         *
+         * @param  {boolean} [textarea=false]
+         */
+        this.textarea = false;
+        /**
+         * Optional form field value of type StringLiteral[]
+         *
+         * @param {StringLiteral[]} value
+         */
+        this.value = [];
+        /**
+         * Optional disable the input field in case of no right to edit the field/value
+         *
+         * @param {boolean}: [disabled=false]
+         */
+        this.disabled = false;
+        /**
+         * Returns (output) an array of StringLiteral when the focus on the field is lost
+         *
+         * @emits {StringLiteral[]} dataChanged
+         */
+        this.dataChanged = new EventEmitter();
+        // set selected language, if it's not defined yet
+        if (!this.language) {
+            if (localStorage.getItem('session') !== null) {
+                // get language from the logged-in user profile data
+                this.language = JSON.parse(localStorage.getItem('session')).user.lang;
+            }
+            else {
+                // get default language from browser
+                this.language = navigator.language.substr(0, 2);
+            }
+        }
+        // does the defined language exists in our supported languages list?
+        if (this.languages.indexOf(this.language) === -1) {
+            // if not, select the first language from our list of supported languages
+            this.language = this.languages[0];
+        }
+    }
+    ngOnInit() {
+        // reset stringLiterals if they have empty values
+        this.resetValues();
+        // build the form
+        this.form = this._fb.group({
+            text: new FormControl({
+                value: '',
+                disabled: this.disabled
+            }, {
+                updateOn: 'blur'
+            })
+        });
+        // update values on form change
+        this.form.valueChanges.subscribe(data => this.onValueChanged());
+        // get value from stringLiterals
+        const val = this.getValueFromStringLiteral(this.language);
+        this.updateFormField(val);
+    }
+    onValueChanged() {
+        if (!this.form) {
+            return;
+        }
+        this.updateStringLiterals(this.language, this.form.controls['text'].value);
+        this.dataChanged.emit(this.value);
+    }
+    toggleAll() {
+        // TODO: open/show all languages with their values
+    }
+    setLanguage(lang) {
+        if (this.language === lang) ;
+        else {
+            // clean stringLIteral value for previous language, if text field is empty
+            this.updateStringLiterals(this.language, this.form.controls['text'].value);
+            this.language = lang;
+            // update form field value / reset in case of no value
+            const val = this.getValueFromStringLiteral(lang);
+            this.updateFormField(val);
+        }
+    }
+    switchFocus() {
+        // close the menu
+        if (!this.textarea && this.btnToSelectLanguage && this.btnToSelectLanguage.menuOpen) {
+            this.btnToSelectLanguage.closeMenu();
+        }
+        if (!this.disabled) {
+            this.form.controls['text'].enable();
+            this.textInput.nativeElement.focus();
+        }
+    }
+    updateFormField(value) {
+        if (!value) {
+            value = '';
+        }
+        this.form.controls['text'].setValue(value);
+    }
+    updateStringLiterals(lang, value) {
+        const index = this.value.findIndex(i => i.language === lang);
+        if (index > -1 && this.value[index].value.length > 0) {
+            // value is not empty and exists in list of stringLiterals
+            // this.updateFormField(this.value[index].value);
+            this.value[index].value = value;
+        }
+        // console.log('update value for ' + lang + ' (' + value + ') on position ' + index + ' in ' + JSON.stringify(this.value));
+        if ((!value || value.length === 0) && index > -1) {
+            // value is empty: delete stringLiteral item for this language
+            // console.error('delete empty value for ' + lang + ' on position ' + index);
+            this.value.splice(index, 1);
+        }
+        if (index < 0 && value) {
+            // TODO: value should be '' if empty
+            // value doesn't exist in stringLiterals: add one
+            // console.log('add new value (' + value + ') for ' + lang);
+            this.value.push({
+                language: lang,
+                value: value
+            });
+        }
+        /*
+        if (value && index > 0) {
+            console.log('update value');
+            this.value[index].value = value;
+        } else if (value && index < 0) {
+            console.log('add stringLiteral');
+            this.value.push({
+                language: lang,
+                value: value
+
+            });
+        } else {
+            console.log('delete stringLiteral');
+            this.value.splice(index, 1);
+        }
+        */
+    }
+    updateValuesDepr(lang) {
+        // get value from stringLiterals
+        const value = this.getValueFromStringLiteral(lang);
+        // does a value for this language exist?
+        if (value) {
+            this.form.controls['text'].setValue(value);
+        }
+        else {
+            if (this.value.findIndex(i => i.language === lang) < 0) {
+                this.value.push({
+                    language: lang,
+                    value: ''
+                });
+            }
+            // reset form field
+            this.form.controls['text'].reset();
+        }
+    }
+    initValues(stringLiterals) {
+        const length = stringLiterals.length;
+        if (length > 0) {
+            let index = length - 1;
+            while (index >= 0) {
+                // remove items with empty value
+                if (!stringLiterals[index].value.length) {
+                    stringLiterals.splice(index, 1);
+                }
+                index--;
+            }
+            // does an item for selected lanuage exists
+            if (stringLiterals.findIndex(i => i.language === this.language) === -1) {
+                this.language = stringLiterals[0].language;
+            }
+        }
+        else {
+            stringLiterals = [];
+        }
+        return stringLiterals;
+    }
+    resetValues() {
+        const length = this.value.length;
+        if (length > 0) {
+            let index = length - 1;
+            while (index >= 0) {
+                // remove items with empty value
+                if (!this.value[index].value.length) {
+                    this.value.splice(index, 1);
+                }
+                index--;
+            }
+            // does an item for selected lanuage exists
+            if (this.value.findIndex(i => i.language === this.language) === -1) {
+                this.language = this.value[0].language;
+            }
+        }
+        else {
+            this.value = [];
+        }
+    }
+    getValueFromStringLiteral(lang) {
+        // console.log('existing value in', this.value);
+        // get index for this language
+        const index = this.value.findIndex(i => i.language === lang);
+        if (this.value[index] && this.value[index].value.length > 0) {
+            return this.value[index].value;
+        }
+        else {
+            return undefined;
+        }
+    }
+};
+__decorate([
+    Input(),
+    __metadata("design:type", String)
+], StringLiteralInputComponent.prototype, "placeholder", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", String)
+], StringLiteralInputComponent.prototype, "language", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean)
+], StringLiteralInputComponent.prototype, "textarea", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Array)
+], StringLiteralInputComponent.prototype, "value", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean)
+], StringLiteralInputComponent.prototype, "disabled", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", EventEmitter)
+], StringLiteralInputComponent.prototype, "dataChanged", void 0);
+__decorate([
+    ViewChild('textInput', { static: false }),
+    __metadata("design:type", ElementRef)
+], StringLiteralInputComponent.prototype, "textInput", void 0);
+__decorate([
+    ViewChild('btnToSelectLanguage', { static: false }),
+    __metadata("design:type", MatMenuTrigger)
+], StringLiteralInputComponent.prototype, "btnToSelectLanguage", void 0);
+StringLiteralInputComponent = __decorate([
+    Component({
+        selector: 'kui-string-literal-input',
+        template: "<form [formGroup]=\"form\">\n\n    <!-- default input element -->\n    <mat-form-field *ngIf=\"!textarea\" class=\"string-literal short-text\">\n\n        <!-- select: button to select language -->\n        <button mat-button type=\"button\" matPrefix class=\"select-lang\" [matMenuTriggerFor]=\"selectLanguage\"\n                #btnToSelectLanguage=\"matMenuTrigger\" (click)=\"form.controls['text'].disable()\">\n            <span class=\"label\">{{language}}</span>\n            <mat-icon class=\"icon\" matSuffix>keyboard_arrow_down</mat-icon>\n        </button>\n\n        <!-- select: menu with list of languages -->\n        <mat-menu #selectLanguage=\"matMenu\">\n            <button mat-menu-item type=\"button\" *ngFor=\"let lang of languages\"\n                    (click)=\"setLanguage(lang);switchFocus()\">\n                <span [class.existing-value]=\"getValueFromStringLiteral(lang)\">{{lang}}</span>\n            </button>\n            <!-- TODO / QUESTION: should we support a show all button, to display values for all languages?\n                <mat-divider></mat-divider>\n                <button mat-menu-item type=\"button\" (click)=\"toggleAll()\">\n                    <span>Show values for all languages</span>\n                </button>\n                -->\n        </mat-menu>\n\n        <!-- input field-->\n        <input matInput [placeholder]=\"placeholder + ' (' + language + ')'\" [formControl]=\"form.controls['text']\"\n               #textInput>\n    </mat-form-field>\n\n    <!-- input element type is textarea -->\n    <div *ngIf=\"textarea\" class=\"string-literal long-text\">\n        <!-- button toggle group: buttons to select language -->\n        <mat-button-toggle-group matPrefix #group=\"matButtonToggleGroup\" vertical class=\"string-literal-select-lang\">\n            <mat-button-toggle *ngFor=\"let lang of languages\" (click)=\"setLanguage(lang);switchFocus()\"\n                               [checked]=\"lang === language\">\n                <span [class.existing-value]=\"getValueFromStringLiteral(lang)\">{{lang}}</span>\n            </mat-button-toggle>\n        </mat-button-toggle-group>\n        <mat-form-field class=\"string-literal-textarea\">\n            <!-- textarea -->\n            <textarea matInput [placeholder]=\"placeholder + ' (' + language + ')'\" [formControl]=\"form.controls['text']\"\n                      #textInput></textarea>\n        </mat-form-field>\n    </div>\n\n</form>\n",
+        styles: [".mat-form-field{width:100%!important}.existing-value{font-weight:700}"]
+    }),
+    __metadata("design:paramtypes", [FormBuilder])
+], StringLiteralInputComponent);
+
 /**
  * @ignore
  */
@@ -641,7 +899,7 @@ let AdminImageDirective = class AdminImageDirective {
                     this.source = AdminImageConfig.defaultUser;
                 }
                 else {
-                    this.source = 'http://www.gravatar.com/avatar/' + Md5.hashStr(this.image) + '?d=mp&s=256';
+                    this.source = location.protocol + '//www.gravatar.com/avatar/' + Md5.hashStr(this.image) + '?d=mp&s=256';
                 }
                 break;
             case 'project':
@@ -845,9 +1103,7 @@ let JdnDatepickerDirective = class JdnDatepickerDirective {
 JdnDatepickerDirective = __decorate([
     Directive({
         selector: 'kuiJdnDatepicker',
-        providers: [
-            { provide: DateAdapter, useClass: JDNConvertibleCalendarDateAdapter, deps: [MAT_DATE_LOCALE] }
-        ]
+        providers: [{ provide: DateAdapter, useClass: JDNConvertibleCalendarDateAdapter, deps: [MAT_DATE_LOCALE] }]
     }),
     __metadata("design:paramtypes", [DateAdapter])
 ], JdnDatepickerDirective);
@@ -990,10 +1246,14 @@ KuiActionModule = __decorate([
             CommonModule,
             BrowserAnimationsModule,
             MatButtonModule,
+            MatButtonToggleModule,
             MatCardModule,
+            MatFormFieldModule,
             MatIconModule,
+            MatInputModule,
             MatListModule,
-            MatMenuModule
+            MatMenuModule,
+            ReactiveFormsModule
         ],
         declarations: [
             ProgressIndicatorComponent,
@@ -1006,7 +1266,8 @@ KuiActionModule = __decorate([
             GndDirective,
             ResourceDialogComponent,
             JdnDatepickerDirective,
-            MessageComponent
+            MessageComponent,
+            StringLiteralInputComponent
         ],
         exports: [
             ProgressIndicatorComponent,
@@ -1018,7 +1279,8 @@ KuiActionModule = __decorate([
             KeyPipe,
             GndDirective,
             JdnDatepickerDirective,
-            MessageComponent
+            MessageComponent,
+            StringLiteralInputComponent
         ]
     })
     /**
@@ -1026,5 +1288,5 @@ KuiActionModule = __decorate([
      */
 ], KuiActionModule);
 
-export { AdminImageDirective, ExistingNameDirective, GndDirective, JdnDatepickerDirective, KeyPipe, KuiActionModule, KuiMessageData, MessageComponent, ProgressIndicatorComponent, ReversePipe, SortButtonComponent, SortByPipe, existingNameValidator, existingNamesValidator, notAllowed, StatusMsg as ɵa, ResourceDialogComponent as ɵb };
+export { AdminImageDirective, ExistingNameDirective, GndDirective, JdnDatepickerDirective, KeyPipe, KuiActionModule, KuiMessageData, MessageComponent, ProgressIndicatorComponent, ReversePipe, SortButtonComponent, SortByPipe, StringLiteralInputComponent, existingNameValidator, existingNamesValidator, notAllowed, StatusMsg as ɵa, ResourceDialogComponent as ɵb };
 //# sourceMappingURL=knora-action.js.map

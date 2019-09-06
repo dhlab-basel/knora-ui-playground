@@ -31,7 +31,8 @@
             "styles": [
               "src/assets/style/mat-teal-amber.scss",
               "src/assets/style/main.scss",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/@knora/action/assets/style/action.scss"
             ],
             "scripts": [
               "node_modules/openseadragon/build/openseadragon/openseadragon.min.js",

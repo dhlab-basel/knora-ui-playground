@@ -13,6 +13,7 @@ import { KuiCoreConfigToken, KuiCoreModule } from '@knora/core';
 import { KuiSearchModule } from '@knora/search';
 import { KuiViewerModule } from '@knora/viewer';
 import { MarkdownModule } from 'ngx-markdown';
+
 import { ActionPgComponent } from './action-pg/action-pg.component';
 import { AppInitService } from './app-init.service';
 import { AppRouting } from './app-routing';
@@ -21,10 +22,11 @@ import { AuthenticationPgComponent } from './authentication-pg/authentication-pg
 import { MaterialModule } from './material-module';
 import { NewSearchPgComponent } from './new-search-pg/new-search-pg.component';
 import { OntologyPgComponent } from './ontology-pg/ontology-pg.component';
+import { PropertyPgComponent } from './property-pg/property-pg.component';
 import { SearchPgComponent } from './search-pg/search-pg.component';
 import { SearchResultComponent } from './search-pg/search-result/search-result.component';
 import { ViewerPgComponent } from './viewer-pg/viewer-pg.component';
-import { PropertyPgComponent } from './property-pg/property-pg.component';
+
 
 export function initializeApp(appInitService: AppInitService) {
     return (): Promise<any> => {

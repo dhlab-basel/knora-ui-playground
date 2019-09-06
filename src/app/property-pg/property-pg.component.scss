@@ -1,11 +1,16 @@
-form {
+h3 {
+  display: inline-flex;
+}
+
+.set-param {
+  padding: 12px 16px;
+}
+
+.demo {
+  margin: 30px 0;
   max-width: 320px;
 }
 
-.mat-form-field {
-  width: 100% !important;
-}
-
-.existing-value {
-  font-weight: bold;
+.results {
+  margin: 30px 0;
 }

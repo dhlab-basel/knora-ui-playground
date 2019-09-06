@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/router'), require('ts-md5'), require('@knora/core'), require('@angular/forms'), require('jdnconvertiblecalendardateadapter'), require('@angular/material/core'), require('@angular/material/button'), require('@angular/material/card'), require('@angular/material/icon'), require('@angular/material/list'), require('@angular/material/menu'), require('@angular/platform-browser/animations'), require('@angular/material/dialog')) :
-    typeof define === 'function' && define.amd ? define('@knora/action', ['exports', '@angular/core', '@angular/common', '@angular/router', 'ts-md5', '@knora/core', '@angular/forms', 'jdnconvertiblecalendardateadapter', '@angular/material/core', '@angular/material/button', '@angular/material/card', '@angular/material/icon', '@angular/material/list', '@angular/material/menu', '@angular/platform-browser/animations', '@angular/material/dialog'], factory) :
-    (global = global || self, factory((global.knora = global.knora || {}, global.knora.action = {}), global.ng.core, global.ng.common, global.ng.router, global.tsMd5, global['@knora/core'], global.ng.forms, global.jdnconvertiblecalendardateadapter, global.ng.material.core, global.ng.material.button, global.ng.material.card, global.ng.material.icon, global.ng.material.list, global.ng.material.menu, global.ng.platformBrowser.animations, global.ng.material.dialog));
-}(this, function (exports, core, common, router, tsMd5, core$1, forms, jdnconvertiblecalendardateadapter, core$2, button, card, icon, list, menu, animations, dialog) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/router'), require('@angular/forms'), require('@angular/material'), require('ts-md5'), require('@knora/core'), require('jdnconvertiblecalendardateadapter'), require('@angular/material/core'), require('@angular/material/button'), require('@angular/material/card'), require('@angular/material/icon'), require('@angular/material/list'), require('@angular/material/menu'), require('@angular/platform-browser/animations'), require('@angular/material/dialog')) :
+    typeof define === 'function' && define.amd ? define('@knora/action', ['exports', '@angular/core', '@angular/common', '@angular/router', '@angular/forms', '@angular/material', 'ts-md5', '@knora/core', 'jdnconvertiblecalendardateadapter', '@angular/material/core', '@angular/material/button', '@angular/material/card', '@angular/material/icon', '@angular/material/list', '@angular/material/menu', '@angular/platform-browser/animations', '@angular/material/dialog'], factory) :
+    (global = global || self, factory((global.knora = global.knora || {}, global.knora.action = {}), global.ng.core, global.ng.common, global.ng.router, global.ng.forms, global.ng.material, global['ts-md5'], global['@knora/core'], global.jdnconvertiblecalendardateadapter, global.ng.material.core, global.ng.material.button, global.ng.material.card, global.ng.material.icon, global.ng.material.list, global.ng.material.menu, global.ng.platformBrowser.animations, global.ng.material.dialog));
+}(this, function (exports, core, common, router, forms, material, tsMd5, core$1, jdnconvertiblecalendardateadapter, core$2, button, card, icon, list, menu, animations, dialog) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -91,8 +91,7 @@
     var SortButtonComponent = /** @class */ (function () {
         function SortButtonComponent() {
             /**
-             * @ignore {string} sortKeyChange
-             * @emits TODO: this would be the correct syntax for Output eventEmitter
+             * @emits {string} sortKeyChange
              *
              * EventEmitter when a user selected a sort property;
              * This is the selected key
@@ -631,6 +630,268 @@
         return MessageComponent;
     }());
 
+    var StringLiteralInputComponent = /** @class */ (function () {
+        function StringLiteralInputComponent(_fb) {
+            this._fb = _fb;
+            this.languages = ['de', 'fr', 'it', 'en'];
+            /**
+             * Optional placeholder for the input field e.g. Label
+             *
+             * @param  {string} [placeholder='Label']
+             */
+            this.placeholder = 'Label';
+            /**
+             * Optional form field input type: textarea? set to true for textarea
+             * otherwise it's a simple (short) input field
+             *
+             * @param  {boolean} [textarea=false]
+             */
+            this.textarea = false;
+            /**
+             * Optional form field value of type StringLiteral[]
+             *
+             * @param {StringLiteral[]} value
+             */
+            this.value = [];
+            /**
+             * Optional disable the input field in case of no right to edit the field/value
+             *
+             * @param {boolean}: [disabled=false]
+             */
+            this.disabled = false;
+            /**
+             * Returns (output) an array of StringLiteral when the focus on the field is lost
+             *
+             * @emits {StringLiteral[]} dataChanged
+             */
+            this.dataChanged = new core.EventEmitter();
+            // set selected language, if it's not defined yet
+            if (!this.language) {
+                if (localStorage.getItem('session') !== null) {
+                    // get language from the logged-in user profile data
+                    this.language = JSON.parse(localStorage.getItem('session')).user.lang;
+                }
+                else {
+                    // get default language from browser
+                    this.language = navigator.language.substr(0, 2);
+                }
+            }
+            // does the defined language exists in our supported languages list?
+            if (this.languages.indexOf(this.language) === -1) {
+                // if not, select the first language from our list of supported languages
+                this.language = this.languages[0];
+            }
+        }
+        StringLiteralInputComponent.prototype.ngOnInit = function () {
+            var _this = this;
+            // reset stringLiterals if they have empty values
+            this.resetValues();
+            // build the form
+            this.form = this._fb.group({
+                text: new forms.FormControl({
+                    value: '',
+                    disabled: this.disabled
+                }, {
+                    updateOn: 'blur'
+                })
+            });
+            // update values on form change
+            this.form.valueChanges.subscribe(function (data) { return _this.onValueChanged(); });
+            // get value from stringLiterals
+            var val = this.getValueFromStringLiteral(this.language);
+            this.updateFormField(val);
+        };
+        StringLiteralInputComponent.prototype.onValueChanged = function () {
+            if (!this.form) {
+                return;
+            }
+            this.updateStringLiterals(this.language, this.form.controls['text'].value);
+            this.dataChanged.emit(this.value);
+        };
+        StringLiteralInputComponent.prototype.toggleAll = function () {
+            // TODO: open/show all languages with their values
+        };
+        StringLiteralInputComponent.prototype.setLanguage = function (lang) {
+            if (this.language === lang) ;
+            else {
+                // clean stringLIteral value for previous language, if text field is empty
+                this.updateStringLiterals(this.language, this.form.controls['text'].value);
+                this.language = lang;
+                // update form field value / reset in case of no value
+                var val = this.getValueFromStringLiteral(lang);
+                this.updateFormField(val);
+            }
+        };
+        StringLiteralInputComponent.prototype.switchFocus = function () {
+            // close the menu
+            if (!this.textarea && this.btnToSelectLanguage && this.btnToSelectLanguage.menuOpen) {
+                this.btnToSelectLanguage.closeMenu();
+            }
+            if (!this.disabled) {
+                this.form.controls['text'].enable();
+                this.textInput.nativeElement.focus();
+            }
+        };
+        StringLiteralInputComponent.prototype.updateFormField = function (value) {
+            if (!value) {
+                value = '';
+            }
+            this.form.controls['text'].setValue(value);
+        };
+        StringLiteralInputComponent.prototype.updateStringLiterals = function (lang, value) {
+            var index = this.value.findIndex(function (i) { return i.language === lang; });
+            if (index > -1 && this.value[index].value.length > 0) {
+                // value is not empty and exists in list of stringLiterals
+                // this.updateFormField(this.value[index].value);
+                this.value[index].value = value;
+            }
+            // console.log('update value for ' + lang + ' (' + value + ') on position ' + index + ' in ' + JSON.stringify(this.value));
+            if ((!value || value.length === 0) && index > -1) {
+                // value is empty: delete stringLiteral item for this language
+                // console.error('delete empty value for ' + lang + ' on position ' + index);
+                this.value.splice(index, 1);
+            }
+            if (index < 0 && value) {
+                // TODO: value should be '' if empty
+                // value doesn't exist in stringLiterals: add one
+                // console.log('add new value (' + value + ') for ' + lang);
+                this.value.push({
+                    language: lang,
+                    value: value
+                });
+            }
+            /*
+            if (value && index > 0) {
+                console.log('update value');
+                this.value[index].value = value;
+            } else if (value && index < 0) {
+                console.log('add stringLiteral');
+                this.value.push({
+                    language: lang,
+                    value: value
+
+                });
+            } else {
+                console.log('delete stringLiteral');
+                this.value.splice(index, 1);
+            }
+            */
+        };
+        StringLiteralInputComponent.prototype.updateValuesDepr = function (lang) {
+            // get value from stringLiterals
+            var value = this.getValueFromStringLiteral(lang);
+            // does a value for this language exist?
+            if (value) {
+                this.form.controls['text'].setValue(value);
+            }
+            else {
+                if (this.value.findIndex(function (i) { return i.language === lang; }) < 0) {
+                    this.value.push({
+                        language: lang,
+                        value: ''
+                    });
+                }
+                // reset form field
+                this.form.controls['text'].reset();
+            }
+        };
+        StringLiteralInputComponent.prototype.initValues = function (stringLiterals) {
+            var _this = this;
+            var length = stringLiterals.length;
+            if (length > 0) {
+                var index = length - 1;
+                while (index >= 0) {
+                    // remove items with empty value
+                    if (!stringLiterals[index].value.length) {
+                        stringLiterals.splice(index, 1);
+                    }
+                    index--;
+                }
+                // does an item for selected lanuage exists
+                if (stringLiterals.findIndex(function (i) { return i.language === _this.language; }) === -1) {
+                    this.language = stringLiterals[0].language;
+                }
+            }
+            else {
+                stringLiterals = [];
+            }
+            return stringLiterals;
+        };
+        StringLiteralInputComponent.prototype.resetValues = function () {
+            var _this = this;
+            var length = this.value.length;
+            if (length > 0) {
+                var index = length - 1;
+                while (index >= 0) {
+                    // remove items with empty value
+                    if (!this.value[index].value.length) {
+                        this.value.splice(index, 1);
+                    }
+                    index--;
+                }
+                // does an item for selected lanuage exists
+                if (this.value.findIndex(function (i) { return i.language === _this.language; }) === -1) {
+                    this.language = this.value[0].language;
+                }
+            }
+            else {
+                this.value = [];
+            }
+        };
+        StringLiteralInputComponent.prototype.getValueFromStringLiteral = function (lang) {
+            // console.log('existing value in', this.value);
+            // get index for this language
+            var index = this.value.findIndex(function (i) { return i.language === lang; });
+            if (this.value[index] && this.value[index].value.length > 0) {
+                return this.value[index].value;
+            }
+            else {
+                return undefined;
+            }
+        };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], StringLiteralInputComponent.prototype, "placeholder", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], StringLiteralInputComponent.prototype, "language", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean)
+        ], StringLiteralInputComponent.prototype, "textarea", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Array)
+        ], StringLiteralInputComponent.prototype, "value", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean)
+        ], StringLiteralInputComponent.prototype, "disabled", void 0);
+        __decorate([
+            core.Output(),
+            __metadata("design:type", core.EventEmitter)
+        ], StringLiteralInputComponent.prototype, "dataChanged", void 0);
+        __decorate([
+            core.ViewChild('textInput', { static: false }),
+            __metadata("design:type", core.ElementRef)
+        ], StringLiteralInputComponent.prototype, "textInput", void 0);
+        __decorate([
+            core.ViewChild('btnToSelectLanguage', { static: false }),
+            __metadata("design:type", material.MatMenuTrigger)
+        ], StringLiteralInputComponent.prototype, "btnToSelectLanguage", void 0);
+        StringLiteralInputComponent = __decorate([
+            core.Component({
+                selector: 'kui-string-literal-input',
+                template: "<form [formGroup]=\"form\">\n\n    <!-- default input element -->\n    <mat-form-field *ngIf=\"!textarea\" class=\"string-literal short-text\">\n\n        <!-- select: button to select language -->\n        <button mat-button type=\"button\" matPrefix class=\"select-lang\" [matMenuTriggerFor]=\"selectLanguage\"\n                #btnToSelectLanguage=\"matMenuTrigger\" (click)=\"form.controls['text'].disable()\">\n            <span class=\"label\">{{language}}</span>\n            <mat-icon class=\"icon\" matSuffix>keyboard_arrow_down</mat-icon>\n        </button>\n\n        <!-- select: menu with list of languages -->\n        <mat-menu #selectLanguage=\"matMenu\">\n            <button mat-menu-item type=\"button\" *ngFor=\"let lang of languages\"\n                    (click)=\"setLanguage(lang);switchFocus()\">\n                <span [class.existing-value]=\"getValueFromStringLiteral(lang)\">{{lang}}</span>\n            </button>\n            <!-- TODO / QUESTION: should we support a show all button, to display values for all languages?\n                <mat-divider></mat-divider>\n                <button mat-menu-item type=\"button\" (click)=\"toggleAll()\">\n                    <span>Show values for all languages</span>\n                </button>\n                -->\n        </mat-menu>\n\n        <!-- input field-->\n        <input matInput [placeholder]=\"placeholder + ' (' + language + ')'\" [formControl]=\"form.controls['text']\"\n               #textInput>\n    </mat-form-field>\n\n    <!-- input element type is textarea -->\n    <div *ngIf=\"textarea\" class=\"string-literal long-text\">\n        <!-- button toggle group: buttons to select language -->\n        <mat-button-toggle-group matPrefix #group=\"matButtonToggleGroup\" vertical class=\"string-literal-select-lang\">\n            <mat-button-toggle *ngFor=\"let lang of languages\" (click)=\"setLanguage(lang);switchFocus()\"\n                               [checked]=\"lang === language\">\n                <span [class.existing-value]=\"getValueFromStringLiteral(lang)\">{{lang}}</span>\n            </mat-button-toggle>\n        </mat-button-toggle-group>\n        <mat-form-field class=\"string-literal-textarea\">\n            <!-- textarea -->\n            <textarea matInput [placeholder]=\"placeholder + ' (' + language + ')'\" [formControl]=\"form.controls['text']\"\n                      #textInput></textarea>\n        </mat-form-field>\n    </div>\n\n</form>\n",
+                styles: [".mat-form-field{width:100%!important}.existing-value{font-weight:700}"]
+            }),
+            __metadata("design:paramtypes", [forms.FormBuilder])
+        ], StringLiteralInputComponent);
+        return StringLiteralInputComponent;
+    }());
+
     /**
      * @ignore
      */
@@ -682,7 +943,7 @@
                         this.source = AdminImageConfig.defaultUser;
                     }
                     else {
-                        this.source = 'http://www.gravatar.com/avatar/' + tsMd5.Md5.hashStr(this.image) + '?d=mp&s=256';
+                        this.source = location.protocol + '//www.gravatar.com/avatar/' + tsMd5.Md5.hashStr(this.image) + '?d=mp&s=256';
                     }
                     break;
                 case 'project':
@@ -898,9 +1159,7 @@
         JdnDatepickerDirective = __decorate([
             core.Directive({
                 selector: 'kuiJdnDatepicker',
-                providers: [
-                    { provide: core$2.DateAdapter, useClass: jdnconvertiblecalendardateadapter.JDNConvertibleCalendarDateAdapter, deps: [core$2.MAT_DATE_LOCALE] }
-                ]
+                providers: [{ provide: core$2.DateAdapter, useClass: jdnconvertiblecalendardateadapter.JDNConvertibleCalendarDateAdapter, deps: [core$2.MAT_DATE_LOCALE] }]
             }),
             __metadata("design:paramtypes", [core$2.DateAdapter])
         ], JdnDatepickerDirective);
@@ -1057,10 +1316,14 @@
                     common.CommonModule,
                     animations.BrowserAnimationsModule,
                     button.MatButtonModule,
+                    material.MatButtonToggleModule,
                     card.MatCardModule,
+                    material.MatFormFieldModule,
                     icon.MatIconModule,
+                    material.MatInputModule,
                     list.MatListModule,
-                    menu.MatMenuModule
+                    menu.MatMenuModule,
+                    forms.ReactiveFormsModule
                 ],
                 declarations: [
                     ProgressIndicatorComponent,
@@ -1073,7 +1336,8 @@
                     GndDirective,
                     ResourceDialogComponent,
                     JdnDatepickerDirective,
-                    MessageComponent
+                    MessageComponent,
+                    StringLiteralInputComponent
                 ],
                 exports: [
                     ProgressIndicatorComponent,
@@ -1085,7 +1349,8 @@
                     KeyPipe,
                     GndDirective,
                     JdnDatepickerDirective,
-                    MessageComponent
+                    MessageComponent,
+                    StringLiteralInputComponent
                 ]
             })
             /**
@@ -1107,6 +1372,7 @@
     exports.ReversePipe = ReversePipe;
     exports.SortButtonComponent = SortButtonComponent;
     exports.SortByPipe = SortByPipe;
+    exports.StringLiteralInputComponent = StringLiteralInputComponent;
     exports.existingNameValidator = existingNameValidator;
     exports.existingNamesValidator = existingNamesValidator;
     exports.notAllowed = notAllowed;

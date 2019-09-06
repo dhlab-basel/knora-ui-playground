@@ -2,16 +2,16 @@
 <h3>Configure the search panel with the following parameters</h3>
 <form [formGroup]="form">
 
-    <mat-checkbox class="set-search-param" [formControl]="form.controls['filterbyproject']">
+    <mat-checkbox class="set-param" [formControl]="form.controls['filterbyproject']">
         filterbyproject = "{{ projectIri }}"</mat-checkbox>
 
-    <mat-slide-toggle class="set-search-param" [formControl]="form.controls['projectfilter']">projectfilter
+    <mat-slide-toggle class="set-param" [formControl]="form.controls['projectfilter']">projectfilter
     </mat-slide-toggle>
 
-    <mat-slide-toggle class="set-search-param" [formControl]="form.controls['advancedsearch']">advanced
+    <mat-slide-toggle class="set-param" [formControl]="form.controls['advancedsearch']">advanced
     </mat-slide-toggle>
 
-    <mat-slide-toggle class="set-search-param" [formControl]="form.controls['expertsearch']">expert
+    <mat-slide-toggle class="set-param" [formControl]="form.controls['expertsearch']">expert
     </mat-slide-toggle>
 
 </form>
@@ -61,7 +61,7 @@
 <mat-divider></mat-divider>
 
 <!-- search results -->
-<div class="search-results">
+<div class="results">
     <h3>Search results</h3>
     <router-outlet></router-outlet>
 </div>

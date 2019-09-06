@@ -1,65 +1,61 @@
+<!-- configure the string literal input -->
+<h3>Configure the string literal input with the following parameters</h3>
 <form [formGroup]="form">
 
+    <mat-checkbox class="set-param" [formControl]="form.controls['language']">
+        predefinedLanguage = "'{{language}}'"</mat-checkbox>
 
-    <!-- default input element -->
-    <mat-form-field *ngIf="!textarea" class="string-literal short-text">
+    <mat-slide-toggle class="set-param" [formControl]="form.controls['values']">Predefined values (edit mode)
+    </mat-slide-toggle>
 
-        <!-- select: button to select language -->
-        <button mat-button type="button" matPrefix class="select-lang" [matMenuTriggerFor]="selectLanguage"
-                #btnToSelectLanguage="matMenuTrigger" (click)="form.controls['text'].disable()">
-            <span class="label">{{language}}</span>
-            <mat-icon class="icon" matSuffix>keyboard_arrow_down</mat-icon>
-        </button>
+    <mat-slide-toggle class="set-param" [formControl]="form.controls['textarea']">textarea
+    </mat-slide-toggle>
 
-        <!-- select: menu with list of languages -->
-        <mat-menu #selectLanguage="matMenu">
-            <button mat-menu-item type="button" *ngFor="let lang of languages"
-                    (click)="setLanguage(lang);switchFocus()">
-                <span [class.existing-value]="getValueFromStringLiteral(lang)">{{lang}}</span>
-            </button>
-            <!-- TODO / QUESTION: should we support a show all button, to display values for all languages?
-                <mat-divider></mat-divider>
-                <button mat-menu-item type="button" (click)="toggleAll()">
-                    <span>Show values for all languages</span>
-                </button>
-                -->
-        </mat-menu>
-
-        <!-- input field-->
-        <input matInput [placeholder]="placeholder + ' (' + language + ')'" [formControl]="form.controls['text']"
-               #textInput>
-    </mat-form-field>
-
-    <!-- input element type is textarea -->
-    <div *ngIf="textarea" class="string-literal long-text">
-        <!-- button toggle group: buttons to select language -->
-        <mat-button-toggle-group matPrefix #group="matButtonToggleGroup" vertical class="string-literal-select-lang">
-            <mat-button-toggle *ngFor="let lang of languages" (click)="setLanguage(lang);switchFocus()"
-                               [checked]="lang === language">
-                <span [class.existing-value]="getValueFromStringLiteral(lang)">{{lang}}</span>
-            </mat-button-toggle>
-        </mat-button-toggle-group>
-        <mat-form-field class="string-literal-textarea">
-            <!-- textarea -->
-            <textarea matInput [placeholder]="placeholder + ' (' + language + ')'" [formControl]="form.controls['text']"
-                      #textInput></textarea>
-        </mat-form-field>
-    </div>
-
+    <mat-slide-toggle class="set-param" [formControl]="form.controls['disabled']">disabled
+    </mat-slide-toggle>
 
 
 </form>
 
+<!-- show the generated code -->
+<mat-accordion>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Show code
+            </mat-panel-title>
+            <mat-panel-description>
+                kui-string-literal-input
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <pre>
+      &lt;kui-string-literal-input
+        [value]="{{values | json}}"
+        [placeholder]="{{placeholder}}"
+        [textarea]="{{textarea}}"
+        [disabled]="{{disabled}}"
+        [language]="{{language}}"
+        (dataChanged)="handleData($event)&gt;
+      &lt;/kui-string-literal-input&gt;
+    </pre>
+    </mat-expansion-panel>
+</mat-accordion>
 
-
-
+<!-- demo of search panel -->
+<div class="demo" *ngIf="!loading">
+    <kui-string-literal-input [placeholder]="placeholder" [value]="values" [textarea]="textarea" [disabled]="disabled"
+                              (dataChanged)="handleData($event)">
+    </kui-string-literal-input>
+</div>
 
 <mat-divider></mat-divider>
 
-<p>Result</p>
-
-<ul *ngIf="value.length > 0">
-    <li *ngFor="let v of value">
-        {{v.language}}: {{v.value}}
-    </li>
-</ul>
+<!-- search results -->
+<div class="results">
+    <h3>Output</h3>
+    <ul *ngIf="values.length > 0">
+        <li *ngFor="let v of values">
+            {{v.language}}: {{v.value}}
+        </li>
+    </ul>
+</div>
