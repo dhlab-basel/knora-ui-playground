@@ -136,7 +136,7 @@ export declare class OntologyInformation {
      * @param b second element
      * @return negative -1 if the first element is considered lower than the second, 1 if the second element is considered bigger, 0 if they are equal
      */
-    static sortFunc(a: ResourceClass | Property, b: ResourceClass | Property): 1 | -1 | 0;
+    static sortFunc(a: ResourceClass | Property, b: ResourceClass | Property): 1 | 0 | -1;
     /**
      * Merge the given [[OntologyInformation]] into the current instance,
      * updating the existing information.

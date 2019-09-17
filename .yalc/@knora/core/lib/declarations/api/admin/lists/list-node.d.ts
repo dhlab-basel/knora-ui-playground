@@ -1,8 +1,10 @@
+import { StringLiteral } from '../../shared/strings';
 export declare class ListNode {
     id: string;
     name: string;
-    label: string;
+    hasRootNode: string;
+    labels: StringLiteral[];
+    comments: StringLiteral[];
     children: ListNode[];
-    level: number;
     position: number;
 }

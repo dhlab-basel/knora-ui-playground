@@ -1,6 +1,6 @@
 {
   "name": "@knora/search",
-  "version": "8.0.0-88e53a46",
+  "version": "9.0.0-f0265baa",
   "description": "Knora ui module: search",
   "repository": {
     "type": "git",
@@ -15,11 +15,12 @@
     "dhlab basel"
   ],
   "peerDependencies": {
-    "@angular/common": "^7.2.7",
-    "@angular/core": "^7.2.7",
-    "@knora/core": "8.0.0",
-    "@knora/viewer": "8.0.0",
-    "jdnconvertiblecalendardateadapter": "^0.0.9"
+    "@angular/common": "^8.0.3",
+    "@angular/core": "^8.0.3",
+    "@knora/action": "9.0.0",
+    "@knora/core": "9.0.0",
+    "@knora/viewer": "9.0.0",
+    "jdnconvertiblecalendardateadapter": "^0.0.10"
   },
   "main": "bundles/knora-search.umd.js",
   "module": "fesm5/knora-search.js",

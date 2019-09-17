@@ -59,4 +59,5 @@ export declare abstract class ApiService {
      * @returns Observable of ApiServiceError
      */
     protected handleJsonError(error: any): Observable<ApiServiceError>;
+    protected compareVersion(server: string): void;
 }

@@ -9,8 +9,7 @@ export interface SortProp {
  */
 export declare class SortButtonComponent implements OnInit {
     /**
-     * @ignore {string} sortKeyChange
-     * @emits TODO: this would be the correct syntax for Output eventEmitter
+     * @emits {string} sortKeyChange
      *
      * EventEmitter when a user selected a sort property;
      * This is the selected key

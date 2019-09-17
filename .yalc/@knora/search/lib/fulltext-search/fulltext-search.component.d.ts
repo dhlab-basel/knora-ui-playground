@@ -1,5 +1,5 @@
 import { Overlay, OverlayRef, PositionStrategy } from '@angular/cdk/overlay';
-import { ElementRef, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import { ElementRef, OnInit, TemplateRef, ViewContainerRef, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Project, ProjectsService } from '@knora/core';
 import { MatMenuTrigger } from '@angular/material';
@@ -34,6 +34,8 @@ export declare class FulltextSearchComponent implements OnInit {
      * filtered by one project, you can define it with project iri.
      */
     filterbyproject?: string;
+    show: boolean;
+    showState: EventEmitter<{}>;
     searchPanel: ElementRef;
     searchInput: ElementRef;
     searchMenu: TemplateRef<any>;
@@ -48,6 +50,7 @@ export declare class FulltextSearchComponent implements OnInit {
     error: any;
     searchPanelFocus: boolean;
     overlayRef: OverlayRef;
+    doNotDisplay: string[];
     constructor(_overlay: Overlay, _router: Router, _viewContainerRef: ViewContainerRef, _projectsService: ProjectsService);
     ngOnInit(): void;
     openPanelWithBackdrop(): void;

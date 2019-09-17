@@ -1,9 +1,11 @@
 export declare class KnoraConstants {
+    static KnoraVersion: string;
     static KnoraApi: string;
     static PathSeparator: string;
     static KnoraOntologyPath: string;
     static KnoraBase: string;
     static KnoraAdmin: string;
+    static DefaultSharedOntologyIRI: string;
     static SystemProjectIRI: string;
     static SystemAdminGroupIRI: string;
     static ProjectAdminGroupIRI: string;

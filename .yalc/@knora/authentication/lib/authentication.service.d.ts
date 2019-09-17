@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ApiServiceError } from '@knora/core';
+import { ApiServiceError, KuiCoreConfig } from '@knora/core';
 import { Observable } from 'rxjs';
 import { SessionService } from './session/session.service';
 /**
@@ -8,8 +8,8 @@ import { SessionService } from './session/session.service';
 export declare class AuthenticationService {
     http: HttpClient;
     private _session;
-    config: any;
-    constructor(http: HttpClient, _session: SessionService, config: any);
+    config: KuiCoreConfig;
+    constructor(http: HttpClient, _session: SessionService, config: KuiCoreConfig);
     /**
      * validate if a user is logged in or not
      * returns true if the session is active
@@ -37,9 +37,8 @@ export declare class AuthenticationService {
     /**
      * logout the user by destroying the session
      *
-     * @param
      */
-    logout(): void;
+    logout(): Observable<any>;
     /**
      * @ignore
      * handle request error in case of server error

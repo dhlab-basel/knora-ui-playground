@@ -1,16 +1,17 @@
+import { __decorate, __metadata, __extends, __values, __param } from 'tslib';
+import { InjectionToken, NgModule, ɵɵdefineInjectable, ɵɵinject, Injectable, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { JsonObject, JsonProperty, JsonConvert, OperationMode, ValueCheckingMode } from 'json2typescript';
-import { throwError } from 'rxjs/internal/observable/throwError';
-import { from, Observable, forkJoin, of, Subject, BehaviorSubject } from 'rxjs';
-import { __extends, __values, __decorate, __metadata } from 'tslib';
-import { InjectionToken, NgModule, Inject, Injectable, defineInjectable, inject } from '@angular/core';
 import { HttpClientModule, HttpClient, HttpParams } from '@angular/common/http';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { JsonProperty, JsonObject, JsonConvert, OperationMode, ValueCheckingMode } from 'json2typescript';
+import { from, Observable, of, forkJoin, Subject, BehaviorSubject } from 'rxjs';
+import { map, catchError, mergeMap } from 'rxjs/operators';
+import { throwError } from 'rxjs/internal/observable/throwError';
 
 var KuiCoreConfigToken = new InjectionToken('KuiCoreConfigToken (knora.core.config)');
 var KuiCoreModule = /** @class */ (function () {
     function KuiCoreModule() {
     }
+    KuiCoreModule_1 = KuiCoreModule;
     /**
      *
      * @param {KuiCoreConfig} config
@@ -20,24 +21,25 @@ var KuiCoreModule = /** @class */ (function () {
         // get the app environment configuration here
         // console.log('KuiCoreModule - forRoot - config: ', config);
         return {
-            ngModule: KuiCoreModule,
+            ngModule: KuiCoreModule_1,
             providers: [
                 { provide: KuiCoreConfigToken, useValue: config }
             ]
         };
     };
-    KuiCoreModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        HttpClientModule
-                    ],
-                    declarations: [],
-                    exports: [
-                        HttpClientModule
-                    ]
-                },] }
-    ];
+    var KuiCoreModule_1;
+    KuiCoreModule = KuiCoreModule_1 = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                HttpClientModule
+            ],
+            declarations: [],
+            exports: [
+                HttpClientModule
+            ]
+        })
+    ], KuiCoreModule);
     return KuiCoreModule;
 }());
 
@@ -69,6 +71,11 @@ var KuiCoreConfig = /** @class */ (function () {
          * @type {string}
          */
         this.media = undefined;
+        /**
+         * url of the ontology e.g. 'http://api.02.unibas.dasch.swiss'
+         * @type {string}
+         */
+        this.ontologyIRI = undefined;
     }
     __decorate([
         JsonProperty('name', String),
@@ -86,6 +93,10 @@ var KuiCoreConfig = /** @class */ (function () {
         JsonProperty('media', String),
         __metadata("design:type", String)
     ], KuiCoreConfig.prototype, "media", void 0);
+    __decorate([
+        JsonProperty('ontologyIRI', String),
+        __metadata("design:type", String)
+    ], KuiCoreConfig.prototype, "ontologyIRI", void 0);
     KuiCoreConfig = __decorate([
         JsonObject('KuiCoreConfig')
     ], KuiCoreConfig);
@@ -152,11 +163,14 @@ var ApiServiceError = /** @class */ (function () {
 var KnoraConstants = /** @class */ (function () {
     function KnoraConstants() {
     }
+    // The following version of Knora is needed to work properly with this module
+    KnoraConstants.KnoraVersion = '9.0.0';
     KnoraConstants.KnoraApi = 'http://api.knora.org/ontology/knora-api';
     KnoraConstants.PathSeparator = '#';
     KnoraConstants.KnoraOntologyPath = 'http://www.knora.org/ontology';
     KnoraConstants.KnoraBase = KnoraConstants.KnoraOntologyPath + '/knora-base';
     KnoraConstants.KnoraAdmin = KnoraConstants.KnoraOntologyPath + '/knora-admin';
+    KnoraConstants.DefaultSharedOntologyIRI = KnoraConstants.KnoraAdmin + '#DefaultSharedOntologiesProject';
     KnoraConstants.SystemProjectIRI = KnoraConstants.KnoraAdmin + '#SystemProject';
     KnoraConstants.SystemAdminGroupIRI = KnoraConstants.KnoraAdmin + '#SystemAdmin';
     KnoraConstants.ProjectAdminGroupIRI = KnoraConstants.KnoraAdmin + '#ProjectAdmin';
@@ -668,7 +682,9 @@ var GroupsResponse = /** @class */ (function () {
 var ListInfo = /** @class */ (function () {
     function ListInfo() {
         this.id = undefined;
+        this.name = undefined;
         this.projectIri = undefined;
+        this.isRootNode = undefined;
         this.labels = undefined;
         this.comments = undefined;
     }
@@ -677,9 +693,17 @@ var ListInfo = /** @class */ (function () {
         __metadata("design:type", String)
     ], ListInfo.prototype, "id", void 0);
     __decorate([
-        JsonProperty('projectIri', String, false),
+        JsonProperty('name', String, true),
+        __metadata("design:type", String)
+    ], ListInfo.prototype, "name", void 0);
+    __decorate([
+        JsonProperty('projectIri', String, true),
         __metadata("design:type", String)
     ], ListInfo.prototype, "projectIri", void 0);
+    __decorate([
+        JsonProperty('isRootNode', Boolean, true),
+        __metadata("design:type", Boolean)
+    ], ListInfo.prototype, "isRootNode", void 0);
     __decorate([
         JsonProperty('labels', [StringLiteral], true),
         __metadata("design:type", Array)
@@ -698,15 +722,16 @@ var ListNode = /** @class */ (function () {
     function ListNode() {
         this.id = undefined;
         this.name = undefined;
-        this.label = undefined;
+        this.hasRootNode = undefined;
+        this.labels = undefined;
+        this.comments = undefined;
         this.children = undefined;
-        this.level = undefined;
         this.position = undefined;
     }
     ListNode_1 = ListNode;
     var ListNode_1;
     __decorate([
-        JsonProperty('id', String, false),
+        JsonProperty('id', String),
         __metadata("design:type", String)
     ], ListNode.prototype, "id", void 0);
     __decorate([
@@ -714,17 +739,21 @@ var ListNode = /** @class */ (function () {
         __metadata("design:type", String)
     ], ListNode.prototype, "name", void 0);
     __decorate([
-        JsonProperty('label', String, true),
+        JsonProperty('hasRootNode', String, true),
         __metadata("design:type", String)
-    ], ListNode.prototype, "label", void 0);
+    ], ListNode.prototype, "hasRootNode", void 0);
+    __decorate([
+        JsonProperty('labels', [StringLiteral]),
+        __metadata("design:type", Array)
+    ], ListNode.prototype, "labels", void 0);
+    __decorate([
+        JsonProperty('comments', [StringLiteral]),
+        __metadata("design:type", Array)
+    ], ListNode.prototype, "comments", void 0);
     __decorate([
         JsonProperty('children', [ListNode_1], true),
         __metadata("design:type", Array)
     ], ListNode.prototype, "children", void 0);
-    __decorate([
-        JsonProperty('level', Number, true),
-        __metadata("design:type", Number)
-    ], ListNode.prototype, "level", void 0);
     __decorate([
         JsonProperty('position', Number, true),
         __metadata("design:type", Number)
@@ -768,6 +797,9 @@ var ListInfoResponse = /** @class */ (function () {
     return ListInfoResponse;
 }());
 
+/**
+ * @deprecated You should use ListNode instead
+ */
 var ListNodeInfo = /** @class */ (function () {
     function ListNodeInfo() {
         this.id = undefined;
@@ -807,13 +839,16 @@ var ListNodeInfo = /** @class */ (function () {
     return ListNodeInfo;
 }());
 
+/**
+ * @deprecated You should use ListNodeResponse instead
+ */
 var ListNodeInfoResponse = /** @class */ (function () {
     function ListNodeInfoResponse() {
         this.nodeinfo = undefined;
     }
     __decorate([
-        JsonProperty('nodeinfo', ListNodeInfo, false),
-        __metadata("design:type", ListNodeInfo)
+        JsonProperty('nodeinfo', ListNode, false),
+        __metadata("design:type", ListNode)
     ], ListNodeInfoResponse.prototype, "nodeinfo", void 0);
     ListNodeInfoResponse = __decorate([
         JsonObject('ListNodeInfoResponse')
@@ -835,12 +870,26 @@ var ListResponse = /** @class */ (function () {
     return ListResponse;
 }());
 
+var ListNodeResponse = /** @class */ (function () {
+    function ListNodeResponse() {
+        this.nodeinfo = undefined;
+    }
+    __decorate([
+        JsonProperty('nodeinfo', ListNode, false),
+        __metadata("design:type", ListNode)
+    ], ListNodeResponse.prototype, "nodeinfo", void 0);
+    ListNodeResponse = __decorate([
+        JsonObject('ListNodeResponse')
+    ], ListNodeResponse);
+    return ListNodeResponse;
+}());
+
 var ListsResponse = /** @class */ (function () {
     function ListsResponse() {
         this.lists = undefined;
     }
     __decorate([
-        JsonProperty('lists', [ListNodeInfo], false),
+        JsonProperty('lists', [ListNode], false),
         __metadata("design:type", Array)
     ], ListsResponse.prototype, "lists", void 0);
     ListsResponse = __decorate([
@@ -1539,6 +1588,7 @@ var Resource = /** @class */ (function () {
 }());
 
 var jsonld = require('jsonld');
+var semver = require('semver');
 var ApiService = /** @class */ (function () {
     function ApiService(http, config) {
         this.http = http;
@@ -1562,6 +1612,8 @@ var ApiService = /** @class */ (function () {
         return this.http.get(this.config.api + path, { observe: 'response', params: params }).pipe(map(function (response) {
             _this.loading = false;
             var result = new ApiServiceResult();
+            result.header = { 'server': response.headers.get('Server') };
+            _this.compareVersion(response.headers.get('Server'));
             result.status = response.status;
             result.statusText = response.statusText;
             result.url = path;
@@ -1600,6 +1652,8 @@ var ApiService = /** @class */ (function () {
         return this.http.post(this.config.api + path, body, { observe: 'response' }).pipe(map(function (response) {
             _this.loading = false;
             var result = new ApiServiceResult();
+            result.header = { 'server': response.headers.get('Server') };
+            _this.compareVersion(result.header.server);
             result.status = response.status;
             result.statusText = response.statusText;
             result.url = path;
@@ -1626,6 +1680,8 @@ var ApiService = /** @class */ (function () {
             _this.loading = false;
             // console.log(response);
             var result = new ApiServiceResult();
+            result.header = { 'server': response.headers.get('Server') };
+            _this.compareVersion(result.header.server);
             result.status = response.status;
             result.statusText = response.statusText;
             result.url = path;
@@ -1651,6 +1707,8 @@ var ApiService = /** @class */ (function () {
             _this.loading = false;
             // console.log(response);
             var result = new ApiServiceResult();
+            result.header = { 'server': response.headers.get('Server') };
+            _this.compareVersion(result.header.server);
             result.status = response.status;
             result.statusText = response.statusText;
             result.url = path;
@@ -1671,6 +1729,7 @@ var ApiService = /** @class */ (function () {
     ApiService.prototype.handleRequestError = function (error) {
         // console.error(error);
         var serviceError = new ApiServiceError();
+        serviceError.header = { 'server': error.headers.get('Server') };
         serviceError.status = error.status;
         serviceError.statusText = error.statusText;
         serviceError.errorInfo = error.message;
@@ -1687,23 +1746,34 @@ var ApiService = /** @class */ (function () {
         if (error instanceof ApiServiceError)
             return throwError(error);
         var serviceError = new ApiServiceError();
+        serviceError.header = { 'server': error.headers.get('Server') };
         serviceError.status = -1;
         serviceError.statusText = 'Invalid JSON';
         serviceError.errorInfo = error;
         serviceError.url = '';
         return throwError(serviceError);
     };
-    ApiService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root',
-                },] }
-    ];
-    /** @nocollapse */
-    ApiService.ctorParameters = function () { return [
-        { type: HttpClient },
-        { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] }
-    ]; };
-    ApiService.ngInjectableDef = defineInjectable({ factory: function ApiService_Factory() { return new ApiService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: ApiService, providedIn: "root" });
+    ApiService.prototype.compareVersion = function (server) {
+        // expected knora api version
+        var expected = KnoraConstants.KnoraVersion;
+        // existing knora api version
+        if (server) {
+            var versions = server.split(' ');
+            var existing = versions[0].split('/')[1];
+            // compare the two versions: expected vs existing
+            if (semver.diff(existing, expected) === 'major') {
+                console.warn('The version of the @knora/core module works with Knora v' + expected + ', but you are using it with Knora v' + existing);
+            }
+        }
+    };
+    ApiService.ngInjectableDef = ɵɵdefineInjectable({ factory: function ApiService_Factory() { return new ApiService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: ApiService, providedIn: "root" });
+    ApiService = __decorate([
+        Injectable({
+            providedIn: 'root',
+        }),
+        __param(1, Inject(KuiCoreConfigToken)),
+        __metadata("design:paramtypes", [HttpClient, Object])
+    ], ApiService);
     return ApiService;
 }());
 
@@ -1797,7 +1867,7 @@ var OntologyService = /** @class */ (function (_super) {
      * Create new ontology.
      *
      * @param {NewOntology} data Data contains: projectIri, name, label
-     * @returns Observable<ApiServiceResult>
+     * @returns Observable<ApiServiceResult> incl. ontolog iri and knora-api:lastModificationDate
      */
     OntologyService.prototype.createOntology = function (data) {
         var path = '/v2/ontologies';
@@ -1814,12 +1884,136 @@ var OntologyService = /** @class */ (function (_super) {
         };
         return this.httpPost(path, ontology).pipe(map(function (result) { return result.body; }), catchError(this.handleJsonError));
     };
-    OntologyService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root',
-                },] }
-    ];
-    OntologyService.ngInjectableDef = defineInjectable({ factory: function OntologyService_Factory() { return new OntologyService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: OntologyService, providedIn: "root" });
+    OntologyService.prototype.createResourceClass = function (data) {
+        var path = '/v2/ontologies/classes';
+        // TODO: add the following values to parameter
+        var onto_iri;
+        var onto_name;
+        var last_onto_date;
+        var resourceClass = {
+            '@id': onto_iri,
+            '@type': 'owl:Ontology',
+            'knora-api:lastModificationDate': last_onto_date,
+            '@graph': [{
+                    '@id': onto_name + ':' + data.name,
+                    '@type': 'owl:Class',
+                    'rdfs:label': data.labels,
+                    'rdfs:comment': data.comments,
+                    'rdfs:subClassOf': {
+                        '@id': data.subClassOf
+                    }
+                }],
+            '@context': {
+                'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+                'knora-api': 'http://api.knora.org/ontology/knora-api/v2#',
+                'owl': 'http://www.w3.org/2002/07/owl#',
+                'rdfs': 'http://www.w3.org/2000/01/rdf-schema#',
+                'xsd': 'http://www.w3.org/2001/XMLSchema#',
+                onto_name: onto_iri + '#'
+            }
+        };
+        return this.httpPost(path, resourceClass).pipe(map(function (result) { return result.body; }), catchError(this.handleJsonError));
+    };
+    OntologyService.prototype.createProperty = function (data) {
+        var e_1, _a;
+        var path = '/v2/ontologies/properties';
+        // TODO: add the following values to parameter
+        var onto_iri;
+        var onto_name;
+        var last_onto_date;
+        var graph = [];
+        try {
+            for (var data_1 = __values(data), data_1_1 = data_1.next(); !data_1_1.done; data_1_1 = data_1.next()) {
+                var prop = data_1_1.value;
+                var prop_obj = {
+                    '@id': onto_name + ':' + prop.name,
+                    '@type': 'owl:ObjectProperty',
+                    'rdfs:label': prop.labels,
+                    'rdfs:comment': prop.comments,
+                    'rdfs:subPropertyOf': prop.subPropertyOf,
+                    'salsah-gui:guiElement': {
+                        '@id': prop.guiElement
+                    }
+                };
+                graph.push(prop_obj);
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (data_1_1 && !data_1_1.done && (_a = data_1.return)) _a.call(data_1);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+        var property = {
+            '@id': onto_iri,
+            '@type': 'owl:Ontology',
+            'knora-api:lastModificationDate': last_onto_date,
+            '@graph': [
+                graph
+            ],
+            '@context': {
+                'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+                'knora-api': 'http://api.knora.org/ontology/knora-api/v2#',
+                'salsah-gui': 'http://api.knora.org/ontology/salsah-gui/v2#',
+                'owl': 'http://www.w3.org/2002/07/owl#',
+                'rdfs': 'http://www.w3.org/2000/01/rdf-schema#',
+                'xsd': 'http://www.w3.org/2001/XMLSchema#',
+                onto_name: onto_iri + '#'
+            }
+        };
+        return this.httpPost(path, property).pipe(map(function (result) { return result.body; }), catchError(this.handleJsonError));
+    };
+    OntologyService.prototype.setCardinality = function (data) {
+        var path = '/v2/ontologies/cardinalities';
+        // TODO: add the following values to parameter
+        var class_iri;
+        var prop_iri;
+        var onto_iri;
+        var last_onto_date;
+        // TODO: find a way with typescript for the following python construct
+        /*
+        let switcher = {
+            '1': ('owl:cardinality', 1),
+            '0-1': ('owl:maxCardinality', 1),
+            '0-n': ('owl:minCardinality', 0),
+            '1-n': ('owl:minCardinality', 1)
+        };
+
+        let occurrence: any = switcher.get(data.occurrence);
+        */
+        var cardinality = {
+            '@id': onto_iri,
+            '@type': 'owl:Ontology',
+            'knora-api:lastModificationDate': last_onto_date,
+            '@graph': [{
+                    '@id': class_iri,
+                    '@type': 'owl:Class',
+                    'rdfs:subClassOf': {
+                        '@type': 'owl:Restriction',
+                        // occurrence[0]: occurrence[1],
+                        'owl:onProperty': {
+                            '@id': prop_iri
+                        }
+                    }
+                }],
+            '@context': {
+                'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+                'knora-api': 'http://api.knora.org/ontology/knora-api/v2#',
+                'owl': 'http://www.w3.org/2002/07/owl#',
+                'rdfs': 'http://www.w3.org/2000/01/rdf-schema#',
+                'xsd': 'http://www.w3.org/2001/XMLSchema#',
+                onto_name: onto_iri + '#'
+            }
+        };
+        return this.httpPost(path, cardinality).pipe(map(function (result) { return result.body; }), catchError(this.handleJsonError));
+    };
+    OntologyService.ngInjectableDef = ɵɵdefineInjectable({ factory: function OntologyService_Factory() { return new OntologyService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: OntologyService, providedIn: "root" });
+    OntologyService = __decorate([
+        Injectable({
+            providedIn: 'root',
+        })
+    ], OntologyService);
     return OntologyService;
 }(ApiService));
 
@@ -2678,16 +2872,13 @@ var OntologyCacheService = /** @class */ (function () {
             return of(this.getPropertyDefinitionsFromCache(propertyIris));
         }
     };
-    OntologyCacheService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    OntologyCacheService.ctorParameters = function () { return [
-        { type: OntologyService }
-    ]; };
-    OntologyCacheService.ngInjectableDef = defineInjectable({ factory: function OntologyCacheService_Factory() { return new OntologyCacheService(inject(OntologyService)); }, token: OntologyCacheService, providedIn: "root" });
+    OntologyCacheService.ngInjectableDef = ɵɵdefineInjectable({ factory: function OntologyCacheService_Factory() { return new OntologyCacheService(ɵɵinject(OntologyService)); }, token: OntologyCacheService, providedIn: "root" });
+    OntologyCacheService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [OntologyService])
+    ], OntologyCacheService);
     return OntologyCacheService;
 }());
 
@@ -2792,12 +2983,12 @@ var GroupsService = /** @class */ (function (_super) {
         this.path += '/' + encodeURIComponent(iri);
         return this.httpGet(this.path).pipe(map(function (result) { return result.getBody(GroupResponse).group; }), catchError(this.handleJsonError));
     };
-    GroupsService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    GroupsService.ngInjectableDef = defineInjectable({ factory: function GroupsService_Factory() { return new GroupsService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: GroupsService, providedIn: "root" });
+    GroupsService.ngInjectableDef = ɵɵdefineInjectable({ factory: function GroupsService_Factory() { return new GroupsService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: GroupsService, providedIn: "root" });
+    GroupsService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        })
+    ], GroupsService);
     return GroupsService;
 }(ApiService));
 
@@ -2818,13 +3009,14 @@ var ListsService = /** @class */ (function (_super) {
      * Returns a list of all lists.
      *
      * @param {string} [projectIri]
-     * @returns Observable<ListNodeInfo[]>
+     * @returns Observable<ListNode[]>
      */
     ListsService.prototype.getLists = function (projectIri) {
+        var newPath = this.path;
         if (projectIri) {
-            this.path += '?projectIri=' + encodeURIComponent(projectIri);
+            newPath += '?projectIri=' + encodeURIComponent(projectIri);
         }
-        return this.httpGet(this.path).pipe(map(function (result) { return result.getBody(ListsResponse).lists; }), catchError(this.handleJsonError));
+        return this.httpGet(newPath).pipe(map(function (result) { return result.getBody(ListsResponse).lists; }), catchError(this.handleJsonError));
     };
     /**
      * Return a list object.
@@ -2842,18 +3034,16 @@ var ListsService = /** @class */ (function (_super) {
      * @returns Observable<ListInfo>
      */
     ListsService.prototype.getListInfo = function (listIri) {
-        this.path += '/infos/' + encodeURIComponent(listIri);
-        return this.httpGet(this.path).pipe(map(function (result) { return result.getBody(ListInfoResponse).listinfo; }), catchError(this.handleJsonError));
+        return this.httpGet(this.path + '/infos/' + encodeURIComponent(listIri)).pipe(map(function (result) { return result.getBody(ListInfoResponse).listinfo; }), catchError(this.handleJsonError));
     };
     /**
      * Return a list node info object.
      *
      * @param {string} nodeIri
-     * @returns Observable<ListNodeInfo>
+     * @returns Observable<ListNode>
      */
     ListsService.prototype.getListNodeInfo = function (nodeIri) {
-        this.path += '/nodes/' + encodeURIComponent(nodeIri);
-        return this.httpGet(this.path).pipe(map(function (result) { return result.getBody(ListNodeInfoResponse).nodeinfo; }), catchError(this.handleJsonError));
+        return this.httpGet(this.path + '/nodes/' + encodeURIComponent(nodeIri)).pipe(map(function (result) { return result.getBody(ListNodeResponse).nodeinfo; }), catchError(this.handleJsonError));
     };
     // ------------------------------------------------------------------------
     // POST
@@ -2867,6 +3057,16 @@ var ListsService = /** @class */ (function (_super) {
     ListsService.prototype.createList = function (payload) {
         return this.httpPost(this.path, payload).pipe(map(function (result) { return result.getBody(ListResponse).list; }), catchError(this.handleJsonError));
     };
+    /**
+     * Create new list node.
+     *
+     * @param {string} listIri
+     * @param {ListNodeUpdatePayload} payload
+     * @returns Observable<ListNode>
+     */
+    ListsService.prototype.createListItem = function (listIri, payload) {
+        return this.httpPost(this.path + '/' + encodeURIComponent(listIri), payload).pipe(map(function (result) { return result.getBody(ListNodeResponse).nodeinfo; }), catchError(this.handleJsonError));
+    };
     // ------------------------------------------------------------------------
     // PUT
     // ------------------------------------------------------------------------
@@ -2877,15 +3077,14 @@ var ListsService = /** @class */ (function (_super) {
      * @returns Observable<ListInfo>
      */
     ListsService.prototype.updateListInfo = function (payload) {
-        this.path += '/infos/' + encodeURIComponent(payload.listIri);
-        return this.httpPut(this.path, payload).pipe(map(function (result) { return result.getBody(ListInfoResponse).listinfo; }), catchError(this.handleJsonError));
+        return this.httpPut(this.path + '/infos/' + encodeURIComponent(payload.listIri), payload).pipe(map(function (result) { return result.getBody(ListInfoResponse).listinfo; }), catchError(this.handleJsonError));
     };
-    ListsService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    ListsService.ngInjectableDef = defineInjectable({ factory: function ListsService_Factory() { return new ListsService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: ListsService, providedIn: "root" });
+    ListsService.ngInjectableDef = ɵɵdefineInjectable({ factory: function ListsService_Factory() { return new ListsService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: ListsService, providedIn: "root" });
+    ListsService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        })
+    ], ListsService);
     return ListsService;
 }(ApiService));
 
@@ -3044,12 +3243,12 @@ var ProjectsService = /** @class */ (function (_super) {
         var url = '/admin/projects/iri/' + encodeURIComponent(iri);
         return this.httpDelete(url).pipe(map(function (result) { return result.getBody(ProjectResponse).project; }), catchError(this.handleJsonError));
     };
-    ProjectsService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    ProjectsService.ngInjectableDef = defineInjectable({ factory: function ProjectsService_Factory() { return new ProjectsService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: ProjectsService, providedIn: "root" });
+    ProjectsService.ngInjectableDef = ɵɵdefineInjectable({ factory: function ProjectsService_Factory() { return new ProjectsService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: ProjectsService, providedIn: "root" });
+    ProjectsService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        })
+    ], ProjectsService);
     return ProjectsService;
 }(ApiService));
 
@@ -3307,12 +3506,12 @@ var UsersService = /** @class */ (function (_super) {
         var path = '/admin/users/iri/' + encodeURIComponent(userIri);
         return this.httpDelete(path).pipe(map(function (result) { return result.getBody(UserResponse).user; }), catchError(this.handleJsonError));
     };
-    UsersService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    UsersService.ngInjectableDef = defineInjectable({ factory: function UsersService_Factory() { return new UsersService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: UsersService, providedIn: "root" });
+    UsersService.ngInjectableDef = ɵɵdefineInjectable({ factory: function UsersService_Factory() { return new UsersService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: UsersService, providedIn: "root" });
+    UsersService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        })
+    ], UsersService);
     return UsersService;
 }(ApiService));
 
@@ -3326,12 +3525,12 @@ var LanguageService = /** @class */ (function () {
     LanguageService.prototype.getLanguage = function () {
         return this.subject.asObservable();
     };
-    LanguageService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    LanguageService.ngInjectableDef = defineInjectable({ factory: function LanguageService_Factory() { return new LanguageService(); }, token: LanguageService, providedIn: "root" });
+    LanguageService.ngInjectableDef = ɵɵdefineInjectable({ factory: function LanguageService_Factory() { return new LanguageService(); }, token: LanguageService, providedIn: "root" });
+    LanguageService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        })
+    ], LanguageService);
     return LanguageService;
 }());
 
@@ -3354,17 +3553,14 @@ var StatusMsgService = /** @class */ (function () {
             console.error(err);
         }));
     };
-    StatusMsgService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    StatusMsgService.ctorParameters = function () { return [
-        { type: HttpClient },
-        { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] }
-    ]; };
-    StatusMsgService.ngInjectableDef = defineInjectable({ factory: function StatusMsgService_Factory() { return new StatusMsgService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: StatusMsgService, providedIn: "root" });
+    StatusMsgService.ngInjectableDef = ɵɵdefineInjectable({ factory: function StatusMsgService_Factory() { return new StatusMsgService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: StatusMsgService, providedIn: "root" });
+    StatusMsgService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __param(1, Inject(KuiCoreConfigToken)),
+        __metadata("design:paramtypes", [HttpClient, Object])
+    ], StatusMsgService);
     return StatusMsgService;
 }());
 
@@ -3857,18 +4053,14 @@ var ResourceService = /** @class */ (function (_super) {
             }));
         }));
     };
-    ResourceService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    ResourceService.ctorParameters = function () { return [
-        { type: HttpClient },
-        { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] },
-        { type: OntologyCacheService }
-    ]; };
-    ResourceService.ngInjectableDef = defineInjectable({ factory: function ResourceService_Factory() { return new ResourceService(inject(HttpClient), inject(KuiCoreConfigToken), inject(OntologyCacheService)); }, token: ResourceService, providedIn: "root" });
+    ResourceService.ngInjectableDef = ɵɵdefineInjectable({ factory: function ResourceService_Factory() { return new ResourceService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken), ɵɵinject(OntologyCacheService)); }, token: ResourceService, providedIn: "root" });
+    ResourceService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __param(1, Inject(KuiCoreConfigToken)),
+        __metadata("design:paramtypes", [HttpClient, Object, OntologyCacheService])
+    ], ResourceService);
     return ResourceService;
 }(ApiService));
 
@@ -4129,18 +4321,14 @@ var SearchService = /** @class */ (function (_super) {
         var res = this.httpGet('/v2/searchbylabel/' + encodeURIComponent(searchTerm), httpParams);
         return res.pipe(mergeMap(this.processJSONLD), mergeMap(this.convertJSONLDToReadResourceSequence));
     };
-    SearchService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root',
-                },] }
-    ];
-    /** @nocollapse */
-    SearchService.ctorParameters = function () { return [
-        { type: HttpClient },
-        { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] },
-        { type: OntologyCacheService }
-    ]; };
-    SearchService.ngInjectableDef = defineInjectable({ factory: function SearchService_Factory() { return new SearchService(inject(HttpClient), inject(KuiCoreConfigToken), inject(OntologyCacheService)); }, token: SearchService, providedIn: "root" });
+    SearchService.ngInjectableDef = ɵɵdefineInjectable({ factory: function SearchService_Factory() { return new SearchService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken), ɵɵinject(OntologyCacheService)); }, token: SearchService, providedIn: "root" });
+    SearchService = __decorate([
+        Injectable({
+            providedIn: 'root',
+        }),
+        __param(1, Inject(KuiCoreConfigToken)),
+        __metadata("design:paramtypes", [HttpClient, Object, OntologyCacheService])
+    ], SearchService);
     return SearchService;
 }(ApiService));
 
@@ -4187,12 +4375,12 @@ var IncomingService = /** @class */ (function (_super) {
         var sparqlQueryStr = "\nPREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>\n\nCONSTRUCT {\n?incomingRes knora-api:isMainResource true .\n\n?incomingRes ?incomingProp <" + resourceIri + "> .\n\n} WHERE {\n\n?incomingRes a knora-api:Resource .\n\n?incomingRes ?incomingProp <" + resourceIri + "> .\n\n<" + resourceIri + "> a knora-api:Resource .\n\n?incomingProp knora-api:objectType knora-api:Resource .\n\nknora-api:isRegionOf knora-api:objectType knora-api:Resource .\nknora-api:isPartOf knora-api:objectType knora-api:Resource .\n\nFILTER NOT EXISTS {\n ?incomingRes  knora-api:isRegionOf <" + resourceIri + "> .\n}\n\nFILTER NOT EXISTS {\n ?incomingRes  knora-api:isPartOf <" + resourceIri + "> .\n}\n\n} OFFSET " + offset + "\n";
         return this.doExtendedSearchReadResourceSequence(sparqlQueryStr);
     };
-    IncomingService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root',
-                },] }
-    ];
-    IncomingService.ngInjectableDef = defineInjectable({ factory: function IncomingService_Factory() { return new IncomingService(inject(HttpClient), inject(KuiCoreConfigToken), inject(OntologyCacheService)); }, token: IncomingService, providedIn: "root" });
+    IncomingService.ngInjectableDef = ɵɵdefineInjectable({ factory: function IncomingService_Factory() { return new IncomingService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken), ɵɵinject(OntologyCacheService)); }, token: IncomingService, providedIn: "root" });
+    IncomingService = __decorate([
+        Injectable({
+            providedIn: 'root',
+        })
+    ], IncomingService);
     return IncomingService;
 }(SearchService));
 
@@ -4236,14 +4424,17 @@ var SearchParamsService = /** @class */ (function () {
     SearchParamsService.prototype.getSearchParams = function () {
         return this._currentSearchParams.getValue();
     };
-    SearchParamsService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    SearchParamsService.ctorParameters = function () { return []; };
-    SearchParamsService.ngInjectableDef = defineInjectable({ factory: function SearchParamsService_Factory() { return new SearchParamsService(); }, token: SearchParamsService, providedIn: "root" });
+    SearchParamsService.ngInjectableDef = ɵɵdefineInjectable({ factory: function SearchParamsService_Factory() { return new SearchParamsService(); }, token: SearchParamsService, providedIn: "root" });
+    SearchParamsService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        })
+        /**
+         * Temporarily stores the parameters of an extended search.
+         */
+        ,
+        __metadata("design:paramtypes", [])
+    ], SearchParamsService);
     return SearchParamsService;
 }());
 
@@ -4254,6 +4445,7 @@ var GravsearchGenerationService = /** @class */ (function () {
     function GravsearchGenerationService(_searchParamsService) {
         this._searchParamsService = _searchParamsService;
     }
+    GravsearchGenerationService_1 = GravsearchGenerationService;
     /**
      * Generates a Gravsearch query from the provided arguments.
      *
@@ -4307,13 +4499,13 @@ var GravsearchGenerationService = /** @class */ (function () {
                 var propValueLiteral = propValue + "Literal";
                 if (propWithVal.valueLiteral.comparisonOperator.getClassName() === 'Like') {
                     // generate statement to value literal
-                    restriction = propValue + " <" + GravsearchGenerationService.complexTypeToProp[propWithVal.property.objectType] + "> " + propValueLiteral + '\n';
+                    restriction = propValue + " <" + GravsearchGenerationService_1.complexTypeToProp[propWithVal.property.objectType] + "> " + propValueLiteral + '\n';
                     // use regex function for LIKE
                     restriction += "FILTER regex(" + propValueLiteral + ", " + propWithVal.valueLiteral.value.toSparql(KnoraSchema.complex) + ", \"i\")";
                 }
                 else if (propWithVal.valueLiteral.comparisonOperator.getClassName() === 'Match') {
                     // generate statement to value literal
-                    restriction = propValue + " <" + GravsearchGenerationService.complexTypeToProp[propWithVal.property.objectType] + "> " + propValueLiteral + '\n';
+                    restriction = propValue + " <" + GravsearchGenerationService_1.complexTypeToProp[propWithVal.property.objectType] + "> " + propValueLiteral + '\n';
                     // use contains function for MATCH
                     restriction += "FILTER <" + KnoraConstants.matchFunction + ">(" + propValueLiteral + ", " + propWithVal.valueLiteral.value.toSparql(KnoraSchema.complex) + ")";
                 }
@@ -4323,7 +4515,7 @@ var GravsearchGenerationService = /** @class */ (function () {
                 }
                 else if (propWithVal.property.objectType === KnoraConstants.ListValue) {
                     // handle list node
-                    restriction = propValue + " <" + GravsearchGenerationService.complexTypeToProp[propWithVal.property.objectType] + "> " + propWithVal.valueLiteral.value.toSparql(KnoraSchema.complex) + '\n';
+                    restriction = propValue + " <" + GravsearchGenerationService_1.complexTypeToProp[propWithVal.property.objectType] + "> " + propWithVal.valueLiteral.value.toSparql(KnoraSchema.complex) + '\n';
                     // check for comparison operator "not equals"
                     if (propWithVal.valueLiteral.comparisonOperator.getClassName() === 'NotEquals') {
                         restriction = "FILTER NOT EXISTS {\n                                " + restriction + "\n                            }";
@@ -4331,7 +4523,7 @@ var GravsearchGenerationService = /** @class */ (function () {
                 }
                 else {
                     // generate statement to value literal
-                    restriction = propValue + " <" + GravsearchGenerationService.complexTypeToProp[propWithVal.property.objectType] + "> " + propValueLiteral + '\n';
+                    restriction = propValue + " <" + GravsearchGenerationService_1.complexTypeToProp[propWithVal.property.objectType] + "> " + propValueLiteral + '\n';
                     // generate filter expression
                     restriction += "FILTER(" + propValueLiteral + " " + propWithVal.valueLiteral.comparisonOperator.type + " " + propWithVal.valueLiteral.value.toSparql(KnoraSchema.complex) + ")";
                 }
@@ -4360,6 +4552,7 @@ var GravsearchGenerationService = /** @class */ (function () {
         }
         return gravsearchTemplate + offsetTemplate;
     };
+    var GravsearchGenerationService_1;
     /**
      * @ignore
      *
@@ -4394,16 +4587,13 @@ var GravsearchGenerationService = /** @class */ (function () {
         'http://api.knora.org/ontology/knora-api/v2#UriValue': KnoraConstants.uriValueAsUri,
         'http://api.knora.org/ontology/knora-api/v2#ListValue': KnoraConstants.listValueAsListNode
     };
-    GravsearchGenerationService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    GravsearchGenerationService.ctorParameters = function () { return [
-        { type: SearchParamsService }
-    ]; };
-    GravsearchGenerationService.ngInjectableDef = defineInjectable({ factory: function GravsearchGenerationService_Factory() { return new GravsearchGenerationService(inject(SearchParamsService)); }, token: GravsearchGenerationService, providedIn: "root" });
+    GravsearchGenerationService.ngInjectableDef = ɵɵdefineInjectable({ factory: function GravsearchGenerationService_Factory() { return new GravsearchGenerationService(ɵɵinject(SearchParamsService)); }, token: GravsearchGenerationService, providedIn: "root" });
+    GravsearchGenerationService = GravsearchGenerationService_1 = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [SearchParamsService])
+    ], GravsearchGenerationService);
     return GravsearchGenerationService;
 }());
 
@@ -4434,17 +4624,14 @@ var StoreService = /** @class */ (function () {
             throw error;
         }));
     };
-    StoreService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    StoreService.ctorParameters = function () { return [
-        { type: HttpClient },
-        { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] }
-    ]; };
-    StoreService.ngInjectableDef = defineInjectable({ factory: function StoreService_Factory() { return new StoreService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: StoreService, providedIn: "root" });
+    StoreService.ngInjectableDef = ɵɵdefineInjectable({ factory: function StoreService_Factory() { return new StoreService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: StoreService, providedIn: "root" });
+    StoreService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __param(1, Inject(KuiCoreConfigToken)),
+        __metadata("design:paramtypes", [HttpClient, Object])
+    ], StoreService);
     return StoreService;
 }());
 
@@ -4467,12 +4654,12 @@ var BasicOntologyService = /** @class */ (function (_super) {
         return this.httpGet(url + '/data/base-data/basic-ontology.json');
         // return this.httpGet(url + '/data/base-data/basic-ontology.json', {withCredentials: false});
     };
-    BasicOntologyService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    BasicOntologyService.ngInjectableDef = defineInjectable({ factory: function BasicOntologyService_Factory() { return new BasicOntologyService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: BasicOntologyService, providedIn: "root" });
+    BasicOntologyService.ngInjectableDef = ɵɵdefineInjectable({ factory: function BasicOntologyService_Factory() { return new BasicOntologyService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: BasicOntologyService, providedIn: "root" });
+    BasicOntologyService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        })
+    ], BasicOntologyService);
     return BasicOntologyService;
 }(ApiService));
 
@@ -4499,12 +4686,12 @@ var ResourceTypesService = /** @class */ (function (_super) {
     ResourceTypesService.prototype.getResourceType = function (iri) {
         return this.httpGet('/v1/resourcetypes/' + encodeURIComponent(iri));
     };
-    ResourceTypesService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    ResourceTypesService.ngInjectableDef = defineInjectable({ factory: function ResourceTypesService_Factory() { return new ResourceTypesService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: ResourceTypesService, providedIn: "root" });
+    ResourceTypesService.ngInjectableDef = ɵɵdefineInjectable({ factory: function ResourceTypesService_Factory() { return new ResourceTypesService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: ResourceTypesService, providedIn: "root" });
+    ResourceTypesService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        })
+    ], ResourceTypesService);
     return ResourceTypesService;
 }(ApiService));
 
@@ -4558,17 +4745,14 @@ var ListService = /** @class */ (function (_super) {
         // this would return an Observable of a PromiseObservable -> combine them into one Observable
         this.processJSONLD));
     };
-    ListService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    ListService.ctorParameters = function () { return [
-        { type: HttpClient },
-        { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] }
-    ]; };
-    ListService.ngInjectableDef = defineInjectable({ factory: function ListService_Factory() { return new ListService(inject(HttpClient), inject(KuiCoreConfigToken)); }, token: ListService, providedIn: "root" });
+    ListService.ngInjectableDef = ɵɵdefineInjectable({ factory: function ListService_Factory() { return new ListService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken)); }, token: ListService, providedIn: "root" });
+    ListService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __param(1, Inject(KuiCoreConfigToken)),
+        __metadata("design:paramtypes", [HttpClient, Object])
+    ], ListService);
     return ListService;
 }(ApiService));
 
@@ -4707,22 +4891,15 @@ var ListCacheService = /** @class */ (function () {
             }));
         }
     };
-    ListCacheService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    ListCacheService.ctorParameters = function () { return [
-        { type: ListService }
-    ]; };
-    ListCacheService.ngInjectableDef = defineInjectable({ factory: function ListCacheService_Factory() { return new ListCacheService(inject(ListService)); }, token: ListCacheService, providedIn: "root" });
+    ListCacheService.ngInjectableDef = ɵɵdefineInjectable({ factory: function ListCacheService_Factory() { return new ListCacheService(ɵɵinject(ListService)); }, token: ListCacheService, providedIn: "root" });
+    ListCacheService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [ListService])
+    ], ListCacheService);
     return ListCacheService;
 }());
-
-/**
- * main api services
- */
 
 var Equals = /** @class */ (function () {
     function Equals() {
@@ -4904,14 +5081,5 @@ var PropertyWithValue = /** @class */ (function () {
     return PropertyWithValue;
 }());
 
-/*
- * Public API Surface of core
- */
-
-/**
- * Generated bundle index. Do not edit.
- */
-
-export { Property as ɵa, KuiCoreConfigToken, KuiCoreModule, KuiCoreConfig, ApiServiceResult, ApiServiceError, Utils, KnoraConstants, KnoraSchema, StringLiteral, Precision, DateSalsah, DateRangeSalsah, AuthenticationResponse, Group, GroupResponse, GroupsResponse, List, ListInfo, ListInfoResponse, ListNode, ListNodeInfo, ListNodeInfoResponse, ListResponse, ListsResponse, OntologyInfoShort, PermissionData, Project, ProjectMembersResponse, ProjectResponse, ProjectsResponse, UsersResponse, UserResponse, User, ReadTextValue, ReadTextValueAsString, ReferredResourcesByStandoffLink, ReadTextValueAsHtml, ReadTextValueAsXml, ReadDateValue, ReadLinkValue, ReadIntegerValue, ReadDecimalValue, ReadStillImageFileValue, ReadMovingImageFileValue, ReadTextFileValue, ReadColorValue, Point2D, RegionGeometry, ReadGeomValue, ReadUriValue, ReadBooleanValue, ReadIntervalValue, ReadListValue, ReadResource, Resource, ReadResourcesSequence, CountQueryResult, StillImageRepresentation, ImageRegion, Equals, NotEquals, GreaterThanEquals, GreaterThan, LessThan, LessThanEquals, Exists, Like, Match, ComparisonOperatorAndValue, ValueLiteral, IRI, PropertyWithValue, ApiService, GroupsService, ListsService, ProjectsService, UsersService, LanguageService, StatusMsgService, OntologyService, OntologyMetadata, CardinalityOccurrence, Cardinality, GuiOrder, ResourceClass, ResourceClasses, Property, Properties, ResourceClassIrisForOntology, OntologyInformation, OntologyCacheService, ResourceService, SearchService, ConvertJSONLD, IncomingService, ExtendedSearchParams, SearchParamsService, GravsearchGenerationService, StoreService, BasicOntologyService, ResourceTypesService, ListNodeV2, ListCacheService };
-
+export { ApiService, ApiServiceError, ApiServiceResult, AuthenticationResponse, BasicOntologyService, Cardinality, CardinalityOccurrence, ComparisonOperatorAndValue, ConvertJSONLD, CountQueryResult, DateRangeSalsah, DateSalsah, Equals, Exists, ExtendedSearchParams, GravsearchGenerationService, GreaterThan, GreaterThanEquals, Group, GroupResponse, GroupsResponse, GroupsService, GuiOrder, IRI, ImageRegion, IncomingService, KnoraConstants, KnoraSchema, KuiCoreConfig, KuiCoreConfigToken, KuiCoreModule, LanguageService, LessThan, LessThanEquals, Like, List, ListCacheService, ListInfo, ListInfoResponse, ListNode, ListNodeInfo, ListNodeInfoResponse, ListNodeResponse, ListNodeV2, ListResponse, ListsResponse, ListsService, Match, NotEquals, OntologyCacheService, OntologyInfoShort, OntologyInformation, OntologyMetadata, OntologyService, PermissionData, Point2D, Precision, Project, ProjectMembersResponse, ProjectResponse, ProjectsResponse, ProjectsService, Properties, Property, PropertyWithValue, ReadBooleanValue, ReadColorValue, ReadDateValue, ReadDecimalValue, ReadGeomValue, ReadIntegerValue, ReadIntervalValue, ReadLinkValue, ReadListValue, ReadMovingImageFileValue, ReadResource, ReadResourcesSequence, ReadStillImageFileValue, ReadTextFileValue, ReadTextValue, ReadTextValueAsHtml, ReadTextValueAsString, ReadTextValueAsXml, ReadUriValue, ReferredResourcesByStandoffLink, RegionGeometry, Resource, ResourceClass, ResourceClassIrisForOntology, ResourceClasses, ResourceService, ResourceTypesService, SearchParamsService, SearchService, StatusMsgService, StillImageRepresentation, StoreService, StringLiteral, User, UserResponse, UsersResponse, UsersService, Utils, ValueLiteral, Property as ɵa };
 //# sourceMappingURL=knora-core.js.map

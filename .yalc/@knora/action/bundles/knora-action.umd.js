@@ -1,8 +1,49 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/router'), require('ts-md5/dist/md5'), require('@knora/core'), require('@angular/forms'), require('jdnconvertiblecalendardateadapter'), require('@angular/common'), require('@angular/platform-browser/animations'), require('@angular/core'), require('@angular/material')) :
-    typeof define === 'function' && define.amd ? define('@knora/action', ['exports', '@angular/router', 'ts-md5/dist/md5', '@knora/core', '@angular/forms', 'jdnconvertiblecalendardateadapter', '@angular/common', '@angular/platform-browser/animations', '@angular/core', '@angular/material'], factory) :
-    (factory((global.knora = global.knora || {}, global.knora.action = {}),global.ng.router,global.md5,global['@knora/core'],global.ng.forms,global.jdnconvertiblecalendardateadapter,global.ng.common,global.ng.platformBrowser.animations,global.ng.core,global.ng.material));
-}(this, (function (exports,router,md5,core,forms,jdnconvertiblecalendardateadapter,common,animations,i0,material) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@angular/router'), require('@angular/forms'), require('@angular/material'), require('ts-md5'), require('@knora/core'), require('jdnconvertiblecalendardateadapter'), require('@angular/material/core'), require('@angular/material/button'), require('@angular/material/card'), require('@angular/material/icon'), require('@angular/material/list'), require('@angular/material/menu'), require('@angular/platform-browser/animations'), require('@angular/material/dialog')) :
+    typeof define === 'function' && define.amd ? define('@knora/action', ['exports', '@angular/core', '@angular/common', '@angular/router', '@angular/forms', '@angular/material', 'ts-md5', '@knora/core', 'jdnconvertiblecalendardateadapter', '@angular/material/core', '@angular/material/button', '@angular/material/card', '@angular/material/icon', '@angular/material/list', '@angular/material/menu', '@angular/platform-browser/animations', '@angular/material/dialog'], factory) :
+    (global = global || self, factory((global.knora = global.knora || {}, global.knora.action = {}), global.ng.core, global.ng.common, global.ng.router, global.ng.forms, global.ng.material, global['ts-md5'], global['@knora/core'], global.jdnconvertiblecalendardateadapter, global.ng.material.core, global.ng.material.button, global.ng.material.card, global.ng.material.icon, global.ng.material.list, global.ng.material.menu, global.ng.platformBrowser.animations, global.ng.material.dialog));
+}(this, function (exports, core, common, router, forms, material, tsMd5, core$1, jdnconvertiblecalendardateadapter, core$2, button, card, icon, list, menu, animations, dialog) { 'use strict';
+
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+    this file except in compliance with the License. You may obtain a copy of the
+    License at http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+    MERCHANTABLITY OR NON-INFRINGEMENT.
+
+    See the Apache Version 2.0 License for specific language governing permissions
+    and limitations under the License.
+    ***************************************************************************** */
+
+    function __decorate(decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    }
+
+    function __param(paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    }
+
+    function __metadata(metadataKey, metadataValue) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    }
+
+    function __values(o) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+        if (m) return m.call(o);
+        return {
+            next: function () {
+                if (o && i >= o.length) o = void 0;
+                return { value: o && o[i++], done: !o };
+            }
+        };
+    }
 
     /**
      * The progress indicator can be used to show the status of loading something.
@@ -24,19 +65,22 @@
         }
         ProgressIndicatorComponent.prototype.ngOnInit = function () {
         };
-        ProgressIndicatorComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'kui-progress-indicator',
-                        template: "<!-- this is the progress indicator for forms -->\n<div class=\"kui-progress-indicator submit\" *ngIf=\"status !== undefined; else isLoading\">\n    <!-- spinner while on load / on submit -->\n    <div class=\"on-submit\" *ngIf=\"status === 0\">\n        <div class=\"spinner\" [style.border-top-color]=\"color\" [style.border-left-color]=\"color\"></div>\n    </div>\n\n    <div>\n        <!-- bullet point before submit -->\n        <mat-icon *ngIf=\"status === -1\" class=\"before-submit\">keyboard_arrow_right</mat-icon>\n        <!-- icon 'check' when done -->\n        <mat-icon *ngIf=\"status === 1\" class=\"after-submit\" [style.color]=\"color\">done</mat-icon>\n        <!-- in case of an error -->\n        <mat-icon *ngIf=\"status === 400\" class=\"submit-error\">not_interested</mat-icon>\n    </div>\n\n</div>\n\n<!-- default case: is loading -->\n<ng-template #isLoading>\n    <div class=\"kui-progress-indicator default\">\n        <div class=\"line\">\n            <div class=\"bounce1\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce2\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce3\" [style.background-color]=\"color\"></div>\n        </div>\n        <div class=\"line\">\n            <div class=\"bounce3\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce1\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce2\" [style.background-color]=\"color\"></div>\n        </div>\n    </div>\n</ng-template>\n\n\n<!-- another variety of isLoading (in one line) -->\n<!--\n<div class=\"loading-progress-indicator\">\n    <span class=\"text\">{{text}}</span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n</div>\n-->\n",
-                        styles: [".kui-progress-indicator.default{height:56px;margin-left:auto;margin-right:auto;padding:24px 36px;top:60px;width:96px}.kui-progress-indicator.default.page-center{left:50%;position:absolute;top:39%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}.kui-progress-indicator.default h1,.kui-progress-indicator.default h2,.kui-progress-indicator.default h3,.kui-progress-indicator.default p{color:#555;text-align:center}.kui-progress-indicator.default .line{margin:0 auto;text-align:center;width:70px}.kui-progress-indicator.default .line>div{-webkit-animation:1.4s ease-in-out infinite both bounce-keyframes;animation:1.4s ease-in-out infinite both bounce-keyframes;background-color:#00695c;border-radius:6px;display:inline-block;height:18px;width:18px}.kui-progress-indicator.default .line .bounce1{-webkit-animation-delay:-.32s;animation-delay:-.32s}.kui-progress-indicator.default .line .bounce2{-webkit-animation-delay:-.16s;animation-delay:-.16s}@-webkit-keyframes bounce-keyframes{0%,100%,80%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}@keyframes bounce-keyframes{0%,100%,80%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}.kui-progress-indicator.submit{height:32px;width:32px}.kui-progress-indicator.submit .on-submit{-webkit-animation:.7s linear infinite spinner-keyframes;animation:.7s linear infinite spinner-keyframes;height:32px;width:32px}.kui-progress-indicator.submit .on-submit .spinner{border:2px solid #00695c;border-bottom-color:transparent;border-radius:50%;border-right-color:transparent;height:28px;width:28px}.kui-progress-indicator.submit .before-submit{color:rgba(128,128,128,.8)}.kui-progress-indicator.submit .after-submit{color:#00695c}.kui-progress-indicator.submit .submit-error{color:#f44336}@-webkit-keyframes spinner-keyframes{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes spinner-keyframes{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.loading-progress-indicator{text-align:center;width:100%}.loading-progress-indicator .text{color:#00695c;font-size:12pt}.loading-progress-indicator .dot{-webkit-animation:1.4s ease-in-out infinite dot-keyframes;animation:1.4s ease-in-out infinite dot-keyframes;background-color:#00695c;border-radius:2px;display:inline-block;height:6px;margin:3px 6px 2px;width:6px}.loading-progress-indicator .dot:nth-child(2){-webkit-animation-delay:.16s;animation-delay:.16s}.loading-progress-indicator .dot:nth-child(3){-webkit-animation-delay:.32s;animation-delay:.32s}.loading-progress-indicator .dot:nth-child(4){-webkit-animation-delay:.48s;animation-delay:.48s}.loading-progress-indicator .dot:nth-child(5){-webkit-animation-delay:.64s;animation-delay:.64s}.loading-progress-indicator .dot:nth-child(6){-webkit-animation-delay:.8s;animation-delay:.8s}@-webkit-keyframes dot-keyframes{0%,100%{opacity:.4;-webkit-transform:scale(1,1);transform:scale(1,1)}50%{opacity:1;-webkit-transform:scale(1.2,1.2);transform:scale(1.2,1.2)}}@keyframes dot-keyframes{0%,100%{opacity:.4;-webkit-transform:scale(1,1);transform:scale(1,1)}50%{opacity:1;-webkit-transform:scale(1.2,1.2);transform:scale(1.2,1.2)}}"]
-                    }] }
-        ];
-        /** @nocollapse */
-        ProgressIndicatorComponent.ctorParameters = function () { return []; };
-        ProgressIndicatorComponent.propDecorators = {
-            status: [{ type: i0.Input }],
-            color: [{ type: i0.Input }]
-        };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Number)
+        ], ProgressIndicatorComponent.prototype, "status", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], ProgressIndicatorComponent.prototype, "color", void 0);
+        ProgressIndicatorComponent = __decorate([
+            core.Component({
+                selector: 'kui-progress-indicator',
+                template: "<!-- this is the progress indicator for forms -->\n<div class=\"kui-progress-indicator submit\" *ngIf=\"status !== undefined; else isLoading\">\n    <!-- spinner while on load / on submit -->\n    <div class=\"on-submit\" *ngIf=\"status === 0\">\n        <div class=\"spinner\" [style.border-top-color]=\"color\" [style.border-left-color]=\"color\"></div>\n    </div>\n\n    <div>\n        <!-- bullet point before submit -->\n        <mat-icon *ngIf=\"status === -1\" class=\"before-submit\">keyboard_arrow_right</mat-icon>\n        <!-- icon 'check' when done -->\n        <mat-icon *ngIf=\"status === 1\" class=\"after-submit\" [style.color]=\"color\">done</mat-icon>\n        <!-- in case of an error -->\n        <mat-icon *ngIf=\"status === 400\" class=\"submit-error\">not_interested</mat-icon>\n    </div>\n\n</div>\n\n<!-- default case: is loading -->\n<ng-template #isLoading>\n    <div class=\"kui-progress-indicator default\">\n        <div class=\"line\">\n            <div class=\"bounce1\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce2\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce3\" [style.background-color]=\"color\"></div>\n        </div>\n        <div class=\"line\">\n            <div class=\"bounce3\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce1\" [style.background-color]=\"color\"></div>\n            <div class=\"bounce2\" [style.background-color]=\"color\"></div>\n        </div>\n    </div>\n</ng-template>\n\n\n<!-- another variety of isLoading (in one line) -->\n<!--\n<div class=\"loading-progress-indicator\">\n    <span class=\"text\">{{text}}</span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n    <span class=\"dot\"></span>\n</div>\n-->\n",
+                styles: [".kui-progress-indicator.default{height:56px;margin-left:auto;margin-right:auto;padding:24px 36px;top:60px;width:96px}.kui-progress-indicator.default.page-center{left:50%;position:absolute;top:39%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}.kui-progress-indicator.default h1,.kui-progress-indicator.default h2,.kui-progress-indicator.default h3,.kui-progress-indicator.default p{color:#555;text-align:center}.kui-progress-indicator.default .line{margin:0 auto;text-align:center;width:70px}.kui-progress-indicator.default .line>div{-webkit-animation:1.4s ease-in-out infinite both bounce-keyframes;animation:1.4s ease-in-out infinite both bounce-keyframes;background-color:#00695c;border-radius:6px;display:inline-block;height:18px;width:18px}.kui-progress-indicator.default .line .bounce1{-webkit-animation-delay:-.32s;animation-delay:-.32s}.kui-progress-indicator.default .line .bounce2{-webkit-animation-delay:-.16s;animation-delay:-.16s}@-webkit-keyframes bounce-keyframes{0%,100%,80%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}@keyframes bounce-keyframes{0%,100%,80%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}.kui-progress-indicator.submit{height:32px;width:32px}.kui-progress-indicator.submit .on-submit{-webkit-animation:.7s linear infinite spinner-keyframes;animation:.7s linear infinite spinner-keyframes;height:32px;width:32px}.kui-progress-indicator.submit .on-submit .spinner{border:2px solid #00695c;border-bottom-color:transparent;border-radius:50%;border-right-color:transparent;height:28px;width:28px}.kui-progress-indicator.submit .before-submit{color:rgba(128,128,128,.8)}.kui-progress-indicator.submit .after-submit{color:#00695c}.kui-progress-indicator.submit .submit-error{color:#f44336}@-webkit-keyframes spinner-keyframes{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes spinner-keyframes{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.loading-progress-indicator{text-align:center;width:100%}.loading-progress-indicator .text{color:#00695c;font-size:12pt}.loading-progress-indicator .dot{-webkit-animation:1.4s ease-in-out infinite dot-keyframes;animation:1.4s ease-in-out infinite dot-keyframes;background-color:#00695c;border-radius:2px;display:inline-block;height:6px;margin:3px 6px 2px;width:6px}.loading-progress-indicator .dot:nth-child(2){-webkit-animation-delay:.16s;animation-delay:.16s}.loading-progress-indicator .dot:nth-child(3){-webkit-animation-delay:.32s;animation-delay:.32s}.loading-progress-indicator .dot:nth-child(4){-webkit-animation-delay:.48s;animation-delay:.48s}.loading-progress-indicator .dot:nth-child(5){-webkit-animation-delay:.64s;animation-delay:.64s}.loading-progress-indicator .dot:nth-child(6){-webkit-animation-delay:.8s;animation-delay:.8s}@-webkit-keyframes dot-keyframes{0%,100%{opacity:.4;-webkit-transform:scale(1,1);transform:scale(1,1)}50%{opacity:1;-webkit-transform:scale(1.2,1.2);transform:scale(1.2,1.2)}}@keyframes dot-keyframes{0%,100%{opacity:.4;-webkit-transform:scale(1,1);transform:scale(1,1)}50%{opacity:1;-webkit-transform:scale(1.2,1.2);transform:scale(1.2,1.2)}}"]
+            }),
+            __metadata("design:paramtypes", [])
+        ], ProgressIndicatorComponent);
         return ProgressIndicatorComponent;
     }());
 
@@ -47,13 +91,12 @@
     var SortButtonComponent = /** @class */ (function () {
         function SortButtonComponent() {
             /**
-             * @ignore {string} sortKeyChange
-             * @emits TODO: this would be the correct syntax for Output eventEmitter
+             * @emits {string} sortKeyChange
              *
              * EventEmitter when a user selected a sort property;
              * This is the selected key
              */
-            this.sortKeyChange = new i0.EventEmitter();
+            this.sortKeyChange = new core.EventEmitter();
             this.menuXPos = 'after';
             /**
              * @param {string} [position='left']
@@ -88,22 +131,36 @@
         SortButtonComponent.prototype.sortBy = function (key) {
             this.sortKeyChange.emit(key);
         };
-        SortButtonComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'kui-sort-button',
-                        template: "<span class=\"sort-button\" [class]=\"position + ' ' + icon\">\n    <button mat-icon-button [matMenuTriggerFor]=\"sortSelection\">\n        <mat-icon>{{icon}}</mat-icon>\n    </button>\n    <mat-menu #sortSelection=\"matMenu\" [xPosition]=\"menuXPos\">\n        <button mat-menu-item\n                *ngFor=\"let item of sortProps\"\n                (click)=\"sortBy(item.key)\"\n                [class.active]=\"activeKey === item.key\">\n            {{item.label}}\n        </button>\n    </mat-menu>\n</span>\n",
-                        styles: [".active{background:rgba(128,128,128,.8)}.right.sort{float:right}.right.sort .mat-icon{-webkit-transform:scale(-1,1);transform:scale(-1,1)}"]
-                    }] }
-        ];
-        /** @nocollapse */
-        SortButtonComponent.ctorParameters = function () { return []; };
-        SortButtonComponent.propDecorators = {
-            sortKeyChange: [{ type: i0.Output }],
-            sortProps: [{ type: i0.Input }],
-            position: [{ type: i0.Input }],
-            icon: [{ type: i0.Input }],
-            sortKey: [{ type: i0.Input }]
-        };
+        __decorate([
+            core.Output(),
+            __metadata("design:type", core.EventEmitter)
+        ], SortButtonComponent.prototype, "sortKeyChange", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Array)
+        ], SortButtonComponent.prototype, "sortProps", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], SortButtonComponent.prototype, "position", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], SortButtonComponent.prototype, "icon", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Function),
+            __metadata("design:paramtypes", [String]),
+            __metadata("design:returntype", void 0)
+        ], SortButtonComponent.prototype, "sortKey", null);
+        SortButtonComponent = __decorate([
+            core.Component({
+                selector: 'kui-sort-button',
+                template: "<span class=\"sort-button\" [class]=\"position + ' ' + icon\">\n    <button mat-icon-button [matMenuTriggerFor]=\"sortSelection\">\n        <mat-icon>{{icon}}</mat-icon>\n    </button>\n    <mat-menu #sortSelection=\"matMenu\" [xPosition]=\"menuXPos\">\n        <button mat-menu-item\n                *ngFor=\"let item of sortProps\"\n                (click)=\"sortBy(item.key)\"\n                [class.active]=\"activeKey === item.key\">\n            {{item.label}}\n        </button>\n    </mat-menu>\n</span>\n",
+                styles: [".active{background:rgba(128,128,128,.8)}.right.sort{float:right}.right.sort .mat-icon{-webkit-transform:scale(-1,1);transform:scale(-1,1)}"]
+            }),
+            __metadata("design:paramtypes", [])
+        ], SortButtonComponent);
         return SortButtonComponent;
     }());
 
@@ -364,12 +421,12 @@
                 }
             };
         }
-        StatusMsg.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        StatusMsg.ngInjectableDef = i0.defineInjectable({ factory: function StatusMsg_Factory() { return new StatusMsg(); }, token: StatusMsg, providedIn: "root" });
+        StatusMsg.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function StatusMsg_Factory() { return new StatusMsg(); }, token: StatusMsg, providedIn: "root" });
+        StatusMsg = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            })
+        ], StatusMsg);
         return StatusMsg;
     }());
 
@@ -547,28 +604,309 @@
         MessageComponent.prototype.closeMessage = function () {
             this.disable = !this.disable;
         };
-        MessageComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'kui-message',
-                        template: "<mat-card *ngIf=\"!short\" class=\"fix-width kui-message\" [ngClass]=\"'kui-' + message?.type\">\n\n    <mat-card-subtitle class=\"message-subtitle\">\n        <span class=\"left\">{{message?.type | uppercase }} {{message?.status}} | {{message?.statusMsg}}</span>\n        <mat-icon class=\"right\">{{message?.type}}</mat-icon>\n    </mat-card-subtitle>\n\n    <mat-card-title class=\"message-title\" [innerHtml]=\"message?.statusText\"></mat-card-title>\n\n    <mat-card-content class=\"message-content\">\n        <mat-list *ngIf=\"message?.route\">\n            <mat-list-item>\n                <a [href]=\"message?.route\" target=\"_blank\">\n                    &rarr; {{message?.route}}\n                </a>\n            </mat-list-item>\n        </mat-list>\n\n        <mat-list *ngIf=\"showLinks\">\n            <p>{{links.title}}</p>\n            <mat-list-item *ngFor=\"let item of links.list\" class=\"link\" (click)=\"goToLocation(item.route)\">\n                <mat-icon mat-list-icon>{{item.icon}}</mat-icon>\n                <p mat-line>{{item.label}}</p>\n            </mat-list-item>\n        </mat-list>\n\n    </mat-card-content>\n\n    <mat-card-footer *ngIf=\"!medium\" class=\"message-footnote\" [innerHtml]=\"message?.footnote\"></mat-card-footer>\n\n</mat-card>\n\n<mat-card *ngIf=\"short && !disable\" class=\"fix-width kui-short-message\" [ngClass]=\"'kui-' + message?.type\">\n\n    <div class=\"kui-panel\">\n        <span class=\"kui-short-message-text\">\n            {{message?.statusText}}\n        </span>\n        <span class=\"fill-remaining-space\"></span>\n        <button mat-icon-button (click)=\"closeMessage()\">\n            <mat-icon>close</mat-icon>\n        </button>\n    </div>\n\n</mat-card>\n",
-                        styles: [".kui-panel{display:flex;box-sizing:border-box;flex-direction:row;white-space:nowrap}.fill-remaining-space{flex-basis:auto;flex-grow:1;flex-shrink:1}.kui-error{background-color:rgba(244,67,54,.5)}.kui-warning{background-color:rgba(255,196,0,.5)}.kui-hint,.kui-note{background-color:rgba(0,105,92,.4)}.kui-error,.kui-hint,.kui-note,.kui-warning{margin:12px auto;max-width:640px}.kui-error .message-subtitle,.kui-hint .message-subtitle,.kui-note .message-subtitle,.kui-warning .message-subtitle{padding-bottom:12px}.kui-error .message-subtitle .left,.kui-hint .message-subtitle .left,.kui-note .message-subtitle .left,.kui-warning .message-subtitle .left{float:left;left:16px;position:absolute;text-align:left}.kui-error .message-subtitle .right,.kui-hint .message-subtitle .right,.kui-note .message-subtitle .right,.kui-warning .message-subtitle .right{float:right;right:16px;position:absolute;text-align:right}.kui-error .message-title,.kui-hint .message-title,.kui-note .message-title,.kui-warning .message-title{padding-top:12px}.kui-error .message-content,.kui-hint .message-content,.kui-note .message-content,.kui-warning .message-content{margin-bottom:48px;margin-top:48px}.kui-error .message-content .link,.kui-hint .message-content .link,.kui-note .message-content .link,.kui-warning .message-content .link{cursor:pointer}.kui-error .message-footnote,.kui-hint .message-footnote,.kui-note .message-footnote,.kui-warning .message-footnote{padding:24px}.kui-short-message .kui-short-message-text{font-weight:bolder;text-align:center}"]
-                    }] }
-        ];
-        /** @nocollapse */
-        MessageComponent.ctorParameters = function () {
-            return [
-                { type: router.Router },
-                { type: common.Location },
-                { type: router.ActivatedRoute },
-                { type: StatusMsg }
-            ];
-        };
-        MessageComponent.propDecorators = {
-            message: [{ type: i0.Input }],
-            short: [{ type: i0.Input }],
-            medium: [{ type: i0.Input }]
-        };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", KuiMessageData)
+        ], MessageComponent.prototype, "message", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean)
+        ], MessageComponent.prototype, "short", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean)
+        ], MessageComponent.prototype, "medium", void 0);
+        MessageComponent = __decorate([
+            core.Component({
+                selector: 'kui-message',
+                template: "<mat-card *ngIf=\"!short\" class=\"fix-width kui-message\" [ngClass]=\"'kui-' + message?.type\">\n\n    <mat-card-subtitle class=\"message-subtitle\">\n        <span class=\"left\">{{message?.type | uppercase }} {{message?.status}} | {{message?.statusMsg}}</span>\n        <mat-icon class=\"right\">{{message?.type}}</mat-icon>\n    </mat-card-subtitle>\n\n    <mat-card-title class=\"message-title\" [innerHtml]=\"message?.statusText\"></mat-card-title>\n\n    <mat-card-content class=\"message-content\">\n        <mat-list *ngIf=\"message?.route\">\n            <mat-list-item>\n                <a [href]=\"message?.route\" target=\"_blank\">\n                    &rarr; {{message?.route}}\n                </a>\n            </mat-list-item>\n        </mat-list>\n\n        <mat-list *ngIf=\"showLinks\">\n            <p>{{links.title}}</p>\n            <mat-list-item *ngFor=\"let item of links.list\" class=\"link\" (click)=\"goToLocation(item.route)\">\n                <mat-icon mat-list-icon>{{item.icon}}</mat-icon>\n                <p mat-line>{{item.label}}</p>\n            </mat-list-item>\n        </mat-list>\n\n    </mat-card-content>\n\n    <mat-card-footer *ngIf=\"!medium\" class=\"message-footnote\" [innerHtml]=\"message?.footnote\"></mat-card-footer>\n\n</mat-card>\n\n<mat-card *ngIf=\"short && !disable\" class=\"fix-width kui-short-message\" [ngClass]=\"'kui-' + message?.type\">\n\n    <div class=\"kui-panel\">\n        <span class=\"kui-short-message-text\">\n            {{message?.statusText}}\n        </span>\n        <span class=\"fill-remaining-space\"></span>\n        <button mat-icon-button (click)=\"closeMessage()\">\n            <mat-icon>close</mat-icon>\n        </button>\n    </div>\n\n</mat-card>\n",
+                styles: [".kui-panel{display:flex;box-sizing:border-box;flex-direction:row;white-space:nowrap}.fill-remaining-space{flex-basis:auto;flex-grow:1;flex-shrink:1}.kui-error{background-color:rgba(244,67,54,.5)}.kui-warning{background-color:rgba(255,196,0,.5)}.kui-hint,.kui-note{background-color:rgba(0,105,92,.4)}.kui-error,.kui-hint,.kui-note,.kui-warning{margin:12px auto;max-width:640px}.kui-error .message-subtitle,.kui-hint .message-subtitle,.kui-note .message-subtitle,.kui-warning .message-subtitle{padding-bottom:12px}.kui-error .message-subtitle .left,.kui-hint .message-subtitle .left,.kui-note .message-subtitle .left,.kui-warning .message-subtitle .left{float:left;left:16px;position:absolute;text-align:left}.kui-error .message-subtitle .right,.kui-hint .message-subtitle .right,.kui-note .message-subtitle .right,.kui-warning .message-subtitle .right{float:right;right:16px;position:absolute;text-align:right}.kui-error .message-title,.kui-hint .message-title,.kui-note .message-title,.kui-warning .message-title{padding-top:12px}.kui-error .message-content,.kui-hint .message-content,.kui-note .message-content,.kui-warning .message-content{margin-bottom:48px;margin-top:48px}.kui-error .message-content .link,.kui-hint .message-content .link,.kui-note .message-content .link,.kui-warning .message-content .link{cursor:pointer}.kui-error .message-footnote,.kui-hint .message-footnote,.kui-note .message-footnote,.kui-warning .message-footnote{padding:24px}.kui-short-message .kui-short-message-text{font-weight:bolder;text-align:center}@media (max-width:576px){.kui-panel{white-space:normal}.kui-short-message .kui-short-message-text{text-align:left}}"]
+            }),
+            __metadata("design:paramtypes", [router.Router,
+                common.Location,
+                router.ActivatedRoute,
+                StatusMsg])
+        ], MessageComponent);
         return MessageComponent;
+    }());
+
+    var StringLiteralInputComponent = /** @class */ (function () {
+        function StringLiteralInputComponent(_fb) {
+            this._fb = _fb;
+            this.languages = ['de', 'fr', 'it', 'en'];
+            /**
+             * Optional placeholder for the input field e.g. Label
+             *
+             * @param  {string} [placeholder='Label']
+             */
+            this.placeholder = 'Label';
+            /**
+             * Optional form field input type: textarea? set to true for textarea
+             * otherwise it's a simple (short) input field
+             *
+             * @param  {boolean} [textarea=false]
+             */
+            this.textarea = false;
+            /**
+             * Optional form field value of type StringLiteral[]
+             *
+             * @param {StringLiteral[]} value
+             */
+            this.value = [];
+            /**
+             * Optional disable the input field in case of no right to edit the field/value
+             *
+             * @param {boolean}: [disabled=false]
+             */
+            this.disabled = false;
+            /**
+             * The readonly attribute specifies whether the control may be modified by the user.
+             *
+             * @param {boolean}: [readonly=false]
+             */
+            this.readonly = false;
+            /**
+             * Returns (output) an array of StringLiteral on any change on the input field.
+             *
+             * @emits {StringLiteral[]} dataChanged
+             */
+            this.dataChanged = new core.EventEmitter();
+            /**
+             * Returns (output) true when the field was touched. This can be used to validate data, e.g. in case a value is required
+             *
+             * @emits {boolean} touched
+             */
+            this.touched = new core.EventEmitter();
+            /**
+             * Returns true when a user press ENTER. This can be used to submit data in the parent component.
+             *
+             * * @emits {boolean} enter
+             */
+            this.enter = new core.EventEmitter();
+            // set selected language, if it's not defined yet
+            if (!this.language) {
+                if (localStorage.getItem('session') !== null) {
+                    // get language from the logged-in user profile data
+                    this.language = JSON.parse(localStorage.getItem('session')).user.lang;
+                }
+                else {
+                    // get default language from browser
+                    this.language = navigator.language.substr(0, 2);
+                }
+            }
+            // does the defined language exists in our supported languages list?
+            if (this.languages.indexOf(this.language) === -1) {
+                // if not, select the first language from our list of supported languages
+                this.language = this.languages[0];
+            }
+        }
+        StringLiteralInputComponent.prototype.ngOnInit = function () {
+            // if (this.placeholder.length > 0) {
+            //     this.placeholder += ' (' + this.language + ')';
+            // }
+            var _this = this;
+            // reset stringLiterals if they have empty values
+            this.resetValues();
+            // build the form
+            this.form = this._fb.group({
+                text: new forms.FormControl({
+                    value: '',
+                    disabled: this.disabled
+                }, {
+                // updateOn: 'blur'
+                })
+            });
+            // update values on form change
+            this.form.valueChanges.subscribe(function (data) { return _this.onValueChanged(); });
+            // get value from stringLiterals
+            var val = this.getValueFromStringLiteral(this.language);
+            this.updateFormField(val);
+        };
+        /**
+         * @ignore
+         *
+         * emit data to parent on any change on the input field
+         */
+        StringLiteralInputComponent.prototype.onValueChanged = function () {
+            if (!this.form) {
+                return;
+            }
+            var form = this.form;
+            var control = form.get('text');
+            this.touched.emit(control && control.dirty);
+            // if (control && control.dirty) {
+            // console.warn('control dirty');
+            // }
+            this.updateStringLiterals(this.language, this.form.controls['text'].value);
+            this.dataChanged.emit(this.value);
+        };
+        StringLiteralInputComponent.prototype.toggleAll = function () {
+            // TODO: open/show all languages with their values
+        };
+        /**
+         * @ignore
+         *
+         * Set the language after selecting; This updates the array of StringLiterals: adds item with the selected language if it doesn't exist
+         */
+        StringLiteralInputComponent.prototype.setLanguage = function (lang) {
+            if (this.language === lang) ;
+            else {
+                // clean stringLIteral value for previous language, if text field is empty
+                this.updateStringLiterals(this.language, this.form.controls['text'].value);
+                this.language = lang;
+                // update form field value / reset in case of no value
+                var val = this.getValueFromStringLiteral(lang);
+                this.updateFormField(val);
+            }
+        };
+        /**
+         * @ignore
+         *
+         * Switch focus to input field after selecting a language
+         */
+        StringLiteralInputComponent.prototype.switchFocus = function () {
+            // close the menu
+            if (!this.textarea && this.btnToSelectLanguage && this.btnToSelectLanguage.menuOpen) {
+                this.btnToSelectLanguage.closeMenu();
+            }
+            if (!this.disabled) {
+                this.form.controls['text'].enable();
+                this.textInput.nativeElement.focus();
+            }
+        };
+        /**
+         * @ignore
+         *
+         * Set the value in the input field
+         */
+        StringLiteralInputComponent.prototype.updateFormField = function (value) {
+            if (!value) {
+                value = '';
+            }
+            this.form.controls['text'].setValue(value);
+        };
+        /**
+         * @ignore
+         *
+         * Update the array of StringLiterals depending on value / empty value add or remove item from array.
+         */
+        StringLiteralInputComponent.prototype.updateStringLiterals = function (lang, value) {
+            var index = this.value.findIndex(function (i) { return i.language === lang; });
+            if (index > -1 && this.value[index].value.length > 0) {
+                // value is not empty and exists in list of stringLiterals
+                // console.log('update existing value for ' + lang + ' on position ' + index);
+                this.value[index].value = value;
+            }
+            if ((!value || value.length === 0) && index > -1) {
+                // value is empty: delete stringLiteral item for this language
+                // console.log('delete empty value for ' + lang + ' on position ' + index);
+                this.value.splice(index, 1);
+            }
+            if (index < 0 && value) {
+                // value doesn't exist in stringLiterals: add one
+                // console.log('add new value (' + value + ') for ' + lang);
+                var newValue = {
+                    value: value,
+                    language: lang
+                };
+                this.value.push(newValue);
+            }
+        };
+        /**
+         * @ignore
+         *
+         * In case of strange array of StringLiterals, this method will reset to a API-conform array. This means an array without empty values.
+         */
+        StringLiteralInputComponent.prototype.resetValues = function () {
+            var _this = this;
+            var length = this.value.length;
+            if (length > 0) {
+                var index = length - 1;
+                while (index >= 0) {
+                    // remove items with empty value
+                    if (!this.value[index].value.length) {
+                        this.value.splice(index, 1);
+                    }
+                    index--;
+                }
+                // does an item for selected lanuage exists
+                if (this.value.findIndex(function (i) { return i.language === _this.language; }) === -1) {
+                    this.language = this.value[0].language;
+                }
+            }
+            else {
+                this.value = [];
+            }
+        };
+        /**
+         * @ignore
+         *
+         * Get the value from array of StringLiterals for the selected language
+         */
+        StringLiteralInputComponent.prototype.getValueFromStringLiteral = function (lang) {
+            // console.log('existing value in', this.value);
+            // get index for this language
+            var index = this.value.findIndex(function (i) { return i.language === lang; });
+            if (this.value[index] && this.value[index].value.length > 0) {
+                return this.value[index].value;
+            }
+            else {
+                return undefined;
+            }
+        };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], StringLiteralInputComponent.prototype, "placeholder", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], StringLiteralInputComponent.prototype, "language", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean)
+        ], StringLiteralInputComponent.prototype, "textarea", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Array)
+        ], StringLiteralInputComponent.prototype, "value", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean)
+        ], StringLiteralInputComponent.prototype, "disabled", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean)
+        ], StringLiteralInputComponent.prototype, "readonly", void 0);
+        __decorate([
+            core.Output(),
+            __metadata("design:type", core.EventEmitter)
+        ], StringLiteralInputComponent.prototype, "dataChanged", void 0);
+        __decorate([
+            core.Output(),
+            __metadata("design:type", core.EventEmitter)
+        ], StringLiteralInputComponent.prototype, "touched", void 0);
+        __decorate([
+            core.Output(),
+            __metadata("design:type", core.EventEmitter)
+        ], StringLiteralInputComponent.prototype, "enter", void 0);
+        __decorate([
+            core.ViewChild('textInput', { static: false }),
+            __metadata("design:type", core.ElementRef)
+        ], StringLiteralInputComponent.prototype, "textInput", void 0);
+        __decorate([
+            core.ViewChild('btnToSelectLanguage', { static: false }),
+            __metadata("design:type", material.MatMenuTrigger)
+        ], StringLiteralInputComponent.prototype, "btnToSelectLanguage", void 0);
+        StringLiteralInputComponent = __decorate([
+            core.Component({
+                selector: 'kui-string-literal-input',
+                template: "<form [formGroup]=\"form\">\n\n    <!-- default input element -->\n    <mat-form-field *ngIf=\"!textarea\" class=\"string-literal short-text\">\n\n        <!-- select: button to select language -->\n        <button mat-button type=\"button\" matPrefix class=\"select-lang\" [matMenuTriggerFor]=\"selectLanguage\"\n                #btnToSelectLanguage=\"matMenuTrigger\" (click)=\"form.controls['text'].disable()\">\n            <span class=\"label\">{{language}}</span>\n            <mat-icon class=\"icon\" matSuffix>keyboard_arrow_down</mat-icon>\n        </button>\n\n        <!-- select: menu with list of languages -->\n        <mat-menu #selectLanguage=\"matMenu\">\n            <button mat-menu-item type=\"button\" *ngFor=\"let lang of languages\"\n                    (click)=\"setLanguage(lang);switchFocus()\">\n                <span [class.existing-value]=\"getValueFromStringLiteral(lang)\">{{lang}}</span>\n            </button>\n            <!-- TODO / QUESTION: should we support a show all button, to display values for all languages?\n                <mat-divider></mat-divider>\n                <button mat-menu-item type=\"button\" (click)=\"toggleAll()\">\n                    <span>Show values for all languages</span>\n                </button>\n            -->\n        </mat-menu>\n\n        <!-- input field-->\n        <input matInput [placeholder]=\"placeholder\" [formControl]=\"form.controls['text']\" #textInput\n               [readonly]=\"readonly\" (keyup.enter)=\"enter.emit(true)\">\n    </mat-form-field>\n\n    <!-- input element type is textarea -->\n    <div *ngIf=\"textarea\" class=\"string-literal long-text\">\n        <!-- button toggle group: buttons to select language -->\n        <mat-button-toggle-group matPrefix #group=\"matButtonToggleGroup\" vertical class=\"string-literal-select-lang\">\n            <mat-button-toggle *ngFor=\"let lang of languages\" (click)=\"setLanguage(lang);switchFocus()\"\n                               [checked]=\"lang === language\">\n                <span [class.existing-value]=\"getValueFromStringLiteral(lang)\">{{lang}}</span>\n            </mat-button-toggle>\n        </mat-button-toggle-group>\n        <mat-form-field class=\"string-literal-textarea\">\n            <!-- textarea -->\n            <textarea matInput [placeholder]=\"placeholder\" [formControl]=\"form.controls['text']\" #textInput\n                      [readonly]=\"readonly\"></textarea>\n        </mat-form-field>\n    </div>\n\n</form>\n",
+                styles: [".mat-form-field{width:100%!important}.existing-value{font-weight:700}"]
+            }),
+            __metadata("design:paramtypes", [forms.FormBuilder])
+        ], StringLiteralInputComponent);
+        return StringLiteralInputComponent;
     }());
 
     /**
@@ -617,14 +955,16 @@
             this.source = this.image;
             switch (this.type) {
                 case 'user':
+                    this.onError = AdminImageConfig.defaultUser;
                     if (this.image === null || this.image === undefined) {
                         this.source = AdminImageConfig.defaultUser;
                     }
                     else {
-                        this.source = 'http://www.gravatar.com/avatar/' + md5.Md5.hashStr(this.image) + '?d=mp&s=256';
+                        this.source = location.protocol + '//www.gravatar.com/avatar/' + tsMd5.Md5.hashStr(this.image) + '?d=mp&s=256';
                     }
                     break;
                 case 'project':
+                    this.onError = AdminImageConfig.defaultProject;
                     if (this.image === null || this.image === undefined) {
                         this.source = AdminImageConfig.defaultProject;
                     }
@@ -635,22 +975,21 @@
             this._renderer.setAttribute(this._ele.nativeElement, 'src', this.source);
             this._renderer.setAttribute(this._ele.nativeElement, 'onError', 'this.src=\'' + this.onError + '\'');
         };
-        AdminImageDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: '[kuiAdminImage]'
-                    },] }
-        ];
-        /** @nocollapse */
-        AdminImageDirective.ctorParameters = function () {
-            return [
-                { type: i0.Renderer2 },
-                { type: i0.ElementRef }
-            ];
-        };
-        AdminImageDirective.propDecorators = {
-            image: [{ type: i0.Input }],
-            type: [{ type: i0.Input }]
-        };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], AdminImageDirective.prototype, "image", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], AdminImageDirective.prototype, "type", void 0);
+        AdminImageDirective = __decorate([
+            core.Directive({
+                selector: '[kuiAdminImage]'
+            }),
+            __metadata("design:paramtypes", [core.Renderer2,
+                core.ElementRef])
+        ], AdminImageDirective);
         return AdminImageDirective;
     }());
 
@@ -673,13 +1012,13 @@
         });
         GndDirective.prototype.ngOnChanges = function () {
             if (this._gnd.length < 30) {
-                if (this._gnd.indexOf(core.KnoraConstants.GNDPrefix) === 0) {
+                if (this._gnd.indexOf(core$1.KnoraConstants.GNDPrefix) === 0) {
                     // GND/IAF identifier
-                    this.el.nativeElement.innerHTML = "<a href=\"" + (core.KnoraConstants.GNDResolver + this._gnd.replace(core.KnoraConstants.GNDPrefix, '')) + "\" target=\"_blank\">" + this._gnd + "</a>";
+                    this.el.nativeElement.innerHTML = "<a href=\"" + (core$1.KnoraConstants.GNDResolver + this._gnd.replace(core$1.KnoraConstants.GNDPrefix, '')) + "\" target=\"_blank\">" + this._gnd + "</a>";
                 }
-                else if (this._gnd.indexOf(core.KnoraConstants.VIAFPrefix) === 0) {
+                else if (this._gnd.indexOf(core$1.KnoraConstants.VIAFPrefix) === 0) {
                     // VIAF identifier
-                    this.el.nativeElement.innerHTML = "<a href=\"" + (core.KnoraConstants.VIAFResolver + this._gnd.replace(core.KnoraConstants.VIAFPrefix, '')) + "\" target=\"_blank\">" + this._gnd + "</a>";
+                    this.el.nativeElement.innerHTML = "<a href=\"" + (core$1.KnoraConstants.VIAFResolver + this._gnd.replace(core$1.KnoraConstants.VIAFPrefix, '')) + "\" target=\"_blank\">" + this._gnd + "</a>";
                 }
                 else {
                     // no identifier, leave unchanged
@@ -691,50 +1030,20 @@
                 this.el.nativeElement.innerHTML = this._gnd;
             }
         };
-        GndDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        // tslint:disable-next-line:directive-selector
-                        selector: '[kuiGnd]'
-                    },] }
-        ];
-        /** @nocollapse */
-        GndDirective.ctorParameters = function () {
-            return [
-                { type: i0.ElementRef }
-            ];
-        };
-        GndDirective.propDecorators = {
-            kuiGnd: [{ type: i0.Input }]
-        };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String),
+            __metadata("design:paramtypes", [String])
+        ], GndDirective.prototype, "kuiGnd", null);
+        GndDirective = __decorate([
+            core.Directive({
+                // tslint:disable-next-line:directive-selector
+                selector: '[kuiGnd]'
+            }),
+            __metadata("design:paramtypes", [core.ElementRef])
+        ], GndDirective);
         return GndDirective;
     }());
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
-
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
-
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
-    ***************************************************************************** */
-    function __values(o) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
-        if (m)
-            return m.call(o);
-        return {
-            next: function () {
-                if (o && i >= o.length)
-                    o = void 0;
-                return { value: o && o[i++], done: !o };
-            }
-        };
-    }
 
     var ExistingNameDirective = /** @class */ (function () {
         function ExistingNameDirective() {
@@ -743,6 +1052,7 @@
              */
             this.valFn = forms.Validators.nullValidator;
         }
+        ExistingNameDirective_1 = ExistingNameDirective;
         /**
          * @ignore
          * @param changes
@@ -765,15 +1075,22 @@
         ExistingNameDirective.prototype.validate = function (control) {
             return this.valFn(control);
         };
-        ExistingNameDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: '[kuiExistingName]',
-                        providers: [{ provide: forms.NG_VALIDATORS, useExisting: ExistingNameDirective, multi: true }]
-                    },] }
-        ];
-        ExistingNameDirective.propDecorators = {
-            existingName: [{ type: i0.Input }]
-        };
+        var ExistingNameDirective_1;
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], ExistingNameDirective.prototype, "existingName", void 0);
+        ExistingNameDirective = ExistingNameDirective_1 = __decorate([
+            core.Directive({
+                selector: '[kuiExistingName]',
+                providers: [{ provide: forms.NG_VALIDATORS, useExisting: ExistingNameDirective_1, multi: true }]
+            })
+            /**
+             * With the ExistingNameDirective we could prevent to use a name which has to be unique but already exists
+             * e.g. get a list of all project shortnames, then we can use this list as existing names;
+             * you can also use it for a list of blacklisted (not allowed) words
+             */
+        ], ExistingNameDirective);
         return ExistingNameDirective;
     }());
     /**
@@ -819,18 +1136,12 @@
                     }
                 }
             }
-            catch (e_1_1) {
-                e_1 = { error: e_1_1 };
-            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
             finally {
                 try {
-                    if (valArrayRegexp_1_1 && !valArrayRegexp_1_1.done && (_a = valArrayRegexp_1.return))
-                        _a.call(valArrayRegexp_1);
+                    if (valArrayRegexp_1_1 && !valArrayRegexp_1_1.done && (_a = valArrayRegexp_1.return)) _a.call(valArrayRegexp_1);
                 }
-                finally {
-                    if (e_1)
-                        throw e_1.error;
-                }
+                finally { if (e_1) throw e_1.error; }
             }
             return no ? { 'existingName': { name: name } } : null;
         };
@@ -862,20 +1173,13 @@
         function JdnDatepickerDirective(adapter) {
             this.adapter = adapter;
         }
-        JdnDatepickerDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: 'kuiJdnDatepicker',
-                        providers: [
-                            { provide: material.DateAdapter, useClass: jdnconvertiblecalendardateadapter.JDNConvertibleCalendarDateAdapter, deps: [material.MAT_DATE_LOCALE] }
-                        ]
-                    },] }
-        ];
-        /** @nocollapse */
-        JdnDatepickerDirective.ctorParameters = function () {
-            return [
-                { type: material.DateAdapter }
-            ];
-        };
+        JdnDatepickerDirective = __decorate([
+            core.Directive({
+                selector: 'kuiJdnDatepicker',
+                providers: [{ provide: core$2.DateAdapter, useClass: jdnconvertiblecalendardateadapter.JDNConvertibleCalendarDateAdapter, deps: [core$2.MAT_DATE_LOCALE] }]
+            }),
+            __metadata("design:paramtypes", [core$2.DateAdapter])
+        ], JdnDatepickerDirective);
         return JdnDatepickerDirective;
     }());
 
@@ -900,11 +1204,11 @@
             }
             return keys;
         };
-        KeyPipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'kuiKey'
-                    },] }
-        ];
+        KeyPipe = __decorate([
+            core.Pipe({
+                name: 'kuiKey'
+            })
+        ], KeyPipe);
         return KeyPipe;
     }());
 
@@ -919,11 +1223,11 @@
                 return value.slice().reverse();
             }
         };
-        ReversePipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'kuiReverse'
-                    },] }
-        ];
+        ReversePipe = __decorate([
+            core.Pipe({
+                name: 'kuiReverse'
+            })
+        ], ReversePipe);
         return ReversePipe;
     }());
 
@@ -953,12 +1257,50 @@
             }
             return array;
         };
-        SortByPipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'kuiSortBy'
-                    },] }
-        ];
+        SortByPipe = __decorate([
+            core.Pipe({
+                name: 'kuiSortBy'
+            })
+        ], SortByPipe);
         return SortByPipe;
+    }());
+
+    /**
+     * This pipe can be used to shorten long text by a defined length.
+     *
+     * In markup:
+     *
+     * {{ str | kuiTruncate:[20] }}
+     *
+     * or
+     *
+     * {{ str | kuiTruncate:[20, '...'] }}
+     *
+     *
+     * The first parameter defines the lenght where to truncate the string.
+     * Second optional parameter defines the characters to append to the shortened string. Default is '...'.
+     *
+     * The advantage of this pipe over the default Angular slice pipe is the simplicity of adding additional characters at the end of the shortened string.
+     * The same construct with slice looks as follow `{{ (str.length>24)? (str | slice:0:24)+'...':(str) }}`.
+     *
+     */
+    var TruncatePipe = /** @class */ (function () {
+        function TruncatePipe() {
+        }
+        TruncatePipe.prototype.transform = function (value, args) {
+            if (!value || value.length === 0) {
+                return;
+            }
+            var limit = args.length > 0 ? parseInt(args[0], 10) : 20;
+            var trail = args.length > 1 ? args[1] : '...';
+            return value.length > limit ? value.substring(0, limit) + trail : value;
+        };
+        TruncatePipe = __decorate([
+            core.Pipe({
+                name: 'kuiTruncate'
+            })
+        ], TruncatePipe);
+        return TruncatePipe;
     }());
 
     var ResourceDialogComponent = /** @class */ (function () {
@@ -976,13 +1318,9 @@
          * @returns
          */
         ResourceDialogComponent.createConfiguration = function (resourceIri, widthPct, heightPct) {
-            if (widthPct === void 0) {
-                widthPct = 60;
-            }
-            if (heightPct === void 0) {
-                heightPct = 60;
-            }
-            var config = new material.MatDialogConfig();
+            if (widthPct === void 0) { widthPct = 60; }
+            if (heightPct === void 0) { heightPct = 60; }
+            var config = new dialog.MatDialogConfig();
             config.height = widthPct + "%";
             config.width = heightPct + "%";
             config.data = {
@@ -1009,109 +1347,165 @@
                 this._dialogRef.updatePosition();
             }
         };
-        ResourceDialogComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'kui-resource-dialog',
-                        template: "<div class=\"object-dialog\">\n  <!-- header with close (on the left hand side) and resize (on the right hand side) button\n      and with the title in the center -->\n  <div class=\"dialog-header\">\n    <span class=\"dialog-action-button\">\n      <button mat-icon-button class=\"resize-button\" (click)=\"toggleFullSize()\">\n        <mat-icon class=\"optimize-direction\" [innerHtml]=\"fullSize ? 'call_received' :'call_made'\"></mat-icon>\n      </button>\n    </span>\n    <span class=\"fill-remaining-space\"></span>\n    <span>\n      <h3 class=\"dialog-title\" mat-dialog-title>\n        Resource\n        <!--'salsahLabels.frameworkForListings.add.title' | translate -->\n      </h3>\n    </span>\n    <span class=\"fill-remaining-space\"></span>\n    <span class=\"dialog-action-button\">\n      <button mat-icon-button class=\"close-button\" (click)=\"_dialogRef.close()\">\n        <mat-icon>close</mat-icon>\n      </button>\n    </span>\n  </div>\n\n  <!-- <mat-dialog-content class=\"dialog-content\" [class.fullsize]=\"fullSize\">\n\n      <salsah-resource-object [iri]=\"data.iri\"></salsah-resource-object>\n\n  </mat-dialog-content> -->\n\n</div>",
-                        styles: [""]
-                    }] }
-        ];
-        /** @nocollapse */
-        ResourceDialogComponent.ctorParameters = function () {
-            return [
-                { type: material.MatDialogRef },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [material.MAT_DIALOG_DATA,] }] }
-            ];
-        };
+        ResourceDialogComponent = __decorate([
+            core.Component({
+                selector: 'kui-resource-dialog',
+                template: "<div class=\"object-dialog\">\n  <!-- header with close (on the left hand side) and resize (on the right hand side) button\n      and with the title in the center -->\n  <div class=\"dialog-header\">\n    <span class=\"dialog-action-button\">\n      <button mat-icon-button class=\"resize-button\" (click)=\"toggleFullSize()\">\n        <mat-icon class=\"optimize-direction\" [innerHtml]=\"fullSize ? 'call_received' :'call_made'\"></mat-icon>\n      </button>\n    </span>\n    <span class=\"fill-remaining-space\"></span>\n    <span>\n      <h3 class=\"dialog-title\" mat-dialog-title>\n        Resource\n        <!--'salsahLabels.frameworkForListings.add.title' | translate -->\n      </h3>\n    </span>\n    <span class=\"fill-remaining-space\"></span>\n    <span class=\"dialog-action-button\">\n      <button mat-icon-button class=\"close-button\" (click)=\"_dialogRef.close()\">\n        <mat-icon>close</mat-icon>\n      </button>\n    </span>\n  </div>\n\n  <!-- <mat-dialog-content class=\"dialog-content\" [class.fullsize]=\"fullSize\">\n\n      <salsah-resource-object [iri]=\"data.iri\"></salsah-resource-object>\n\n  </mat-dialog-content> -->\n\n</div>",
+                styles: [""]
+            }),
+            __param(1, core.Inject(dialog.MAT_DIALOG_DATA)),
+            __metadata("design:paramtypes", [dialog.MatDialogRef, Object])
+        ], ResourceDialogComponent);
         return ResourceDialogComponent;
     }());
 
     /**
-     * This module is part of the Knora-ui modules:
-     * https://github.com/dhlab-basel/Knora-ui
+     * This pipe stringifies an array of StringLiterals. With the parameter 'all' it concats all values and appends the corresponing language in brackets.
      *
-     * @copyright 2018
-     * Digital Humanities Lab, University of Basel;
-     * Data and Service Center for the Humanities DaSCH;
-     * All Rights Reserved.
-     *
-     * @licence
-     * Use of this source code is governed by an MIT-style license that can be
-     * found in the LICENSE file at https://opensource.org/licenses/MIT
-     *
+     * Otherwise it displays the value corresponding to the default language which comes from user profile (if a user is logged-in) or from browser. With the predefined language it checks, if a value exists for it, otherwise it shows the first value from the array
      */
+    var StringifyStringLiteralPipe = /** @class */ (function () {
+        function StringifyStringLiteralPipe() {
+        }
+        StringifyStringLiteralPipe.prototype.transform = function (value, args) {
+            var e_1, _a;
+            var stringified = '';
+            var language;
+            if (!value || !value.length) {
+                return;
+            }
+            if (args === 'all') {
+                // show all values
+                var i = 0;
+                try {
+                    for (var value_1 = __values(value), value_1_1 = value_1.next(); !value_1_1.done; value_1_1 = value_1.next()) {
+                        var sl = value_1_1.value;
+                        var delimiter = (i > 0 ? ' / ' : '');
+                        stringified += delimiter + sl.value + ' (' + sl.language + ')';
+                        i++;
+                    }
+                }
+                catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                finally {
+                    try {
+                        if (value_1_1 && !value_1_1.done && (_a = value_1.return)) _a.call(value_1);
+                    }
+                    finally { if (e_1) throw e_1.error; }
+                }
+                return stringified;
+            }
+            else {
+                // show only one value, depending on default language
+                // the language is defined in user profile if a user is logged-in
+                // otherwise it takes the language from browser
+                if (localStorage.getItem('session') !== null) {
+                    // get language from the logged-in user profile data
+                    language = JSON.parse(localStorage.getItem('session')).user.lang;
+                }
+                else {
+                    // get default language from browser
+                    language = navigator.language.substr(0, 2);
+                }
+                // does the defined language exists and does it have a value?
+                var index = value.findIndex(function (i) { return i.language === language; });
+                if (value[index] && value[index].value.length > 0) {
+                    return value[index].value;
+                }
+                else {
+                    return value[0].value;
+                }
+            }
+        };
+        StringifyStringLiteralPipe = __decorate([
+            core.Pipe({
+                name: 'kuiStringifyStringLiteral'
+            })
+        ], StringifyStringLiteralPipe);
+        return StringifyStringLiteralPipe;
+    }());
+
     var KuiActionModule = /** @class */ (function () {
+        /**
+         * export @dec class
+         */
         function KuiActionModule() {
         }
-        KuiActionModule.decorators = [
-            { type: i0.NgModule, args: [{
-                        imports: [
-                            common.CommonModule,
-                            animations.BrowserAnimationsModule,
-                            material.MatButtonModule,
-                            material.MatCardModule,
-                            material.MatIconModule,
-                            material.MatListModule,
-                            material.MatMenuModule
-                        ],
-                        declarations: [
-                            ProgressIndicatorComponent,
-                            SortButtonComponent,
-                            SortByPipe,
-                            AdminImageDirective,
-                            ExistingNameDirective,
-                            ReversePipe,
-                            KeyPipe,
-                            GndDirective,
-                            ResourceDialogComponent,
-                            JdnDatepickerDirective,
-                            MessageComponent
-                        ],
-                        exports: [
-                            ProgressIndicatorComponent,
-                            SortButtonComponent,
-                            SortByPipe,
-                            AdminImageDirective,
-                            ExistingNameDirective,
-                            ReversePipe,
-                            KeyPipe,
-                            GndDirective,
-                            JdnDatepickerDirective,
-                            MessageComponent
-                        ]
-                    },] }
-        ];
+        KuiActionModule = __decorate([
+            core.NgModule({
+                imports: [
+                    common.CommonModule,
+                    animations.BrowserAnimationsModule,
+                    button.MatButtonModule,
+                    material.MatButtonToggleModule,
+                    card.MatCardModule,
+                    material.MatFormFieldModule,
+                    icon.MatIconModule,
+                    material.MatInputModule,
+                    list.MatListModule,
+                    menu.MatMenuModule,
+                    forms.ReactiveFormsModule
+                ],
+                declarations: [
+                    ProgressIndicatorComponent,
+                    SortButtonComponent,
+                    SortByPipe,
+                    AdminImageDirective,
+                    ExistingNameDirective,
+                    ReversePipe,
+                    KeyPipe,
+                    GndDirective,
+                    ResourceDialogComponent,
+                    JdnDatepickerDirective,
+                    MessageComponent,
+                    StringLiteralInputComponent,
+                    StringifyStringLiteralPipe,
+                    TruncatePipe
+                ],
+                exports: [
+                    ProgressIndicatorComponent,
+                    SortButtonComponent,
+                    SortByPipe,
+                    AdminImageDirective,
+                    ExistingNameDirective,
+                    ReversePipe,
+                    KeyPipe,
+                    GndDirective,
+                    JdnDatepickerDirective,
+                    MessageComponent,
+                    StringLiteralInputComponent,
+                    StringifyStringLiteralPipe,
+                    TruncatePipe
+                ]
+            })
+            /**
+             * export @dec class
+             */
+        ], KuiActionModule);
         return KuiActionModule;
     }());
 
-    /*
-     * Public API Surface of action
-     */
-
-    /**
-     * Generated bundle index. Do not edit.
-     */
-
-    exports.ɵa = StatusMsg;
-    exports.ɵb = ResourceDialogComponent;
-    exports.ProgressIndicatorComponent = ProgressIndicatorComponent;
-    exports.SortButtonComponent = SortButtonComponent;
+    exports.AdminImageDirective = AdminImageDirective;
+    exports.ExistingNameDirective = ExistingNameDirective;
+    exports.GndDirective = GndDirective;
+    exports.JdnDatepickerDirective = JdnDatepickerDirective;
+    exports.KeyPipe = KeyPipe;
+    exports.KuiActionModule = KuiActionModule;
     exports.KuiMessageData = KuiMessageData;
     exports.MessageComponent = MessageComponent;
-    exports.AdminImageDirective = AdminImageDirective;
-    exports.GndDirective = GndDirective;
-    exports.ExistingNameDirective = ExistingNameDirective;
+    exports.ProgressIndicatorComponent = ProgressIndicatorComponent;
+    exports.ReversePipe = ReversePipe;
+    exports.SortButtonComponent = SortButtonComponent;
+    exports.SortByPipe = SortByPipe;
+    exports.StringLiteralInputComponent = StringLiteralInputComponent;
+    exports.StringifyStringLiteralPipe = StringifyStringLiteralPipe;
+    exports.TruncatePipe = TruncatePipe;
     exports.existingNameValidator = existingNameValidator;
     exports.existingNamesValidator = existingNamesValidator;
     exports.notAllowed = notAllowed;
-    exports.JdnDatepickerDirective = JdnDatepickerDirective;
-    exports.KuiActionModule = KuiActionModule;
-    exports.ReversePipe = ReversePipe;
-    exports.KeyPipe = KeyPipe;
-    exports.SortByPipe = SortByPipe;
+    exports.ɵa = StatusMsg;
+    exports.ɵb = ResourceDialogComponent;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
-
+}));
 //# sourceMappingURL=knora-action.umd.js.map

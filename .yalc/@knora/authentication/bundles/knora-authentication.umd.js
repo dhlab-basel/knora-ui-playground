@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('json2typescript'), require('moment'), require('@angular/router'), require('@knora/core'), require('rxjs'), require('rxjs/operators'), require('@angular/common'), require('@angular/common/http'), require('@angular/forms'), require('@angular/material'), require('@knora/action'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('@knora/authentication', ['exports', 'json2typescript', 'moment', '@angular/router', '@knora/core', 'rxjs', 'rxjs/operators', '@angular/common', '@angular/common/http', '@angular/forms', '@angular/material', '@knora/action', '@angular/core'], factory) :
-    (factory((global.knora = global.knora || {}, global.knora.authentication = {}),global.json2typescript,global.moment,global.ng.router,global['@knora/core'],global.rxjs,global.rxjs.operators,global.ng.common,global.ng.common.http,global.ng.forms,global.ng.material,global['@knora/action'],global.ng.core));
-}(this, (function (exports,json2typescript,momentImported,i2,i2$1,rxjs,operators,common,i1,forms,material,action,i0) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('json2typescript'), require('@angular/core'), require('@angular/router'), require('@angular/common/http'), require('@knora/core'), require('moment'), require('rxjs/operators'), require('@angular/forms'), require('rxjs'), require('@angular/common'), require('@angular/material/button'), require('@angular/material/card'), require('@angular/material/dialog'), require('@angular/material/form-field'), require('@angular/material/icon'), require('@angular/material/input'), require('@knora/action')) :
+    typeof define === 'function' && define.amd ? define('@knora/authentication', ['exports', 'json2typescript', '@angular/core', '@angular/router', '@angular/common/http', '@knora/core', 'moment', 'rxjs/operators', '@angular/forms', 'rxjs', '@angular/common', '@angular/material/button', '@angular/material/card', '@angular/material/dialog', '@angular/material/form-field', '@angular/material/icon', '@angular/material/input', '@knora/action'], factory) :
+    (global = global || self, factory((global.knora = global.knora || {}, global.knora.authentication = {}), global.json2typescript, global.ng.core, global.ng.router, global.ng.common.http, global['@knora/core'], global.moment, global.rxjs.operators, global.ng.forms, global.rxjs, global.ng.common, global.ng.material.button, global.ng.material.card, global.ng.material.dialog, global.ng.material['form-field'], global.ng.material.icon, global.ng.material.input, global['@knora/action']));
+}(this, function (exports, json2typescript, core, router, http, core$1, momentImported, operators, forms, rxjs, common, button, card, dialog, formField, icon, input, action) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -18,28 +18,28 @@
     See the Apache Version 2.0 License for specific language governing permissions
     and limitations under the License.
     ***************************************************************************** */
+
     function __decorate(decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-        if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-            r = Reflect.decorate(decorators, target, key, desc);
-        else
-            for (var i = decorators.length - 1; i >= 0; i--)
-                if (d = decorators[i])
-                    r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     }
-    function __metadata(metadataKey, metadataValue) {
-        if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
-            return Reflect.metadata(metadataKey, metadataValue);
+
+    function __param(paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
     }
+
+    function __metadata(metadataKey, metadataValue) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    }
+
     function __values(o) {
         var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
-        if (m)
-            return m.call(o);
+        if (m) return m.call(o);
         return {
             next: function () {
-                if (o && i >= o.length)
-                    o = void 0;
+                if (o && i >= o.length) o = void 0;
                 return { value: o && o[i++], done: !o };
             }
         };
@@ -119,6 +119,9 @@
          */
         SessionService.prototype.setSession = function (jwt, username) {
             var _this = this;
+            // username can be either name or email address, so what do we have?
+            var identifierType = ((username.indexOf('@') > -1) ? 'email' : 'username');
+            /*
             this.session = {
                 id: this.setTimestamp(),
                 user: {
@@ -131,8 +134,9 @@
             };
             // store in the localStorage
             localStorage.setItem('session', JSON.stringify(this.session));
+            */
             // get user information
-            this._users.getUserByUsername(username).subscribe(function (result) {
+            this._users.getUser(username, identifierType).subscribe(function (result) {
                 var e_1, _a;
                 var sysAdmin = false;
                 var projectAdmin = [];
@@ -140,26 +144,20 @@
                 try {
                     for (var groupsPerProjectKeys_1 = __values(groupsPerProjectKeys), groupsPerProjectKeys_1_1 = groupsPerProjectKeys_1.next(); !groupsPerProjectKeys_1_1.done; groupsPerProjectKeys_1_1 = groupsPerProjectKeys_1.next()) {
                         var key = groupsPerProjectKeys_1_1.value;
-                        if (key === i2$1.KnoraConstants.SystemProjectIRI) {
-                            sysAdmin = result.permissions.groupsPerProject[key].indexOf(i2$1.KnoraConstants.SystemAdminGroupIRI) > -1;
+                        if (key === core$1.KnoraConstants.SystemProjectIRI) {
+                            sysAdmin = result.permissions.groupsPerProject[key].indexOf(core$1.KnoraConstants.SystemAdminGroupIRI) > -1;
                         }
-                        if (result.permissions.groupsPerProject[key].indexOf(i2$1.KnoraConstants.ProjectAdminGroupIRI) > -1) {
+                        if (result.permissions.groupsPerProject[key].indexOf(core$1.KnoraConstants.ProjectAdminGroupIRI) > -1) {
                             projectAdmin.push(key);
                         }
                     }
                 }
-                catch (e_1_1) {
-                    e_1 = { error: e_1_1 };
-                }
+                catch (e_1_1) { e_1 = { error: e_1_1 }; }
                 finally {
                     try {
-                        if (groupsPerProjectKeys_1_1 && !groupsPerProjectKeys_1_1.done && (_a = groupsPerProjectKeys_1.return))
-                            _a.call(groupsPerProjectKeys_1);
+                        if (groupsPerProjectKeys_1_1 && !groupsPerProjectKeys_1_1.done && (_a = groupsPerProjectKeys_1.return)) _a.call(groupsPerProjectKeys_1);
                     }
-                    finally {
-                        if (e_1)
-                            throw e_1.error;
-                    }
+                    finally { if (e_1) throw e_1.error; }
                 }
                 // define a session id, which is the timestamp of login
                 _this.session = {
@@ -227,20 +225,14 @@
         SessionService.prototype.destroySession = function () {
             localStorage.removeItem('session');
         };
-        SessionService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        SessionService.ctorParameters = function () {
-            return [
-                { type: i1.HttpClient },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [i2$1.KuiCoreConfigToken,] }] },
-                { type: i2$1.UsersService }
-            ];
-        };
-        SessionService.ngInjectableDef = i0.defineInjectable({ factory: function SessionService_Factory() { return new SessionService(i0.inject(i1.HttpClient), i0.inject(i2$1.KuiCoreConfigToken), i0.inject(i2$1.UsersService)); }, token: SessionService, providedIn: "root" });
+        SessionService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function SessionService_Factory() { return new SessionService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(core$1.KuiCoreConfigToken), core.ɵɵinject(core$1.UsersService)); }, token: SessionService, providedIn: "root" });
+        SessionService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            }),
+            __param(1, core.Inject(core$1.KuiCoreConfigToken)),
+            __metadata("design:paramtypes", [http.HttpClient, Object, core$1.UsersService])
+        ], SessionService);
         return SessionService;
     }());
 
@@ -256,19 +248,14 @@
             }
             return true;
         };
-        AuthGuard.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        AuthGuard.ctorParameters = function () {
-            return [
-                { type: SessionService },
-                { type: i2.Router }
-            ];
-        };
-        AuthGuard.ngInjectableDef = i0.defineInjectable({ factory: function AuthGuard_Factory() { return new AuthGuard(i0.inject(SessionService), i0.inject(i2.Router)); }, token: AuthGuard, providedIn: "root" });
+        AuthGuard.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function AuthGuard_Factory() { return new AuthGuard(core.ɵɵinject(SessionService), core.ɵɵinject(router.Router)); }, token: AuthGuard, providedIn: "root" });
+        AuthGuard = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            }),
+            __metadata("design:paramtypes", [SessionService,
+                router.Router])
+        ], AuthGuard);
         return AuthGuard;
     }());
 
@@ -318,7 +305,13 @@
         AuthenticationService.prototype.login = function (username, password) {
             // console.log('AuthenticationService - login - api: ', this.config.api);
             var _this = this;
-            return this.http.post(this.config.api + '/v2/authentication', { username: username, password: password }, { observe: 'response' }).pipe(operators.map(function (response) {
+            var params = { username: username, password: password };
+            // username can be either name or email address, so what do we have?
+            if (username.indexOf('@') > -1) {
+                // username is email address
+                params = { email: username, password: password };
+            }
+            return this.http.post(this.config.api + '/v2/authentication', params, { observe: 'response' }).pipe(operators.map(function (response) {
                 return response;
             }), operators.catchError(function (error) {
                 return _this.handleRequestError(error);
@@ -327,11 +320,15 @@
         /**
          * logout the user by destroying the session
          *
-         * @param
          */
         AuthenticationService.prototype.logout = function () {
-            // destroy the session
-            localStorage.removeItem('session');
+            var _this = this;
+            return this.http.delete(this.config.api + '/v2/authentication').pipe(operators.map(function (response) {
+                _this._session.destroySession();
+                return response;
+            }), operators.catchError(function (error) {
+                return _this.handleRequestError(error);
+            }));
         };
         /**
          * @ignore
@@ -341,27 +338,24 @@
          * @returns
          */
         AuthenticationService.prototype.handleRequestError = function (error) {
-            var serviceError = new i2$1.ApiServiceError();
+            var serviceError = new core$1.ApiServiceError();
+            serviceError.header = { 'server': error.headers.get('Server') };
             serviceError.status = error.status;
             serviceError.statusText = error.statusText;
             serviceError.errorInfo = error.message;
             serviceError.url = error.url;
             return rxjs.throwError(serviceError);
         };
-        AuthenticationService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        AuthenticationService.ctorParameters = function () {
-            return [
-                { type: i1.HttpClient },
-                { type: SessionService },
-                { type: undefined, decorators: [{ type: i0.Inject, args: [i2$1.KuiCoreConfigToken,] }] }
-            ];
-        };
-        AuthenticationService.ngInjectableDef = i0.defineInjectable({ factory: function AuthenticationService_Factory() { return new AuthenticationService(i0.inject(i1.HttpClient), i0.inject(SessionService), i0.inject(i2$1.KuiCoreConfigToken)); }, token: AuthenticationService, providedIn: "root" });
+        AuthenticationService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function AuthenticationService_Factory() { return new AuthenticationService(core.ɵɵinject(http.HttpClient), core.ɵɵinject(SessionService), core.ɵɵinject(core$1.KuiCoreConfigToken)); }, token: AuthenticationService, providedIn: "root" });
+        AuthenticationService = __decorate([
+            core.Injectable({
+                providedIn: 'root'
+            }),
+            __param(2, core.Inject(core$1.KuiCoreConfigToken)),
+            __metadata("design:paramtypes", [http.HttpClient,
+                SessionService,
+                core$1.KuiCoreConfig])
+        ], AuthenticationService);
         return AuthenticationService;
     }());
 
@@ -464,8 +458,7 @@
             // Grab values from form
             var username = this.frm.get('username').value;
             var password = this.frm.get('password').value;
-            this._auth.login(username, password)
-                .subscribe(function (response) {
+            this._auth.login(username, password).subscribe(function (response) {
                 // we have a token; set the session now
                 _this._session.setSession(response.body.token, username);
                 setTimeout(function () {
@@ -502,30 +495,29 @@
             });
         };
         LoginFormComponent.prototype.logout = function () {
-            this._auth.logout();
+            this._session.destroySession();
             location.reload(true);
         };
-        LoginFormComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'kui-login-form',
-                        template: "<div class=\"login-form\" *ngIf=\"!loggedInUser\">\n    <div class=\"login-form-header\">\n        <h3 mat-subheader>{{login.title}}</h3>\n    </div>\n    <div class=\"login-form-content\">\n        <!-- This is the login form -->\n        <form class=\"login-form\" [formGroup]=\"frm\" (ngSubmit)=\"doLogin()\">\n            <!-- Error message -->\n            <mat-hint *ngIf=\"errorMessage !== undefined\" class=\"full-width\">\n                <span *ngIf=\"loginErrorUser || loginErrorPw\">{{login.error.failed}}</span>\n                <span *ngIf=\"loginErrorServer\">{{login.error.server}}</span>\n            </mat-hint>\n\n            <!-- Username -->\n            <mat-form-field class=\"full-width login-field\">\n                <mat-icon matPrefix>person</mat-icon>\n                <input matInput autofocus [placeholder]=\"login.name\" autocomplete=\"username\" formControlName=\"username\">\n                <mat-hint *ngIf=\"formErrors.username\" class=\"login-error\">{{login.error.failed}}</mat-hint>\n            </mat-form-field>\n\n            <!-- Password -->\n            <mat-form-field class=\"full-width login-field\">\n                <mat-icon matPrefix>lock</mat-icon>\n                <input matInput type=\"password\" [placeholder]=\"login.pw\" autocomplete=\"current-password\" formControlName=\"password\">\n                <mat-hint *ngIf=\"formErrors.password\" class=\"login-error\">{{login.error.failed}}</mat-hint>\n            </mat-form-field>\n\n            <!-- Button: Login -->\n            <div class=\"button-row full-width\">\n                <button mat-raised-button type=\"submit\"\n                        *ngIf=\"!loading\"\n                        [disabled]=\"!frm.valid\"\n                        class=\"full-width submit-button mat-primary\">\n                    {{login.button}}\n                </button>\n                <kui-progress-indicator *ngIf=\"loading\" [color]=\"color\"></kui-progress-indicator>\n            </div>\n        </form>\n    </div>\n</div>\n\n<!-- a user is already logged in; show who it is and a logout button -->\n\n<div class=\"logout-form\" *ngIf=\"loggedInUser\">\n    <p>A user is already logged in:</p>\n    <p>{{loggedInUser}}</p>\n    <br>\n    <p>If it's not you, please logout!</p>\n    <div class=\"button-row full-width\">\n        <button mat-raised-button\n                (click)=\"logout()\"\n                *ngIf=\"!loading\"\n                class=\"full-width mat-warn\">\n            LOGOUT\n        </button>\n        <kui-progress-indicator *ngIf=\"loading\"></kui-progress-indicator>\n    </div>\n</div>\n",
-                        styles: [".full-width{width:100%}.button-row,.mat-form-field,.mat-hint{margin-top:24px}.mat-hint{background:rgba(239,83,80,.39);display:block;margin-left:-16px;padding:16px;text-align:center;width:280px}.login-form,.logout-form{margin-left:auto;margin-right:auto;position:relative;width:280px}.login-form .login-form-header,.logout-form .login-form-header{margin-bottom:24px}.login-form .login-field .mat-icon,.logout-form .login-field .mat-icon{font-size:20px;margin-right:12px}.login-form .button-row,.logout-form .button-row{margin-top:48px}.sign-up{margin-top:24px}"]
-                    }] }
-        ];
-        /** @nocollapse */
-        LoginFormComponent.ctorParameters = function () {
-            return [
-                { type: AuthenticationService },
-                { type: SessionService },
-                { type: forms.FormBuilder },
-                { type: i2.ActivatedRoute },
-                { type: i2.Router }
-            ];
-        };
-        LoginFormComponent.propDecorators = {
-            navigate: [{ type: i0.Input }],
-            color: [{ type: i0.Input }]
-        };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], LoginFormComponent.prototype, "navigate", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String)
+        ], LoginFormComponent.prototype, "color", void 0);
+        LoginFormComponent = __decorate([
+            core.Component({
+                selector: 'kui-login-form',
+                template: "<div class=\"login-form\" *ngIf=\"!loggedInUser\">\n    <div class=\"login-form-header\">\n        <h3 mat-subheader>{{login.title}}</h3>\n    </div>\n    <div class=\"login-form-content\">\n        <!-- This is the login form -->\n        <form class=\"login-form\" [formGroup]=\"frm\" (ngSubmit)=\"doLogin()\">\n            <!-- Error message -->\n            <mat-hint *ngIf=\"errorMessage !== undefined\" class=\"full-width\">\n                <span *ngIf=\"loginErrorUser || loginErrorPw\">{{login.error.failed}}</span>\n                <span *ngIf=\"loginErrorServer\">{{login.error.server}}</span>\n            </mat-hint>\n\n            <!-- Username -->\n            <mat-form-field class=\"full-width login-field\">\n                <mat-icon matPrefix>person</mat-icon>\n                <input matInput autofocus [placeholder]=\"login.name\" autocomplete=\"username\" formControlName=\"username\"\n                       #username cdkFocusInitial>\n                <mat-hint *ngIf=\"formErrors.username\" class=\"login-error\">{{login.error.failed}}</mat-hint>\n            </mat-form-field>\n\n            <!-- Password -->\n            <mat-form-field class=\"full-width login-field\">\n                <mat-icon matPrefix>lock</mat-icon>\n                <input matInput type=\"password\" [placeholder]=\"login.pw\" autocomplete=\"current-password\"\n                       formControlName=\"password\">\n                <mat-hint *ngIf=\"formErrors.password\" class=\"login-error\">{{login.error.failed}}</mat-hint>\n            </mat-form-field>\n\n            <!-- Button: Login -->\n            <div class=\"button-row full-width\">\n                <button mat-raised-button type=\"submit\" *ngIf=\"!loading\" [disabled]=\"!frm.valid\"\n                        class=\"full-width submit-button mat-primary\">\n                    {{login.button}}\n                </button>\n                <kui-progress-indicator *ngIf=\"loading\" [color]=\"color\"></kui-progress-indicator>\n            </div>\n        </form>\n    </div>\n</div>\n\n<!-- a user is already logged in; show who it is and a logout button -->\n\n<div class=\"logout-form\" *ngIf=\"loggedInUser\">\n    <p>A user is already logged in:</p>\n    <p>{{loggedInUser}}</p>\n    <br>\n    <p>If it's not you, please logout!</p>\n    <div class=\"button-row full-width\">\n        <button mat-raised-button (click)=\"logout()\" *ngIf=\"!loading\" class=\"full-width mat-warn\">\n            LOGOUT\n        </button>\n        <kui-progress-indicator *ngIf=\"loading\"></kui-progress-indicator>\n    </div>\n</div>\n",
+                styles: [".full-width{width:100%}.button-row,.mat-form-field,.mat-hint{margin-top:24px}.mat-hint{background:rgba(239,83,80,.39);display:block;margin-left:-16px;padding:16px;text-align:center;width:280px}.login-form,.logout-form{margin-left:auto;margin-right:auto;position:relative;width:280px}.login-form .login-form-header,.logout-form .login-form-header{margin-bottom:24px}.login-form .login-field .mat-icon,.logout-form .login-field .mat-icon{font-size:20px;margin-right:12px}.login-form .button-row,.logout-form .button-row{margin-top:48px}.sign-up{margin-top:24px}"]
+            }),
+            __metadata("design:paramtypes", [AuthenticationService,
+                SessionService,
+                forms.FormBuilder,
+                router.ActivatedRoute,
+                router.Router])
+        ], LoginFormComponent);
         return LoginFormComponent;
     }());
 
@@ -549,15 +541,10 @@
             }
             return next.handle(request);
         };
-        JwtInterceptor.decorators = [
-            { type: i0.Injectable }
-        ];
-        /** @nocollapse */
-        JwtInterceptor.ctorParameters = function () {
-            return [
-                { type: SessionService }
-            ];
-        };
+        JwtInterceptor = __decorate([
+            core.Injectable(),
+            __metadata("design:paramtypes", [SessionService])
+        ], JwtInterceptor);
         return JwtInterceptor;
     }());
 
@@ -573,69 +560,55 @@
             });
             return next.handle(request);
         };
-        WithCredentialsInterceptor.decorators = [
-            { type: i0.Injectable }
-        ];
-        /** @nocollapse */
-        WithCredentialsInterceptor.ctorParameters = function () {
-            return [
-                { type: SessionService }
-            ];
-        };
+        WithCredentialsInterceptor = __decorate([
+            core.Injectable(),
+            __metadata("design:paramtypes", [SessionService])
+        ], WithCredentialsInterceptor);
         return WithCredentialsInterceptor;
     }());
 
     var KuiAuthenticationModule = /** @class */ (function () {
         function KuiAuthenticationModule() {
         }
-        KuiAuthenticationModule.decorators = [
-            { type: i0.NgModule, args: [{
-                        imports: [
-                            common.CommonModule,
-                            action.KuiActionModule,
-                            material.MatCardModule,
-                            material.MatIconModule,
-                            material.MatInputModule,
-                            material.MatButtonModule,
-                            material.MatDialogModule,
-                            material.MatFormFieldModule,
-                            forms.ReactiveFormsModule,
-                            i1.HttpClientModule
-                        ],
-                        declarations: [
-                            LoginFormComponent
-                        ],
-                        exports: [
-                            LoginFormComponent
-                        ],
-                        providers: [
-                            { provide: i1.HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-                            { provide: i1.HTTP_INTERCEPTORS, useClass: WithCredentialsInterceptor, multi: true }
-                        ]
-                    },] }
-        ];
+        KuiAuthenticationModule = __decorate([
+            core.NgModule({
+                imports: [
+                    common.CommonModule,
+                    action.KuiActionModule,
+                    card.MatCardModule,
+                    icon.MatIconModule,
+                    input.MatInputModule,
+                    button.MatButtonModule,
+                    dialog.MatDialogModule,
+                    formField.MatFormFieldModule,
+                    forms.ReactiveFormsModule,
+                    http.HttpClientModule
+                ],
+                declarations: [
+                    LoginFormComponent
+                ],
+                exports: [
+                    LoginFormComponent
+                ],
+                providers: [
+                    { provide: http.HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+                    { provide: http.HTTP_INTERCEPTORS, useClass: WithCredentialsInterceptor, multi: true }
+                ]
+            })
+        ], KuiAuthenticationModule);
         return KuiAuthenticationModule;
     }());
 
-    /*
-     * Public API Surface of authentication
-     */
-
-    /**
-     * Generated bundle index. Do not edit.
-     */
-
+    exports.AuthGuard = AuthGuard;
+    exports.AuthenticationService = AuthenticationService;
+    exports.CurrentUser = CurrentUser;
+    exports.KuiAuthenticationModule = KuiAuthenticationModule;
+    exports.LoginFormComponent = LoginFormComponent;
+    exports.ɵa = SessionService;
     exports.ɵb = JwtInterceptor;
     exports.ɵc = WithCredentialsInterceptor;
-    exports.ɵa = SessionService;
-    exports.CurrentUser = CurrentUser;
-    exports.AuthGuard = AuthGuard;
-    exports.LoginFormComponent = LoginFormComponent;
-    exports.AuthenticationService = AuthenticationService;
-    exports.KuiAuthenticationModule = KuiAuthenticationModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
-
+}));
 //# sourceMappingURL=knora-authentication.umd.js.map

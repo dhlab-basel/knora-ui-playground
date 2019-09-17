@@ -25,4 +25,9 @@ export declare class KuiCoreConfig {
      * @type {string}
      */
     media: string;
+    /**
+     * url of the ontology e.g. 'http://api.02.unibas.dasch.swiss'
+     * @type {string}
+     */
+    ontologyIRI: string;
 }

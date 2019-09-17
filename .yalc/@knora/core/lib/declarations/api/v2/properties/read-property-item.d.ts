@@ -1,4 +1,4 @@
-import { ReadResource } from '../../../';
+import { ReadResource } from '../resources/read-resource';
 import { OntologyInformation } from '../../../../services';
 import { DateRangeSalsah, DateSalsah } from '../../shared/date';
 /**

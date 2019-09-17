@@ -1,28 +1,40 @@
-import { __values } from 'tslib';
+import { __decorate, __metadata, __values } from 'tslib';
+import { Component, Input, Output, ElementRef, EventEmitter, HostListener, NgModule } from '@angular/core';
+import { KnoraConstants, Point2D, ReadBooleanValue, ReadColorValue, DateRangeSalsah, Precision, ReadDateValue, ReadDecimalValue, ReadGeomValue, ReadIntegerValue, ReadIntervalValue, OntologyInformation, ReadLinkValue, ReadListValue, ListCacheService, ReadTextValueAsHtml, ReadTextValueAsString, ReadTextValueAsXml, ReadTextFileValue, ReadUriValue, ImageRegion as ImageRegion$1, StillImageRepresentation as StillImageRepresentation$1, ResourceService, IncomingService, ApiServiceError, SearchService, SearchParamsService, KuiCoreModule } from '@knora/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, Output, HostListener, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatNativeDateModule, MatSlideToggleModule, MatTabsModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { KuiActionModule } from '@knora/action';
-import { KnoraConstants, Point2D, DateRangeSalsah, Precision, ListCacheService, ImageRegion, IncomingService, ResourceService, StillImageRepresentation, ApiServiceError, SearchParamsService, SearchService, KuiCoreModule } from '@knora/core';
 
 var AnnotationComponent = /** @class */ (function () {
     function AnnotationComponent() {
     }
     AnnotationComponent.prototype.ngOnInit = function () {
     };
-    AnnotationComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-annotation',
-                    template: "<p>\n  annotation works!\n</p>\n",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    AnnotationComponent.ctorParameters = function () { return []; };
+    AnnotationComponent = __decorate([
+        Component({
+            selector: 'kui-annotation',
+            template: "<p>\n  annotation works!\n</p>\n",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [])
+    ], AnnotationComponent);
     return AnnotationComponent;
 }());
 
@@ -31,15 +43,14 @@ var AudioComponent = /** @class */ (function () {
     }
     AudioComponent.prototype.ngOnInit = function () {
     };
-    AudioComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-audio',
-                    template: "<p>\n  audio works!\n</p>\n",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    AudioComponent.ctorParameters = function () { return []; };
+    AudioComponent = __decorate([
+        Component({
+            selector: 'kui-audio',
+            template: "<p>\n  audio works!\n</p>\n",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [])
+    ], AudioComponent);
     return AudioComponent;
 }());
 
@@ -48,15 +59,14 @@ var CollectionComponent = /** @class */ (function () {
     }
     CollectionComponent.prototype.ngOnInit = function () {
     };
-    CollectionComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-collection',
-                    template: "<p>\n  collection works!\n</p>\n",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    CollectionComponent.ctorParameters = function () { return []; };
+    CollectionComponent = __decorate([
+        Component({
+            selector: 'kui-collection',
+            template: "<p>\n  collection works!\n</p>\n",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [])
+    ], CollectionComponent);
     return CollectionComponent;
 }());
 
@@ -65,15 +75,14 @@ var DddComponent = /** @class */ (function () {
     }
     DddComponent.prototype.ngOnInit = function () {
     };
-    DddComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-ddd',
-                    template: "<p>\n  ddd works!\n</p>\n",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    DddComponent.ctorParameters = function () { return []; };
+    DddComponent = __decorate([
+        Component({
+            selector: 'kui-ddd',
+            template: "<p>\n  ddd works!\n</p>\n",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [])
+    ], DddComponent);
     return DddComponent;
 }());
 
@@ -82,15 +91,14 @@ var DocumentComponent = /** @class */ (function () {
     }
     DocumentComponent.prototype.ngOnInit = function () {
     };
-    DocumentComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-document',
-                    template: "<p>\n  document works!\n</p>\n",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    DocumentComponent.ctorParameters = function () { return []; };
+    DocumentComponent = __decorate([
+        Component({
+            selector: 'kui-document',
+            template: "<p>\n  document works!\n</p>\n",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [])
+    ], DocumentComponent);
     return DocumentComponent;
 }());
 
@@ -99,15 +107,14 @@ var LinkObjComponent = /** @class */ (function () {
     }
     LinkObjComponent.prototype.ngOnInit = function () {
     };
-    LinkObjComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-link-obj',
-                    template: "<p>\n  link-obj works!\n</p>\n",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    LinkObjComponent.ctorParameters = function () { return []; };
+    LinkObjComponent = __decorate([
+        Component({
+            selector: 'kui-link-obj',
+            template: "<p>\n  link-obj works!\n</p>\n",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [])
+    ], LinkObjComponent);
     return LinkObjComponent;
 }());
 
@@ -116,15 +123,14 @@ var MovingImageComponent = /** @class */ (function () {
     }
     MovingImageComponent.prototype.ngOnInit = function () {
     };
-    MovingImageComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-moving-image',
-                    template: "<p>\n  moving-image works!\n</p>\n",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    MovingImageComponent.ctorParameters = function () { return []; };
+    MovingImageComponent = __decorate([
+        Component({
+            selector: 'kui-moving-image',
+            template: "<p>\n  moving-image works!\n</p>\n",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [])
+    ], MovingImageComponent);
     return MovingImageComponent;
 }());
 
@@ -133,15 +139,14 @@ var ObjectComponent = /** @class */ (function () {
     }
     ObjectComponent.prototype.ngOnInit = function () {
     };
-    ObjectComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-object',
-                    template: "<p>\n  object works!\n</p>",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    ObjectComponent.ctorParameters = function () { return []; };
+    ObjectComponent = __decorate([
+        Component({
+            selector: 'kui-object',
+            template: "<p>\n  object works!\n</p>",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [])
+    ], ObjectComponent);
     return ObjectComponent;
 }());
 
@@ -150,15 +155,14 @@ var RegionComponent = /** @class */ (function () {
     }
     RegionComponent.prototype.ngOnInit = function () {
     };
-    RegionComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-region',
-                    template: "<p>\n  region works!\n</p>\n",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    RegionComponent.ctorParameters = function () { return []; };
+    RegionComponent = __decorate([
+        Component({
+            selector: 'kui-region',
+            template: "<p>\n  region works!\n</p>\n",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [])
+    ], RegionComponent);
     return RegionComponent;
 }());
 
@@ -166,12 +170,12 @@ var RegionComponent = /** @class */ (function () {
  * Represents a region.
  * Contains a reference to the resource representing the region and its geometries.
  */
-var ImageRegion$1 = /** @class */ (function () {
+var ImageRegion = /** @class */ (function () {
     /**
      *
      * @param regionResource a resource of type Region
      */
-    function ImageRegion$$1(regionResource) {
+    function ImageRegion(regionResource) {
         this.regionResource = regionResource;
     }
     /**
@@ -179,25 +183,25 @@ var ImageRegion$1 = /** @class */ (function () {
      *
      * @returns
      */
-    ImageRegion$$1.prototype.getGeometries = function () {
+    ImageRegion.prototype.getGeometries = function () {
         return this.regionResource.properties[KnoraConstants.hasGeometry];
     };
-    return ImageRegion$$1;
+    return ImageRegion;
 }());
 /**
  * Represents an image including its regions.
  */
-var StillImageRepresentation$1 = /** @class */ (function () {
+var StillImageRepresentation = /** @class */ (function () {
     /**
      *
      * @param stillImageFileValue a [[ReadStillImageFileValue]] representing an image.
      * @param regions the regions belonging to the image.
      */
-    function StillImageRepresentation$$1(stillImageFileValue, regions) {
+    function StillImageRepresentation(stillImageFileValue, regions) {
         this.stillImageFileValue = stillImageFileValue;
         this.regions = regions;
     }
-    return StillImageRepresentation$$1;
+    return StillImageRepresentation;
 }());
 /**
  * Represents a geometry belonging to a specific region.
@@ -225,6 +229,7 @@ var StillImageComponent = /** @class */ (function () {
         this.regionHovered = new EventEmitter();
         this.regions = {};
     }
+    StillImageComponent_1 = StillImageComponent;
     /**
      * Calculates the surface of a rectangular region.
      *
@@ -431,7 +436,7 @@ var StillImageComponent = /** @class */ (function () {
             return img.stillImageFileValue;
         });
         // display only the defined range of this.images
-        var tileSources = StillImageComponent.prepareTileSourcesFromFileValues(fileValues);
+        var tileSources = StillImageComponent_1.prepareTileSourcesFromFileValues(fileValues);
         this.removeOverlays();
         this.viewer.open(tileSources);
     };
@@ -487,8 +492,8 @@ var StillImageComponent = /** @class */ (function () {
             // sort all geometries belonging to this page
             geometries.sort(function (geom1, geom2) {
                 if (geom1.geometry.type === 'rectangle' && geom2.geometry.type === 'rectangle') {
-                    var surf1 = StillImageComponent.surfaceOfRectangularRegion(geom1.geometry);
-                    var surf2 = StillImageComponent.surfaceOfRectangularRegion(geom2.geometry);
+                    var surf1 = StillImageComponent_1.surfaceOfRectangularRegion(geom1.geometry);
+                    var surf2 = StillImageComponent_1.surfaceOfRectangularRegion(geom2.geometry);
                     // if reg1 is smaller than reg2, return 1
                     // reg1 then comes after reg2 and thus is rendered later
                     if (surf1 < surf2) {
@@ -663,23 +668,31 @@ var StillImageComponent = /** @class */ (function () {
         }
         return pointsString;
     };
-    StillImageComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-still-image',
-                    template: "<div class=\"still-image-viewer\">\n    <div class=\"navigation left\">\n        <button mat-button class=\"full-size\" id=\"KUI_OSD_PREV_PAGE\">\n            <mat-icon>keyboard_arrow_left</mat-icon>\n        </button>\n    </div>\n\n    <!-- main content with navigation and osd viewer -->\n    <div class=\"content\">\n\n        <!-- openseadragon (osd) viewer -->\n        <div class=\"osd-container\"></div>\n        <!-- /openseadragon (osd) -->\n\n        <!-- footer with image caption e.g. copyright information -->\n        <div class=\"footer\">\n            <p class=\"mat-caption\" [innerHtml]=\"imageCaption\"></p>\n        </div>\n\n        <!-- action panel with tools for image -->\n        <mat-toolbar class=\"action\">\n            <mat-toolbar-row>\n                <!-- home button -->\n                <span>\n                <button mat-icon-button id=\"KUI_OSD_HOME\"><mat-icon>home</mat-icon></button>\n            </span>\n                <!-- zoom buttons -->\n                <span class=\"fill-remaining-space\"></span>\n                <span>\n                <button mat-icon-button id=\"KUI_OSD_ZOOM_IN\"><mat-icon>add</mat-icon></button>\n                <button mat-icon-button id=\"KUI_OSD_ZOOM_OUT\"><mat-icon>remove</mat-icon></button>\n            </span>\n                <!-- window button -->\n                <span class=\"fill-remaining-space\"></span>\n                <span>\n                <button mat-icon-button id=\"KUI_OSD_FULL_PAGE\"><mat-icon>fullscreen</mat-icon></button>\n            </span>\n            </mat-toolbar-row>\n        </mat-toolbar>\n\n    </div>\n\n    <div class=\"navigation right\">\n        <button mat-button class=\"full-size\" id=\"KUI_OSD_NEXT_PAGE\">\n            <mat-icon>keyboard_arrow_right</mat-icon>\n        </button>\n    </div>\n\n</div>\n\n<!-- simple image viewer e.g. as a preview -->\n<!-- TODO: handle images array -->\n<!--<img *ngIf=\"simple && images?.length === 1; else osdViewer\" [src]=\"simpleImageExample\">-->\n\n\n<!--\n    <div>\n        <span *ngIf=\"images.length > 1\" (click)=\"gotoLeft()\">&lt;&lt;</span>\n        <span *ngIf=\"images.length > 1\" (click)=\"gotoRight()\">&gt;&gt;</span>\n    </div>\n-->\n\n\n\n",
-                    styles: [".still-image-viewer{display:inline-flex;height:400px;max-width:800px;width:100%}@media (max-height:636px){.still-image-viewer{height:300px}}.still-image-viewer .navigation{height:calc(400px + 64px + 24px);width:36px}.still-image-viewer .navigation .mat-button.full-size{height:100%!important;width:36px!important;padding:0!important;min-width:36px!important}.still-image-viewer .content{height:calc(400px + 64px + 24px);max-width:calc(800px - (2 * 36px));width:calc(100% - (2 * 36px))}.still-image-viewer .content .osd-container{color:#ccc;background-color:#000;height:400px}.still-image-viewer .content .osd-container.fullscreen{max-width:100vw}.still-image-viewer .content .footer p{color:#ccc;background-color:#000;height:24px;margin:0;padding:0 16px}/deep/ .roi-svgoverlay{opacity:.4;fill:transparent;stroke:#00695c;stroke-width:2px;vector-effect:non-scaling-stroke}.roi-svgoverlay:focus,/deep/ .roi-svgoverlay:hover{opacity:1}/deep/ .roi-svgoverlay.active{opacity:1}"]
-                }] }
-    ];
-    /** @nocollapse */
-    StillImageComponent.ctorParameters = function () { return [
-        { type: ElementRef }
-    ]; };
-    StillImageComponent.propDecorators = {
-        images: [{ type: Input }],
-        imageCaption: [{ type: Input }],
-        activateRegion: [{ type: Input }],
-        regionHovered: [{ type: Output }]
-    };
+    var StillImageComponent_1;
+    __decorate([
+        Input(),
+        __metadata("design:type", Array)
+    ], StillImageComponent.prototype, "images", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], StillImageComponent.prototype, "imageCaption", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], StillImageComponent.prototype, "activateRegion", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], StillImageComponent.prototype, "regionHovered", void 0);
+    StillImageComponent = StillImageComponent_1 = __decorate([
+        Component({
+            selector: 'kui-still-image',
+            template: "<div class=\"still-image-viewer\">\n    <div class=\"navigation left\">\n        <button mat-button class=\"full-size\" id=\"KUI_OSD_PREV_PAGE\">\n            <mat-icon>keyboard_arrow_left</mat-icon>\n        </button>\n    </div>\n\n    <!-- main content with navigation and osd viewer -->\n    <div class=\"content\">\n\n        <!-- openseadragon (osd) viewer -->\n        <div class=\"osd-container\"></div>\n        <!-- /openseadragon (osd) -->\n\n        <!-- footer with image caption e.g. copyright information -->\n        <div class=\"footer\">\n            <p class=\"mat-caption\" [innerHtml]=\"imageCaption\"></p>\n        </div>\n\n        <!-- action panel with tools for image -->\n        <mat-toolbar class=\"action\">\n            <mat-toolbar-row>\n                <!-- home button -->\n                <span>\n                <button mat-icon-button id=\"KUI_OSD_HOME\"><mat-icon>home</mat-icon></button>\n            </span>\n                <!-- zoom buttons -->\n                <span class=\"fill-remaining-space\"></span>\n                <span>\n                <button mat-icon-button id=\"KUI_OSD_ZOOM_IN\"><mat-icon>add</mat-icon></button>\n                <button mat-icon-button id=\"KUI_OSD_ZOOM_OUT\"><mat-icon>remove</mat-icon></button>\n            </span>\n                <!-- window button -->\n                <span class=\"fill-remaining-space\"></span>\n                <span>\n                <button mat-icon-button id=\"KUI_OSD_FULL_PAGE\"><mat-icon>fullscreen</mat-icon></button>\n            </span>\n            </mat-toolbar-row>\n        </mat-toolbar>\n\n    </div>\n\n    <div class=\"navigation right\">\n        <button mat-button class=\"full-size\" id=\"KUI_OSD_NEXT_PAGE\">\n            <mat-icon>keyboard_arrow_right</mat-icon>\n        </button>\n    </div>\n\n</div>\n\n<!-- simple image viewer e.g. as a preview -->\n<!-- TODO: handle images array -->\n<!--<img *ngIf=\"simple && images?.length === 1; else osdViewer\" [src]=\"simpleImageExample\">-->\n\n\n<!--\n    <div>\n        <span *ngIf=\"images.length > 1\" (click)=\"gotoLeft()\">&lt;&lt;</span>\n        <span *ngIf=\"images.length > 1\" (click)=\"gotoRight()\">&gt;&gt;</span>\n    </div>\n-->\n\n\n\n",
+            styles: [".still-image-viewer{display:inline-flex;height:400px;max-width:800px;width:100%}@media (max-height:636px){.still-image-viewer{height:300px}}.still-image-viewer .navigation{height:calc(400px + 64px + 24px);width:36px}.still-image-viewer .navigation .mat-button.full-size{height:100%!important;width:36px!important;padding:0!important;min-width:36px!important}.still-image-viewer .content{height:calc(400px + 64px + 24px);max-width:calc(800px - (2 * 36px));width:calc(100% - (2 * 36px))}.still-image-viewer .content .osd-container{color:#ccc;background-color:#000;height:400px}.still-image-viewer .content .osd-container.fullscreen{max-width:100vw}.still-image-viewer .content .footer p{color:#ccc;background-color:#000;height:24px;margin:0;padding:0 16px}::ng-deep .roi-svgoverlay{opacity:.4;fill:transparent;stroke:#00695c;stroke-width:2px;vector-effect:non-scaling-stroke}.roi-svgoverlay:focus,::ng-deep .roi-svgoverlay:hover{opacity:1}::ng-deep .roi-svgoverlay.active{opacity:1}"]
+        }),
+        __metadata("design:paramtypes", [ElementRef])
+    ], StillImageComponent);
     return StillImageComponent;
 }());
 
@@ -688,15 +701,14 @@ var TextComponent = /** @class */ (function () {
     }
     TextComponent.prototype.ngOnInit = function () {
     };
-    TextComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-text',
-                    template: "<p>\n  text works!\n</p>\n",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    TextComponent.ctorParameters = function () { return []; };
+    TextComponent = __decorate([
+        Component({
+            selector: 'kui-text',
+            template: "<p>\n  text works!\n</p>\n",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [])
+    ], TextComponent);
     return TextComponent;
 }());
 
@@ -713,18 +725,19 @@ var BooleanValueComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    BooleanValueComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-boolean-value',
-                    template: "<mat-checkbox [checked]=\"valueObject.bool\" disabled=\"true\"></mat-checkbox>\n",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    BooleanValueComponent.ctorParameters = function () { return []; };
-    BooleanValueComponent.propDecorators = {
-        valueObject: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", ReadBooleanValue),
+        __metadata("design:paramtypes", [ReadBooleanValue])
+    ], BooleanValueComponent.prototype, "valueObject", null);
+    BooleanValueComponent = __decorate([
+        Component({
+            selector: 'kui-boolean-value',
+            template: "<mat-checkbox [checked]=\"valueObject.bool\" disabled=\"true\"></mat-checkbox>\n",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], BooleanValueComponent);
     return BooleanValueComponent;
 }());
 
@@ -741,18 +754,19 @@ var ColorValueComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    ColorValueComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-color-value',
-                    template: "<span [style.background-color]=\"valueObject.colorHex\">{{valueObject.colorHex}}</span>",
-                    styles: [".fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.mat-form-field{width:36px;overflow-x:visible}"]
-                }] }
-    ];
-    /** @nocollapse */
-    ColorValueComponent.ctorParameters = function () { return []; };
-    ColorValueComponent.propDecorators = {
-        valueObject: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", ReadColorValue),
+        __metadata("design:paramtypes", [ReadColorValue])
+    ], ColorValueComponent.prototype, "valueObject", null);
+    ColorValueComponent = __decorate([
+        Component({
+            selector: 'kui-color-value',
+            template: "<span [style.background-color]=\"valueObject.colorHex\">{{valueObject.colorHex}}</span>",
+            styles: [".fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.mat-form-field{width:36px;overflow-x:visible}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], ColorValueComponent);
     return ColorValueComponent;
 }());
 
@@ -836,20 +850,29 @@ var DateValueComponent = /** @class */ (function () {
             console.error('Error: incorrect precision for date');
         }
     };
-    DateValueComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-date-value',
-                    template: "<span *ngIf=\"period; else preciseDate\">\n    {{dates[0].date | date: dates[0].format}}\n    <span *ngIf=\"era\">\n        {{dates[0].era}}\n    </span>\n    - {{dates[1].date | date: dates[1].format}}\n    <span *ngIf=\"era\">\n        {{dates[1].era}}\n    </span>\n\n    <span *ngIf=\"calendar\">\n        ({{dates[0].calendar}})\n    </span>\n</span>\n\n<ng-template #preciseDate>\n\n    <span>\n        {{dates[0].date | date: dates[0].format}}\n        <span *ngIf=\"era\">\n            {{dates[0].era}}\n        </span>\n        <span *ngIf=\"calendar\">\n            ({{dates[0].calendar}})\n        </span>\n    </span>\n\n</ng-template>\n",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    DateValueComponent.ctorParameters = function () { return []; };
-    DateValueComponent.propDecorators = {
-        calendar: [{ type: Input }],
-        era: [{ type: Input }],
-        valueObject: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], DateValueComponent.prototype, "calendar", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], DateValueComponent.prototype, "era", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", ReadDateValue),
+        __metadata("design:paramtypes", [ReadDateValue])
+    ], DateValueComponent.prototype, "valueObject", null);
+    DateValueComponent = __decorate([
+        Component({
+            selector: 'kui-date-value',
+            template: "<span *ngIf=\"period; else preciseDate\">\n    {{dates[0].date | date: dates[0].format}}\n    <span *ngIf=\"era\">\n        {{dates[0].era}}\n    </span>\n    - {{dates[1].date | date: dates[1].format}}\n    <span *ngIf=\"era\">\n        {{dates[1].era}}\n    </span>\n\n    <span *ngIf=\"calendar\">\n        ({{dates[0].calendar}})\n    </span>\n</span>\n\n<ng-template #preciseDate>\n\n    <span>\n        {{dates[0].date | date: dates[0].format}}\n        <span *ngIf=\"era\">\n            {{dates[0].era}}\n        </span>\n        <span *ngIf=\"calendar\">\n            ({{dates[0].calendar}})\n        </span>\n    </span>\n\n</ng-template>\n",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], DateValueComponent);
     return DateValueComponent;
 }());
 
@@ -866,18 +889,19 @@ var DecimalValueComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    DecimalValueComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-decimal-value',
-                    template: "<span>{{valueObject.decimal}}</span>",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    DecimalValueComponent.ctorParameters = function () { return []; };
-    DecimalValueComponent.propDecorators = {
-        valueObject: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", ReadDecimalValue),
+        __metadata("design:paramtypes", [ReadDecimalValue])
+    ], DecimalValueComponent.prototype, "valueObject", null);
+    DecimalValueComponent = __decorate([
+        Component({
+            selector: 'kui-decimal-value',
+            template: "<span>{{valueObject.decimal}}</span>",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], DecimalValueComponent);
     return DecimalValueComponent;
 }());
 
@@ -886,15 +910,14 @@ var ExternalResValueComponent = /** @class */ (function () {
     }
     ExternalResValueComponent.prototype.ngOnInit = function () {
     };
-    ExternalResValueComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-external-res-value',
-                    template: "<p>\n  external-res-value works!\n</p>\n",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    ExternalResValueComponent.ctorParameters = function () { return []; };
+    ExternalResValueComponent = __decorate([
+        Component({
+            selector: 'kui-external-res-value',
+            template: "<p>\n  external-res-value works!\n</p>\n",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], ExternalResValueComponent);
     return ExternalResValueComponent;
 }());
 
@@ -911,18 +934,19 @@ var GeometryValueComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    GeometryValueComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-geometry-value',
-                    template: "<span>{{valueObject.geometryString}}</span>",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    GeometryValueComponent.ctorParameters = function () { return []; };
-    GeometryValueComponent.propDecorators = {
-        valueObject: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", ReadGeomValue),
+        __metadata("design:paramtypes", [ReadGeomValue])
+    ], GeometryValueComponent.prototype, "valueObject", null);
+    GeometryValueComponent = __decorate([
+        Component({
+            selector: 'kui-geometry-value',
+            template: "<span>{{valueObject.geometryString}}</span>",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], GeometryValueComponent);
     return GeometryValueComponent;
 }());
 
@@ -931,15 +955,14 @@ var GeonameValueComponent = /** @class */ (function () {
     }
     GeonameValueComponent.prototype.ngOnInit = function () {
     };
-    GeonameValueComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-geoname-value',
-                    template: "<p>\n  geoname-value works!\n</p>",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    GeonameValueComponent.ctorParameters = function () { return []; };
+    GeonameValueComponent = __decorate([
+        Component({
+            selector: 'kui-geoname-value',
+            template: "<p>\n  geoname-value works!\n</p>",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], GeonameValueComponent);
     return GeonameValueComponent;
 }());
 
@@ -956,18 +979,19 @@ var IntegerValueComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    IntegerValueComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-integer-value',
-                    template: "<span>{{valueObject.integer}}</span>",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    IntegerValueComponent.ctorParameters = function () { return []; };
-    IntegerValueComponent.propDecorators = {
-        valueObject: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", ReadIntegerValue),
+        __metadata("design:paramtypes", [ReadIntegerValue])
+    ], IntegerValueComponent.prototype, "valueObject", null);
+    IntegerValueComponent = __decorate([
+        Component({
+            selector: 'kui-integer-value',
+            template: "<span>{{valueObject.integer}}</span>",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], IntegerValueComponent);
     return IntegerValueComponent;
 }());
 
@@ -984,18 +1008,19 @@ var IntervalValueComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    IntervalValueComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-interval-value',
-                    template: "<span>{{valueObject.intervalStart}} - {{valueObject.intervalEnd}}</span>",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    IntervalValueComponent.ctorParameters = function () { return []; };
-    IntervalValueComponent.propDecorators = {
-        valueObject: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", ReadIntervalValue),
+        __metadata("design:paramtypes", [ReadIntervalValue])
+    ], IntervalValueComponent.prototype, "valueObject", null);
+    IntervalValueComponent = __decorate([
+        Component({
+            selector: 'kui-interval-value',
+            template: "<span>{{valueObject.intervalStart}} - {{valueObject.intervalEnd}}</span>",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], IntervalValueComponent);
     return IntervalValueComponent;
 }());
 
@@ -1032,20 +1057,28 @@ var LinkValueComponent = /** @class */ (function () {
     LinkValueComponent.prototype.refResClicked = function () {
         this.referredResourceClicked.emit(this._linkValueObj);
     };
-    LinkValueComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-link-value',
-                    template: "<a class=\"salsah-link\" (click)=\"refResClicked()\">{{referredResource}}</a>",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    LinkValueComponent.ctorParameters = function () { return []; };
-    LinkValueComponent.propDecorators = {
-        ontologyInfo: [{ type: Input }],
-        valueObject: [{ type: Input }],
-        referredResourceClicked: [{ type: Output }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", OntologyInformation),
+        __metadata("design:paramtypes", [OntologyInformation])
+    ], LinkValueComponent.prototype, "ontologyInfo", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", ReadLinkValue),
+        __metadata("design:paramtypes", [ReadLinkValue])
+    ], LinkValueComponent.prototype, "valueObject", null);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], LinkValueComponent.prototype, "referredResourceClicked", void 0);
+    LinkValueComponent = __decorate([
+        Component({
+            selector: 'kui-link-value',
+            template: "<a class=\"salsah-link\" (click)=\"refResClicked()\">{{referredResource}}</a>",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], LinkValueComponent);
     return LinkValueComponent;
 }());
 
@@ -1067,20 +1100,19 @@ var ListValueComponent = /** @class */ (function () {
         // given the node's Iri, ask the list cache service
         this.node = this._listCacheService.getListNode(this._listValueObj.listNodeIri);
     };
-    ListValueComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-list-value',
-                    template: "<span *ngIf=\"node | async\">{{(node | async )?.label}}</span>\n",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    ListValueComponent.ctorParameters = function () { return [
-        { type: ListCacheService }
-    ]; };
-    ListValueComponent.propDecorators = {
-        valueObject: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", ReadListValue),
+        __metadata("design:paramtypes", [ReadListValue])
+    ], ListValueComponent.prototype, "valueObject", null);
+    ListValueComponent = __decorate([
+        Component({
+            selector: 'kui-list-value',
+            template: "<span *ngIf=\"node | async\">{{(node | async )?.label}}</span>\n",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+        }),
+        __metadata("design:paramtypes", [ListCacheService])
+    ], ListValueComponent);
     return ListValueComponent;
 }());
 
@@ -1149,24 +1181,39 @@ var TextValueAsHtmlComponent = /** @class */ (function () {
             return false;
         }
     };
-    TextValueAsHtmlComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-text-value-as-html',
-                    template: "<div>{{valueObject.html}}</div>",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    TextValueAsHtmlComponent.ctorParameters = function () { return [
-        { type: ElementRef }
-    ]; };
-    TextValueAsHtmlComponent.propDecorators = {
-        referredResourceClicked: [{ type: Output }],
-        ontologyInfo: [{ type: Input }],
-        bindEvents: [{ type: Input }],
-        valueObject: [{ type: Input }],
-        onClick: [{ type: HostListener, args: ['click', ['$event.target'],] }]
-    };
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], TextValueAsHtmlComponent.prototype, "referredResourceClicked", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", OntologyInformation),
+        __metadata("design:paramtypes", [OntologyInformation])
+    ], TextValueAsHtmlComponent.prototype, "ontologyInfo", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], TextValueAsHtmlComponent.prototype, "bindEvents", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", ReadTextValueAsHtml),
+        __metadata("design:paramtypes", [ReadTextValueAsHtml])
+    ], TextValueAsHtmlComponent.prototype, "valueObject", null);
+    __decorate([
+        HostListener('click', ['$event.target']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], TextValueAsHtmlComponent.prototype, "onClick", null);
+    TextValueAsHtmlComponent = __decorate([
+        Component({
+            selector: 'kui-text-value-as-html',
+            template: "<div>{{valueObject.html}}</div>",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [ElementRef])
+    ], TextValueAsHtmlComponent);
     return TextValueAsHtmlComponent;
 }());
 
@@ -1183,18 +1230,19 @@ var TextValueAsStringComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    TextValueAsStringComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-text-value-as-string',
-                    template: "<span>{{valueObject.str}}</span>\n",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    TextValueAsStringComponent.ctorParameters = function () { return []; };
-    TextValueAsStringComponent.propDecorators = {
-        valueObject: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", ReadTextValueAsString),
+        __metadata("design:paramtypes", [ReadTextValueAsString])
+    ], TextValueAsStringComponent.prototype, "valueObject", null);
+    TextValueAsStringComponent = __decorate([
+        Component({
+            selector: 'kui-text-value-as-string',
+            template: "<span>{{valueObject.str}}</span>\n",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [])
+    ], TextValueAsStringComponent);
     return TextValueAsStringComponent;
 }());
 
@@ -1211,18 +1259,19 @@ var TextValueAsXmlComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    TextValueAsXmlComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-text-value-as-xml',
-                    template: "<span>{{valueObject.xml}}</span>",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    TextValueAsXmlComponent.ctorParameters = function () { return []; };
-    TextValueAsXmlComponent.propDecorators = {
-        valueObject: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", ReadTextValueAsXml),
+        __metadata("design:paramtypes", [ReadTextValueAsXml])
+    ], TextValueAsXmlComponent.prototype, "valueObject", null);
+    TextValueAsXmlComponent = __decorate([
+        Component({
+            selector: 'kui-text-value-as-xml',
+            template: "<span>{{valueObject.xml}}</span>",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [])
+    ], TextValueAsXmlComponent);
     return TextValueAsXmlComponent;
 }());
 
@@ -1239,18 +1288,19 @@ var TextfileValueComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    TextfileValueComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-textfile-value',
-                    template: "<a target=\"_blank\" href=\"{{valueObject.textFileURL}}\">{{valueObject.textFilename}}</a>",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    TextfileValueComponent.ctorParameters = function () { return []; };
-    TextfileValueComponent.propDecorators = {
-        valueObject: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", ReadTextFileValue),
+        __metadata("design:paramtypes", [ReadTextFileValue])
+    ], TextfileValueComponent.prototype, "valueObject", null);
+    TextfileValueComponent = __decorate([
+        Component({
+            selector: 'kui-textfile-value',
+            template: "<a target=\"_blank\" href=\"{{valueObject.textFileURL}}\">{{valueObject.textFilename}}</a>",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [])
+    ], TextfileValueComponent);
     return TextfileValueComponent;
 }());
 
@@ -1275,19 +1325,23 @@ var UriValueComponent = /** @class */ (function () {
             this.displayString = this.label;
         }
     };
-    UriValueComponent.decorators = [
-        { type: Component, args: [{
-                    selector: '   kui-uri-value',
-                    template: "<a href=\"{{valueObject.uri}}\" target=\"_blank\">{{displayString}}</a>\n",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    UriValueComponent.ctorParameters = function () { return []; };
-    UriValueComponent.propDecorators = {
-        valueObject: [{ type: Input }],
-        label: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", ReadUriValue),
+        __metadata("design:paramtypes", [ReadUriValue])
+    ], UriValueComponent.prototype, "valueObject", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], UriValueComponent.prototype, "label", void 0);
+    UriValueComponent = __decorate([
+        Component({
+            selector: '   kui-uri-value',
+            template: "<a href=\"{{valueObject.uri}}\" target=\"_blank\">{{displayString}}</a>\n",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], UriValueComponent);
     return UriValueComponent;
 }());
 
@@ -1296,15 +1350,14 @@ var CompareViewComponent = /** @class */ (function () {
     }
     CompareViewComponent.prototype.ngOnInit = function () {
     };
-    CompareViewComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-compare-view',
-                    template: "<p>\n  compare-view works!\n</p>\n",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    CompareViewComponent.ctorParameters = function () { return []; };
+    CompareViewComponent = __decorate([
+        Component({
+            selector: 'kui-compare-view',
+            template: "<p>\n  compare-view works!\n</p>\n",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], CompareViewComponent);
     return CompareViewComponent;
 }());
 
@@ -1313,15 +1366,14 @@ var GraphViewComponent = /** @class */ (function () {
     }
     GraphViewComponent.prototype.ngOnInit = function () {
     };
-    GraphViewComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-graph-view',
-                    template: "<p>This is the GraphView component to visualize the connection of a resource. This view will implement the d3js library</p>\n",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    GraphViewComponent.ctorParameters = function () { return []; };
+    GraphViewComponent = __decorate([
+        Component({
+            selector: 'kui-graph-view',
+            template: "<p>This is the GraphView component to visualize the connection of a resource. This view will implement the d3js library</p>\n",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], GraphViewComponent);
     return GraphViewComponent;
 }());
 
@@ -1341,21 +1393,22 @@ var GridViewComponent = /** @class */ (function () {
         var url = '/resource/' + encodeURIComponent(id);
         this._router.navigate([url]);
     };
-    GridViewComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-grid-view',
-                    template: "<div>\n  <!-- <kui-progress-indicator *ngIf=\"isLoading\" [color]=\"'#D88958'\"></kui-progress-indicator> -->\n\n  <div fxLayout=\"row wrap\" fxLayout.xs=\"column\" fxLayoutGap=\"grid\">\n\n    <div fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.lg=\"20\" fxFlex.xl=\"16.6\" fxFlex=\"16.6\" *ngFor=\"let res of result\" class=\"gv-preview\">\n      <mat-card class=\"link\" (click)=\"openResource(res.id)\">\n\n        <mat-card-subtitle>{{ontologyInfo?.getLabelForResourceClass(res.type)}}</mat-card-subtitle>\n        <mat-card-title>{{res.label}}</mat-card-title>\n\n\n        <mat-card-content *ngFor=\"let prop of res.properties | kuiKey\">\n          <!-- description -->\n          <div *ngFor=\"let val of prop.value | kuiKey\">\n            <div [ngSwitch]=\"val.value.getClassName()\">\n              <div class=\"lv-html-text\" *ngSwitchCase=\"KnoraConstants.ReadTextValueAsHtml\">\n                <kui-text-value-as-html [valueObject]=\"val.value\" [ontologyInfo]=\"ontologyInfo\" [bindEvents]=\"false\"></kui-text-value-as-html>\n                <p class=\"lv-read-more\"></p>\n              </div>\n              <div>\n                <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val.value\" [calendar]=\"true\" [era]=\"true\"></kui-date-value>\n                <span *ngSwitchDefault=\"\">{{val.value.getContent()}}</span>\n              </div>\n              <br>\n              <span *ngIf=\"ontologyInfo?.getLabelForProperty(prop.key) !== 'Text'\">\n                {{ontologyInfo?.getLabelForProperty(prop.key)}}\n              </span>\n            </div>\n          </div>\n        </mat-card-content>\n\n      </mat-card>\n    </div>\n  </div>\n\n\n</div>",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.gv-preview{margin:6px 0;padding:24px;word-wrap:break-word;border-radius:5px}.gv-preview .mat-card{height:160px;color:rgba(0,0,0,.81);overflow:hidden;padding-bottom:25px}.gv-preview .mat-card:hover{background:rgba(0,105,92,.39);color:#000}.gv-preview .mat-card:active{background:rgba(0,105,92,.61)}.gv-preview .mat-card .mat-card-title{font-size:12pt;font-weight:600}"]
-                }] }
-    ];
-    /** @nocollapse */
-    GridViewComponent.ctorParameters = function () { return [
-        { type: Router }
-    ]; };
-    GridViewComponent.propDecorators = {
-        result: [{ type: Input }],
-        ontologyInfo: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], GridViewComponent.prototype, "result", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", OntologyInformation)
+    ], GridViewComponent.prototype, "ontologyInfo", void 0);
+    GridViewComponent = __decorate([
+        Component({
+            selector: 'kui-grid-view',
+            template: "<div>\n  <!-- <kui-progress-indicator *ngIf=\"isLoading\" [color]=\"'#D88958'\"></kui-progress-indicator> -->\n\n  <div fxLayout=\"row wrap\" fxLayout.xs=\"column\" fxLayoutGap=\"grid\">\n\n    <div fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.lg=\"20\" fxFlex.xl=\"16.6\" fxFlex=\"16.6\" *ngFor=\"let res of result\" class=\"gv-preview\">\n      <mat-card class=\"link\" (click)=\"openResource(res.id)\">\n\n        <mat-card-subtitle>{{ontologyInfo?.getLabelForResourceClass(res.type)}}</mat-card-subtitle>\n        <mat-card-title>{{res.label}}</mat-card-title>\n\n\n        <mat-card-content *ngFor=\"let prop of res.properties | kuiKey\">\n          <!-- description -->\n          <div *ngFor=\"let val of prop.value | kuiKey\">\n            <div [ngSwitch]=\"val.value.getClassName()\">\n              <div class=\"lv-html-text\" *ngSwitchCase=\"KnoraConstants.ReadTextValueAsHtml\">\n                <kui-text-value-as-html [valueObject]=\"val.value\" [ontologyInfo]=\"ontologyInfo\" [bindEvents]=\"false\"></kui-text-value-as-html>\n                <p class=\"lv-read-more\"></p>\n              </div>\n              <div>\n                <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val.value\" [calendar]=\"true\" [era]=\"true\"></kui-date-value>\n                <span *ngSwitchDefault=\"\">{{val.value.getContent()}}</span>\n              </div>\n              <br>\n              <span *ngIf=\"ontologyInfo?.getLabelForProperty(prop.key) !== 'Text'\">\n                {{ontologyInfo?.getLabelForProperty(prop.key)}}\n              </span>\n            </div>\n          </div>\n        </mat-card-content>\n\n      </mat-card>\n    </div>\n  </div>\n\n\n</div>",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.gv-preview{margin:6px 0;padding:24px;word-wrap:break-word;border-radius:5px}.gv-preview .mat-card{height:160px;color:rgba(0,0,0,.81);overflow:hidden;padding-bottom:25px}.gv-preview .mat-card:hover{background:rgba(0,105,92,.39);color:#000}.gv-preview .mat-card:active{background:rgba(0,105,92,.61)}.gv-preview .mat-card .mat-card-title{font-size:12pt;font-weight:600}"]
+        }),
+        __metadata("design:paramtypes", [Router])
+    ], GridViewComponent);
     return GridViewComponent;
 }());
 
@@ -1373,21 +1426,22 @@ var ListViewComponent = /** @class */ (function () {
         var url = '/resource/' + encodeURIComponent(id);
         this._router.navigate([url]);
     };
-    ListViewComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-list-view',
-                    template: "<div>\n    <!-- <kui-progress-indicator *ngIf=\"isLoading\" [color]=\"'#D88958'\"></kui-progress-indicator> -->\n\n    <mat-list class=\"list-view lv-items\" *ngFor=\"let res of result; let i = index; let last = last;\">\n        <mat-list-item class=\"link\" (click)=\"openResource(res.id)\">\n            <mat-icon matListIcon>image_search</mat-icon>\n            <p matLine class=\"lv-res-label\">{{ontologyInfo?.getLabelForResourceClass(res.type)}}</p>\n            <h3 matLine class=\"lv-label\">{{res.label}}</h3>\n\n            <div matLine *ngFor=\"let prop of res.properties | kuiKey\">\n\n                <div matLine *ngFor=\"let val of prop.value | kuiKey\">\n\n                    <div [ngSwitch]=\"val.value.getClassName()\">\n                        <span *ngIf=\"ontologyInfo?.getLabelForProperty(prop.key) !== 'Text'\" class=\"lv-prop-label\">\n                            {{ontologyInfo?.getLabelForProperty(prop.key)}}:&nbsp;\n                        </span>\n\n                        <div class=\"lv-html-text\">\n\n                            <div *ngSwitchCase=\"KnoraConstants.ReadTextValueAsHtml\">\n                                <kui-text-value-as-html [valueObject]=\"val.value\" [ontologyInfo]=\"ontologyInfo\" [bindEvents]=\"false\"></kui-text-value-as-html>\n                            </div>\n\n                            <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val.value\" [calendar]=\"true\" [era]=\"true\"></kui-date-value>\n\n                            <span *ngSwitchDefault=\"\">{{val.value.getContent()}}</span>\n\n                            <!-- slice the end of long texts -->\n                            <p class=\"lv-read-more\"></p>\n\n                        </div>\n\n                    </div>\n\n                </div>\n\n            </div>\n\n        </mat-list-item>\n\n        <mat-divider *ngIf=\"!last\"></mat-divider>\n\n    </mat-list>\n</div>\n",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.mat-list .mat-list-item .mat-line{white-space:normal!important}.list-view .mat-list-item{height:auto;min-height:40px;padding:8px 0}.lv-label{font-weight:700!important;font-size:16px!important;line-height:1.5}.lv-res-label{color:rgba(0,0,0,.54);font-size:14px!important}.lv-prop-label{font-style:italic}"]
-                }] }
-    ];
-    /** @nocollapse */
-    ListViewComponent.ctorParameters = function () { return [
-        { type: Router }
-    ]; };
-    ListViewComponent.propDecorators = {
-        result: [{ type: Input }],
-        ontologyInfo: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], ListViewComponent.prototype, "result", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", OntologyInformation)
+    ], ListViewComponent.prototype, "ontologyInfo", void 0);
+    ListViewComponent = __decorate([
+        Component({
+            selector: 'kui-list-view',
+            template: "<div>\n    <!-- <kui-progress-indicator *ngIf=\"isLoading\" [color]=\"'#D88958'\"></kui-progress-indicator> -->\n\n    <mat-list class=\"list-view lv-items\" *ngFor=\"let res of result; let i = index; let last = last;\">\n        <mat-list-item class=\"link\" (click)=\"openResource(res.id)\">\n            <mat-icon matListIcon>image_search</mat-icon>\n            <p matLine class=\"lv-res-label\">{{ontologyInfo?.getLabelForResourceClass(res.type)}}</p>\n            <h3 matLine class=\"lv-label\">{{res.label}}</h3>\n\n            <div matLine *ngFor=\"let prop of res.properties | kuiKey\">\n\n                <div matLine *ngFor=\"let val of prop.value | kuiKey\">\n\n                    <div [ngSwitch]=\"val.value.getClassName()\">\n                        <span *ngIf=\"ontologyInfo?.getLabelForProperty(prop.key) !== 'Text'\" class=\"lv-prop-label\">\n                            {{ontologyInfo?.getLabelForProperty(prop.key)}}:&nbsp;\n                        </span>\n\n                        <div class=\"lv-html-text\">\n\n                            <div *ngSwitchCase=\"KnoraConstants.ReadTextValueAsHtml\">\n                                <kui-text-value-as-html [valueObject]=\"val.value\" [ontologyInfo]=\"ontologyInfo\" [bindEvents]=\"false\"></kui-text-value-as-html>\n                            </div>\n\n                            <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val.value\" [calendar]=\"true\" [era]=\"true\"></kui-date-value>\n\n                            <span *ngSwitchDefault=\"\">{{val.value.getContent()}}</span>\n\n                            <!-- slice the end of long texts -->\n                            <p class=\"lv-read-more\"></p>\n\n                        </div>\n\n                    </div>\n\n                </div>\n\n            </div>\n\n        </mat-list-item>\n\n        <mat-divider *ngIf=\"!last\"></mat-divider>\n\n    </mat-list>\n</div>\n",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.mat-list .mat-list-item .mat-line{white-space:normal!important}.list-view .mat-list-item{height:auto;min-height:40px;padding:8px 0}.lv-label{font-weight:700!important;font-size:16px!important;line-height:1.5}.lv-res-label{color:rgba(0,0,0,.54);font-size:14px!important}.lv-prop-label{font-style:italic}"]
+        }),
+        __metadata("design:paramtypes", [Router])
+    ], ListViewComponent);
     return ListViewComponent;
 }());
 
@@ -1397,15 +1451,14 @@ var ListViewComponent = /** @class */ (function () {
 var PropertiesViewComponent = /** @class */ (function () {
     function PropertiesViewComponent() {
     }
-    PropertiesViewComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-properties-view',
-                    template: "<p>\n    properties-view works!\n</p>",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    PropertiesViewComponent.ctorParameters = function () { return []; };
+    PropertiesViewComponent = __decorate([
+        Component({
+            selector: 'kui-properties-view',
+            template: "<p>\n    properties-view works!\n</p>",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], PropertiesViewComponent);
     return PropertiesViewComponent;
 }());
 
@@ -1476,7 +1529,7 @@ var ResourceViewComponent = /** @class */ (function () {
                     try {
                         for (var _e = __values(resource.incomingRegions), _f = _e.next(); !_f.done; _f = _e.next()) {
                             var incomingRegion = _f.value;
-                            var region = new ImageRegion(incomingRegion);
+                            var region = new ImageRegion$1(incomingRegion);
                             regions.push(region);
                         }
                     }
@@ -1487,7 +1540,7 @@ var ResourceViewComponent = /** @class */ (function () {
                         }
                         finally { if (e_2) throw e_2.error; }
                     }
-                    var stillImage = new StillImageRepresentation(img, regions);
+                    var stillImage = new StillImageRepresentation$1(img, regions);
                     imgRepresentations.push(stillImage);
                 }
             }
@@ -1519,7 +1572,7 @@ var ResourceViewComponent = /** @class */ (function () {
                     try {
                         for (var _g = __values(resource.incomingRegions), _h = _g.next(); !_h.done; _h = _g.next()) {
                             var incomingRegion = _h.value;
-                            var region = new ImageRegion(incomingRegion);
+                            var region = new ImageRegion$1(incomingRegion);
                             regions.push(region);
                         }
                     }
@@ -1530,7 +1583,7 @@ var ResourceViewComponent = /** @class */ (function () {
                         }
                         finally { if (e_4) throw e_4.error; }
                     }
-                    var stillImage = new StillImageRepresentation(img, regions);
+                    var stillImage = new StillImageRepresentation$1(img, regions);
                     imgRepresentations.push(stillImage);
                 }
             }
@@ -1622,23 +1675,21 @@ var ResourceViewComponent = /** @class */ (function () {
         this.loading = true;
         this._router.navigate(['/resource/' + encodeURIComponent(id)]);
     };
-    ResourceViewComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-resource-view',
-                    template: "<div class=\"resource-view\">\n\n    <kui-progress-indicator *ngIf=\"loading\"></kui-progress-indicator>\n\n    <div *ngIf=\"!loading\">\n\n        <div class=\"resource\" *ngFor=\"let resource of sequence.resources; let last = last\">\n\n            <!-- 0) Title first? -->\n            <mat-list>\n\n                <h3 class=\"mat-subheader\">\n                    {{sequence.ontologyInformation.getLabelForResourceClass(resource.type)}}\n                </h3>\n\n                <mat-list-item>\n                    <h2 class=\"mat-headline\">{{resource.label}}</h2>\n                </mat-list-item>\n\n            </mat-list>\n\n            <!-- 1) show fileRepresentation first-->\n            <div *ngFor=\"let prop of resource.properties | kuiKey\">\n                <div [ngSwitch]=\"prop.key\">\n\n                    <div *ngSwitchCase=\"KnoraConstants.hasStillImageFileValue\" class=\"media\">\n                        <!-- if the property is of type stillImageFileValue, show the image with osd viewer from @knora/viewer TODO: the fileValue will be part of an own resource property -->\n                        <kui-still-image *ngIf=\"resource.stillImageRepresentationsToDisplay.length > 0\" class=\"osd-viewer\" [imageCaption]=\"sequence.ontologyInformation.getLabelForProperty(prop.key)\" [images]=\"resource.stillImageRepresentationsToDisplay\">\n                        </kui-still-image>\n                    </div>\n\n                    <!-- TODO: switch through all other media type -->\n                    <!--\n                    <kui-moving-image></kui-moving-image>\n                    <kui-audio></kui-audio>\n                    <kui-ddd></kui-ddd>\n                    <kui-document></kui-document>\n  \n                    <kui-collection></kui-collection>\n  \n                    <kui-annotation></kui-annotation>\n                    <kui-link-obj></kui-link-obj>\n                    <kui-object></kui-object>\n                    <kui-region></kui-region>\n                    <kui-text></kui-text>\n                    -->\n\n                    <div *ngSwitchDefault class=\"hidden\">\n                        <!--<p>This media type ({{prop.key}}) is not yet implemented</p>-->\n                    </div>\n                </div>\n            </div>\n\n            <!-- 2) show properties, annotations (list of regions, sequences etc.), incomming resources (links, files) -->\n            <div class=\"data\">\n\n                <mat-tab-group class=\"full-width\">\n                    <mat-tab label=\"Metadata\">\n                        <mat-list>\n                            <div *ngFor=\"let prop of guiOrder; let last = last\" class=\"property\">\n                                <div *ngIf=\"resource.properties[prop?.property]\">\n                                    <!-- label of the property -->\n                                    <h3 mat-subheader class=\"property-label\">\n                                        {{sequence.ontologyInformation.getLabelForProperty(prop?.property)}}\n                                    </h3>\n                                    <!-- the value(s) of the property -->\n                                    <mat-list-item class=\"property-value-item\" *ngFor=\"let val of resource.properties[prop?.property]; let lastItem = last\">\n                                        <li [ngSwitch]=\"val.getClassName()\" [class.list]=\"resource.properties[prop?.property].length > 1\" [class.lastItem]=\"lastItem\">\n                                            <kui-text-value-as-string *ngSwitchCase=\"KnoraConstants.ReadTextValueAsString\" [valueObject]=\"val\"></kui-text-value-as-string>\n                                            <kui-text-value-as-xml *ngSwitchCase=\"KnoraConstants.ReadTextValueAsXml\" [valueObject]=\"val\"></kui-text-value-as-xml>\n                                            <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val\" [calendar]=\"true\" [era]=\"true\"></kui-date-value>\n                                            <kui-link-value class=\"app-link\" *ngSwitchCase=\"KnoraConstants.ReadLinkValue\" [valueObject]=\"val\" [ontologyInfo]=\"ontologyInfo\" (referredResourceClicked)=\"openLink(val.referredResourceIri)\">\n                                            </kui-link-value>\n                                            <kui-integer-value *ngSwitchCase=\"KnoraConstants.ReadIntegerValue\" [valueObject]=\"val\"></kui-integer-value>\n                                            <kui-decimal-value *ngSwitchCase=\"KnoraConstants.ReadDecimalValue\" [valueObject]=\"val\"></kui-decimal-value>\n                                            <kui-geometry-value *ngSwitchCase=\"KnoraConstants.ReadGeomValue\" [valueObject]=\"val\"></kui-geometry-value>\n                                            <kui-color-value *ngSwitchCase=\"KnoraConstants.ReadColorValue\" [valueObject]=\"val\"></kui-color-value>\n                                            <kui-uri-value *ngSwitchCase=\"KnoraConstants.ReadUriValue\" [valueObject]=\"val\"></kui-uri-value>\n                                            <kui-boolean-value *ngSwitchCase=\"KnoraConstants.ReadBooleanValue\" [valueObject]=\"val\"></kui-boolean-value>\n                                            <kui-interval-value *ngSwitchCase=\"KnoraConstants.ReadIntervalValue\" [valueObject]=\"val\"></kui-interval-value>\n                                            <kui-list-value *ngSwitchCase=\"KnoraConstants.ReadListValue\" [valueObject]=\"val\"></kui-list-value>\n                                            <kui-textfile-value *ngSwitchCase=\"KnoraConstants.TextFileValue\" [valueObject]=\"val\"></kui-textfile-value>\n                                            <span *ngSwitchDefault>Not supported {{val.getClassName()}}</span>\n                                        </li>\n                                    </mat-list-item>\n                                </div>\n                            </div>\n                        </mat-list>\n                    </mat-tab>\n\n                    <mat-tab label=\"Annotations\" *ngIf=\"resource.annotations?.length > 0\">\n\n                    </mat-tab>\n\n                    <mat-tab label=\"Links / Connections\" *ngIf=\"resource.incomingLinks?.length > 0\">\n                        <div>\n                            <mat-list *ngFor=\"let incoming of resource.incomingLinks\">\n                                <mat-list-item class=\"app-link\" (click)=\"openLink(incoming.id)\">\n                                    <span>{{incoming.label}}</span>\n                                </mat-list-item>\n                            </mat-list>\n                        </div>\n                    </mat-tab>\n\n                </mat-tab-group>\n\n            </div>\n\n            <!-- in case of more than one resource -->\n            <mat-divider *ngIf=\"!last\"></mat-divider>\n\n        </div>\n\n    </div>\n</div>\n\n\n<!-- OLD / first template\n  <mat-card>\n  \n  \n    <h2>metadata for resource {{ resource?.label}} ({{ resource?.id }})</h2>\n    <h3>type: {{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h3>\n  \n    <div *ngFor=\"let prop of resource?.properties | kuiKey\">\n        <mat-list>\n            <span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>\n            <mat-list-item *ngFor=\"let val of prop.value\">\n                <span [ngSwitch]=\"val.getClassName()\">\n                    <kui-color-value *ngSwitchCase=\"KnoraConstants.ReadColorValue\"\n                                     [valueObject]=\"val\"></kui-color-value>\n                    <kui-text-value-as-html *ngSwitchCase=\"KnoraConstants.ReadTextValueAsHtml\" [valueObject]=\"val\"\n                                            [ontologyInfo]=\"ontologyInfo\" [bindEvents]=\"true\"></kui-text-value-as-html>\n                    <kui-text-value-as-string *ngSwitchCase=\"KnoraConstants.ReadTextValueAsString\"\n                                              [valueObject]=\"val\"></kui-text-value-as-string>\n                    <kui-text-value-as-xml *ngSwitchCase=\"KnoraConstants.ReadTextValueAsXml\"\n                                           [valueObject]=\"val\"></kui-text-value-as-xml>\n                    <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val\"></kui-date-value>\n                    <kui-link-value *ngSwitchCase=\"KnoraConstants.ReadLinkValue\" [valueObject]=\"val\"\n                                    [ontologyInfo]=\"ontologyInfo\"></kui-link-value>\n                    <kui-integer-value *ngSwitchCase=\"KnoraConstants.ReadIntegerValue\"\n                                       [valueObject]=\"val\"></kui-integer-value>\n                    <kui-decimal-value *ngSwitchCase=\"KnoraConstants.ReadDecimalValue\"\n                                       [valueObject]=\"val\"></kui-decimal-value>\n                    <kui-geometry-value *ngSwitchCase=\"KnoraConstants.ReadGeomValue\"\n                                        [valueObject]=\"val\"></kui-geometry-value>\n                    <kui-uri-value *ngSwitchCase=\"KnoraConstants.ReadUriValue\" [valueObject]=\"val\"></kui-uri-value>\n                    <kui-boolean-value *ngSwitchCase=\"KnoraConstants.ReadBooleanValue\"\n                                       [valueObject]=\"val\"></kui-boolean-value>\n                    <kui-interval-value *ngSwitchCase=\"KnoraConstants.ReadIntervalValue\"\n                                        [valueObject]=\"val\"></kui-interval-value>\n                    <kui-list-value *ngSwitchCase=\"KnoraConstants.ReadListValue\" [valueObject]=\"val\"></kui-list-value>\n                    <kui-textfile-value *ngSwitchCase=\"KnoraConstants.TextFileValue\"\n                                        [valueObject]=\"val\"></kui-textfile-value>\n                    <span *ngSwitchDefault=\"\">Not supported {{val.getClassName()}}</span>\n                </span>\n            </mat-list-item>\n        </mat-list>\n    </div>\n  \n  </mat-card>\n  -->\n",
-                    styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.resource-view{max-width:720px;margin:0 auto}.resource-view .resource .media{width:720px;height:calc(720px / (4 / 3))}.resource-view .resource .data{min-height:700px;padding:24px 36px}.hidden{display:none}.property{margin-bottom:12px}.property .property-value-item{min-height:48px;height:auto}.property .property-value-item li{list-style-type:none}.property .property-value-item li.list:before{content:'-    '}.property .property-value-item li.lastItem{margin-bottom:12px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    ResourceViewComponent.ctorParameters = function () { return [
-        { type: ActivatedRoute },
-        { type: Router },
-        { type: ResourceService },
-        { type: IncomingService }
-    ]; };
-    ResourceViewComponent.propDecorators = {
-        iri: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], ResourceViewComponent.prototype, "iri", void 0);
+    ResourceViewComponent = __decorate([
+        Component({
+            selector: 'kui-resource-view',
+            template: "<div class=\"resource-view\">\n\n    <kui-progress-indicator *ngIf=\"loading\"></kui-progress-indicator>\n\n    <div *ngIf=\"!loading\">\n\n        <div class=\"resource\" *ngFor=\"let resource of sequence.resources; let last = last\">\n\n            <!-- 0) Title first? -->\n            <mat-list>\n\n                <h3 class=\"mat-subheader\">\n                    {{sequence.ontologyInformation.getLabelForResourceClass(resource.type)}}\n                </h3>\n\n                <mat-list-item>\n                    <h2 class=\"mat-headline\">{{resource.label}}</h2>\n                </mat-list-item>\n\n            </mat-list>\n\n            <!-- 1) show fileRepresentation first-->\n            <div *ngFor=\"let prop of resource.properties | kuiKey\">\n                <div [ngSwitch]=\"prop.key\">\n\n                    <div *ngSwitchCase=\"KnoraConstants.hasStillImageFileValue\" class=\"media\">\n                        <!-- if the property is of type stillImageFileValue, show the image with osd viewer from @knora/viewer TODO: the fileValue will be part of an own resource property -->\n                        <kui-still-image *ngIf=\"resource.stillImageRepresentationsToDisplay.length > 0\" class=\"osd-viewer\" [imageCaption]=\"sequence.ontologyInformation.getLabelForProperty(prop.key)\" [images]=\"resource.stillImageRepresentationsToDisplay\">\n                        </kui-still-image>\n                    </div>\n\n                    <!-- TODO: switch through all other media type -->\n                    <!--\n                    <kui-moving-image></kui-moving-image>\n                    <kui-audio></kui-audio>\n                    <kui-ddd></kui-ddd>\n                    <kui-document></kui-document>\n  \n                    <kui-collection></kui-collection>\n  \n                    <kui-annotation></kui-annotation>\n                    <kui-link-obj></kui-link-obj>\n                    <kui-object></kui-object>\n                    <kui-region></kui-region>\n                    <kui-text></kui-text>\n                    -->\n\n                    <div *ngSwitchDefault class=\"hidden\">\n                        <!--<p>This media type ({{prop.key}}) is not yet implemented</p>-->\n                    </div>\n                </div>\n            </div>\n\n            <!-- 2) show properties, annotations (list of regions, sequences etc.), incomming resources (links, files) -->\n            <div class=\"data\">\n\n                <mat-tab-group class=\"full-width\">\n                    <mat-tab label=\"Metadata\">\n                        <mat-list>\n                            <div *ngFor=\"let prop of guiOrder; let last = last\" class=\"property\">\n                                <div *ngIf=\"resource.properties[prop?.property]\">\n                                    <!-- label of the property -->\n                                    <h3 mat-subheader class=\"property-label\">\n                                        {{sequence.ontologyInformation.getLabelForProperty(prop?.property)}}\n                                    </h3>\n                                    <!-- the value(s) of the property -->\n                                    <mat-list-item class=\"property-value-item\" *ngFor=\"let val of resource.properties[prop?.property]; let lastItem = last\">\n                                        <li [ngSwitch]=\"val.getClassName()\" [class.list]=\"resource.properties[prop?.property].length > 1\" [class.lastItem]=\"lastItem\">\n                                            <kui-text-value-as-string *ngSwitchCase=\"KnoraConstants.ReadTextValueAsString\" [valueObject]=\"val\"></kui-text-value-as-string>\n                                            <kui-text-value-as-xml *ngSwitchCase=\"KnoraConstants.ReadTextValueAsXml\" [valueObject]=\"val\"></kui-text-value-as-xml>\n                                            <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val\" [calendar]=\"true\" [era]=\"true\"></kui-date-value>\n                                            <kui-link-value class=\"app-link\" *ngSwitchCase=\"KnoraConstants.ReadLinkValue\" [valueObject]=\"val\" [ontologyInfo]=\"ontologyInfo\" (referredResourceClicked)=\"openLink(val.referredResourceIri)\">\n                                            </kui-link-value>\n                                            <kui-integer-value *ngSwitchCase=\"KnoraConstants.ReadIntegerValue\" [valueObject]=\"val\"></kui-integer-value>\n                                            <kui-decimal-value *ngSwitchCase=\"KnoraConstants.ReadDecimalValue\" [valueObject]=\"val\"></kui-decimal-value>\n                                            <kui-geometry-value *ngSwitchCase=\"KnoraConstants.ReadGeomValue\" [valueObject]=\"val\"></kui-geometry-value>\n                                            <kui-color-value *ngSwitchCase=\"KnoraConstants.ReadColorValue\" [valueObject]=\"val\"></kui-color-value>\n                                            <kui-uri-value *ngSwitchCase=\"KnoraConstants.ReadUriValue\" [valueObject]=\"val\"></kui-uri-value>\n                                            <kui-boolean-value *ngSwitchCase=\"KnoraConstants.ReadBooleanValue\" [valueObject]=\"val\"></kui-boolean-value>\n                                            <kui-interval-value *ngSwitchCase=\"KnoraConstants.ReadIntervalValue\" [valueObject]=\"val\"></kui-interval-value>\n                                            <kui-list-value *ngSwitchCase=\"KnoraConstants.ReadListValue\" [valueObject]=\"val\"></kui-list-value>\n                                            <kui-textfile-value *ngSwitchCase=\"KnoraConstants.TextFileValue\" [valueObject]=\"val\"></kui-textfile-value>\n                                            <span *ngSwitchDefault>Not supported {{val.getClassName()}}</span>\n                                        </li>\n                                    </mat-list-item>\n                                </div>\n                            </div>\n                        </mat-list>\n                    </mat-tab>\n\n                    <mat-tab label=\"Annotations\" *ngIf=\"resource.annotations?.length > 0\">\n\n                    </mat-tab>\n\n                    <mat-tab label=\"Links / Connections\" *ngIf=\"resource.incomingLinks?.length > 0\">\n                        <div>\n                            <mat-list *ngFor=\"let incoming of resource.incomingLinks\">\n                                <mat-list-item class=\"app-link link\" (click)=\"openLink(incoming.id)\">\n                                    <span>{{incoming.label}}</span>\n                                </mat-list-item>\n                            </mat-list>\n                        </div>\n                    </mat-tab>\n\n                </mat-tab-group>\n\n            </div>\n\n            <!-- in case of more than one resource -->\n            <mat-divider *ngIf=\"!last\"></mat-divider>\n\n        </div>\n\n    </div>\n</div>\n\n\n<!-- OLD / first template\n  <mat-card>\n  \n  \n    <h2>metadata for resource {{ resource?.label}} ({{ resource?.id }})</h2>\n    <h3>type: {{ontologyInfo?.getLabelForResourceClass(resource?.type)}}</h3>\n  \n    <div *ngFor=\"let prop of resource?.properties | kuiKey\">\n        <mat-list>\n            <span>{{ontologyInfo?.getLabelForProperty(prop.key)}}</span>\n            <mat-list-item *ngFor=\"let val of prop.value\">\n                <span [ngSwitch]=\"val.getClassName()\">\n                    <kui-color-value *ngSwitchCase=\"KnoraConstants.ReadColorValue\"\n                                     [valueObject]=\"val\"></kui-color-value>\n                    <kui-text-value-as-html *ngSwitchCase=\"KnoraConstants.ReadTextValueAsHtml\" [valueObject]=\"val\"\n                                            [ontologyInfo]=\"ontologyInfo\" [bindEvents]=\"true\"></kui-text-value-as-html>\n                    <kui-text-value-as-string *ngSwitchCase=\"KnoraConstants.ReadTextValueAsString\"\n                                              [valueObject]=\"val\"></kui-text-value-as-string>\n                    <kui-text-value-as-xml *ngSwitchCase=\"KnoraConstants.ReadTextValueAsXml\"\n                                           [valueObject]=\"val\"></kui-text-value-as-xml>\n                    <kui-date-value *ngSwitchCase=\"KnoraConstants.ReadDateValue\" [valueObject]=\"val\"></kui-date-value>\n                    <kui-link-value *ngSwitchCase=\"KnoraConstants.ReadLinkValue\" [valueObject]=\"val\"\n                                    [ontologyInfo]=\"ontologyInfo\"></kui-link-value>\n                    <kui-integer-value *ngSwitchCase=\"KnoraConstants.ReadIntegerValue\"\n                                       [valueObject]=\"val\"></kui-integer-value>\n                    <kui-decimal-value *ngSwitchCase=\"KnoraConstants.ReadDecimalValue\"\n                                       [valueObject]=\"val\"></kui-decimal-value>\n                    <kui-geometry-value *ngSwitchCase=\"KnoraConstants.ReadGeomValue\"\n                                        [valueObject]=\"val\"></kui-geometry-value>\n                    <kui-uri-value *ngSwitchCase=\"KnoraConstants.ReadUriValue\" [valueObject]=\"val\"></kui-uri-value>\n                    <kui-boolean-value *ngSwitchCase=\"KnoraConstants.ReadBooleanValue\"\n                                       [valueObject]=\"val\"></kui-boolean-value>\n                    <kui-interval-value *ngSwitchCase=\"KnoraConstants.ReadIntervalValue\"\n                                        [valueObject]=\"val\"></kui-interval-value>\n                    <kui-list-value *ngSwitchCase=\"KnoraConstants.ReadListValue\" [valueObject]=\"val\"></kui-list-value>\n                    <kui-textfile-value *ngSwitchCase=\"KnoraConstants.TextFileValue\"\n                                        [valueObject]=\"val\"></kui-textfile-value>\n                    <span *ngSwitchDefault=\"\">Not supported {{val.getClassName()}}</span>\n                </span>\n            </mat-list-item>\n        </mat-list>\n    </div>\n  \n  </mat-card>\n  -->\n",
+            styles: [".mat-form-field{width:320px}.fill-remaining-space{flex:1 1 auto}.center{text-align:center}.link{cursor:pointer}.lv-html-text{max-height:60px;position:relative;overflow:hidden}.lv-read-more{position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;border-radius:3px}.resource-view{max-width:720px;margin:0 auto}.resource-view .resource .media{width:720px;height:calc(720px / (4 / 3))}.resource-view .resource .data{min-height:700px;padding:24px 36px}.hidden{display:none}.property{margin-bottom:12px}.property .property-value-item{min-height:48px;height:auto}.property .property-value-item li{list-style-type:none}.property .property-value-item li.list:before{content:'-    '}.property .property-value-item li.lastItem{margin-bottom:12px}.app-link:hover{background-color:#f1f1f1}@media (max-width:576px){.resource-view .resource .media{width:auto}}"]
+        }),
+        __metadata("design:paramtypes", [ActivatedRoute,
+            Router,
+            ResourceService,
+            IncomingService])
+    ], ResourceViewComponent);
     return ResourceViewComponent;
 }());
 
@@ -1648,20 +1699,26 @@ var TableViewComponent = /** @class */ (function () {
     }
     TableViewComponent.prototype.ngOnInit = function () {
     };
-    TableViewComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-table-view',
-                    template: "<p>\n  table-view works!\n</p>\n",
-                    styles: [""]
-                }] }
-    ];
-    /** @nocollapse */
-    TableViewComponent.ctorParameters = function () { return []; };
-    TableViewComponent.propDecorators = {
-        result: [{ type: Input }],
-        ontologyInfo: [{ type: Input }],
-        isLoading: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], TableViewComponent.prototype, "result", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], TableViewComponent.prototype, "ontologyInfo", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], TableViewComponent.prototype, "isLoading", void 0);
+    TableViewComponent = __decorate([
+        Component({
+            selector: 'kui-table-view',
+            template: "<p>\n  table-view works!\n</p>\n",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [])
+    ], TableViewComponent);
     return TableViewComponent;
 }());
 
@@ -1738,7 +1795,6 @@ var SearchResultsComponent = /** @class */ (function () {
     };
     SearchResultsComponent.prototype.ngOnChanges = function () {
         var _this = this;
-        // this.ngOnInit();
         this._route.paramMap.subscribe(function (params) {
             // get the search mode
             if (!_this.searchMode) {
@@ -1872,143 +1928,141 @@ var SearchResultsComponent = /** @class */ (function () {
         }
         this.getResult();
     };
-    SearchResultsComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'kui-search-results',
-                    template: "<kui-progress-indicator *ngIf=\"loading\"></kui-progress-indicator>\n\n<div *ngIf=\"!loading && !badRequest\">\n\n    <div *ngIf=\"numberOfAllResults !== 0 && result; else noResult\">\n\n        <mat-tab-group animationDuration=\"0ms\" [selectedIndex]=\"1\">\n            <mat-tab disabled>\n                <ng-template mat-tab-label>\n                    <!-- <mat-icon class=\"tab-icon\">hashtag</mat-icon> -->\n                    <h4 class=\"search-results-title\">Results: {{numberOfAllResults}}</h4>\n                </ng-template>\n            </mat-tab>\n            <mat-tab>\n                <ng-template mat-tab-label>\n                    <mat-icon class=\"tab-icon\">view_list</mat-icon>\n                    List\n                </ng-template>\n                <kui-list-view [result]=\"result\" [ontologyInfo]=\"ontologyInfo\"></kui-list-view>\n            </mat-tab>\n\n            <!-- in caase of complexView: show tab to switch to grid view -->\n            <mat-tab *ngIf=\"complexView\">\n                <ng-template mat-tab-label>\n                    <mat-icon class=\"tab-icon\">view_module</mat-icon>\n                    Grid\n                </ng-template>\n                <kui-grid-view [result]=\"result\" [ontologyInfo]=\"ontologyInfo\"></kui-grid-view>\n            </mat-tab>\n            <!-- not yet implemented! --\n            <mat-tab>\n                <ng-template mat-tab-label>\n                    <mat-icon class=\"tab-icon\">table_chart</mat-icon>\n                    Table\n                </ng-template>\n                <kui-table-view [result]=\"result\" [ontologyInfo]=\"ontologyInfo\">\n                </kui-table-view>\n            </mat-tab>\n            -->\n\n            <!-- the following tab we don't need anymore? The GravSearch view will be part of the export menu --\n            <mat-tab>\n                <ng-template mat-tab-label>\n                    <mat-icon class=\"tab-icon\">code</mat-icon>\n                    Gravsearch\n                </ng-template>\n                <kui-gravsearch-view></kui-gravsearch-view>\n            </mat-tab>\n            -->\n\n        </mat-tab-group>\n        <!-- <div>\n            <p>List view n\u00B02</p>\n            <kui-list-view [result]=\"result\" [ontologyInfo]=\"ontologyInfo\" *ngIf=\"!complexView\"></kui-list-view>\n        </div> -->\n\n        <div class=\"load-panel\" *ngIf=\"result.length > 0\">\n            <button mat-flat-button color=\"primary\" class=\"link center\" (click)=\"loadMore(offset)\"\n                    *ngIf=\"offset < maxOffset\">Load more\n                <mat-icon>keyboard_arrow_down</mat-icon>\n            </button>\n        </div>\n\n    </div>\n\n    <!-- In case of 0 result -->\n    <ng-template #noResult>\n        <kui-message [message]=\"{status: 404, statusMsg: 'No results', statusText: 'Sorry, but we couldn\\'t find any results matching your search'}\"\n                     [medium]=\"true\"></kui-message>\n        <!-- <p><strong>No result</strong></p> -->\n    </ng-template>\n\n</div>\n\n<!-- Error message -->\n<kui-message *ngIf=\"errorMessage\" [message]=\"{status: 400, statusText: errorMessage.errorInfo}\" [medium]=\"true\">\n</kui-message>\n",
-                    styles: [".load-panel{width:100%}.load-panel .center{display:block;line-height:24px;margin:12px auto}.tab-icon{margin-right:8px}"]
-                }] }
-    ];
-    /** @nocollapse */
-    SearchResultsComponent.ctorParameters = function () { return [
-        { type: ActivatedRoute },
-        { type: SearchService },
-        { type: SearchParamsService },
-        { type: Router }
-    ]; };
-    SearchResultsComponent.propDecorators = {
-        complexView: [{ type: Input }],
-        searchQuery: [{ type: Input }],
-        searchMode: [{ type: Input }],
-        projectIri: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SearchResultsComponent.prototype, "complexView", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SearchResultsComponent.prototype, "searchQuery", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SearchResultsComponent.prototype, "searchMode", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SearchResultsComponent.prototype, "projectIri", void 0);
+    SearchResultsComponent = __decorate([
+        Component({
+            selector: 'kui-search-results',
+            template: "<kui-progress-indicator *ngIf=\"loading\"></kui-progress-indicator>\n\n<div *ngIf=\"!loading && !badRequest\">\n\n    <div *ngIf=\"numberOfAllResults !== 0 && result; else noResult\">\n\n        <mat-tab-group animationDuration=\"0ms\" [selectedIndex]=\"1\">\n            <mat-tab disabled>\n                <ng-template mat-tab-label>\n                    <!-- <mat-icon class=\"tab-icon\">hashtag</mat-icon> -->\n                    <h4 class=\"search-results-title\">Results: {{numberOfAllResults}}</h4>\n                </ng-template>\n            </mat-tab>\n            <mat-tab>\n                <ng-template mat-tab-label>\n                    <mat-icon class=\"tab-icon\">view_list</mat-icon>\n                    List\n                </ng-template>\n                <kui-list-view [result]=\"result\" [ontologyInfo]=\"ontologyInfo\"></kui-list-view>\n            </mat-tab>\n\n            <!-- in caase of complexView: show tab to switch to grid view -->\n            <mat-tab *ngIf=\"complexView\">\n                <ng-template mat-tab-label>\n                    <mat-icon class=\"tab-icon\">view_module</mat-icon>\n                    Grid\n                </ng-template>\n                <kui-grid-view [result]=\"result\" [ontologyInfo]=\"ontologyInfo\"></kui-grid-view>\n            </mat-tab>\n            <!-- not yet implemented! --\n            <mat-tab>\n                <ng-template mat-tab-label>\n                    <mat-icon class=\"tab-icon\">table_chart</mat-icon>\n                    Table\n                </ng-template>\n                <kui-table-view [result]=\"result\" [ontologyInfo]=\"ontologyInfo\">\n                </kui-table-view>\n            </mat-tab>\n            -->\n\n            <!-- the following tab we don't need anymore? The GravSearch view will be part of the export menu --\n            <mat-tab>\n                <ng-template mat-tab-label>\n                    <mat-icon class=\"tab-icon\">code</mat-icon>\n                    Gravsearch\n                </ng-template>\n                <kui-gravsearch-view></kui-gravsearch-view>\n            </mat-tab>\n            -->\n\n        </mat-tab-group>\n        <!-- <div>\n            <p>List view n\u00B02</p>\n            <kui-list-view [result]=\"result\" [ontologyInfo]=\"ontologyInfo\" *ngIf=\"!complexView\"></kui-list-view>\n        </div> -->\n\n        <div class=\"load-panel\" *ngIf=\"result.length > 0\">\n            <button mat-flat-button color=\"primary\" class=\"link center\" (click)=\"loadMore(offset)\"\n                    *ngIf=\"offset < maxOffset\">Load more\n                <mat-icon>keyboard_arrow_down</mat-icon>\n            </button>\n        </div>\n\n    </div>\n\n    <!-- In case of 0 result -->\n    <ng-template #noResult>\n        <kui-message [message]=\"{status: 404, statusMsg: 'No results', statusText: 'Sorry, but we couldn\\'t find any results matching your search'}\"\n                     [medium]=\"true\"></kui-message>\n        <!-- <p><strong>No result</strong></p> -->\n    </ng-template>\n\n</div>\n\n<!-- Error message -->\n<kui-message *ngIf=\"errorMessage\" [message]=\"{status: 400, statusText: errorMessage.errorInfo}\" [medium]=\"true\">\n</kui-message>\n",
+            styles: [".load-panel{width:100%}.load-panel .center{display:block;line-height:24px;margin:12px auto}.tab-icon{margin-right:8px}"]
+        }),
+        __metadata("design:paramtypes", [ActivatedRoute,
+            SearchService,
+            SearchParamsService,
+            Router])
+    ], SearchResultsComponent);
     return SearchResultsComponent;
 }());
 
 var KuiViewerModule = /** @class */ (function () {
     function KuiViewerModule() {
     }
-    KuiViewerModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        KuiCoreModule,
-                        KuiActionModule,
-                        MatAutocompleteModule,
-                        MatButtonModule,
-                        MatCardModule,
-                        MatCheckboxModule,
-                        MatDatepickerModule,
-                        MatExpansionModule,
-                        MatFormFieldModule,
-                        MatInputModule,
-                        MatIconModule,
-                        MatListModule,
-                        MatNativeDateModule,
-                        MatSlideToggleModule,
-                        MatTabsModule,
-                        MatToolbarModule,
-                        MatTooltipModule,
-                        ReactiveFormsModule,
-                        FlexLayoutModule
-                    ],
-                    declarations: [
-                        AnnotationComponent,
-                        AudioComponent,
-                        CollectionComponent,
-                        DddComponent,
-                        DocumentComponent,
-                        LinkObjComponent,
-                        MovingImageComponent,
-                        ObjectComponent,
-                        RegionComponent,
-                        StillImageComponent,
-                        TextComponent,
-                        TextValueAsHtmlComponent,
-                        TextValueAsStringComponent,
-                        TextValueAsXmlComponent,
-                        TextfileValueComponent,
-                        DateValueComponent,
-                        IntegerValueComponent,
-                        ColorValueComponent,
-                        DecimalValueComponent,
-                        UriValueComponent,
-                        BooleanValueComponent,
-                        GeometryValueComponent,
-                        GeonameValueComponent,
-                        IntervalValueComponent,
-                        ListValueComponent,
-                        LinkValueComponent,
-                        ExternalResValueComponent,
-                        ListViewComponent,
-                        GridViewComponent,
-                        TableViewComponent,
-                        ResourceViewComponent,
-                        CompareViewComponent,
-                        GraphViewComponent,
-                        PropertiesViewComponent,
-                        SearchResultsComponent
-                    ],
-                    exports: [
-                        AnnotationComponent,
-                        AudioComponent,
-                        CollectionComponent,
-                        DddComponent,
-                        DocumentComponent,
-                        LinkObjComponent,
-                        MovingImageComponent,
-                        ObjectComponent,
-                        RegionComponent,
-                        StillImageComponent,
-                        TextComponent,
-                        TextValueAsHtmlComponent,
-                        TextValueAsStringComponent,
-                        TextValueAsXmlComponent,
-                        TextfileValueComponent,
-                        DateValueComponent,
-                        IntegerValueComponent,
-                        ColorValueComponent,
-                        DecimalValueComponent,
-                        UriValueComponent,
-                        BooleanValueComponent,
-                        GeometryValueComponent,
-                        GeonameValueComponent,
-                        IntervalValueComponent,
-                        ListValueComponent,
-                        LinkValueComponent,
-                        ExternalResValueComponent,
-                        ListViewComponent,
-                        GridViewComponent,
-                        TableViewComponent,
-                        ResourceViewComponent,
-                        CompareViewComponent,
-                        GraphViewComponent,
-                        PropertiesViewComponent,
-                        SearchResultsComponent
-                    ]
-                },] }
-    ];
+    KuiViewerModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                KuiCoreModule,
+                KuiActionModule,
+                MatAutocompleteModule,
+                MatButtonModule,
+                MatCardModule,
+                MatCheckboxModule,
+                MatDatepickerModule,
+                MatExpansionModule,
+                MatFormFieldModule,
+                MatInputModule,
+                MatIconModule,
+                MatListModule,
+                MatNativeDateModule,
+                MatSlideToggleModule,
+                MatTabsModule,
+                MatToolbarModule,
+                MatTooltipModule,
+                ReactiveFormsModule,
+                FlexLayoutModule
+            ],
+            declarations: [
+                AnnotationComponent,
+                AudioComponent,
+                CollectionComponent,
+                DddComponent,
+                DocumentComponent,
+                LinkObjComponent,
+                MovingImageComponent,
+                ObjectComponent,
+                RegionComponent,
+                StillImageComponent,
+                TextComponent,
+                TextValueAsHtmlComponent,
+                TextValueAsStringComponent,
+                TextValueAsXmlComponent,
+                TextfileValueComponent,
+                DateValueComponent,
+                IntegerValueComponent,
+                ColorValueComponent,
+                DecimalValueComponent,
+                UriValueComponent,
+                BooleanValueComponent,
+                GeometryValueComponent,
+                GeonameValueComponent,
+                IntervalValueComponent,
+                ListValueComponent,
+                LinkValueComponent,
+                ExternalResValueComponent,
+                ListViewComponent,
+                GridViewComponent,
+                TableViewComponent,
+                ResourceViewComponent,
+                CompareViewComponent,
+                GraphViewComponent,
+                PropertiesViewComponent,
+                SearchResultsComponent
+            ],
+            exports: [
+                AnnotationComponent,
+                AudioComponent,
+                CollectionComponent,
+                DddComponent,
+                DocumentComponent,
+                LinkObjComponent,
+                MovingImageComponent,
+                ObjectComponent,
+                RegionComponent,
+                StillImageComponent,
+                TextComponent,
+                TextValueAsHtmlComponent,
+                TextValueAsStringComponent,
+                TextValueAsXmlComponent,
+                TextfileValueComponent,
+                DateValueComponent,
+                IntegerValueComponent,
+                ColorValueComponent,
+                DecimalValueComponent,
+                UriValueComponent,
+                BooleanValueComponent,
+                GeometryValueComponent,
+                GeonameValueComponent,
+                IntervalValueComponent,
+                ListValueComponent,
+                LinkValueComponent,
+                ExternalResValueComponent,
+                ListViewComponent,
+                GridViewComponent,
+                TableViewComponent,
+                ResourceViewComponent,
+                CompareViewComponent,
+                GraphViewComponent,
+                PropertiesViewComponent,
+                SearchResultsComponent
+            ]
+        })
+    ], KuiViewerModule);
     return KuiViewerModule;
 }());
 
-/*
- * Public API Surface of viewer
- */
-
-/**
- * Generated bundle index. Do not edit.
- */
-
-export { BooleanValueComponent as ɵu, ColorValueComponent as ɵr, DateValueComponent as ɵp, DecimalValueComponent as ɵs, ExternalResValueComponent as ɵba, GeometryValueComponent as ɵv, GeonameValueComponent as ɵw, IntegerValueComponent as ɵq, IntervalValueComponent as ɵx, LinkValueComponent as ɵz, ListValueComponent as ɵy, TextValueAsHtmlComponent as ɵl, TextValueAsStringComponent as ɵm, TextValueAsXmlComponent as ɵn, TextfileValueComponent as ɵo, UriValueComponent as ɵt, AnnotationComponent as ɵa, AudioComponent as ɵb, CollectionComponent as ɵc, DddComponent as ɵd, DocumentComponent as ɵe, LinkObjComponent as ɵf, MovingImageComponent as ɵg, ObjectComponent as ɵh, RegionComponent as ɵi, StillImageComponent as ɵj, TextComponent as ɵk, CompareViewComponent as ɵbf, GraphViewComponent as ɵbg, GridViewComponent as ɵbc, ListViewComponent as ɵbb, PropertiesViewComponent as ɵbh, ResourceViewComponent as ɵbe, SearchResultsComponent as ɵbi, TableViewComponent as ɵbd, AnnotationComponent, AudioComponent, CollectionComponent, DddComponent, DocumentComponent, LinkObjComponent, MovingImageComponent, ObjectComponent, RegionComponent, ImageRegion$1 as ImageRegion, StillImageRepresentation$1 as StillImageRepresentation, GeometryForRegion, StillImageComponent, TextComponent, BooleanValueComponent, ColorValueComponent, DateValueComponent, DecimalValueComponent, ExternalResValueComponent, GeometryValueComponent, GeonameValueComponent, IntegerValueComponent, IntervalValueComponent, LinkValueComponent, ListValueComponent, TextValueAsHtmlComponent, TextValueAsStringComponent, TextValueAsXmlComponent, TextfileValueComponent, UriValueComponent, CompareViewComponent, GraphViewComponent, GridViewComponent, ListViewComponent, PropertiesViewComponent, ResourceViewComponent, TableViewComponent, SearchResultsComponent, KuiViewerModule };
-
+export { AnnotationComponent, AudioComponent, BooleanValueComponent, CollectionComponent, ColorValueComponent, CompareViewComponent, DateValueComponent, DddComponent, DecimalValueComponent, DocumentComponent, ExternalResValueComponent, GeometryForRegion, GeometryValueComponent, GeonameValueComponent, GraphViewComponent, GridViewComponent, ImageRegion, IntegerValueComponent, IntervalValueComponent, KuiViewerModule, LinkObjComponent, LinkValueComponent, ListValueComponent, ListViewComponent, MovingImageComponent, ObjectComponent, PropertiesViewComponent, RegionComponent, ResourceViewComponent, SearchResultsComponent, StillImageComponent, StillImageRepresentation, TableViewComponent, TextComponent, TextValueAsHtmlComponent, TextValueAsStringComponent, TextValueAsXmlComponent, TextfileValueComponent, UriValueComponent, AnnotationComponent as ɵa, AudioComponent as ɵb, ExternalResValueComponent as ɵba, ListViewComponent as ɵbb, GridViewComponent as ɵbc, TableViewComponent as ɵbd, ResourceViewComponent as ɵbe, CompareViewComponent as ɵbf, GraphViewComponent as ɵbg, PropertiesViewComponent as ɵbh, SearchResultsComponent as ɵbi, CollectionComponent as ɵc, DddComponent as ɵd, DocumentComponent as ɵe, LinkObjComponent as ɵf, MovingImageComponent as ɵg, ObjectComponent as ɵh, RegionComponent as ɵi, StillImageComponent as ɵj, TextComponent as ɵk, TextValueAsHtmlComponent as ɵl, TextValueAsStringComponent as ɵm, TextValueAsXmlComponent as ɵn, TextfileValueComponent as ɵo, DateValueComponent as ɵp, IntegerValueComponent as ɵq, ColorValueComponent as ɵr, DecimalValueComponent as ɵs, UriValueComponent as ɵt, BooleanValueComponent as ɵu, GeometryValueComponent as ɵv, GeonameValueComponent as ɵw, IntervalValueComponent as ɵx, ListValueComponent as ɵy, LinkValueComponent as ɵz };
 //# sourceMappingURL=knora-viewer.js.map

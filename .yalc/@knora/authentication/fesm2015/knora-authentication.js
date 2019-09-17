@@ -1,21 +1,29 @@
-import { __decorate, __metadata } from 'tslib';
-import { JsonObject, JsonProperty } from 'json2typescript';
-import * as momentImported from 'moment';
+import { __decorate, __metadata, __param } from 'tslib';
+import { JsonProperty, JsonObject } from 'json2typescript';
+import { ɵɵdefineInjectable, ɵɵinject, Injectable, Inject, Input, Component, NgModule } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { KnoraConstants, KuiCoreConfigToken, UsersService, ApiServiceError } from '@knora/core';
-import { throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCardModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
+import { KnoraConstants, KuiCoreConfigToken, UsersService, ApiServiceError, KuiCoreConfig } from '@knora/core';
+import * as momentImported from 'moment';
+import { map, catchError } from 'rxjs/operators';
+import { Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { throwError } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { KuiActionModule } from '@knora/action';
-import { Inject, Injectable, Component, Input, defineInjectable, inject, NgModule } from '@angular/core';
 
 /**
  * currently logged-in user
  */
 let CurrentUser = class CurrentUser {
+    /**
+     * currently logged-in user
+     */
     constructor() {
         /**
          * username
@@ -64,7 +72,7 @@ CurrentUser = __decorate([
 ], CurrentUser);
 
 const moment = momentImported;
-class SessionService {
+let SessionService = class SessionService {
     constructor(_http, config, _users) {
         this._http = _http;
         this.config = config;
@@ -84,6 +92,9 @@ class SessionService {
      * @param username
      */
     setSession(jwt, username) {
+        // username can be either name or email address, so what do we have?
+        const identifierType = ((username.indexOf('@') > -1) ? 'email' : 'username');
+        /*
         this.session = {
             id: this.setTimestamp(),
             user: {
@@ -96,8 +107,9 @@ class SessionService {
         };
         // store in the localStorage
         localStorage.setItem('session', JSON.stringify(this.session));
+        */
         // get user information
-        this._users.getUserByUsername(username).subscribe((result) => {
+        this._users.getUser(username, identifierType).subscribe((result) => {
             let sysAdmin = false;
             const projectAdmin = [];
             const groupsPerProjectKeys = Object.keys(result.permissions.groupsPerProject);
@@ -175,21 +187,17 @@ class SessionService {
     destroySession() {
         localStorage.removeItem('session');
     }
-}
-SessionService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-SessionService.ctorParameters = () => [
-    { type: HttpClient },
-    { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] },
-    { type: UsersService }
-];
-SessionService.ngInjectableDef = defineInjectable({ factory: function SessionService_Factory() { return new SessionService(inject(HttpClient), inject(KuiCoreConfigToken), inject(UsersService)); }, token: SessionService, providedIn: "root" });
+};
+SessionService.ngInjectableDef = ɵɵdefineInjectable({ factory: function SessionService_Factory() { return new SessionService(ɵɵinject(HttpClient), ɵɵinject(KuiCoreConfigToken), ɵɵinject(UsersService)); }, token: SessionService, providedIn: "root" });
+SessionService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __param(1, Inject(KuiCoreConfigToken)),
+    __metadata("design:paramtypes", [HttpClient, Object, UsersService])
+], SessionService);
 
-class AuthGuard {
+let AuthGuard = class AuthGuard {
     constructor(_session, _router) {
         this._session = _session;
         this._router = _router;
@@ -201,23 +209,20 @@ class AuthGuard {
         }
         return true;
     }
-}
-AuthGuard.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-AuthGuard.ctorParameters = () => [
-    { type: SessionService },
-    { type: Router }
-];
-AuthGuard.ngInjectableDef = defineInjectable({ factory: function AuthGuard_Factory() { return new AuthGuard(inject(SessionService), inject(Router)); }, token: AuthGuard, providedIn: "root" });
+};
+AuthGuard.ngInjectableDef = ɵɵdefineInjectable({ factory: function AuthGuard_Factory() { return new AuthGuard(ɵɵinject(SessionService), ɵɵinject(Router)); }, token: AuthGuard, providedIn: "root" });
+AuthGuard = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __metadata("design:paramtypes", [SessionService,
+        Router])
+], AuthGuard);
 
 /**
  * Authentication service includes the login, logout method and a session method to check if a user is logged in or not.
  */
-class AuthenticationService {
+let AuthenticationService = class AuthenticationService {
     constructor(http, _session, config) {
         this.http = http;
         this._session = _session;
@@ -259,7 +264,13 @@ class AuthenticationService {
      */
     login(username, password) {
         // console.log('AuthenticationService - login - api: ', this.config.api);
-        return this.http.post(this.config.api + '/v2/authentication', { username: username, password: password }, { observe: 'response' }).pipe(map((response) => {
+        let params = { username: username, password: password };
+        // username can be either name or email address, so what do we have?
+        if (username.indexOf('@') > -1) {
+            // username is email address
+            params = { email: username, password: password };
+        }
+        return this.http.post(this.config.api + '/v2/authentication', params, { observe: 'response' }).pipe(map((response) => {
             return response;
         }), catchError((error) => {
             return this.handleRequestError(error);
@@ -268,11 +279,14 @@ class AuthenticationService {
     /**
      * logout the user by destroying the session
      *
-     * @param
      */
     logout() {
-        // destroy the session
-        localStorage.removeItem('session');
+        return this.http.delete(this.config.api + '/v2/authentication').pipe(map((response) => {
+            this._session.destroySession();
+            return response;
+        }), catchError((error) => {
+            return this.handleRequestError(error);
+        }));
     }
     /**
      * @ignore
@@ -283,27 +297,26 @@ class AuthenticationService {
      */
     handleRequestError(error) {
         const serviceError = new ApiServiceError();
+        serviceError.header = { 'server': error.headers.get('Server') };
         serviceError.status = error.status;
         serviceError.statusText = error.statusText;
         serviceError.errorInfo = error.message;
         serviceError.url = error.url;
         return throwError(serviceError);
     }
-}
-AuthenticationService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-AuthenticationService.ctorParameters = () => [
-    { type: HttpClient },
-    { type: SessionService },
-    { type: undefined, decorators: [{ type: Inject, args: [KuiCoreConfigToken,] }] }
-];
-AuthenticationService.ngInjectableDef = defineInjectable({ factory: function AuthenticationService_Factory() { return new AuthenticationService(inject(HttpClient), inject(SessionService), inject(KuiCoreConfigToken)); }, token: AuthenticationService, providedIn: "root" });
+};
+AuthenticationService.ngInjectableDef = ɵɵdefineInjectable({ factory: function AuthenticationService_Factory() { return new AuthenticationService(ɵɵinject(HttpClient), ɵɵinject(SessionService), ɵɵinject(KuiCoreConfigToken)); }, token: AuthenticationService, providedIn: "root" });
+AuthenticationService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __param(2, Inject(KuiCoreConfigToken)),
+    __metadata("design:paramtypes", [HttpClient,
+        SessionService,
+        KuiCoreConfig])
+], AuthenticationService);
 
-class LoginFormComponent {
+let LoginFormComponent = class LoginFormComponent {
     constructor(_auth, _session, _fb, _route, _router) {
         this._auth = _auth;
         this._session = _session;
@@ -399,8 +412,7 @@ class LoginFormComponent {
         // Grab values from form
         const username = this.frm.get('username').value;
         const password = this.frm.get('password').value;
-        this._auth.login(username, password)
-            .subscribe((response) => {
+        this._auth.login(username, password).subscribe((response) => {
             // we have a token; set the session now
             this._session.setSession(response.body.token, username);
             setTimeout(() => {
@@ -437,31 +449,32 @@ class LoginFormComponent {
         });
     }
     logout() {
-        this._auth.logout();
+        this._session.destroySession();
         location.reload(true);
     }
-}
-LoginFormComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'kui-login-form',
-                template: "<div class=\"login-form\" *ngIf=\"!loggedInUser\">\n    <div class=\"login-form-header\">\n        <h3 mat-subheader>{{login.title}}</h3>\n    </div>\n    <div class=\"login-form-content\">\n        <!-- This is the login form -->\n        <form class=\"login-form\" [formGroup]=\"frm\" (ngSubmit)=\"doLogin()\">\n            <!-- Error message -->\n            <mat-hint *ngIf=\"errorMessage !== undefined\" class=\"full-width\">\n                <span *ngIf=\"loginErrorUser || loginErrorPw\">{{login.error.failed}}</span>\n                <span *ngIf=\"loginErrorServer\">{{login.error.server}}</span>\n            </mat-hint>\n\n            <!-- Username -->\n            <mat-form-field class=\"full-width login-field\">\n                <mat-icon matPrefix>person</mat-icon>\n                <input matInput autofocus [placeholder]=\"login.name\" autocomplete=\"username\" formControlName=\"username\">\n                <mat-hint *ngIf=\"formErrors.username\" class=\"login-error\">{{login.error.failed}}</mat-hint>\n            </mat-form-field>\n\n            <!-- Password -->\n            <mat-form-field class=\"full-width login-field\">\n                <mat-icon matPrefix>lock</mat-icon>\n                <input matInput type=\"password\" [placeholder]=\"login.pw\" autocomplete=\"current-password\" formControlName=\"password\">\n                <mat-hint *ngIf=\"formErrors.password\" class=\"login-error\">{{login.error.failed}}</mat-hint>\n            </mat-form-field>\n\n            <!-- Button: Login -->\n            <div class=\"button-row full-width\">\n                <button mat-raised-button type=\"submit\"\n                        *ngIf=\"!loading\"\n                        [disabled]=\"!frm.valid\"\n                        class=\"full-width submit-button mat-primary\">\n                    {{login.button}}\n                </button>\n                <kui-progress-indicator *ngIf=\"loading\" [color]=\"color\"></kui-progress-indicator>\n            </div>\n        </form>\n    </div>\n</div>\n\n<!-- a user is already logged in; show who it is and a logout button -->\n\n<div class=\"logout-form\" *ngIf=\"loggedInUser\">\n    <p>A user is already logged in:</p>\n    <p>{{loggedInUser}}</p>\n    <br>\n    <p>If it's not you, please logout!</p>\n    <div class=\"button-row full-width\">\n        <button mat-raised-button\n                (click)=\"logout()\"\n                *ngIf=\"!loading\"\n                class=\"full-width mat-warn\">\n            LOGOUT\n        </button>\n        <kui-progress-indicator *ngIf=\"loading\"></kui-progress-indicator>\n    </div>\n</div>\n",
-                styles: [".full-width{width:100%}.button-row,.mat-form-field,.mat-hint{margin-top:24px}.mat-hint{background:rgba(239,83,80,.39);display:block;margin-left:-16px;padding:16px;text-align:center;width:280px}.login-form,.logout-form{margin-left:auto;margin-right:auto;position:relative;width:280px}.login-form .login-form-header,.logout-form .login-form-header{margin-bottom:24px}.login-form .login-field .mat-icon,.logout-form .login-field .mat-icon{font-size:20px;margin-right:12px}.login-form .button-row,.logout-form .button-row{margin-top:48px}.sign-up{margin-top:24px}"]
-            }] }
-];
-/** @nocollapse */
-LoginFormComponent.ctorParameters = () => [
-    { type: AuthenticationService },
-    { type: SessionService },
-    { type: FormBuilder },
-    { type: ActivatedRoute },
-    { type: Router }
-];
-LoginFormComponent.propDecorators = {
-    navigate: [{ type: Input }],
-    color: [{ type: Input }]
 };
+__decorate([
+    Input(),
+    __metadata("design:type", String)
+], LoginFormComponent.prototype, "navigate", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", String)
+], LoginFormComponent.prototype, "color", void 0);
+LoginFormComponent = __decorate([
+    Component({
+        selector: 'kui-login-form',
+        template: "<div class=\"login-form\" *ngIf=\"!loggedInUser\">\n    <div class=\"login-form-header\">\n        <h3 mat-subheader>{{login.title}}</h3>\n    </div>\n    <div class=\"login-form-content\">\n        <!-- This is the login form -->\n        <form class=\"login-form\" [formGroup]=\"frm\" (ngSubmit)=\"doLogin()\">\n            <!-- Error message -->\n            <mat-hint *ngIf=\"errorMessage !== undefined\" class=\"full-width\">\n                <span *ngIf=\"loginErrorUser || loginErrorPw\">{{login.error.failed}}</span>\n                <span *ngIf=\"loginErrorServer\">{{login.error.server}}</span>\n            </mat-hint>\n\n            <!-- Username -->\n            <mat-form-field class=\"full-width login-field\">\n                <mat-icon matPrefix>person</mat-icon>\n                <input matInput autofocus [placeholder]=\"login.name\" autocomplete=\"username\" formControlName=\"username\"\n                       #username cdkFocusInitial>\n                <mat-hint *ngIf=\"formErrors.username\" class=\"login-error\">{{login.error.failed}}</mat-hint>\n            </mat-form-field>\n\n            <!-- Password -->\n            <mat-form-field class=\"full-width login-field\">\n                <mat-icon matPrefix>lock</mat-icon>\n                <input matInput type=\"password\" [placeholder]=\"login.pw\" autocomplete=\"current-password\"\n                       formControlName=\"password\">\n                <mat-hint *ngIf=\"formErrors.password\" class=\"login-error\">{{login.error.failed}}</mat-hint>\n            </mat-form-field>\n\n            <!-- Button: Login -->\n            <div class=\"button-row full-width\">\n                <button mat-raised-button type=\"submit\" *ngIf=\"!loading\" [disabled]=\"!frm.valid\"\n                        class=\"full-width submit-button mat-primary\">\n                    {{login.button}}\n                </button>\n                <kui-progress-indicator *ngIf=\"loading\" [color]=\"color\"></kui-progress-indicator>\n            </div>\n        </form>\n    </div>\n</div>\n\n<!-- a user is already logged in; show who it is and a logout button -->\n\n<div class=\"logout-form\" *ngIf=\"loggedInUser\">\n    <p>A user is already logged in:</p>\n    <p>{{loggedInUser}}</p>\n    <br>\n    <p>If it's not you, please logout!</p>\n    <div class=\"button-row full-width\">\n        <button mat-raised-button (click)=\"logout()\" *ngIf=\"!loading\" class=\"full-width mat-warn\">\n            LOGOUT\n        </button>\n        <kui-progress-indicator *ngIf=\"loading\"></kui-progress-indicator>\n    </div>\n</div>\n",
+        styles: [".full-width{width:100%}.button-row,.mat-form-field,.mat-hint{margin-top:24px}.mat-hint{background:rgba(239,83,80,.39);display:block;margin-left:-16px;padding:16px;text-align:center;width:280px}.login-form,.logout-form{margin-left:auto;margin-right:auto;position:relative;width:280px}.login-form .login-form-header,.logout-form .login-form-header{margin-bottom:24px}.login-form .login-field .mat-icon,.logout-form .login-field .mat-icon{font-size:20px;margin-right:12px}.login-form .button-row,.logout-form .button-row{margin-top:48px}.sign-up{margin-top:24px}"]
+    }),
+    __metadata("design:paramtypes", [AuthenticationService,
+        SessionService,
+        FormBuilder,
+        ActivatedRoute,
+        Router])
+], LoginFormComponent);
 
-class JwtInterceptor {
+let JwtInterceptor = class JwtInterceptor {
     constructor(_session) {
         this._session = _session;
     }
@@ -481,16 +494,13 @@ class JwtInterceptor {
         }
         return next.handle(request);
     }
-}
-JwtInterceptor.decorators = [
-    { type: Injectable }
-];
-/** @nocollapse */
-JwtInterceptor.ctorParameters = () => [
-    { type: SessionService }
-];
+};
+JwtInterceptor = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [SessionService])
+], JwtInterceptor);
 
-class WithCredentialsInterceptor {
+let WithCredentialsInterceptor = class WithCredentialsInterceptor {
     constructor(_session) {
         this._session = _session;
     }
@@ -502,52 +512,40 @@ class WithCredentialsInterceptor {
         });
         return next.handle(request);
     }
-}
-WithCredentialsInterceptor.decorators = [
-    { type: Injectable }
-];
-/** @nocollapse */
-WithCredentialsInterceptor.ctorParameters = () => [
-    { type: SessionService }
-];
+};
+WithCredentialsInterceptor = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [SessionService])
+], WithCredentialsInterceptor);
 
-class KuiAuthenticationModule {
-}
-KuiAuthenticationModule.decorators = [
-    { type: NgModule, args: [{
-                imports: [
-                    CommonModule,
-                    KuiActionModule,
-                    MatCardModule,
-                    MatIconModule,
-                    MatInputModule,
-                    MatButtonModule,
-                    MatDialogModule,
-                    MatFormFieldModule,
-                    ReactiveFormsModule,
-                    HttpClientModule
-                ],
-                declarations: [
-                    LoginFormComponent
-                ],
-                exports: [
-                    LoginFormComponent
-                ],
-                providers: [
-                    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-                    { provide: HTTP_INTERCEPTORS, useClass: WithCredentialsInterceptor, multi: true }
-                ]
-            },] }
-];
+let KuiAuthenticationModule = class KuiAuthenticationModule {
+};
+KuiAuthenticationModule = __decorate([
+    NgModule({
+        imports: [
+            CommonModule,
+            KuiActionModule,
+            MatCardModule,
+            MatIconModule,
+            MatInputModule,
+            MatButtonModule,
+            MatDialogModule,
+            MatFormFieldModule,
+            ReactiveFormsModule,
+            HttpClientModule
+        ],
+        declarations: [
+            LoginFormComponent
+        ],
+        exports: [
+            LoginFormComponent
+        ],
+        providers: [
+            { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+            { provide: HTTP_INTERCEPTORS, useClass: WithCredentialsInterceptor, multi: true }
+        ]
+    })
+], KuiAuthenticationModule);
 
-/*
- * Public API Surface of authentication
- */
-
-/**
- * Generated bundle index. Do not edit.
- */
-
-export { JwtInterceptor as ɵb, WithCredentialsInterceptor as ɵc, SessionService as ɵa, CurrentUser, AuthGuard, LoginFormComponent, AuthenticationService, KuiAuthenticationModule };
-
+export { AuthGuard, AuthenticationService, CurrentUser, KuiAuthenticationModule, LoginFormComponent, SessionService as ɵa, JwtInterceptor as ɵb, WithCredentialsInterceptor as ɵc };
 //# sourceMappingURL=knora-authentication.js.map

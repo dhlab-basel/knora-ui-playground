@@ -4,6 +4,10 @@
 export declare class ApiServiceResult {
     private static jsonConvert;
     /**
+     * Header contains the Knora / Server version
+     */
+    header?: any;
+    /**
      * Status number
      */
     status: number;
