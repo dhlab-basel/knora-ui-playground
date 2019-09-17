@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'kuip-authentication-pg',
-  templateUrl: './authentication-pg.component.html',
-  styleUrls: ['./authentication-pg.component.scss']
+    selector: 'kuip-authentication-pg',
+    templateUrl: './authentication-pg.component.html',
+    styleUrls: ['./authentication-pg.component.scss']
 })
 export class AuthenticationPgComponent implements OnInit {
 
-  constructor() { }
+    resourceIri: string = 'http://rdfh.ch/0001/a-thing-with-text-values';
 
-  ngOnInit() {
-  }
+    constructor () { }
 
+    ngOnInit() {
+    }
+
+    refresh(thing: any) {
+        console.log(thing);
+        window.location.reload();
+    }
 }

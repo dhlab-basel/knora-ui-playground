@@ -1,1 +1,8 @@
-<kui-login-form [navigate]="'authentication'"></kui-login-form>
+<kui-login-form [navigate]="'authentication'" (status)=refresh($event)></kui-login-form>
+
+<br><br>
+<mat-divider></mat-divider>
+
+<h2>The following resource should only be visible for logged-in users:</h2>
+
+<kui-resource-view [iri]="resourceIri"></kui-resource-view>
