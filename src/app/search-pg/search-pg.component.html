@@ -2,17 +2,17 @@
 <h3>Configure the search panel with the following parameters</h3>
 <form [formGroup]="form">
 
-  <mat-checkbox class="set-search-param" [formControl]="form.controls['filterbyproject']">
-    filterbyproject = "{{ projectIri }}"</mat-checkbox>
+    <mat-checkbox class="set-param" [formControl]="form.controls['filterbyproject']">
+        filterbyproject = "{{ projectIri }}"</mat-checkbox>
 
-  <mat-slide-toggle class="set-search-param" [formControl]="form.controls['projectfilter']">projectfilter
-  </mat-slide-toggle>
+    <mat-slide-toggle class="set-param" [formControl]="form.controls['projectfilter']">projectfilter
+    </mat-slide-toggle>
 
-  <mat-slide-toggle class="set-search-param" [formControl]="form.controls['advancedsearch']">advanced
-  </mat-slide-toggle>
+    <mat-slide-toggle class="set-param" [formControl]="form.controls['advancedsearch']">advanced
+    </mat-slide-toggle>
 
-  <mat-slide-toggle class="set-search-param" [formControl]="form.controls['expertsearch']">expert
-  </mat-slide-toggle>
+    <mat-slide-toggle class="set-param" [formControl]="form.controls['expertsearch']">expert
+    </mat-slide-toggle>
 
 </form>
 
@@ -26,16 +26,16 @@
 
 <!-- show the generated code -->
 <mat-accordion>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Show code
-      </mat-panel-title>
-      <mat-panel-description>
-        kui-search-panel
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <pre>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Show code
+            </mat-panel-title>
+            <mat-panel-description>
+                kui-search-panel
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <pre>
       &lt;kui-search-panel
         [filterbyproject]="{{limitToProject}}"
         [projectfilter]="{{projectFilter}}"
@@ -43,25 +43,25 @@
         [expert]="{{expertSearch}}"&gt;
       &lt;/kui-search-panel&gt;
     </pre>
-  </mat-expansion-panel>
+    </mat-expansion-panel>
 </mat-accordion>
 
-<!-- demo of search paenl -->
+<!-- demo of search panel -->
 <div class="demo">
-  <!-- simulate header -->
-  <div class="header">
-    <kui-search-panel *ngIf="!loading" class="center" [route]="'/search'" [projectfilter]="projectFilter"
-                      [filterbyproject]="limitToProject" [advanced]="advancedSearch" [expert]="expertSearch">
-    </kui-search-panel>
-    <!--  -->
+    <!-- simulate header -->
+    <div class="header">
+        <kui-search-panel *ngIf="!loading" class="center" [route]="'/search'" [projectfilter]="projectFilter"
+                          [filterbyproject]="limitToProject" [advanced]="advancedSearch" [expert]="expertSearch">
+        </kui-search-panel>
+        <!--  -->
 
-  </div>
+    </div>
 </div>
 
 <mat-divider></mat-divider>
 
 <!-- search results -->
-<div class="search-results">
-  <h3>Search results</h3>
-  <router-outlet></router-outlet>
+<div class="results">
+    <h3>Search results</h3>
+    <router-outlet></router-outlet>
 </div>

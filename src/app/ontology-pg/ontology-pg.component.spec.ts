@@ -1,11 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import {
-  MatCardModule,
-  MatDividerModule,
-  MatIconModule,
-  MatTooltipModule
-} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ProgressIndicatorComponent } from '@knora/action';
 import { KuiCoreConfig, KuiCoreConfigToken } from '@knora/core';
 

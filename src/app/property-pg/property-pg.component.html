@@ -1,0 +1,61 @@
+<!-- configure the string literal input -->
+<h3>Configure the string literal input with the following parameters</h3>
+<form [formGroup]="form">
+
+    <mat-checkbox class="set-param" [formControl]="form.controls['language']">
+        predefinedLanguage = "'{{language}}'"</mat-checkbox>
+
+    <mat-slide-toggle class="set-param" [formControl]="form.controls['values']">Predefined values (edit mode)
+    </mat-slide-toggle>
+
+    <mat-slide-toggle class="set-param" [formControl]="form.controls['textarea']">textarea
+    </mat-slide-toggle>
+
+    <mat-slide-toggle class="set-param" [formControl]="form.controls['disabled']">disabled
+    </mat-slide-toggle>
+
+
+</form>
+
+<!-- show the generated code -->
+<mat-accordion>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Show code
+            </mat-panel-title>
+            <mat-panel-description>
+                kui-string-literal-input
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <pre>
+      &lt;kui-string-literal-input
+        [value]="{{values | json}}"
+        [placeholder]="{{placeholder}}"
+        [textarea]="{{textarea}}"
+        [disabled]="{{disabled}}"
+        [language]="{{language}}"
+        (dataChanged)="handleData($event)&gt;
+      &lt;/kui-string-literal-input&gt;
+    </pre>
+    </mat-expansion-panel>
+</mat-accordion>
+
+<!-- demo of search panel -->
+<div class="demo" *ngIf="!loading">
+    <kui-string-literal-input [placeholder]="placeholder" [value]="values" [textarea]="textarea" [disabled]="disabled"
+                              (dataChanged)="handleData($event)">
+    </kui-string-literal-input>
+</div>
+
+<mat-divider></mat-divider>
+
+<!-- search results -->
+<div class="results">
+    <h3>Output</h3>
+    <ul *ngIf="values.length > 0">
+        <li *ngFor="let v of values">
+            {{v.language}}: {{v.value}}
+        </li>
+    </ul>
+</div>
