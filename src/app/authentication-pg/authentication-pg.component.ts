@@ -16,6 +16,8 @@ export class AuthenticationPgComponent implements OnInit {
 
     refresh(thing: any) {
         console.log(thing);
-        window.location.reload();
+        if (thing === true) {
+            window.location.reload();
+        }
     }
 }
