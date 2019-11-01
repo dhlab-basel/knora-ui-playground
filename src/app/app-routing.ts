@@ -10,6 +10,7 @@ import { SearchPgComponent } from './search-pg/search-pg.component';
 import { SearchResultComponent } from './search-pg/search-result/search-result.component';
 import { NewSearchPgComponent } from './new-search-pg/new-search-pg.component';
 import { PropertyPgComponent } from './property-pg/property-pg.component';
+import { NewPlaygroundComponent } from './new-playground/new-playground.component';
 
 
 const appRoutes: Routes = [
@@ -50,6 +51,10 @@ const appRoutes: Routes = [
     {
         path: 'property',
         component: PropertyPgComponent
+    },
+    {
+        path: 'playground',
+        component: NewPlaygroundComponent
     }
 ];
 

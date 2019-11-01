@@ -28,6 +28,12 @@ export class ViewerPgComponent implements OnInit, OnDestroy {
             disabled: false
         },
         {
+            type: 'Ding',
+            icon: 'chrome_reader_mode',
+            id: 'http://rdfh.ch/0001/a-thing-with-text-valuesLanguage',
+            disabled: false
+        },
+        {
             type: 'Film',
             icon: 'camera_roll',
             id: 'http://rdfh.ch/0815/6BUOOKNnRFeoTheBAM4CHQ',
@@ -49,7 +55,8 @@ export class ViewerPgComponent implements OnInit, OnDestroy {
 
     resourceIri: string;
 
-    constructor (private _route: ActivatedRoute,
+    constructor(
+        private _route: ActivatedRoute,
         private _router: Router) {
 
         this._route.paramMap.subscribe((params: Params) => {
@@ -91,5 +98,11 @@ export class ViewerPgComponent implements OnInit, OnDestroy {
 
     openRes(id: string) {
         this._router.navigate(['/resource/' + encodeURIComponent(id)]);
+    }
+
+    deleteResource(id: string) {
+        // this._resourceService.deleteResource(id, undefined, true);
+
+
     }
 }

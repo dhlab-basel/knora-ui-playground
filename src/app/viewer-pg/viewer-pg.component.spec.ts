@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatIconModule } from '@angular/material/icon';
 
 import { ViewerPgComponent } from './viewer-pg.component';
 
@@ -12,7 +13,8 @@ describe('ViewerPgComponent', () => {
         TestBed.configureTestingModule({
             declarations: [ViewerPgComponent],
             imports: [
-                MatButtonToggleModule
+                MatButtonToggleModule,
+                MatIconModule
             ]
         })
             .compileComponents();

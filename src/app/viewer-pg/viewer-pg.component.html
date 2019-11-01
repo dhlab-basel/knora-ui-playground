@@ -11,6 +11,14 @@
 <mat-divider></mat-divider>
 
 <div *ngIf="resourceIri !== null && !loading">
+    <!--
+    <button mat-button color="warn" (click)="deleteResource(resourceIri)">
+        <mat-icon>delete</mat-icon>
+        Delete
+    </button>
+    -->
+    <br>
+    <!-- TODO: add [toolbar]="true" as soon it's implemented in the viewer module -->
     <kui-resource-view [iri]="resourceIri"></kui-resource-view>
 </div>
 

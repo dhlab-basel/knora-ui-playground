@@ -1,20 +1,4 @@
-import { Component, OnInit, } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import {
-    ApiServiceError,
-    ApiServiceResult,
-    ConvertJSONLD,
-    ExtendedSearchParams,
-    GravsearchGenerationService,
-    KnoraConstants,
-    OntologyCacheService,
-    OntologyInformation,
-    ReadResource,
-    ReadResourcesSequence,
-    SearchParamsService,
-    SearchService
-} from '@knora/core';
-import { AppDemo } from 'src/app/app.config';
+import { Component, OnInit } from '@angular/core';
 
 export interface ListData {
     title: string;
@@ -72,7 +56,7 @@ export class SearchResultComponent implements OnInit {
 
         /*  this._route.params.subscribe((params: Params) => {
              this.list.searchMode = params['mode'];
- 
+
              if (this.list.searchMode === 'fulltext') {
                  this.list.restrictedBy = params['q'];
              } else if (this.list.searchMode === 'extended') {
@@ -88,7 +72,7 @@ export class SearchResultComponent implements OnInit {
                      this.list.restrictedBy = <string> gravsearch;
                  }
              }
- 
+
              this.result = [];
              this.rerender = true;
              this.getResult();

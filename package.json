@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "~8.2.3",
     "@angular/router": "~8.2.3",
     "@knora/action": "file:.yalc/@knora/action",
+    "@knora/api": "file:.yalc/@knora/api",
     "@knora/authentication": "file:.yalc/@knora/authentication",
     "@knora/core": "file:.yalc/@knora/core",
     "@knora/search": "file:.yalc/@knora/search",
