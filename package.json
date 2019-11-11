@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "yalc-add-modules": "yalc add @knora/action && yalc add @knora/authentication && yalc add @knora/core && yalc add @knora/search && yalc add @knora/viewer",
+    "yalc-add-modules": "yalc add @knora/api && yalc add @knora/action && yalc add @knora/authentication && yalc add @knora/core && yalc add @knora/search && yalc add @knora/viewer",
     "build-prod": "ng build --prod --build-optimizer"
   },
   "private": true,
