@@ -38,7 +38,7 @@
     "jsonld": "^1.5.4",
     "moment": "^2.24.0",
     "ngx-markdown": "^7.1.4",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.13.1",
     "openseadragon": "^2.4.0",
     "rxjs": "~6.3.3",
     "svg-overlay": "github:openseadragon/svg-overlay",
