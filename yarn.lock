@@ -308,38 +308,28 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@knora/action@^7.6.0":
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/@knora/action/-/action-7.6.0.tgz#bbd2ad6982c311e4d7eb1443860ed9ebc632e21a"
-  integrity sha512-XUQQP1YOuiVGLlhTL+uXmaxUXKYUyDXUtsHVR4gbZqqX7aJdw8bBOu+XQ5xsme7xjKnIeHbEMFTw8y7oZQ1QBA==
+"@knora/action@file:.yalc/@knora/action":
+  version "7.6.0-9c954158"
   dependencies:
     tslib "^1.9.0"
 
-"@knora/authentication@^7.6.0":
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/@knora/authentication/-/authentication-7.6.0.tgz#38ad7a7587fcf7abde9ac6a324599de595949911"
-  integrity sha512-AnYq/+LyectmgwvLAkRapbul4coSgsc3g3mPHQkfegF/+kAwOhbwGcKbbpPMEPvktAYxDK8QKaXmZu6rpdsslw==
+"@knora/authentication@file:.yalc/@knora/authentication":
+  version "7.6.0-1f8c344d"
   dependencies:
     tslib "^1.9.0"
 
-"@knora/core@^7.6.0":
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/@knora/core/-/core-7.6.0.tgz#505b204f92f6e74adfcf5ebf1519c26f26b3e8a6"
-  integrity sha512-VSeNXMJACEw7VVwt+R9+pMsww2z8gae65cz5juiPnzZcnS2uJkr7WJRjGH1HsVlm8CmnGjwD5H4tnNLjEs49Sw==
+"@knora/core@file:.yalc/@knora/core":
+  version "7.6.0-e87b1946"
   dependencies:
     tslib "^1.9.0"
 
-"@knora/search@^7.6.0":
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/@knora/search/-/search-7.6.0.tgz#7a4be5e88fb6f05cf908eb624180e1e0c97b28e6"
-  integrity sha512-+ZCdxkfExuHhv/IVhrkc5g7LEQG28IwYqeLJ27/1jmWUKUFev0ZJAp0pT2dGeUHyS1fqAGUwwNosVLjkk3MGhQ==
+"@knora/search@file:.yalc/@knora/search":
+  version "8.0.0-88e53a46"
   dependencies:
     tslib "^1.9.0"
 
-"@knora/viewer@^7.6.0":
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/@knora/viewer/-/viewer-7.6.0.tgz#bba80943f9a9da7fd557612afec149f22752c5bc"
-  integrity sha512-ruV6klze2xscn8XkEZOVcXgfDP2jzlXDke7VAduKVRs1f7hwxkwCKbBDY0GVzk0TxTzurIq//tcuk+Wmyv/VFA==
+"@knora/viewer@file:.yalc/@knora/viewer":
+  version "8.0.0-85e1c51d"
   dependencies:
     tslib "^1.9.0"
 
@@ -4459,10 +4449,10 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   dependencies:
     minimist "0.0.8"
 
-moment@^2.24.0:
-  version "2.24.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
-  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+moment@^2.29.2:
+  version "2.29.2"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.2.tgz#00910c60b20843bcba52d37d58c628b47b1f20e4"
+  integrity sha512-UgzG4rvxYpN15jgCmVJwac49h9ly9NurikMWGPdVxm8GZD6XjkKPxDTjQQ43gtGgnV3X0cAyWDdP2Wexoquifg==
 
 move-concurrently@^1.0.1:
   version "1.0.1"
