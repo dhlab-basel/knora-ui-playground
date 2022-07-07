@@ -36,7 +36,7 @@
     "jdnconvertiblecalendardateadapter": "^0.0.9",
     "json2typescript": "^1.2.0",
     "jsonld": "^1.5.4",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "ngx-markdown": "^7.1.4",
     "node-sass": "^4.11.0",
     "openseadragon": "^2.4.0",
